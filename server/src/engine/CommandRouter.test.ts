@@ -21,12 +21,22 @@ describe('CommandRouter', () => {
       expect(output).toContain('气血');
       expect(output).toContain('内力');
       expect(output).toContain('精力');
+      // No Unicode box-drawing chars (CJK alignment fix)
+      expect(output).not.toContain('╔');
+      expect(output).not.toContain('║');
+      expect(output).not.toContain('╚');
+      expect(output).not.toContain('╝');
+      expect(output).not.toContain('╠');
+      expect(output).not.toContain('╣');
     });
 
     it('who returns online players', () => {
       const output = handleCommand('who', 'test-player');
       expect(output).toContain('在线玩家');
       expect(output).toContain('游客');
+      // No Unicode box-drawing chars
+      expect(output).not.toContain('╔');
+      expect(output).not.toContain('║');
     });
 
     it('help lists available commands', () => {
@@ -36,6 +46,11 @@ describe('CommandRouter', () => {
       expect(output).toContain('who');
       expect(output).toContain('help');
       expect(output).toContain('clear');
+      // No Unicode box-drawing chars
+      expect(output).not.toContain('╔');
+      expect(output).not.toContain('║');
+      expect(output).not.toContain('╠');
+      expect(output).not.toContain('╣');
     });
 
     it('clear returns special clear token', () => {
