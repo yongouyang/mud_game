@@ -67,7 +67,7 @@ jobs:
         run: |
           ALB_DNS=$(aws elbv2 describe-load-balancers --names wuxia-mud-alb --query 'LoadBalancers[0].DNSName' --output text --region ${{ env.AWS_REGION }})
           for i in $(seq 1 12); do
-            STATUS=$(curl -sk -o /dev/null -w '%{http_code}' "https://$ALB_DNS/health")
+            STATUS=$(curl -s -o /dev/null -w '%{http_code}' "http://$ALB_DNS/health")
             if [ "$STATUS" = "200" ]; then
               echo "Health check passed!"
               exit 0

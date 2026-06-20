@@ -30,7 +30,7 @@ variable "container_port"  { default = 3000 }
 variable "cpu"             { default = "256" }  # 0.25 vCPU
 variable "memory"          { default = "512" }
 variable "desired_count"   { default = 1 }
-variable "domain_name"     { default = "mud.example.com" }  # override in tfvars
+variable "domain_name"     { default = "" }  # empty = use ALB DNS, no HTTPS
 variable "certificate_arn" { default = "" }                   # ACM cert ARN
 
 # ─── VPC ──────────────────────────────────────────
@@ -215,7 +215,7 @@ resource "aws_ecs_service" "app" {
     container_port   = var.container_port
   }
 
-  depends_on = [aws_lb_listener.https]
+  depends_on = [aws_lb_listener.http]
 }
 
 # ─── CloudWatch Logs ──────────────────────────────
@@ -248,11 +248,31 @@ resource "aws_lb_target_group" "app" {
   }
 }
 
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.app.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = var.certificate_arn != "" ? "redirect" : "forward"
+    dynamic "redirect" {
+      for_each = var.certificate_arn != "" ? [1] : []
+      content {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+    target_group_arn = var.certificate_arn != "" ? null : aws_lb_target_group.app.arn
+  }
+}
+
 resource "aws_lb_listener" "https" {
+  count             = var.certificate_arn != "" ? 1 : 0
   load_balancer_arn = aws_lb.app.arn
   port              = 443
   protocol          = "HTTPS"
-  certificate_arn   = var.certificate_arn != "" ? var.certificate_arn : data.aws_acm_certificate.default[0].arn
+  certificate_arn   = var.certificate_arn
 
   default_action {
     type             = "forward"
@@ -260,24 +280,9 @@ resource "aws_lb_listener" "https" {
   }
 }
 
-# Redirect HTTP → HTTPS
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.app.arn
-  port              = 80
-  protocol          = "HTTP"
-  default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
 data "aws_acm_certificate" "default" {
-  count  = var.certificate_arn == "" ? 1 : 0
-  domain = var.domain_name
+  count  = 0  # no longer used; pass certificate_arn directly
+  domain = "unused"
 }
 
 # ─── IAM Roles ────────────────────────────────────
