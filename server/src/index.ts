@@ -77,6 +77,40 @@ npcs.register({
     skills: [{ skillId: "taiji-quan", level: 50 }],
     aggressive: false,
 });
+  // Register new school master NPCs (Phase 4 expansion)
+  npcs.register({
+    id: "master-gaibang", name: "洪七公", description: "丐帮帮主，北丐之首，武功盖世。",
+    roomId: "gaibang/hq",
+    dialogue: ["小兄弟可想加入我丐帮？", "打狗棒法乃我丐帮镇帮之宝。"],
+    attributes: { str: 15, int: 10, con: 12, dex: 12 },
+    skills: [{ skillId: "dagou-bang", level: 50 }, { skillId: "xianglong-zhang", level: 50 }],
+    aggressive: false,
+  });
+  npcs.register({
+    id: "master-huashan", name: "岳不群", description: "华山派掌门，君子剑的名号响彻江湖。",
+    roomId: "huashan/peak",
+    dialogue: ["华山派欢迎有志之士。", "剑法之道，贵在精纯。"],
+    attributes: { str: 12, int: 12, con: 10, dex: 14 },
+    skills: [{ skillId: "huashan-jian", level: 50 }, { skillId: "dugu-jiujian", level: 40 }],
+    aggressive: false,
+  });
+  npcs.register({
+    id: "master-emei", name: "灭绝师太", description: "峨眉派掌门，性子刚烈，武功极高。",
+    roomId: "emei/golden",
+    dialogue: ["哼！", "峨眉剑法虽柔，亦可杀敌。"],
+    attributes: { str: 12, int: 12, con: 10, dex: 14 },
+    skills: [{ skillId: "emei-jian", level: 50 }],
+    aggressive: false,
+  });
+  npcs.register({
+    id: "master-gumu", name: "小龙女", description: "古墓派传人，美貌绝伦，武功深不可测。",
+    roomId: "gumu/chamber",
+    dialogue: ["古墓派不收外人……不过既然来了。", "玉女心经须两人合修。"],
+    attributes: { str: 10, int: 12, con: 10, dex: 16 },
+    skills: [{ skillId: "yunu-xinjing", level: 50 }, { skillId: "anran-xiaohun", level: 50 }],
+    aggressive: false,
+  });
+  
 
 const router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
 

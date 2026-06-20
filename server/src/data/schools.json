@@ -5,8 +5,17 @@
     "description": "天下武功出少林。少林寺位于嵩山，以七十二绝技名震江湖。弟子须持戒修行，武功以刚猛见长。",
     "joinRoomId": "shaolin/hall",
     "masterName": "玄慈方丈",
-    "masterDialogue": ["阿弥陀佛，施主想入我少林门下？", "习武先修心，持戒方能成器。", "罗汉拳乃我少林入门功夫。"],
-    "skills": ["cuff", "dodge", "force", "luohan-quan"]
+    "masterDialogue": [
+      "阿弥陀佛，施主想入我少林门下？",
+      "习武先修心，持戒方能成器。",
+      "罗汉拳乃我少林入门功夫。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "luohan-quan"
+    ]
   },
   {
     "id": "wudang",
@@ -14,7 +23,91 @@
     "description": "武当山为道教名山，武当派以太极拳、太极剑闻名于世。讲究以柔克刚，后发制人。",
     "joinRoomId": "wudang/hall",
     "masterName": "冲虚道长",
-    "masterDialogue": ["无量天尊，施主可是来拜师的？", "太极之道，以柔克刚。", "学武先学道，修道先修心。"],
-    "skills": ["cuff", "dodge", "force", "taiji-quan"]
+    "masterDialogue": [
+      "无量天尊，施主可是来拜师的？",
+      "太极之道，以柔克刚。",
+      "学武先学道，修道先修心。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "taiji-quan"
+    ]
+  },
+  {
+    "id": "gaibang",
+    "name": "丐帮",
+    "description": "天下第一大帮。帮众遍布五湖四海，以打狗棒法和降龙十八掌名震江湖。入门没有门槛，但帮规森严。",
+    "joinRoomId": "gaibang/hq",
+    "masterName": "洪七公",
+    "masterDialogue": [
+      "小兄弟可想加入我丐帮？",
+      "打狗棒法乃我丐帮镇帮之宝。",
+      "降龙十八掌可不是谁都能学的。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "dagou-bang",
+      "xianglong-zhang"
+    ]
+  },
+  {
+    "id": "huashan",
+    "name": "华山派",
+    "description": "五岳剑派之一。华山剑法以险峻著称。位于华山之巅，弟子需有恒心毅力才能上山学艺。",
+    "joinRoomId": "huashan/peak",
+    "masterName": "岳不群",
+    "masterDialogue": [
+      "华山派欢迎有志之士。",
+      "剑法之道，贵在精纯。",
+      "独孤九剑乃我镇派绝学。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "huashan-jian",
+      "dugu-jiujian"
+    ]
+  },
+  {
+    "id": "emei",
+    "name": "峨眉派",
+    "description": "武林名门正派。位于峨眉山金顶，以峨眉剑法闻名。门规清严，只收女弟子。",
+    "joinRoomId": "emei/golden",
+    "masterName": "灭绝师太",
+    "masterDialogue": [
+      "峨眉派不收男弟子……也罢。",
+      "剑法如心，心正则剑正。",
+      "峨眉剑法虽柔，亦可杀敌。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "emei-jian"
+    ]
+  },
+  {
+    "id": "gumu",
+    "name": "古墓派",
+    "description": "隐世门派。藏于古墓密室之中，以玉女心经和黯然销魂掌著称。弟子行事低调，武功深不可测。",
+    "joinRoomId": "gumu/chamber",
+    "masterName": "小龙女",
+    "masterDialogue": [
+      "古墓派不收外人……不过既然来了。",
+      "玉女心经须两人合修。",
+      "黯然销魂掌，情到深处自然成。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "yunu-xinjing",
+      "anran-xiaohun"
+    ]
   }
 ]

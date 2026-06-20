@@ -106,6 +106,10 @@
         {
           "direction": "east",
           "roomId": "wilderness/cliff"
+        },
+        {
+          "direction": "south",
+          "roomId": "gaibang/forest1"
         }
       ]
     },
@@ -125,6 +129,14 @@
         {
           "direction": "north",
           "roomId": "shaolin/gate"
+        },
+        {
+          "direction": "north",
+          "roomId": "huashan/foot"
+        },
+        {
+          "direction": "north",
+          "roomId": "gumu/entrance"
         }
       ]
     },
@@ -140,6 +152,10 @@
         {
           "direction": "west",
           "roomId": "wudang/gate"
+        },
+        {
+          "direction": "north",
+          "roomId": "emei/foot"
         }
       ]
     },
@@ -233,6 +249,140 @@
         {
           "direction": "south",
           "roomId": "wudang/hall"
+        }
+      ]
+    },
+    {
+      "id": "gaibang/hq",
+      "name": "丐帮·总舵",
+      "description": "丐帮总舵，一座宽敞的院落。帮主洪七公坐在正中的椅子上。\\n弟子们来来往往，热闹非凡。西边通向杏子林。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "gaibang/forest1"
+        }
+      ]
+    },
+    {
+      "id": "gaibang/forest1",
+      "name": "丐帮·杏子林入口",
+      "description": "一片茂密的杏子林，这里是丐帮弟子聚集的地方。\\n东边是总舵，南边可以进入密林深处。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "gaibang/hq"
+        },
+        {
+          "direction": "south",
+          "roomId": "gaibang/forest2"
+        },
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest1"
+        }
+      ]
+    },
+    {
+      "id": "gaibang/forest2",
+      "name": "丐帮·杏子林深处",
+      "description": "杏子林的深处，几个叫花子围坐在篝火旁。\\n林间隐约能看到一些练功的木桩。北边可以返回入口。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "gaibang/forest1"
+        }
+      ]
+    },
+    {
+      "id": "huashan/foot",
+      "name": "华山·山脚",
+      "description": "华山脚下，一条蜿蜒的石阶通向云雾中的山顶。\\n一块石碑上刻着「华山派」三个大字。北边可以上山，南边通向山林。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "huashan/path"
+        },
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "huashan/path",
+      "name": "华山·山道",
+      "description": "险峻的华山山道，一侧是悬崖峭壁。\\n长空栈道令人胆战心惊。南边是山脚，北边通向山顶。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "huashan/foot"
+        },
+        {
+          "direction": "north",
+          "roomId": "huashan/peak"
+        }
+      ]
+    },
+    {
+      "id": "huashan/peak",
+      "name": "华山·之巅",
+      "description": "华山之巅，云雾在脚下翻涌。\\n岳不群在此修炼剑法，剑气纵横。南边可以下山。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "huashan/path"
+        }
+      ]
+    },
+    {
+      "id": "emei/foot",
+      "name": "峨眉·山门",
+      "description": "峨眉山山门，两旁古松参天。\\n石阶直通山顶。北边可以上山，南边通向荒野。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "emei/golden"
+        },
+        {
+          "direction": "south",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "emei/golden",
+      "name": "峨眉·金顶",
+      "description": "峨眉山金顶。阳光透过云层洒下，金光万丈。\\n灭绝师太手持倚天剑，神情威严。南边可以下山。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "emei/foot"
+        }
+      ]
+    },
+    {
+      "id": "gumu/entrance",
+      "name": "古墓·入口",
+      "description": "终南山下一座隐蔽的古墓入口。\\n藤蔓遮掩着石门。南边通向一处密林，北边可以进入古墓。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "gumu/chamber"
+        },
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "gumu/chamber",
+      "name": "古墓·密室",
+      "description": "古墓深处的一间密室。石壁上刻满了武功心法。\\n一张石床上，小龙女正在修炼玉女心经。南边可以离开密室。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "gumu/entrance"
         }
       ]
     }

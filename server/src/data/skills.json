@@ -1,9 +1,114 @@
 [
-  { "id": "cuff",          "name": "基本拳脚", "type": "unarmed", "description": "徒手搏击的基本功夫。",                                   "damageBase": 3, "damageScale": 0.5 },
-  { "id": "dodge",         "name": "基本轻功", "type": "dodge",   "description": "闪避腾挪的身法。",                                     "damageBase": 0, "damageScale": 0 },
-  { "id": "force",         "name": "基本内功", "type": "force",   "description": "修炼内力心法，提升气血。",                             "damageBase": 0, "damageScale": 0 },
-  { "id": "taiji-quan",    "name": "太极拳",   "type": "strike",  "description": "武当派绝学，以柔克刚，四两拨千斤。",                   "damageBase": 6, "damageScale": 0.8 },
-  { "id": "luohan-quan",   "name": "罗汉拳",   "type": "strike",  "description": "少林入门拳法，刚猛有力。",                             "damageBase": 5, "damageScale": 0.7 },
-  { "id": "qinggong",      "name": "草上飞",   "type": "dodge",   "description": "轻功身法「草上飞」，在草地中穿行如履平地。",           "damageBase": 0, "damageScale": 0 },
-  { "id": "neigong-xinfa", "name": "内功心法", "type": "force",   "description": "基础内功心法，修炼后可提升内力上限。",                 "damageBase": 0, "damageScale": 0 }
+  {
+    "id": "cuff",
+    "name": "基本拳脚",
+    "type": "unarmed",
+    "description": "徒手搏击的基本功夫。",
+    "damageBase": 3,
+    "damageScale": 0.5
+  },
+  {
+    "id": "dodge",
+    "name": "基本轻功",
+    "type": "dodge",
+    "description": "闪避腾挪的身法。",
+    "damageBase": 0,
+    "damageScale": 0
+  },
+  {
+    "id": "force",
+    "name": "基本内功",
+    "type": "force",
+    "description": "修炼内力心法，提升气血。",
+    "damageBase": 0,
+    "damageScale": 0
+  },
+  {
+    "id": "taiji-quan",
+    "name": "太极拳",
+    "type": "strike",
+    "description": "武当派绝学，以柔克刚，四两拨千斤。",
+    "damageBase": 6,
+    "damageScale": 0.8
+  },
+  {
+    "id": "luohan-quan",
+    "name": "罗汉拳",
+    "type": "strike",
+    "description": "少林入门拳法，刚猛有力。",
+    "damageBase": 5,
+    "damageScale": 0.7
+  },
+  {
+    "id": "qinggong",
+    "name": "草上飞",
+    "type": "dodge",
+    "description": "轻功身法「草上飞」，在草地中穿行如履平地。",
+    "damageBase": 0,
+    "damageScale": 0
+  },
+  {
+    "id": "neigong-xinfa",
+    "name": "内功心法",
+    "type": "force",
+    "description": "基础内功心法，修炼后可提升内力上限。",
+    "damageBase": 0,
+    "damageScale": 0
+  },
+  {
+    "id": "dagou-bang",
+    "name": "打狗棒法",
+    "type": "strike",
+    "description": "丐帮镇帮之宝，三十六路棒法出神入化。",
+    "damageBase": 7,
+    "damageScale": 0.9
+  },
+  {
+    "id": "xianglong-zhang",
+    "name": "降龙十八掌",
+    "type": "strike",
+    "description": "丐帮绝学，刚猛无匹的掌法。",
+    "damageBase": 8,
+    "damageScale": 1.0
+  },
+  {
+    "id": "huashan-jian",
+    "name": "华山剑法",
+    "type": "strike",
+    "description": "华山派镇山剑法，剑招灵动。",
+    "damageBase": 6,
+    "damageScale": 0.7
+  },
+  {
+    "id": "dugu-jiujian",
+    "name": "独孤九剑",
+    "type": "strike",
+    "description": "剑魔独孤求败所创，破尽天下武学。",
+    "damageBase": 9,
+    "damageScale": 1.2
+  },
+  {
+    "id": "emei-jian",
+    "name": "峨眉剑法",
+    "type": "strike",
+    "description": "峨眉派独门剑法，以柔克刚。",
+    "damageBase": 6,
+    "damageScale": 0.7
+  },
+  {
+    "id": "yunu-xinjing",
+    "name": "玉女心经",
+    "type": "force",
+    "description": "古墓派不外传的内功心法，修习后内力大增。",
+    "damageBase": 0,
+    "damageScale": 0
+  },
+  {
+    "id": "anran-xiaohun",
+    "name": "黯然销魂掌",
+    "type": "strike",
+    "description": "杨过独创的掌法，情之所至，掌力无穷。",
+    "damageBase": 8,
+    "damageScale": 1.1
+  }
 ]

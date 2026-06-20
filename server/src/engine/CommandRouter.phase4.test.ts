@@ -33,14 +33,14 @@ describe('Phase 4: Schools', () => {
 
   it('school list is available', () => {
     const out = cmd('schools');
-    expect(out).toContain('少林派');
+    expect(out).toContain('少林派'); expect(out).toContain('武当派'); expect(out).toContain('丐帮'); expect(out).toContain('华山派'); expect(out).toContain('峨眉派'); expect(out).toContain('古墓派');
     expect(out).toContain('武当派');
   });
 
   it('school info shows details', () => {
     const out = cmd('schools 少林派');
-    expect(out).toContain('少林派');
-    expect(out).toContain('武功');
+    expect(out).toContain("少林派");
+    expect(out).toContain("武功");
   });
 
   it('cannot join school when not at the school location', () => {
