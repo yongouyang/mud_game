@@ -1,0 +1,35 @@
+{
+  "name": "wuxia-mud",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "cd server && npm run dev",
+    "dev:all": "concurrently -n client,server \"npm run dev\" \"npm run dev:server\"",
+    "build": "vite build",
+    "start:server": "cd server && npm start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:sweep": "npm run build && E2E_PROD=1 npm run test:e2e -- tests/e2e/game.spec.ts --project='Desktop Chrome'"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^6.0.2",
+    "concurrently": "^9.2.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.9.0",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.8"
+  }
+}

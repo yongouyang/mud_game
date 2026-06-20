@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'node:http';
 import { Server as SocketIOServer } from 'socket.io';
 import path from 'node:path';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { handleCommand } from './engine/CommandRouter.js';
 
@@ -12,9 +13,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new SocketIOServer(httpServer);
 
-// Serve static client files from ../../client
-const clientDir = path.resolve(__dirname, '..', '..', 'client');
-app.use(express.static(clientDir));
+// In production (after `npm run build`), serve the Vite-built React app.
+// In dev, Vite's own dev server proxies /socket.io to us.
+const distDir = path.resolve(__dirname, '..', '..', 'dist');
+if (fs.existsSync(distDir)) {
+  app.use(express.static(distDir));
+  console.log(`[server] Serving production build from ${distDir}`);
+} else {
+  console.log('[server] No dist/ found — running in dev mode (Vite proxies requests)');
+}
 
 // Health check for ALB
 app.get('/health', (_req, res) => {
