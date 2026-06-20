@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { Theme } from '../themes';
 
-export function Terminal() {
+interface TerminalProps {
+  theme: Theme;
+}
+
+export function Terminal({ theme }: TerminalProps) {
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState('');
   const [connected, setConnected] = useState(false);
@@ -18,12 +23,13 @@ export function Terminal() {
       setConnected(true);
       appendLines([
         '',
-        '  ╔════════════════════════════╗',
-        '  ║    ★ 炎黄群侠传 ★        ║',
-        '  ║    Web MUD Phase 1        ║',
-        '  ╠════════════════════════════╣',
-        '  ║  输入 help 查看可用命令    ║',
-        '  ╚════════════════════════════╝',
+        `  ╔════════════════════════════╗`,
+        `  ║    ★ 炎黄群侠传 ★        ║`,
+        `  ║    Web MUD Phase 1        ║`,
+        `  ╠════════════════════════════╣`,
+        `  ║  输入 help 查看可用命令    ║`,
+        `  ║  #tokyo | #catppuccin | #amber  ║`,
+        `  ╚════════════════════════════╝`,
         '',
       ]);
     });
@@ -77,36 +83,34 @@ export function Terminal() {
     inputRef.current?.focus();
   }, []);
 
+  const s = styles(theme);
+  const dotColor = connected ? theme.success : theme.error;
+
   return (
-    <div style={styles.container} onClick={handleContainerClick}>
+    <div style={s.container} onClick={handleContainerClick}>
       {/* Header */}
-      <div style={styles.header}>
-        <h1 style={styles.title}>炎黄群侠传</h1>
-        <span style={styles.status}>
-          <span
-            style={{
-              ...styles.dot,
-              background: connected ? '#0f0' : '#f33',
-              boxShadow: `0 0 6px ${connected ? '#0f0' : '#f33'}`,
-            }}
-          />
-          <span style={styles.statusLabel}>
-            {connected ? '在线' : '断开'}
+      <div style={s.header}>
+        <h1 style={s.title}>炎黄群侠传</h1>
+        <div style={s.headerRight}>
+          <span style={s.themeBadge}>{theme.name}</span>
+          <span style={s.status}>
+            <span style={{ ...s.dot, background: dotColor, boxShadow: `0 0 6px ${dotColor}` }} />
+            <span style={s.statusLabel}>{connected ? '在线' : '断开'}</span>
           </span>
-        </span>
+        </div>
       </div>
 
       {/* Output */}
-      <div ref={outputRef} style={styles.output}>
+      <div ref={outputRef} style={s.output}>
         {lines.join('\n')}
       </div>
 
       {/* Input bar */}
-      <div style={styles.inputBar}>
-        <span style={styles.prompt}>&gt;</span>
+      <div style={s.inputBar}>
+        <span style={s.prompt}>&gt;</span>
         <input
           ref={inputRef}
-          style={styles.input}
+          style={s.input}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -115,7 +119,7 @@ export function Terminal() {
           autoFocus
           autoComplete="off"
         />
-        <button style={styles.sendBtn} onClick={sendCommand}>
+        <button style={s.sendBtn} onClick={sendCommand}>
           发送
         </button>
       </div>
@@ -123,91 +127,108 @@ export function Terminal() {
   );
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    background: '#0a0a0a',
-    color: '#33ff33',
-    fontFamily: "'Consolas', 'Monaco', 'Courier New', 'Fira Code', monospace",
-    fontSize: 14,
-    lineHeight: 1.55,
-    overflow: 'hidden',
-  },
-  header: {
-    background: 'linear-gradient(135deg, #111 0%, #1a1a1a 100%)',
-    padding: '10px 16px',
-    borderBottom: '1px solid #0f0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexShrink: 0,
-  },
-  title: {
-    color: '#0f0',
-    fontSize: 15,
-    letterSpacing: 2,
-    textShadow: '0 0 8px rgba(0,255,0,0.4)',
-    margin: 0,
-  },
-  status: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    fontSize: 11,
-    color: '#888',
-  },
-  dot: {
-    display: 'inline-block',
-    width: 8,
-    height: 8,
-    borderRadius: '50%',
-  },
-  statusLabel: {
-    color: '#888',
-  },
-  output: {
-    flex: 1,
-    overflowY: 'auto',
-    padding: '12px 16px',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-all',
-    scrollBehavior: 'smooth',
-  },
-  inputBar: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-    padding: '8px 16px',
-    background: '#111',
-    borderTop: '1px solid #333',
-    flexShrink: 0,
-  },
-  prompt: {
-    color: '#0f0',
-    fontWeight: 'bold',
-    fontSize: 14,
-    flexShrink: 0,
-  },
-  input: {
-    flex: 1,
-    background: 'transparent',
-    border: 'none',
-    color: '#33ff33',
-    fontFamily: 'inherit',
-    fontSize: 14,
-    outline: 'none',
-    caretColor: '#0f0',
-  },
-  sendBtn: {
-    background: '#1a1a1a',
-    color: '#0f0',
-    border: '1px solid #0f0',
-    padding: '4px 14px',
-    fontFamily: 'inherit',
-    fontSize: 13,
-    cursor: 'pointer',
-    flexShrink: 0,
-  },
-};
+function styles(t: Theme) {
+  return {
+    container: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      height: '100vh',
+      background: t.bg,
+      color: t.fg,
+      fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace",
+      fontSize: 14,
+      lineHeight: 1.6,
+      overflow: 'hidden',
+    },
+    header: {
+      background: t.bgDark,
+      padding: '10px 16px',
+      borderBottom: `1px solid ${t.border}`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexShrink: 0,
+    },
+    title: {
+      color: t.accent,
+      fontSize: 15,
+      letterSpacing: 3,
+      textShadow: t.glow,
+      margin: 0,
+      fontWeight: 600 as const,
+    },
+    headerRight: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 14,
+    },
+    themeBadge: {
+      color: t.fgDim,
+      fontSize: 10,
+      letterSpacing: 1,
+      textTransform: 'uppercase' as const,
+      opacity: 0.7,
+    },
+    status: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 5,
+      fontSize: 11,
+    },
+    dot: {
+      display: 'inline-block',
+      width: 7,
+      height: 7,
+      borderRadius: '50%',
+      transition: 'background 0.3s',
+    },
+    statusLabel: {
+      color: t.fgDim,
+    },
+    output: {
+      flex: 1,
+      overflowY: 'auto' as const,
+      padding: '14px 18px',
+      whiteSpace: 'pre-wrap' as const,
+      wordBreak: 'break-all' as const,
+      scrollBehavior: 'smooth' as const,
+    },
+    inputBar: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      padding: '10px 16px',
+      background: t.bgDark,
+      borderTop: `1px solid ${t.border}`,
+      flexShrink: 0,
+    },
+    prompt: {
+      color: t.prompt,
+      fontWeight: 'bold' as const,
+      fontSize: 15,
+      flexShrink: 0,
+    },
+    input: {
+      flex: 1,
+      background: 'transparent',
+      border: 'none',
+      color: t.fg,
+      fontFamily: 'inherit',
+      fontSize: 14,
+      outline: 'none',
+      caretColor: t.accent,
+    },
+    sendBtn: {
+      background: t.bg,
+      color: t.accent,
+      border: `1px solid ${t.border}`,
+      padding: '4px 16px',
+      borderRadius: 3,
+      fontFamily: 'inherit',
+      fontSize: 13,
+      cursor: 'pointer',
+      flexShrink: 0,
+      transition: 'all 0.15s',
+    },
+  };
+}
