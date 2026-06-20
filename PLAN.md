@@ -1,5 +1,7 @@
 # 武侠MUD Web版 — 可行性方案 (v2)
 
+> **实现状态：** Phase 1 ✅ — Express + Socket.io 后端起，Vite + React 复古终端前端上线，35 tests 全绿。琥珀主题（古卷）已应用。Phase 2（角色/地图/战斗系统）待开始。
+
 ---
 
 ## 一、方案概览

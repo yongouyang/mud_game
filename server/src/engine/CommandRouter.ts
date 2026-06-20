@@ -6,8 +6,7 @@ export function handleCommand(input: string, _playerId: string): string {
   const trimmed = input.trim();
   if (!trimmed) return '';
 
-  const [cmd, ...args] = trimmed.split(/\s+/);
-  const arg = args.join(' ');
+  const [cmd] = trimmed.split(/\s+/);
 
   switch (cmd?.toLowerCase()) {
     case 'look':
