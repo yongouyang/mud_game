@@ -40,36 +40,4 @@ describe('Terminal UI', () => {
     await user.type(input, 'look');
     expect(input).toHaveValue('look');
   });
-
-  describe('welcome banner', () => {
-    it('displays on initial load', () => {
-      render(<App />);
-      expect(screen.getByText('★ 炎 黄 群 侠 传 ★')).toBeInTheDocument();
-      expect(screen.getByText('输入 help 查看可用命令')).toBeInTheDocument();
-    });
-
-    it('disappears after a command is sent', async () => {
-      const user = userEvent.setup();
-      render(<App />);
-      expect(screen.getByText('★ 炎 黄 群 侠 传 ★')).toBeInTheDocument();
-
-      const input = screen.getByPlaceholderText('输入命令...');
-      await user.type(input, 'look');
-      await user.click(screen.getByRole('button', { name: '发送' }));
-
-      expect(screen.queryByText('★ 炎 黄 群 侠 传 ★')).not.toBeInTheDocument();
-    });
-
-    it('disappears when pressing Enter', async () => {
-      const user = userEvent.setup();
-      render(<App />);
-      expect(screen.getByText('★ 炎 黄 群 侠 传 ★')).toBeInTheDocument();
-
-      const input = screen.getByPlaceholderText('输入命令...');
-      await user.type(input, 'look');
-      await user.keyboard('{Enter}');
-
-      expect(screen.queryByText('★ 炎 黄 群 侠 传 ★')).not.toBeInTheDocument();
-    });
-  });
 });

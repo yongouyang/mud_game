@@ -3,12 +3,16 @@ import express from 'express';
 import { createServer, Server as HttpServer } from 'node:http';
 import { Server as SocketIOServer } from 'socket.io';
 import { io as ioc, Socket as ClientSocket } from 'socket.io-client';
-import { handleCommand } from './engine/CommandRouter.js';
+import { CommandRouter } from './engine/CommandRouter.js';
+import { PlayerManager } from './systems/PlayerManager.js';
+import { MapSystem } from './systems/MapSystem.js';
+import { CombatSystem } from './systems/CombatSystem.js';
 import { AddressInfo } from 'node:net';
 
 let httpServer: HttpServer;
 let port: number;
 let clientSocket: ClientSocket;
+let players: PlayerManager;
 
 beforeAll(async () => {
   const app = express();
@@ -17,14 +21,18 @@ beforeAll(async () => {
   httpServer = createServer(app);
   const io = new SocketIOServer(httpServer);
 
+  players = new PlayerManager();
+  const map = new MapSystem();
+  const combat = new CombatSystem();
+  const router = new CommandRouter(players, map, combat);
+
   io.on('connection', (socket) => {
+    players.createPlayer(socket.id);
+    socket.emit('output', { text: router.handle('', socket.id) });
+
     socket.on('command', (data: { input: string }) => {
       const raw = (data.input || '').trim();
-      if (!raw) {
-        socket.emit('output', { text: '' });
-        return;
-      }
-      const response = handleCommand(raw, socket.id);
+      const response = router.handle(raw, socket.id);
       socket.emit('output', { text: response });
     });
   });
@@ -43,7 +51,7 @@ afterAll(() => {
   httpServer?.close();
 });
 
-describe('E2E: WebSocket command flow', () => {
+describe('E2E: WebSocket command flow (Phase 2)', () => {
   beforeAll(async () => {
     clientSocket = ioc(`http://localhost:${port}`);
 
@@ -71,46 +79,33 @@ describe('E2E: WebSocket command flow', () => {
     });
   }
 
-  it('connects successfully', () => {
+  it('connects and receives character creation prompt', async () => {
     expect(clientSocket.connected).toBe(true);
-  });
-
-  it('receives room description on look', async () => {
-    const text = await sendCmd('look');
-    expect(text).toContain('炎黄群侠传');
-    expect(text).toContain('练武场');
-  });
-
-  it('receives status on hp', async () => {
-    const text = await sendCmd('hp');
-    expect(text).toContain('气血');
-    expect(text).toContain('内力');
-  });
-
-  it('returns clear token for clear', async () => {
-    const text = await sendCmd('clear');
-    expect(text).toBe('__CLEAR__');
-  });
-
-  it('handles unknown command', async () => {
-    const text = await sendCmd('flap');
-    expect(text).toContain('什么');
-  });
-
-  it('handles multiple sequential commands', async () => {
-    const r1 = await sendCmd('who');
-    expect(r1).toContain('游客');
-
-    const r2 = await sendCmd('help');
-    expect(r2).toContain('look');
-
-    const r3 = await sendCmd('look');
-    expect(r3).toContain('练武场');
-  });
-
-  it('handles empty input', async () => {
+    // First message is the creation prompt
     const text = await sendCmd('');
-    expect(text).toBe('');
+    expect(text).toContain('欢迎来到炎黄群侠传');
+  });
+
+  it('creates a character and enters the world', async () => {
+    await sendCmd('楚留香');
+    const text = await sendCmd('done');
+    expect(text).toContain('角色创建成功');
+    expect(text).toContain('无名小镇');
+  });
+
+  it('can move around', async () => {
+    const text = await sendCmd('n');
+    expect(text).toContain('主街');
+  });
+
+  it('can look at the new room', async () => {
+    const text = await sendCmd('look');
+    expect(text).toContain('主街');
+  });
+
+  it('can go back south', async () => {
+    const text = await sendCmd('s');
+    expect(text).toContain('广场');
   });
 
   it('health endpoint returns ok', async () => {

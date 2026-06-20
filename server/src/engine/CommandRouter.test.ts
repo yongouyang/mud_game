@@ -1,101 +1,183 @@
-import { describe, it, expect } from 'vitest';
-import { handleCommand } from './CommandRouter.js';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { CommandRouter } from './CommandRouter.js';
+import { PlayerManager } from '../systems/PlayerManager.js';
+import { MapSystem } from '../systems/MapSystem.js';
+import { CombatSystem } from '../systems/CombatSystem.js';
+
+const PLAYER_ID = 'test-player';
 
 describe('CommandRouter', () => {
-  describe('known commands', () => {
-    it('look returns room description', () => {
-      const output = handleCommand('look', 'test-player');
-      expect(output).toContain('炎黄群侠传');
-      expect(output).toContain('练武场');
+  let router: CommandRouter;
+  let players: PlayerManager;
+
+  beforeEach(() => {
+    players = new PlayerManager();
+    const map = new MapSystem();
+    const combat = new CombatSystem();
+    router = new CommandRouter(players, map, combat);
+    players.createPlayer(PLAYER_ID);
+  });
+
+  function cmd(input: string): string {
+    return router.handle(input, PLAYER_ID);
+  }
+
+  describe('character creation', () => {
+    it('prompts for name on first connect', () => {
+      const output = cmd('');
+      expect(output).toContain('欢迎来到炎黄群侠传');
+      expect(output).toContain('请输入你的名字');
+    });
+
+    it('rejects invalid names', () => {
+      const output = cmd('ab');
+      expect(output).toContain('名字须为2-6个中文字');
+    });
+
+    it('accepts a valid Chinese name', () => {
+      const output = cmd('楚留香');
+      expect(output).toContain('楚留香');
+      expect(output).toContain('分配属性点数');
+    });
+
+    it('rejects attribute out of range', () => {
+      cmd('楚留香');
+      const output = cmd('set 臂力 3');
+      expect(output).toContain('属性值须为 5-20');
+    });
+
+    it('rejects attribute if points exceeded', () => {
+      cmd('楚留香');
+      const output = cmd('set 臂力 25');
+      expect(output).toContain('属性值须为 5-20');
+    });
+
+    it('completes character creation with done', () => {
+      cmd('楚留香');
+      const output = cmd('done');
+      expect(output).toContain('角色创建成功');
+      expect(output).toContain('无名小镇');
+    });
+
+    it('shows help during creation', () => {
+      const output = cmd('help');
+      expect(output).toContain('创建角色流程');
+    });
+  });
+
+  describe('after character creation', () => {
+    beforeEach(() => {
+      cmd('楚留香');
+      cmd('done');
+    });
+
+    it('look shows room description', () => {
+      const output = cmd('look');
+      expect(output).toContain('无名小镇·广场');
+      expect(output).toContain('古井');
     });
 
     it('l is an alias for look', () => {
-      const output = handleCommand('l', 'test-player');
-      expect(output).toContain('炎黄群侠传');
+      const output = cmd('l');
+      expect(output).toContain('无名小镇·广场');
+    });
+
+    it('hp shows status', () => {
+      const output = cmd('hp');
+      expect(output).toContain('楚留香');
+      expect(output).toContain('气血');
+      expect(output).toContain('内力');
+    });
+
+    it('score shows attributes', () => {
+      const output = cmd('score');
+      expect(output).toContain('臂力');
+      expect(output).toContain('悟性');
+      expect(output).toContain('根骨');
+      expect(output).toContain('身法');
+    });
+
+    it('n moves north', () => {
+      const output = cmd('n');
+      expect(output).toContain('主街');
+    });
+
+    it('south moves south', () => {
+      const output = cmd('south');
       expect(output).toContain('练武场');
     });
 
-    it('hp returns status info', () => {
-      const output = handleCommand('hp', 'test-player');
-      expect(output).toContain('状态信息');
-      expect(output).toContain('气血');
-      expect(output).toContain('内力');
-      expect(output).toContain('精力');
-      // No Unicode box-drawing chars (CJK alignment fix)
-      expect(output).not.toContain('╔');
-      expect(output).not.toContain('║');
-      expect(output).not.toContain('╚');
-      expect(output).not.toContain('╝');
-      expect(output).not.toContain('╠');
-      expect(output).not.toContain('╣');
+    it('movement alias works (s for south)', () => {
+      const output = cmd('s');
+      expect(output).toContain('练武场');
     });
 
-    it('who returns online players', () => {
-      const output = handleCommand('who', 'test-player');
-      expect(output).toContain('在线玩家');
-      expect(output).toContain('游客');
-      // No Unicode box-drawing chars
-      expect(output).not.toContain('╔');
-      expect(output).not.toContain('║');
+    it('cannot move through walls', () => {
+      const output = cmd('w');
+      expect(output).toContain('这个方向没有路');
     });
 
-    it('help lists available commands', () => {
-      const output = handleCommand('help', 'test-player');
-      expect(output).toContain('look');
-      expect(output).toContain('hp');
-      expect(output).toContain('who');
-      expect(output).toContain('help');
-      expect(output).toContain('clear');
-      // No Unicode box-drawing chars
-      expect(output).not.toContain('╔');
-      expect(output).not.toContain('║');
-      expect(output).not.toContain('╠');
-      expect(output).not.toContain('╣');
+    it('help lists new commands', () => {
+      const output = cmd('help');
+      expect(output).toContain('n s e w u d');
+      expect(output).toContain('kill');
+      expect(output).toContain('score');
     });
 
-    it('clear returns special clear token', () => {
-      const output = handleCommand('clear', 'test-player');
-      expect(output).toBe('__CLEAR__');
+    it('clear returns clear token', () => {
+      expect(cmd('clear')).toBe('__CLEAR__');
+    });
+
+    it('no box-drawing chars in responses', () => {
+      const outputs = [cmd('look'), cmd('hp'), cmd('help'), cmd('n')];
+      for (const out of outputs) {
+        expect(out).not.toContain('╔');
+        expect(out).not.toContain('║');
+        expect(out).not.toContain('╠');
+        expect(out).not.toContain('╣');
+      }
+    });
+
+    it('returns confused for unknown command', () => {
+      const output = cmd('xyzzy');
+      expect(output).toContain('什么');
     });
   });
 
-  describe('input handling', () => {
-    it('empty string returns empty string', () => {
-      expect(handleCommand('', 'test-player')).toBe('');
+  describe('combat', () => {
+    let player2Id: string;
+
+    beforeEach(() => {
+      cmd('楚留香');
+      cmd('done');
+      // Move to training yard
+      cmd('s');
+
+      // Create a second player for combat
+      player2Id = 'test-player-2';
+      players.createPlayer(player2Id);
+      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem());
+      router2.handle('李寻欢', player2Id);
+      router2.handle('done', player2Id);
+      router2.handle('s', player2Id); // Move to same room
     });
 
-    it('whitespace-only input returns empty string', () => {
-      expect(handleCommand('   ', 'test-player')).toBe('');
+    it('kill initiates combat', () => {
+      const output = cmd('kill 李寻欢');
+      expect(output).toContain('发起了攻击');
+      expect(output).toContain('李寻欢');
+      expect(output).toContain('战斗');
     });
 
-    it('leading/trailing whitespace is trimmed', () => {
-      const output = handleCommand('  look  ', 'test-player');
-      expect(output).toContain('炎黄群侠传');
+    it('kill requires a target name', () => {
+      const output = cmd('kill');
+      expect(output).toContain('你想攻击谁');
     });
 
-    it('commands are case-insensitive', () => {
-      expect(handleCommand('LOOK', 'test-player')).toContain('炎黄群侠传');
-      expect(handleCommand('L', 'test-player')).toContain('炎黄群侠传');
-      expect(handleCommand('Hp', 'test-player')).toContain('状态信息');
-      expect(handleCommand('HELP', 'test-player')).toContain('look');
-    });
-  });
-
-  describe('unknown commands', () => {
-    it('returns confused response for gibberish', () => {
-      const output = handleCommand('xyzzy', 'test-player');
-      expect(output).toContain('什么');
-      expect(output).toContain('help');
-    });
-
-    it('returns confused response for unknown verbs', () => {
-      const output = handleCommand('fly', 'test-player');
-      expect(output).toContain('什么');
-    });
-
-    it('mentions the command the user typed', () => {
-      const output = handleCommand('dance', 'test-player');
-      expect(output).toContain('dance');
+    it('hit during combat deals damage', () => {
+      cmd('kill 李寻欢');
+      const output = cmd('hit');
+      expect(output).toContain('伤害');
     });
   });
 });

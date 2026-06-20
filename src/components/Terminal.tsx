@@ -13,7 +13,6 @@ export function Terminal({ theme }: TerminalProps) {
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState('');
   const [connected, setConnected] = useState(false);
-  const [showBanner, setShowBanner] = useState(true);
 
   const socketRef = useRef<Socket | null>(null);
   const outputRef = useRef<HTMLDivElement>(null);
@@ -25,7 +24,6 @@ export function Terminal({ theme }: TerminalProps) {
 
     socket.on('connect', () => {
       setConnected(true);
-      setShowBanner(true);
     });
 
     socket.on('disconnect', () => {
@@ -59,7 +57,6 @@ export function Terminal({ theme }: TerminalProps) {
     const trimmed = input.trim();
     if (!trimmed || !socketRef.current) return;
 
-    setShowBanner(false);
     setLines((prev) => [...prev, `  > ${trimmed}`]);
     socketRef.current.emit('command', { input: trimmed });
     setInput('');
@@ -103,12 +100,6 @@ export function Terminal({ theme }: TerminalProps) {
 
       {/* Output */}
       <div ref={outputRef} style={st.output}>
-        {showBanner && (
-          <div style={st.banner}>
-            <div style={st.bannerTitle}>★ 炎 黄 群 侠 传 ★</div>
-            <div style={st.bannerHint}>输入 help 查看可用命令</div>
-          </div>
-        )}
         {lines.join('\n')}
       </div>
 
@@ -228,25 +219,6 @@ function styles(t: Theme) {
       wordBreak: 'break-all' as const,
       scrollBehavior: 'smooth' as const,
       boxShadow: `inset 0 8px 12px -12px ${t.bgDark}`,
-    },
-    banner: {
-      marginBottom: 24,
-      padding: '18px 0',
-      borderTop: `1px solid ${t.accentAlt}55`,
-      borderBottom: `1px solid ${t.accentAlt}55`,
-      textAlign: 'center' as const,
-    },
-    bannerTitle: {
-      color: t.accent,
-      fontSize: 16,
-      fontWeight: 600 as const,
-      letterSpacing: 6,
-      textShadow: t.glow,
-      marginBottom: 10,
-    },
-    bannerHint: {
-      color: t.fgDim,
-      fontSize: 13,
     },
     inputBar: {
       position: 'relative' as const,
