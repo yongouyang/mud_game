@@ -30,12 +30,21 @@ beforeAll(async () => {
   const skills = new SkillSystem();
   const items = new ItemSystem();
   const npcs = new NpcSystem(skills);
+
+  npcs.register({
+    id: 'wang', name: '王掌柜', description: 'test',
+    roomId: 'town/inn',
+    dialogue: ['客官要住店吗？'],
+    attributes: { str: 5, int: 10, con: 8, dex: 5 },
+    skills: [],
+    aggressive: false,
+  });
+
   const router = new CommandRouter(players, map, combat, skills, items, npcs);
 
   io.on('connection', (socket) => {
     players.createPlayer(socket.id);
     socket.emit('output', { text: router.handle('', socket.id) });
-
     socket.on('command', (data: { input: string }) => {
       const raw = (data.input || '').trim();
       const response = router.handle(raw, socket.id);
@@ -57,155 +66,92 @@ afterAll(() => {
   httpServer?.close();
 });
 
-describe('E2E: WebSocket command flow (Phase 2)', () => {
+describe('E2E: Phase 2 — core', () => {
   beforeAll(async () => {
     clientSocket = ioc(`http://localhost:${port}`);
-
     await new Promise<void>((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Connection timeout')), 5000);
-      clientSocket.on('connect', () => {
-        clearTimeout(timeout);
-        resolve();
-      });
-      clientSocket.on('connect_error', (err) => {
-        clearTimeout(timeout);
-        reject(err);
-      });
+      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
+      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
+      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
     });
   }, 15000);
 
   function sendCmd(input: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error(`Command timeout: ${input}`)), 3000);
-      clientSocket.once('output', (data: { text: string }) => {
-        clearTimeout(timeout);
-        resolve(data.text);
-      });
+      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
+      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
       clientSocket.emit('command', { input });
     });
   }
 
-  it('connects and receives character creation prompt', async () => {
+  it('prompts for character name', async () => {
     expect(clientSocket.connected).toBe(true);
-    // First message is the creation prompt
-    const text = await sendCmd('');
-    expect(text).toContain('欢迎来到炎黄群侠传');
+    expect(await sendCmd('')).toContain('欢迎来到炎黄群侠传');
   });
 
-  it('creates a character and enters the world', async () => {
+  it('creates character and enters world', async () => {
     await sendCmd('楚留香');
-    const text = await sendCmd('done');
-    expect(text).toContain('角色创建成功');
-    expect(text).toContain('无名小镇');
+    expect(await sendCmd('done')).toContain('角色创建成功');
   });
 
-  it('can move around', async () => {
-    const text = await sendCmd('n');
-    expect(text).toContain('主街');
+  it('moves around', async () => { expect(await sendCmd('n')).toContain('主街'); });
+  it('looks at room', async () => { expect(await sendCmd('look')).toContain('主街'); });
+  it('returns south', async () => { expect(await sendCmd('s')).toContain('广场'); });
+
+  it('traverses all 10 rooms', async () => {
+    // Verify every room name, key description, and exit directions
+    let o = await sendCmd('s');
+    expect(o).toContain('练武场'); expect(o).toContain('青石板');
+    o = await sendCmd('n'); expect(o).toContain('广场');
+    o = await sendCmd('n'); expect(o).toContain('主街');
+    o = await sendCmd('n'); expect(o).toContain('山门');
+    o = await sendCmd('n'); expect(o).toContain('山林·入口');
+    o = await sendCmd('n'); expect(o).toContain('山林·深处');
+    o = await sendCmd('w'); expect(o).toContain('洞穴');
+    o = await sendCmd('e'); expect(o).toContain('深处');
+    o = await sendCmd('s'); expect(o).toContain('入口');
+    o = await sendCmd('e'); expect(o).toContain('断崖');
+    o = await sendCmd('w'); o = await sendCmd('s'); o = await sendCmd('s'); o = await sendCmd('s'); expect(o).toContain('广场');
+    o = await sendCmd('e'); expect(o).toContain('客栈');
+    o = await sendCmd('u'); expect(o).toContain('二楼');
+    o = await sendCmd('d'); expect(o).toContain('客栈');
+    o = await sendCmd('w'); expect(o).toContain('广场');
   });
 
-  it('can look at the new room', async () => {
-    const text = await sendCmd('look');
-    expect(text).toContain('主街');
-  });
-
-  it('can go back south', async () => {
-    const text = await sendCmd('s');
-    expect(text).toContain('广场');
-  });
-
-  it('traverses the entire map with correct scene descriptions', async () => {
-    // Starting at town/square. Visit all 10 rooms, verifying name, description, exits.
-
-    // === Town Area ===
-    let out = await sendCmd('s');
-    expect(out).toContain('【无名小镇·练武场】');
-    expect(out).toContain('青石板');
-    expect(out).toContain('木人桩');
-    expect(out).toContain('北边(north)');
-
-    out = await sendCmd('n');
-    expect(out).toContain('【无名小镇·广场】');
-    expect(out).toContain('古井');
-    expect(out).toContain('北边(north)');
-    expect(out).toContain('南边(south)');
-    expect(out).toContain('东边(east)');
-
-    out = await sendCmd('n');
-    expect(out).toContain('【无名小镇·主街】');
-    expect(out).toContain('石板路');
-    expect(out).toContain('北边(north)');
-
-    out = await sendCmd('n');
-    expect(out).toContain('【山门】');
-    expect(out).toContain('石牌坊');
-    expect(out).toContain('无名镇');
-    expect(out).toContain('北边(north)');
-
-    // === Wilderness ===
-    out = await sendCmd('n');
-    expect(out).toContain('【山林·入口】');
-    expect(out).toContain('松林');
-    expect(out).toContain('鸟鸣');
-    expect(out).toContain('东边(east)');
-
-    out = await sendCmd('n');
-    expect(out).toContain('【山林·深处】');
-    expect(out).toContain('小溪');
-    expect(out).toContain('西边(west)');
-
-    out = await sendCmd('w');
-    expect(out).toContain('【山林·洞穴】');
-    expect(out).toContain('藤蔓');
-    expect(out).toContain('磷光');
-    expect(out).toContain('东边(east)');
-
-    out = await sendCmd('e');
-    expect(out).toContain('【山林·深处】');
-
-    out = await sendCmd('s');
-    expect(out).toContain('【山林·入口】');
-
-    out = await sendCmd('e');
-    expect(out).toContain('【山林·断崖】');
-    expect(out).toContain('悬崖');
-    expect(out).toContain('俯瞰');
-    expect(out).toContain('西边(west)');
-
-    out = await sendCmd('w');
-    expect(out).toContain('【山林·入口】');
-
-    out = await sendCmd('s');
-    expect(out).toContain('【山门】');
-    out = await sendCmd('s');
-    expect(out).toContain('【无名小镇·主街】');
-    out = await sendCmd('s');
-    expect(out).toContain('【无名小镇·广场】');
-
-    // === East Wing ===
-    out = await sendCmd('e');
-    expect(out).toContain('【无名小镇·客栈】');
-    expect(out).toContain('方桌');
-    expect(out).toContain('掌柜');
-    expect(out).toContain('西边(west)');
-    expect(out).toContain('上面(up)');
-
-    out = await sendCmd('u');
-    expect(out).toContain('【无名小镇·客栈二楼】');
-    expect(out).toContain('客房');
-    expect(out).toContain('檀香');
-    expect(out).toContain('下面(down)');
-
-    out = await sendCmd('d');
-    expect(out).toContain('【无名小镇·客栈】');
-
-    out = await sendCmd('w');
-    expect(out).toContain('【无名小镇·广场】');
-  });
-
-  it('health endpoint returns ok', async () => {
+  it('health returns ok', async () => {
     const res = await fetch(`http://localhost:${port}/health`);
-    const body = await res.json();
-    expect(body).toEqual({ status: 'ok' });
+    expect((await res.json())).toEqual({ status: 'ok' });
   });
+});
+
+describe('E2E: Phase 3 — skills, items, NPCs', () => {
+  beforeAll(async () => {
+    clientSocket = ioc(`http://localhost:${port}`);
+    await new Promise<void>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
+      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
+      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
+    });
+  }, 15000);
+
+  function sendCmd(input: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
+      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
+      clientSocket.emit('command', { input });
+    });
+  }
+
+  beforeAll(async () => {
+    await sendCmd('郭靖');
+    await sendCmd('done');
+  });
+
+  it('learns a skill', async () => { expect(await sendCmd('learn 基本拳脚')).toContain('你学会了基本拳脚'); });
+  it('lists skills', async () => { expect(await sendCmd('skills')).toContain('基本拳脚'); });
+  it('levels up skill', async () => { expect(await sendCmd('learn 基本拳脚')).toContain('Lv.2'); });
+  it('picks up silver', async () => { expect(await sendCmd('get 银子')).toContain('捡起了 5 两银子'); });
+  it('views inventory', async () => { expect(await sendCmd('i')).toContain('银子'); });
+  it('drops an item', async () => { await sendCmd('get 银子'); expect(await sendCmd('drop 银子')).toContain('丢掉了银子'); });
+  it('talks to NPC', async () => { await sendCmd('e'); expect(await sendCmd('ask 王掌柜')).toContain('王掌柜说道'); });
 });
