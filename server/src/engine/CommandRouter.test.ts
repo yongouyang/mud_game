@@ -65,6 +65,18 @@ describe('CommandRouter', () => {
       expect(output).toContain('臂力(str): 14');
     });
 
+    it('accepts all four English keys (str/int/con/dex)', () => {
+      cmd('楚留香');
+      let out = cmd('set str 12');
+      expect(out).toContain('臂力(str): 12');
+      out = cmd('set int 13');
+      expect(out).toContain('悟性(int): 13');
+      out = cmd('set dex 14');
+      expect(out).toContain('身法(dex): 14');
+      out = cmd('set con 11');
+      expect(out).toContain('根骨(con): 11');
+    });
+
     it('shows remaining points correctly', () => {
       cmd('楚留香');
       // Default: 10 each = 40 total, remaining = 10
