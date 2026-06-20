@@ -55,7 +55,7 @@ export default defineConfig({
   ],
   webServer: {
     command: process.env.E2E_PROD
-      ? `npx serve dist -l ${port}`
+      ? `cd server && PORT=${port} npm start`
       : `npm run dev:all -- --port ${port}`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,

@@ -1,7 +1,7 @@
 const net = require('net');
 
-const PREFERRED = 3000;
-const FALLBACK_START = 3001;
+const PREFERRED = 5173;
+const FALLBACK_START = 5174;
 const MAX_ATTEMPTS = 100;
 
 function isPortInUse(port) {
