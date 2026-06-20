@@ -1,4 +1,5 @@
 import { Player, createPlayer, PlayerAttributes, ATTRIBUTE_NAMES, DEFAULT_ATTRIBUTES } from '../models/Player.js';
+import { bar } from '../utils.js';
 
 const CHAR_NAME_RE = /^[\u4e00-\u9fff]{2,6}$/;
 
@@ -38,6 +39,10 @@ export class PlayerManager {
     return result;
   }
 
+  getAllPlayers(): Player[] {
+    return [...this.players.values()].filter((p) => p.state !== 'creating');
+  }
+
   setPlayerName(id: string, name: string): string | null {
     const player = this.players.get(id);
     if (!player) return '系统错误。';
@@ -67,13 +72,13 @@ export class PlayerManager {
     const mpBar = bar(player.mp, player.maxMp, 20);
     return [
       '',
-      `  ═══ ${player.name} ═══`,
+      `  ─── ${player.name} ───`,
       '',
       `  气血  ${hpBar}  ${player.hp}/${player.maxHp}`,
       `  内力  ${mpBar}  ${player.mp}/${player.maxMp}`,
       '',
-      `  臂力: ${a.str}    悟性: ${a.int}`,
-      `  根骨: ${a.con}    身法: ${a.dex}`,
+      `  臂力(str): ${a.str}    悟性(int): ${a.int}`,
+      `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
       '',
     ].join('\n') + '\n';
   }
@@ -97,10 +102,4 @@ export class PlayerManager {
       '',
     ].join('\n') + '\n';
   }
-}
-
-function bar(current: number, max: number, width: number): string {
-  const filled = Math.max(0, Math.round((current / max) * width));
-  const empty = width - filled;
-  return '█'.repeat(filled) + '░'.repeat(empty);
 }

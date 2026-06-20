@@ -41,7 +41,11 @@ export class MapSystem {
   }
 
   resolveDirection(input: string): string | null {
-    return DIRECTION_ALIASES[input.toLowerCase()] || input.toLowerCase();
+    const lower = input.toLowerCase();
+    if (DIRECTION_ALIASES[lower]) return DIRECTION_ALIASES[lower];
+    const values = Object.values(DIRECTION_ALIASES) as string[];
+    if (values.includes(lower) || DIRECTION_NAMES[lower]) return lower;
+    return null;
   }
 
   getExit(roomId: string, direction: string): Exit | undefined {

@@ -1,4 +1,5 @@
 import { Player } from '../models/Player.js';
+import { bar } from '../utils.js';
 
 export interface CombatResult {
   message: string;
@@ -34,17 +35,11 @@ export class CombatSystem {
   formatCombatStatus(player: Player, enemy: Player): string {
     return [
       '',
-      `  ═══ 战斗 ═══`,
+      '  ─── 战斗 ───',
       '',
       `  你 (${player.name})    HP: ${bar(player.hp, player.maxHp, 15)}  ${player.hp}/${player.maxHp}`,
       `  敌人 (${enemy.name})   HP: ${bar(enemy.hp, enemy.maxHp, 15)}  ${enemy.hp}/${enemy.maxHp}`,
       '',
     ].join('\n') + '\n';
   }
-}
-
-function bar(current: number, max: number, width: number): string {
-  const filled = Math.max(0, Math.round((current / max) * width));
-  const empty = width - filled;
-  return '█'.repeat(filled) + '░'.repeat(empty);
 }

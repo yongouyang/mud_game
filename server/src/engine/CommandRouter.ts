@@ -33,7 +33,7 @@ export class CommandRouter {
     const [cmd, ...rest] = trimmed.split(/\s+/);
     const cmdLower = cmd?.toLowerCase() || '';
 
-    // Movement commands (available during combat too)
+    // Movement commands (direction words → try to move)
     const moveResult = this.map.movePlayer(player.currentRoom, cmdLower);
     if (moveResult.success && moveResult.newRoomId) {
       player.currentRoom = moveResult.newRoomId;
@@ -44,13 +44,9 @@ export class CommandRouter {
       }
       return msg;
     }
-    if (moveResult.message && !moveResult.message.includes('没有这个方向')) {
-      // It was a valid direction word but there's no exit — let it fall through to other commands
-    } else if (!moveResult.success && cmdLower.length <= 2) {
-      // Short input that looks like a direction shortcut — return error
-      if (['n', 's', 'e', 'w', 'u', 'd', 'ne', 'nw', 'se', 'sw', 'north', 'south', 'east', 'west', 'up', 'down', 'northeast', 'northwest', 'southeast', 'southwest'].includes(cmdLower)) {
-        return moveResult.message;
-      }
+    // If it was a recognized direction word but no exit, return the error
+    if (this.map.resolveDirection(cmdLower) && moveResult.message) {
+      return moveResult.message;
     }
 
     // Combat commands (during fighting, only allow hit/kill and status)
@@ -77,10 +73,6 @@ export class CommandRouter {
       case 'hit':
         return this.handleKill(player, rest[0] || '');
       default:
-        // If it looks like a movement attempt, forward the movement error
-        if (cmdLower.length <= 2) {
-          return moveResult.message;
-        }
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
     }
   }
@@ -151,10 +143,10 @@ export class CommandRouter {
   }
 
   private handleWho(_player: import('../models/Player.js').Player): string {
-    const online: string[] = [];
-    // We need to iterate all players. PlayerManager doesn't expose iteration yet.
-    // For now, simplified.
-    return '\n  当前在线玩家：\n  ───────────────\n  你\n';
+    const online = this.players.getAllPlayers();
+    if (online.length === 0) return '\n  当前没有在线玩家。\n';
+    const names = online.map((p) => `  ${p.name}`).join('\n');
+    return `\n  当前在线玩家（${online.length}人）：\n  ───────────────\n${names}\n`;
   }
 
   private handleHelp(): string {
