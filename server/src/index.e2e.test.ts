@@ -108,6 +108,95 @@ describe('E2E: WebSocket command flow (Phase 2)', () => {
     expect(text).toContain('广场');
   });
 
+  it('traverses the entire map with correct scene descriptions', async () => {
+    // Starting at town/square. Visit all 10 rooms, verifying name, description, exits.
+
+    // === Town Area ===
+    let out = await sendCmd('s');
+    expect(out).toContain('【无名小镇·练武场】');
+    expect(out).toContain('青石板');
+    expect(out).toContain('木人桩');
+    expect(out).toContain('北边(north)');
+
+    out = await sendCmd('n');
+    expect(out).toContain('【无名小镇·广场】');
+    expect(out).toContain('古井');
+    expect(out).toContain('北边(north)');
+    expect(out).toContain('南边(south)');
+    expect(out).toContain('东边(east)');
+
+    out = await sendCmd('n');
+    expect(out).toContain('【无名小镇·主街】');
+    expect(out).toContain('石板路');
+    expect(out).toContain('北边(north)');
+
+    out = await sendCmd('n');
+    expect(out).toContain('【山门】');
+    expect(out).toContain('石牌坊');
+    expect(out).toContain('无名镇');
+    expect(out).toContain('北边(north)');
+
+    // === Wilderness ===
+    out = await sendCmd('n');
+    expect(out).toContain('【山林·入口】');
+    expect(out).toContain('松林');
+    expect(out).toContain('鸟鸣');
+    expect(out).toContain('东边(east)');
+
+    out = await sendCmd('n');
+    expect(out).toContain('【山林·深处】');
+    expect(out).toContain('小溪');
+    expect(out).toContain('西边(west)');
+
+    out = await sendCmd('w');
+    expect(out).toContain('【山林·洞穴】');
+    expect(out).toContain('藤蔓');
+    expect(out).toContain('磷光');
+    expect(out).toContain('东边(east)');
+
+    out = await sendCmd('e');
+    expect(out).toContain('【山林·深处】');
+
+    out = await sendCmd('s');
+    expect(out).toContain('【山林·入口】');
+
+    out = await sendCmd('e');
+    expect(out).toContain('【山林·断崖】');
+    expect(out).toContain('悬崖');
+    expect(out).toContain('俯瞰');
+    expect(out).toContain('西边(west)');
+
+    out = await sendCmd('w');
+    expect(out).toContain('【山林·入口】');
+
+    out = await sendCmd('s');
+    expect(out).toContain('【山门】');
+    out = await sendCmd('s');
+    expect(out).toContain('【无名小镇·主街】');
+    out = await sendCmd('s');
+    expect(out).toContain('【无名小镇·广场】');
+
+    // === East Wing ===
+    out = await sendCmd('e');
+    expect(out).toContain('【无名小镇·客栈】');
+    expect(out).toContain('方桌');
+    expect(out).toContain('掌柜');
+    expect(out).toContain('西边(west)');
+    expect(out).toContain('上面(up)');
+
+    out = await sendCmd('u');
+    expect(out).toContain('【无名小镇·客栈二楼】');
+    expect(out).toContain('客房');
+    expect(out).toContain('檀香');
+    expect(out).toContain('下面(down)');
+
+    out = await sendCmd('d');
+    expect(out).toContain('【无名小镇·客栈】');
+
+    out = await sendCmd('w');
+    expect(out).toContain('【无名小镇·广场】');
+  });
+
   it('health endpoint returns ok', async () => {
     const res = await fetch(`http://localhost:${port}/health`);
     const body = await res.json();
