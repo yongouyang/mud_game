@@ -226,4 +226,110 @@ describe('CommandRouter', () => {
       expect(output).toContain('伤害');
     });
   });
+
+  describe('skills and items', () => {
+    beforeEach(() => {
+      cmd('楚留香');
+      cmd('done');
+    });
+
+    it('learn learns a new skill', () => {
+      const output = cmd('learn 基本拳脚');
+      expect(output).toContain('你学会了基本拳脚');
+      expect(output).toContain('Lv.1');
+    });
+
+    it('learn levels up existing skill', () => {
+      cmd('learn 基本拳脚');
+      const output = cmd('learn 基本拳脚');
+      expect(output).toContain('Lv.2');
+    });
+
+    it('learn rejects unknown skill', () => {
+      const output = cmd('learn 六脉神剑');
+      expect(output).toContain('没有"六脉神剑"这个武功');
+    });
+
+    it('skills lists learned skills', () => {
+      cmd('learn 基本拳脚');
+      const output = cmd('skills');
+      expect(output).toContain('基本拳脚');
+    });
+
+    it('skills shows empty message when none learned', () => {
+      const output = cmd('skills');
+      expect(output).toContain('尚未学习任何武功');
+    });
+
+    it('i shows inventory', () => {
+      const output = cmd('i');
+      expect(output).toContain('空空如也');
+    });
+
+    it('get picks up silver', () => {
+      const output = cmd('get 银子');
+      expect(output).toContain('捡起了 5 两银子');
+      const inv = cmd('i');
+      expect(inv).toContain('银子');
+    });
+
+    it('drop discards an item', () => {
+      cmd('get 银子');
+      const output = cmd('drop 银子');
+      expect(output).toContain('丢掉了银子');
+      expect(cmd('i')).toContain('银子 x4');
+    });
+
+    it('drop rejects item not in inventory', () => {
+      const output = cmd('drop 铁剑');
+      expect(output).toContain('你没有"铁剑"');
+    });
+
+    it('use consumes medicine and heals', () => {
+      // Give player a medicine via inventory directly
+      const p = players.getPlayer(PLAYER_ID)!;
+      const items = new ItemSystem();
+      items.addItem(p, 'jinchuang-yao', 1);
+      p.hp = 50; // damage player first
+
+      const output = cmd('use 金疮药');
+      expect(output).toContain('恢复了 30 点气血');
+      expect(p.hp).toBe(80);
+    });
+
+    it('wear equips an item', () => {
+      const p = players.getPlayer(PLAYER_ID)!;
+      const items = new ItemSystem();
+      items.addItem(p, 'iron-sword', 1);
+
+      const output = cmd('wear 铁剑');
+      expect(output).toContain('装备了铁剑');
+      expect(p.equipped).toContain('iron-sword');
+    });
+
+    it('remove unequips an item', () => {
+      const p = players.getPlayer(PLAYER_ID)!;
+      p.equipped.push('wooden-sword');
+
+      const output = cmd('remove 木剑');
+      expect(output).toContain('脱下了木剑');
+    });
+
+    it('remove rejects item not equipped', () => {
+      const output = cmd('remove 铁剑');
+      expect(output).toContain('你没有装备"铁剑"');
+    });
+
+    it('ask talks to NPC', () => {
+      const npcs = new NpcSystem(new SkillSystem());
+      npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
+      const newRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), npcs);
+      cmd = (input: string) => newRouter.handle(input, PLAYER_ID);
+      newRouter.handle("楚留香", PLAYER_ID);
+      newRouter.handle("done", PLAYER_ID);
+      cmd('e');
+      const output = cmd('ask 王掌柜');
+      expect(output).toContain('王掌柜说道');
+    });
+  });
 });
