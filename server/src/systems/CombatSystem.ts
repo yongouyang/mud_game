@@ -1,5 +1,10 @@
-import { Player } from '../models/Player.js';
 import { bar } from '../utils.js';
+
+export interface CombatTarget {
+  name: string;
+  hp: number;
+  maxHp: number;
+}
 
 export interface CombatResult {
   message: string;
@@ -7,7 +12,7 @@ export interface CombatResult {
 }
 
 export class CombatSystem {
-  attack(attacker: Player, defender: Player): CombatResult {
+  attack(attacker: { attributes: { str: number; dex: number } }, defender: CombatTarget & { attributes: { dex: number } }): CombatResult {
     const baseDmg = 5 + attacker.attributes.str * 1.5;
     const dodge = defender.attributes.dex * 0.8;
     const variation = 0.8 + Math.random() * 0.4;
@@ -22,7 +27,7 @@ export class CombatSystem {
 
     defender.hp = Math.max(0, defender.hp - damage);
 
-    let msg = `\n  ${attacker.name}${critical ? ' 奋力一击！' : ''} 对 ${defender.name} 造成了 ${damage} 点伤害。\n`;
+    let msg = `\n  ${(attacker as any).name || '你'}${critical ? ' 奋力一击！' : ''} 对 ${defender.name} 造成了 ${damage} 点伤害。\n`;
 
     if (defender.hp <= 0) {
       msg += `\n  ${defender.name} 倒下了！\n`;
@@ -32,7 +37,7 @@ export class CombatSystem {
     return { message: msg, defenderDead: false };
   }
 
-  formatCombatStatus(player: Player, enemy: Player): string {
+  formatCombatStatus(player: CombatTarget, enemy: CombatTarget): string {
     return [
       '',
       '  ─── 战斗 ───',

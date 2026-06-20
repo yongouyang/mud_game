@@ -4,7 +4,7 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
-import { PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
+import { Player, PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
 
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
 for (const [key, name] of Object.entries(ATTRIBUTE_NAMES)) {
@@ -85,7 +85,7 @@ export class CommandRouter {
   }
 
   // ── Character Creation ──────────────────────────────────
-  private handleCreating(player: any, trimmed: string): string {
+  private handleCreating(player: Player, trimmed: string): string {
     const [cmd, ...args] = trimmed.split(/\s+/);
     const cmdLower = cmd?.toLowerCase() || '';
     if (!cmdLower) return this.players.formatCreatingPrompt(player);
@@ -118,17 +118,17 @@ export class CommandRouter {
   }
 
   // ── Look / Who / Help ────────────────────────────────────
-  private handleLook(player: any): string {
+  private handleLook(player: Player): string {
     const room = this.map.getRoom(player.currentRoom);
     if (!room) return '\n  你在一片虚无之中……\n';
-    const others = this.players.getPlayersInRoom(player.currentRoom).filter((p: any) => p.id !== player.id);
+    const others = this.players.getPlayersInRoom(player.currentRoom).filter((p: Player) => p.id !== player.id);
     let msg = this.map.formatRoom(room);
     msg += this.npcs.formatNpcsInRoom(player.currentRoom);
-    if (others.length > 0) msg += `  这里还有：${others.map((p: any) => p.name).join('、')}\n`;
+    if (others.length > 0) msg += `  这里还有：${others.map((p: Player) => p.name).join('、')}\n`;
     return msg;
   }
 
-  private handleWho(_player: any): string {
+  private handleWho(_player: Player): string {
     const online = this.players.getAllPlayers();
     if (online.length === 0) return '\n  当前没有在线玩家。\n';
     const names = online.map((p) => `  ${p.name}`).join('\n');
@@ -151,7 +151,7 @@ export class CommandRouter {
   }
 
   // ── Combat ──────────────────────────────────────────────
-  private handleKill(player: any, args: string[]): string {
+  private handleKill(player: Player, args: string[]): string {
     const targetName = args.join(' ');
     if (!targetName) return '\n  你想攻击谁？用法：kill <名字>\n';
 
@@ -164,7 +164,7 @@ export class CommandRouter {
       targetNpc.state = 'fighting';
       targetNpc.targetPlayerId = player.id;
       return `\n  你向 ${targetNpc.def.name} 发起了攻击！\n` +
-        this.combat.formatCombatStatus(player, { name: targetNpc.def.name, hp: targetNpc.hp, maxHp: targetNpc.maxHp } as any);
+        this.combat.formatCombatStatus(player, { name: targetNpc.def.name, hp: targetNpc.hp, maxHp: targetNpc.maxHp });
     }
 
     // Check players in room
@@ -180,7 +180,7 @@ export class CommandRouter {
     return `\n  你向 ${target.name} 发起了攻击！\n` + this.combat.formatCombatStatus(player, target);
   }
 
-  private handleCombat(player: any, cmd: string, _args: string[]): string {
+  private handleCombat(player: Player, cmd: string, _args: string[]): string {
     const targetId = player.targetEnemy;
     if (!targetId) { player.state = 'playing'; return '\n  战斗已结束。\n'; }
 
@@ -197,53 +197,48 @@ export class CommandRouter {
     }
 
     if (cmd === 'hit' || cmd === 'kill') {
-      // Player attacks
-      const strike = this.skills.getBestStrike(player);
-      const skillDmg = strike ? strike.def.damageBase + strike.def.damageScale * strike.level : 0;
-      const baseDmg = player.attributes.str * 1.5 + skillDmg + 5;
-      const dodge = player.attributes.dex * 0.8 + this.skills.getDodgeLevel(player) * 0.3;
-      const equipBonus = this.items.getEquipBonus(player);
-      const totalStr = player.attributes.str + (equipBonus.str || 0);
-      const totalCon = player.attributes.con + (equipBonus.con || 0);
-      const dmg = Math.max(1, Math.round((totalStr * 1.5 + skillDmg + 5 - dodge) * (0.8 + Math.random() * 0.4)));
+      let msg = '';
 
-      let msg = `\n  你${strike ? '使出了' + strike.def.name : ''} 对 ${enemyName} 造成了 ${dmg} 点伤害。\n`;
-
-      // Apply to correct target
       if (targetId.startsWith('npc:')) {
         const npc = this.npcs.getNpc(targetId.slice(4))!;
-        npc.hp = Math.max(0, npc.hp - dmg);
-        if (npc.hp <= 0) {
-          msg += `\n  ${enemyName} 倒下了！\n`;
+        const npcTarget = {
+          name: npc.def.name,
+          get hp() { return npc.hp; },
+          set hp(v: number) { npc.hp = v; },
+          maxHp: npc.maxHp,
+          attributes: npc.def.attributes,
+        };
+        const result = this.combat.attack(player, npcTarget);
+        msg = result.message;
+        if (result.defenderDead) {
           player.state = 'playing'; player.targetEnemy = null;
           npc.state = 'idle'; npc.targetPlayerId = null;
           return msg;
         }
         // NPC counter-attacks
-        const npcDmg = Math.max(1, Math.round(this.npcs.getNpcDamage(npc) * (0.8 + Math.random() * 0.4)));
-        player.hp = Math.max(0, player.hp - npcDmg);
-        msg += `  ${enemyName} 反击，对你造成了 ${npcDmg} 点伤害。\n`;
-        if (player.hp <= 0) {
-          player.state = 'playing'; player.targetEnemy = null; npc.state = 'idle'; npc.targetPlayerId = null;
+        const counter = this.combat.attack({ attributes: npc.def.attributes, name: npc.def.name }, player);
+        msg += counter.message;
+        if (counter.defenderDead) {
+          player.state = 'playing'; player.targetEnemy = null;
+          npc.state = 'idle'; npc.targetPlayerId = null;
           player.hp = 1;
           return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
         }
-        return msg + this.combat.formatCombatStatus(player, { name: enemyName, hp: npc.hp, maxHp: npc.maxHp } as any);
+        return msg + this.combat.formatCombatStatus(player, npcTarget);
       } else {
         const target = this.players.getPlayer(targetId)!;
-        target.hp = Math.max(0, target.hp - dmg);
-        if (target.hp <= 0) {
-          msg += `\n  ${enemyName} 倒下了！\n`;
+        const result = this.combat.attack(player, target);
+        msg = result.message;
+        if (result.defenderDead) {
           player.state = 'playing'; player.targetEnemy = null;
           target.state = 'playing'; target.targetEnemy = null;
           return msg;
         }
-        // Player-vs-player counter-attack (simplified, no skills)
-        const counterDmg = Math.max(1, Math.round((target.attributes.str * 1.5 + 5) * (0.8 + Math.random() * 0.4)));
-        player.hp = Math.max(0, player.hp - counterDmg);
-        msg += `  ${enemyName} 反击，对你造成了 ${counterDmg} 点伤害。\n`;
-        if (player.hp <= 0) {
-          player.state = 'playing'; player.targetEnemy = null; target.state = 'playing'; target.targetEnemy = null;
+        const counter = this.combat.attack(target, player);
+        msg += counter.message;
+        if (counter.defenderDead) {
+          player.state = 'playing'; player.targetEnemy = null;
+          target.state = 'playing'; target.targetEnemy = null;
           player.hp = 1;
           return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
         }
@@ -251,21 +246,33 @@ export class CommandRouter {
       }
     }
     if (cmd === 'hp' || cmd === 'look' || cmd === 'l') {
-      return this.combat.formatCombatStatus(player, { name: enemyName, hp: enemyHp, maxHp: enemyMaxHp } as any);
+      return this.combat.formatCombatStatus(player, { name: enemyName, hp: enemyHp, maxHp: enemyMaxHp });
     }
     return '\n  战斗中只能使用 hit、hp、look。\n';
   }
 
   // ── Items ────────────────────────────────────────────────
-  private handleGet(player: any, args: string[]): string {
+  private handleGet(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想捡什么？用法：get <物品名>\n';
-    // For now, just give silver as a demo (items on ground can be added later)
+
+    // Check room for items
+    const room = this.map.getRoom(player.currentRoom);
+    const roomItems = room?.items;
+    if (roomItems && roomItems.includes(name)) {
+      const def = this.items.findDefByName(name);
+      if (def) {
+        this.items.addItem(player, def.id);
+        return `\n  你捡起了${name}。\n`;
+      }
+    }
+
+    // Legacy: silver is always available
     if (name === '银子') { this.items.addItem(player, 'silver', 5); return '\n  你捡起了 5 两银子。\n'; }
     return `\n  这里没有"${name}"。\n`;
   }
 
-  private handleDrop(player: any, args: string[]): string {
+  private handleDrop(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想丢弃什么？\n';
     const def = this.items.findDefByName(name);
@@ -274,7 +281,7 @@ export class CommandRouter {
     return `\n  你丢掉了${name}。\n`;
   }
 
-  private handleUse(player: any, args: string[]): string {
+  private handleUse(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想使用什么？\n';
     // Find item by Chinese name
@@ -289,7 +296,7 @@ export class CommandRouter {
     return `\n  你没有可以使用的"${name}"。\n`;
   }
 
-  private handleWear(player: any, args: string[]): string {
+  private handleWear(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想穿戴什么？\n';
     for (const inv of player.inventory || []) {
@@ -304,7 +311,7 @@ export class CommandRouter {
     return `\n  你没有可以穿戴的"${name}"。\n`;
   }
 
-  private handleRemove(player: any, args: string[]): string {
+  private handleRemove(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想脱下什么？\n';
     const idx = player.equipped.findIndex((id: string) => this.items.getDef(id)?.name === name);
@@ -316,7 +323,7 @@ export class CommandRouter {
   }
 
   // ── Skills ───────────────────────────────────────────────
-  private handleLearn(player: any, args: string[]): string {
+  private handleLearn(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想学什么武功？用法：learn <武功名>\n';
     const def = this.skills.findDefByName(name);
@@ -330,7 +337,7 @@ export class CommandRouter {
   }
 
   // ── NPC Interaction ──────────────────────────────────────
-  private handleAsk(player: any, args: string[]): string {
+  private handleAsk(player: Player, args: string[]): string {
     const name = args.join(' ');
     if (!name) return '\n  你想向谁打听？用法：ask <NPC名>\n';
     const npcs = this.npcs.getNpcsInRoom(player.currentRoom);

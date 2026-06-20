@@ -285,6 +285,11 @@ describe('CommandRouter', () => {
       expect(output).toContain('你没有"铁剑"');
     });
 
+    it('get picks up room-placed items', () => {
+      cmd('s'); // training yard has 木剑 and 金疮药
+      expect(cmd('get 木剑')).toContain('捡起了木剑');
+    });
+
     it('use consumes medicine and heals', () => {
       // Give player a medicine via inventory directly
       const p = players.getPlayer(PLAYER_ID)!;

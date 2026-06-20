@@ -8,4 +8,5 @@ export interface Room {
   name: string;
   description: string;
   exits: Exit[];
+  items?: string[];  // item names placed in this room
 }
