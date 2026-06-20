@@ -32,6 +32,11 @@ export class PlayerManager {
     this.players.delete(id);
   }
 
+  /** Insert a fully-formed Player (e.g. loaded from save file) */
+  setPlayer(p: Player): void {
+    this.players.set(p.id, p);
+  }
+
   getPlayersInRoom(roomId: string): Player[] {
     const result: Player[] = [];
     for (const p of this.players.values()) {

@@ -12,6 +12,7 @@ import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
 import { SchoolSystem } from './systems/SchoolSystem.js';
+import { PersistenceSystem } from './systems/PersistenceSystem.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env['PORT'] || '3000', 10);
@@ -40,7 +41,15 @@ const combat = new CombatSystem();
 const skills = new SkillSystem();
 const items = new ItemSystem();
 const npcs = new NpcSystem(skills);
-  const schools = new SchoolSystem();
+const schools = new SchoolSystem();
+const persistence = new PersistenceSystem();
+
+// Load saved players on startup
+const savedPlayers = persistence.loadAll();
+for (const p of savedPlayers) {
+  players.setPlayer(p);
+}
+console.log(`[server] Loaded ${savedPlayers.length} saved player(s)`);
 
 // Register NPCs in the world
 npcs.register({
@@ -114,26 +123,91 @@ npcs.register({
 
 const router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
 
+// Track auth state per socket
+const socketAuth = new Map<string, { authState: string; username?: string }>();
+
 io.on('connection', (socket) => {
   console.log(`[connect] ${socket.id}`);
 
-  // Create a new player session
-  players.createPlayer(socket.id);
-
-  // Greet with character creation prompt
-  socket.emit('output', { text: router.handle('', socket.id) });
+  // Auth greeting
+  socketAuth.set(socket.id, { authState: 'login' });
+  socket.emit('output', { text: '\n  欢迎来到炎黄群侠传！\n\n  login <用户名> <密码> — 登录\n  register <用户名> <密码> — 注册新账号\n' });
 
   socket.on('command', (data: { input: string }) => {
     const raw = (data.input || '').trim();
     console.log(`[cmd] ${socket.id}: ${raw}`);
 
+    const auth = socketAuth.get(socket.id);
+    if (!auth) return;
+
+    if (auth.authState === 'login') {
+      const parts = raw.split(/\s+/);
+      const cmd = parts[0]?.toLowerCase();
+
+      if (cmd === 'register' && parts.length >= 3) {
+        const username = parts[1].toLowerCase();
+        const password = parts.slice(2).join('');
+        if (persistence.getUserHash(username)) {
+          socket.emit('output', { text: '\n  用户名已存在。请换一个或输入 login <用户名> <密码> 登录。\n' });
+          return;
+        }
+        const hash = Buffer.from(username + ':' + password).toString('base64');
+        persistence.saveUser(username, hash);
+        socketAuth.set(socket.id, { authState: 'creating', username });
+        players.createPlayer(socket.id);
+        socket.emit('output', { text: router.handle('', socket.id) });
+        return;
+      }
+
+      if (cmd === 'login' && parts.length >= 3) {
+        const username = parts[1].toLowerCase();
+        const password = parts.slice(2).join('');
+        const storedHash = persistence.getUserHash(username);
+        const inputHash = Buffer.from(username + ':' + password).toString('base64');
+        if (!storedHash || storedHash !== inputHash) {
+          socket.emit('output', { text: '\n  用户名或密码错误。\n' });
+          return;
+        }
+        const saved = players.getPlayer(username);
+        if (saved) {
+          socketAuth.set(socket.id, { authState: 'playing', username });
+          saved.id = socket.id;
+          players.setPlayer(saved);
+          const room = map.getRoom(saved.currentRoom);
+          socket.emit('output', { text: `\n  欢迎回来，${saved.name}！\n${room ? map.formatRoom(room) : ''}` });
+        } else {
+          socket.emit('output', { text: '\n  数据丢失，请重新 register。\n' });
+        }
+        return;
+      }
+
+      socket.emit('output', { text: '\n  请先输入 login 或 register。\n' });
+      return;
+    }
+
+    if (auth.authState === 'creating') {
+      const response = router.handle(raw, socket.id);
+      socket.emit('output', { text: response });
+      const p = players.getPlayer(socket.id);
+      if (p && p.state === 'playing') {
+        socketAuth.set(socket.id, { authState: 'playing', username: auth.username });
+        p.id = auth.username!;
+        persistence.saveAll(players.getAllPlayers());
+      }
+      return;
+    }
+
     const response = router.handle(raw, socket.id);
     socket.emit('output', { text: response });
+    const p = players.getPlayer(socket.id);
+    if (p && p.state === 'playing') {
+      persistence.saveAll(players.getAllPlayers());
+    }
   });
 
   socket.on('disconnect', () => {
     console.log(`[disconnect] ${socket.id}`);
-    players.removePlayer(socket.id);
+    socketAuth.delete(socket.id);
   });
 });
 

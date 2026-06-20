@@ -85,12 +85,13 @@ describe('E2E: Phase 2 — core', () => {
     });
   }
 
-  it('prompts for character name', async () => {
+  it('shows login prompt', async () => {
     expect(clientSocket.connected).toBe(true);
     expect(await sendCmd('')).toContain('欢迎来到炎黄群侠传');
   });
 
-  it('creates character and enters world', async () => {
+  it('registers and creates character', async () => {
+    await sendCmd('register tester pass123');
     await sendCmd('楚留香');
     expect(await sendCmd('done')).toContain('角色创建成功');
   });
@@ -144,6 +145,7 @@ describe('E2E: Phase 3 — skills, items, NPCs', () => {
   }
 
   beforeAll(async () => {
+    await sendCmd('register guojing pw123');
     await sendCmd('郭靖');
     await sendCmd('done');
   });
