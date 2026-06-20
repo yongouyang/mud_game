@@ -6,6 +6,8 @@ import { PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
 for (const [key, name] of Object.entries(ATTRIBUTE_NAMES)) {
   ATTR_KEY_BY_NAME[name] = key as keyof PlayerAttributes;
+  ATTR_KEY_BY_NAME[key] = key as keyof PlayerAttributes; // English alias
+  ATTR_KEY_BY_NAME[key.toUpperCase()] = key as keyof PlayerAttributes; // uppercase
 }
 
 export class CommandRouter {

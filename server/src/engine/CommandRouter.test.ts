@@ -52,6 +52,34 @@ describe('CommandRouter', () => {
       expect(output).toContain('属性值须为 5-20');
     });
 
+    it('accepts English attribute key (str)', () => {
+      cmd('楚留香');
+      const output = cmd('set str 15');
+      expect(output).toContain('臂力(str): 15');
+      expect(output).toContain('剩余 5 点');
+    });
+
+    it('accepts uppercase English key (STR)', () => {
+      cmd('楚留香');
+      const output = cmd('set STR 14');
+      expect(output).toContain('臂力(str): 14');
+    });
+
+    it('shows remaining points correctly', () => {
+      cmd('楚留香');
+      // Default: 10 each = 40 total, remaining = 10
+      let output = cmd('');
+      expect(output).toContain('剩余 10 点');
+
+      // Allocate 3 to arm strength
+      output = cmd('set 臂力 13');
+      expect(output).toContain('剩余 7 点');
+
+      // Allocate 4 to constitution (English key)
+      output = cmd('set con 14');
+      expect(output).toContain('剩余 3 点');
+    });
+
     it('completes character creation with done', () => {
       cmd('楚留香');
       const output = cmd('done');

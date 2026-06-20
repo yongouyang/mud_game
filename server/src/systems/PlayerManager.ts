@@ -82,16 +82,18 @@ export class PlayerManager {
     if (!player.name) {
       return '\n  欢迎来到炎黄群侠传！\n\n  请输入你的名字（2-6个中文字）：\n';
     }
+    const a = player.attributes;
+    const remaining = 50 - (a.str + a.int + a.con + a.dex);
     return [
       '',
       `  你的名字：${player.name}`,
       '',
-      '  请分配属性点数（剩余 10 点）：',
+      `  请分配属性点数（剩余 ${remaining} 点）：`,
       ...Object.entries(ATTRIBUTE_NAMES).map(
-        ([key, label]) => `    ${label}: ${player.attributes[key as keyof PlayerAttributes]}`,
+        ([key, label]) => `    ${label}(${key}): ${a[key as keyof PlayerAttributes]}`,
       ),
       '',
-      '  命令：set 臂力 15 | done 完成创建',
+      `  命令：set 臂力 15 | set str 15 | done 完成创建`,
       '',
     ].join('\n') + '\n';
   }
