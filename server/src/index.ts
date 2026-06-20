@@ -8,6 +8,9 @@ import { CommandRouter } from './engine/CommandRouter.js';
 import { PlayerManager } from './systems/PlayerManager.js';
 import { MapSystem } from './systems/MapSystem.js';
 import { CombatSystem } from './systems/CombatSystem.js';
+import { SkillSystem } from './systems/SkillSystem.js';
+import { ItemSystem } from './systems/ItemSystem.js';
+import { NpcSystem } from './systems/NpcSystem.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env['PORT'] || '3000', 10);
@@ -33,7 +36,29 @@ app.get('/health', (_req, res) => {
 const players = new PlayerManager();
 const map = new MapSystem();
 const combat = new CombatSystem();
-const router = new CommandRouter(players, map, combat);
+const skills = new SkillSystem();
+const items = new ItemSystem();
+const npcs = new NpcSystem(skills);
+
+// Register NPCs in the world
+npcs.register({
+  id: 'wang', name: '王掌柜', description: '客栈掌柜，戴着圆框眼镜，正在拨弄算盘。',
+  roomId: 'town/inn',
+  dialogue: ['客官要住店吗？', '江湖险恶，多带些金疮药吧。', '最近镇外来了一伙山贼，不太平啊。'],
+  attributes: { str: 5, int: 10, con: 8, dex: 5 },
+  skills: [],
+  aggressive: false,
+});
+npcs.register({
+  id: 'bandit', name: '山贼', description: '一个面目凶狠的山贼，手持短刀。',
+  roomId: 'wilderness/forest1',
+  dialogue: ['此路是我开！', '哈哈哈，留下买路钱！'],
+  attributes: { str: 12, int: 5, con: 10, dex: 8 },
+  skills: [{ skillId: 'luohan-quan', level: 3 }],
+  aggressive: true,
+});
+
+const router = new CommandRouter(players, map, combat, skills, items, npcs);
 
 io.on('connection', (socket) => {
   console.log(`[connect] ${socket.id}`);

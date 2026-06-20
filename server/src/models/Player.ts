@@ -1,3 +1,6 @@
+import { InventoryItem } from './Item.js';
+import { PlayerSkill } from './Skill.js';
+
 export interface PlayerAttributes {
   str: number; // 臂力 — affects attack damage
   int: number; // 悟性 — affects skill learning
@@ -18,6 +21,9 @@ export interface Player {
   currentRoom: string;
   state: PlayerState;
   targetEnemy: string | null;
+  inventory: InventoryItem[];
+  equipped: string[];
+  skills: PlayerSkill[];
 }
 
 export function createPlayer(id: string, name: string, attrs: PlayerAttributes): Player {
@@ -34,6 +40,9 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     currentRoom: 'town/square',
     state: 'playing',
     targetEnemy: null,
+    inventory: [],
+    equipped: [],
+    skills: [],
   };
 }
 

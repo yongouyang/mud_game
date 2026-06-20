@@ -7,6 +7,9 @@ import { CommandRouter } from './engine/CommandRouter.js';
 import { PlayerManager } from './systems/PlayerManager.js';
 import { MapSystem } from './systems/MapSystem.js';
 import { CombatSystem } from './systems/CombatSystem.js';
+import { SkillSystem } from './systems/SkillSystem.js';
+import { ItemSystem } from './systems/ItemSystem.js';
+import { NpcSystem } from './systems/NpcSystem.js';
 import { AddressInfo } from 'node:net';
 
 let httpServer: HttpServer;
@@ -24,7 +27,10 @@ beforeAll(async () => {
   players = new PlayerManager();
   const map = new MapSystem();
   const combat = new CombatSystem();
-  const router = new CommandRouter(players, map, combat);
+  const skills = new SkillSystem();
+  const items = new ItemSystem();
+  const npcs = new NpcSystem(skills);
+  const router = new CommandRouter(players, map, combat, skills, items, npcs);
 
   io.on('connection', (socket) => {
     players.createPlayer(socket.id);

@@ -3,6 +3,9 @@ import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
 import { MapSystem } from '../systems/MapSystem.js';
 import { CombatSystem } from '../systems/CombatSystem.js';
+import { SkillSystem } from '../systems/SkillSystem.js';
+import { ItemSystem } from '../systems/ItemSystem.js';
+import { NpcSystem } from '../systems/NpcSystem.js';
 
 const PLAYER_ID = 'test-player';
 
@@ -14,7 +17,10 @@ describe('CommandRouter', () => {
     players = new PlayerManager();
     const map = new MapSystem();
     const combat = new CombatSystem();
-    router = new CommandRouter(players, map, combat);
+    const skills = new SkillSystem();
+    const items = new ItemSystem();
+    const npcs = new NpcSystem(skills);
+    router = new CommandRouter(players, map, combat, skills, items, npcs);
     players.createPlayer(PLAYER_ID);
   });
 
@@ -161,7 +167,7 @@ describe('CommandRouter', () => {
       const output = cmd('help');
       expect(output).toContain('n s e w u d');
       expect(output).toContain('kill');
-      expect(output).toContain('score');
+      expect(output).toContain('skills');
     });
 
     it('clear returns clear token', () => {
@@ -196,7 +202,7 @@ describe('CommandRouter', () => {
       // Create a second player for combat
       player2Id = 'test-player-2';
       players.createPlayer(player2Id);
-      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem());
+      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), new NpcSystem(new SkillSystem()));
       router2.handle('李寻欢', player2Id);
       router2.handle('done', player2Id);
       router2.handle('s', player2Id); // Move to same room

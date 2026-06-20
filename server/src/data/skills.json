@@ -1,0 +1,9 @@
+[
+  { "id": "cuff",          "name": "基本拳脚", "type": "unarmed", "description": "徒手搏击的基本功夫。",                                   "damageBase": 3, "damageScale": 0.5 },
+  { "id": "dodge",         "name": "基本轻功", "type": "dodge",   "description": "闪避腾挪的身法。",                                     "damageBase": 0, "damageScale": 0 },
+  { "id": "force",         "name": "基本内功", "type": "force",   "description": "修炼内力心法，提升气血。",                             "damageBase": 0, "damageScale": 0 },
+  { "id": "taiji-quan",    "name": "太极拳",   "type": "strike",  "description": "武当派绝学，以柔克刚，四两拨千斤。",                   "damageBase": 6, "damageScale": 0.8 },
+  { "id": "luohan-quan",   "name": "罗汉拳",   "type": "strike",  "description": "少林入门拳法，刚猛有力。",                             "damageBase": 5, "damageScale": 0.7 },
+  { "id": "qinggong",      "name": "草上飞",   "type": "dodge",   "description": "轻功身法「草上飞」，在草地中穿行如履平地。",           "damageBase": 0, "damageScale": 0 },
+  { "id": "neigong-xinfa", "name": "内功心法", "type": "force",   "description": "基础内功心法，修炼后可提升内力上限。",                 "damageBase": 0, "damageScale": 0 }
+]

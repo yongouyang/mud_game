@@ -18,6 +18,9 @@ export class PlayerManager {
       currentRoom: 'town/square',
       state: 'creating',
       targetEnemy: null,
+      inventory: [],
+      equipped: [],
+      skills: [],
     });
   }
 
