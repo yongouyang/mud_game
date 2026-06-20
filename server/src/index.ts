@@ -11,6 +11,7 @@ import { CombatSystem } from './systems/CombatSystem.js';
 import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
+import { SchoolSystem } from './systems/SchoolSystem.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env['PORT'] || '3000', 10);
@@ -39,6 +40,7 @@ const combat = new CombatSystem();
 const skills = new SkillSystem();
 const items = new ItemSystem();
 const npcs = new NpcSystem(skills);
+  const schools = new SchoolSystem();
 
 // Register NPCs in the world
 npcs.register({
@@ -56,9 +58,27 @@ npcs.register({
   attributes: { str: 12, int: 5, con: 10, dex: 8 },
   skills: [{ skillId: 'luohan-quan', level: 3 }],
   aggressive: true,
+  });
+
+  // Register school master NPCs
+  npcs.register({
+    id: "master-shaolin", name: "玄慈方丈", description: "少林寺方丈，慈眉善目，佛法精深。",
+    roomId: "shaolin/hall",
+    dialogue: ["阿弥陀佛，施主可是来拜师的？", "习武先修心，持戒方能成器。"],
+    attributes: { str: 10, int: 15, con: 10, dex: 10 },
+    skills: [{ skillId: "luohan-quan", level: 50 }],
+    aggressive: false,
+  });
+  npcs.register({
+    id: "master-wudang", name: "冲虚道长", description: "武当掌门，仙风道骨，深不可测。",
+    roomId: "wudang/hall",
+    dialogue: ["无量天尊。", "太极之道，以柔克刚。"],
+    attributes: { str: 10, int: 15, con: 10, dex: 15 },
+    skills: [{ skillId: "taiji-quan", level: 50 }],
+    aggressive: false,
 });
 
-const router = new CommandRouter(players, map, combat, skills, items, npcs);
+const router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
 
 io.on('connection', (socket) => {
   console.log(`[connect] ${socket.id}`);

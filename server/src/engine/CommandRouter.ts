@@ -4,6 +4,7 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
+import { SchoolSystem } from '../systems/SchoolSystem.js';
 import { Player, PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
 
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
@@ -21,6 +22,7 @@ export class CommandRouter {
     private skills: SkillSystem,
     private items: ItemSystem,
     private npcs: NpcSystem,
+    private schools: SchoolSystem,
   ) {}
 
   handle(input: string, playerId: string): string {
@@ -78,6 +80,8 @@ export class CommandRouter {
       case 'wear': return this.handleWear(player, rest);
       case 'remove': return this.handleRemove(player, rest);
       case 'learn': return this.handleLearn(player, rest);
+      case 'schools': return this.handleSchools(player, rest);
+      case 'join': return this.handleJoin(player, rest);
       case 'ask': return this.handleAsk(player, rest);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
@@ -344,5 +348,30 @@ export class CommandRouter {
     const npc = npcs.find((n) => n.def.name === name);
     if (!npc) return `\n  这里没有"${name}"。\n`;
     return `\n  ${npc.def.name}说道：「${this.npcs.getDialogue(npc.def.id)}」\n`;
+  }
+  // ── Schools ─────────────────────────────────────────────
+
+  private handleSchools(player: Player, args: string[]): string {
+    const name = args.join(' ');
+    if (name) {
+      const school = this.schools.findSchoolByName(name);
+      if (!school) return `\n  没有"${name}"这个门派。\n`;
+      return this.schools.formatSchoolDetail(school);
+    }
+    return this.schools.listSchools();
+  }
+
+  private handleJoin(player: Player, args: string[]): string {
+    const name = args.join(' ');
+    if (!name) return '\n  你想加入哪个门派？用法：join <门派名>\n';
+    const school = this.schools.findSchoolByName(name);
+    if (!school) return `\n  没有"${name}"这个门派。\n`;
+    if (player.currentRoom !== school.joinRoomId) {
+      return `\n  这里不是${school.name}的山门。请到${school.name}所在地加入。\n`;
+    }
+    const p = player as any;
+    if (p.schoolId) return '\n  你已经加入了门派。\n';
+    p.schoolId = school.id;
+    return `\n  你拜入了${school.name}！\n  掌门${school.masterName}收你为弟子。\n`;
   }
 }

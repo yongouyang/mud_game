@@ -6,6 +6,7 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
+import { SchoolSystem } from '../systems/SchoolSystem.js';
 
 const PLAYER_ID = 'test-player';
 
@@ -20,7 +21,7 @@ describe('CommandRouter', () => {
     const skills = new SkillSystem();
     const items = new ItemSystem();
     const npcs = new NpcSystem(skills);
-    router = new CommandRouter(players, map, combat, skills, items, npcs);
+    router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem());
     players.createPlayer(PLAYER_ID);
   });
 
@@ -202,7 +203,7 @@ describe('CommandRouter', () => {
       // Create a second player for combat
       player2Id = 'test-player-2';
       players.createPlayer(player2Id);
-      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), new NpcSystem(new SkillSystem()));
+      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), new NpcSystem(new SkillSystem()), new SchoolSystem());
       router2.handle('李寻欢', player2Id);
       router2.handle('done', player2Id);
       router2.handle('s', player2Id); // Move to same room
@@ -328,7 +329,7 @@ describe('CommandRouter', () => {
     it('ask talks to NPC', () => {
       const npcs = new NpcSystem(new SkillSystem());
       npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
-      const newRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), npcs);
+      const newRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), npcs, new SchoolSystem());
       cmd = (input: string) => newRouter.handle(input, PLAYER_ID);
       newRouter.handle("楚留香", PLAYER_ID);
       newRouter.handle("done", PLAYER_ID);

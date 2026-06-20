@@ -10,6 +10,7 @@ import { CombatSystem } from './systems/CombatSystem.js';
 import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
+import { SchoolSystem } from './systems/SchoolSystem.js';
 import { AddressInfo } from 'node:net';
 
 let httpServer: HttpServer;
@@ -40,7 +41,7 @@ beforeAll(async () => {
     aggressive: false,
   });
 
-  const router = new CommandRouter(players, map, combat, skills, items, npcs);
+  const router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem());
 
   io.on('connection', (socket) => {
     players.createPlayer(socket.id);
@@ -154,4 +155,16 @@ describe('E2E: Phase 3 — skills, items, NPCs', () => {
   it('views inventory', async () => { expect(await sendCmd('i')).toContain('银子'); });
   it('drops an item', async () => { await sendCmd('get 银子'); expect(await sendCmd('drop 银子')).toContain('丢掉了银子'); });
   it('talks to NPC', async () => { await sendCmd('e'); expect(await sendCmd('ask 王掌柜')).toContain('王掌柜说道'); });
+
+  it('traverses to Shaolin and joins the school', async () => {
+    let o = await sendCmd('w');  o = await sendCmd('n');  expect(o).toContain('主街');
+    o = await sendCmd('n');      expect(o).toContain('山门');
+    o = await sendCmd('n');      expect(o).toContain('山林·入口');
+    o = await sendCmd('n');      expect(o).toContain('山林·深处');
+    o = await sendCmd('n');      expect(o).toContain('少林寺');
+    o = await sendCmd('w');      expect(o).toContain('大雄宝殿');
+    o = await sendCmd('schools'); expect(o).toContain('少林派');
+    o = await sendCmd('join 少林派'); expect(o).toContain('拜入了少林派');
+    o = await sendCmd('schools 少林派'); expect(o).toContain('玄慈方丈');
+  });
 });

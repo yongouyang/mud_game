@@ -5,9 +5,18 @@
       "name": "无名小镇·广场",
       "description": "你站在小镇的中心广场。地面铺着磨损的青石板，中央有一口古井。\n北边是小镇主街，南边通向郊外的练武场，东边有一家客栈。",
       "exits": [
-        { "direction": "north", "roomId": "town/mainstreet" },
-        { "direction": "south", "roomId": "town/training" },
-        { "direction": "east", "roomId": "town/inn" }
+        {
+          "direction": "north",
+          "roomId": "town/mainstreet"
+        },
+        {
+          "direction": "south",
+          "roomId": "town/training"
+        },
+        {
+          "direction": "east",
+          "roomId": "town/inn"
+        }
       ]
     },
     {
@@ -15,8 +24,14 @@
       "name": "无名小镇·主街",
       "description": "一条笔直的石板路贯穿小镇南北。路边摆着几个小摊，叫卖着蔬菜和杂货。\n南边通向广场，北边通往镇外的山门。",
       "exits": [
-        { "direction": "south", "roomId": "town/square" },
-        { "direction": "north", "roomId": "wilderness/gate" }
+        {
+          "direction": "south",
+          "roomId": "town/square"
+        },
+        {
+          "direction": "north",
+          "roomId": "wilderness/gate"
+        }
       ]
     },
     {
@@ -24,8 +39,14 @@
       "name": "无名小镇·客栈",
       "description": "一家简陋的客栈，大堂里摆着几张方桌。掌柜的在柜台后打着算盘。\n西边是广场，从这里可以上楼（up）。",
       "exits": [
-        { "direction": "west", "roomId": "town/square" },
-        { "direction": "up", "roomId": "town/inn_upstairs" }
+        {
+          "direction": "west",
+          "roomId": "town/square"
+        },
+        {
+          "direction": "up",
+          "roomId": "town/inn_upstairs"
+        }
       ]
     },
     {
@@ -33,15 +54,25 @@
       "name": "无名小镇·客栈二楼",
       "description": "客栈的二楼是客房区。走廊两侧是紧闭的房门，空气中飘着淡淡的檀香味。\n从这里可以下楼（down）回到客栈大堂。",
       "exits": [
-        { "direction": "down", "roomId": "town/inn" }
+        {
+          "direction": "down",
+          "roomId": "town/inn"
+        }
       ]
     },
     {
-      "id": "town/training", "items": ["木剑", "金疮药"],
+      "id": "town/training",
+      "items": [
+        "木剑",
+        "金疮药"
+      ],
       "name": "无名小镇·练武场",
       "description": "一片空旷的练武场。地面铺着青石板，四周立着木人桩。\n几个年轻的武者在练习基本功。北边通向小镇广场。",
       "exits": [
-        { "direction": "north", "roomId": "town/square" }
+        {
+          "direction": "north",
+          "roomId": "town/square"
+        }
       ]
     },
     {
@@ -49,8 +80,14 @@
       "name": "山门",
       "description": "一座古老的石牌坊矗立在镇外入口处，上书「无名镇」三个大字。\n一条土路向南通向小镇，向北延伸进茂密的山林。",
       "exits": [
-        { "direction": "south", "roomId": "town/mainstreet" },
-        { "direction": "north", "roomId": "wilderness/forest1" }
+        {
+          "direction": "south",
+          "roomId": "town/mainstreet"
+        },
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest1"
+        }
       ]
     },
     {
@@ -58,9 +95,18 @@
       "name": "山林·入口",
       "description": "茂密的松林遮天蔽日，林间小路蜿蜒向前。偶尔能听到远处传来的鸟鸣。\n南边是山门，北边和东边都有小路延伸。",
       "exits": [
-        { "direction": "south", "roomId": "wilderness/gate" },
-        { "direction": "north", "roomId": "wilderness/forest2" },
-        { "direction": "east", "roomId": "wilderness/cliff" }
+        {
+          "direction": "south",
+          "roomId": "wilderness/gate"
+        },
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        },
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
       ]
     },
     {
@@ -68,8 +114,18 @@
       "name": "山林·深处",
       "description": "越往北走，林木越发茂密。一条小溪从路边流过，溪水清澈见底。\n南边可以退出密林，西边似乎有条岔路。",
       "exits": [
-        { "direction": "south", "roomId": "wilderness/forest1" },
-        { "direction": "west", "roomId": "wilderness/cave" }
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest1"
+        },
+        {
+          "direction": "west",
+          "roomId": "wilderness/cave"
+        },
+        {
+          "direction": "north",
+          "roomId": "shaolin/gate"
+        }
       ]
     },
     {
@@ -77,7 +133,14 @@
       "name": "山林·断崖",
       "description": "一处陡峭的悬崖边缘。站在崖边可以俯瞰整个无名小镇，景色壮丽。\n西边可以返回林间小路。",
       "exits": [
-        { "direction": "west", "roomId": "wilderness/forest1" }
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest1"
+        },
+        {
+          "direction": "west",
+          "roomId": "wudang/gate"
+        }
       ]
     },
     {
@@ -85,7 +148,92 @@
       "name": "山林·洞穴",
       "description": "一个隐蔽的山洞隐藏在藤蔓之后。洞内阴暗潮湿，空气清凉。\n洞壁上有些微弱的磷光，隐约能看到深处的通道。东边可以离开洞穴。",
       "exits": [
-        { "direction": "east", "roomId": "wilderness/forest2" }
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "shaolin/gate",
+      "name": "少林寺·山门",
+      "description": "一座庄严的古寺矗立在山腰。朱红的大门上方匾额写着「少林寺」三个金字。\n几个小沙弥正在清扫石阶。西边可以返回山林。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "shaolin/hall"
+        },
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "shaolin/hall",
+      "name": "少林寺·大雄宝殿",
+      "description": "大雄宝殿内香烟缭绕，金身佛像庄严肃穆。\n玄慈方丈端坐在蒲团上。东边是山门，北边是练功房。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "shaolin/gate"
+        },
+        {
+          "direction": "north",
+          "roomId": "shaolin/training"
+        }
+      ]
+    },
+    {
+      "id": "shaolin/training",
+      "name": "少林寺·练功房",
+      "description": "一间宽敞的练功房，地上散落着石锁和沙袋。\n壁上画着十八罗汉的姿势图解。南边可以返回大殿。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "shaolin/hall"
+        }
+      ]
+    },
+    {
+      "id": "wudang/gate",
+      "name": "武当山·山门",
+      "description": "武当山云雾缭绕，石阶蜿蜒而上。一座石牌坊上刻「武当山」三字。\n西边通向紫霄宫。东边可以返回山林。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wudang/hall"
+        },
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "wudang/hall",
+      "name": "武当山·紫霄宫",
+      "description": "紫霄宫是武当派的中心。殿内供奉着真武大帝，檀香缥缈。\n冲虚道长正在闭目养神。东边是山门，北边是练武场。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wudang/gate"
+        },
+        {
+          "direction": "north",
+          "roomId": "wudang/training"
+        }
+      ]
+    },
+    {
+      "id": "wudang/training",
+      "name": "武当山·练武场",
+      "description": "山顶一片平整的练武场，云雾从身边飘过。\n几个弟子正在练习太极拳，动作舒缓流畅。南边可以返回紫霄宫。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wudang/hall"
+        }
       ]
     }
   ]

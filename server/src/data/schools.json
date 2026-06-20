@@ -1,0 +1,20 @@
+[
+  {
+    "id": "shaolin",
+    "name": "少林派",
+    "description": "天下武功出少林。少林寺位于嵩山，以七十二绝技名震江湖。弟子须持戒修行，武功以刚猛见长。",
+    "joinRoomId": "shaolin/hall",
+    "masterName": "玄慈方丈",
+    "masterDialogue": ["阿弥陀佛，施主想入我少林门下？", "习武先修心，持戒方能成器。", "罗汉拳乃我少林入门功夫。"],
+    "skills": ["cuff", "dodge", "force", "luohan-quan"]
+  },
+  {
+    "id": "wudang",
+    "name": "武当派",
+    "description": "武当山为道教名山，武当派以太极拳、太极剑闻名于世。讲究以柔克刚，后发制人。",
+    "joinRoomId": "wudang/hall",
+    "masterName": "冲虚道长",
+    "masterDialogue": ["无量天尊，施主可是来拜师的？", "太极之道，以柔克刚。", "学武先学道，修道先修心。"],
+    "skills": ["cuff", "dodge", "force", "taiji-quan"]
+  }
+]
