@@ -31,7 +31,8 @@ if (fs.existsSync(distDir)) {
 }
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
+    const online = players.getAllPlayers();
+    res.json({ status: 'ok', uptime: process.uptime().toFixed(0), online: online.length, players: online.map(p => p.name) });
 });
 
 // Wire up game systems

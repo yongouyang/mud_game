@@ -20,7 +20,7 @@ let players: PlayerManager;
 
 beforeAll(async () => {
   const app = express();
-  app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+  app.get('/health', (_req, res) => res.json({ status: 'ok', online: players.getAllPlayers().length, players: [] }));
 
   httpServer = createServer(app);
   const io = new SocketIOServer(httpServer);
@@ -122,7 +122,7 @@ describe('E2E: Phase 2 — core', () => {
 
   it('health returns ok', async () => {
     const res = await fetch(`http://localhost:${port}/health`);
-    expect((await res.json())).toEqual({ status: 'ok' });
+    const body = await res.json(); expect(body.status).toBe('ok'); expect(body.online).toBeGreaterThanOrEqual(0);
   });
 });
 
