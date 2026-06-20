@@ -6,7 +6,6 @@ interface TerminalProps {
   theme: Theme;
 }
 
-/** Tiny embedded SVG noise for parchment grain — ~200 bytes */
 const NOISE_SVG =
   `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`;
 
@@ -14,6 +13,7 @@ export function Terminal({ theme }: TerminalProps) {
   const [lines, setLines] = useState<string[]>([]);
   const [input, setInput] = useState('');
   const [connected, setConnected] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
 
   const socketRef = useRef<Socket | null>(null);
   const outputRef = useRef<HTMLDivElement>(null);
@@ -25,15 +25,7 @@ export function Terminal({ theme }: TerminalProps) {
 
     socket.on('connect', () => {
       setConnected(true);
-      appendLines([
-        '',
-        '  ╔══════════════════════════╗',
-        '  ║   ★  炎 黄 群 侠 传  ★  ║',
-        '  ╚══════════════════════════╝',
-        '',
-        '  输入 help 查看可用命令',
-        '',
-      ]);
+      setShowBanner(true);
     });
 
     socket.on('disconnect', () => {
@@ -67,6 +59,7 @@ export function Terminal({ theme }: TerminalProps) {
     const trimmed = input.trim();
     if (!trimmed || !socketRef.current) return;
 
+    setShowBanner(false);
     setLines((prev) => [...prev, `  > ${trimmed}`]);
     socketRef.current.emit('command', { input: trimmed });
     setInput('');
@@ -85,12 +78,12 @@ export function Terminal({ theme }: TerminalProps) {
     inputRef.current?.focus();
   }, []);
 
-  const st = s(theme);
-  const dotColor = connected ? theme.success : theme.error;
+  const t = theme;
+  const dotColor = connected ? t.success : t.error;
+  const st = styles(t);
 
   return (
     <div style={st.container} onClick={handleContainerClick}>
-      {/* Parchment grain overlay */}
       <div style={st.grainOverlay} />
 
       {/* Header */}
@@ -110,10 +103,16 @@ export function Terminal({ theme }: TerminalProps) {
 
       {/* Output */}
       <div ref={outputRef} style={st.output}>
+        {showBanner && (
+          <div style={st.banner}>
+            <div style={st.bannerTitle}>★ 炎 黄 群 侠 传 ★</div>
+            <div style={st.bannerHint}>输入 help 查看可用命令</div>
+          </div>
+        )}
         {lines.join('\n')}
       </div>
 
-      {/* Input bar — scroll-like double border */}
+      {/* Input bar */}
       <div style={st.inputBar}>
         <span style={st.prompt}>&gt;</span>
         <input
@@ -131,14 +130,14 @@ export function Terminal({ theme }: TerminalProps) {
           style={st.sendBtn}
           onClick={sendCommand}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = theme.accent;
-            e.currentTarget.style.color = theme.bg;
-            e.currentTarget.style.borderColor = theme.accent;
+            e.currentTarget.style.background = t.accent;
+            e.currentTarget.style.color = t.bg;
+            e.currentTarget.style.borderColor = t.accent;
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = theme.bg;
-            e.currentTarget.style.color = theme.accent;
-            e.currentTarget.style.borderColor = theme.border;
+            e.currentTarget.style.background = t.bg;
+            e.currentTarget.style.color = t.accent;
+            e.currentTarget.style.borderColor = t.border;
           }}
         >
           发送
@@ -148,8 +147,7 @@ export function Terminal({ theme }: TerminalProps) {
   );
 }
 
-// ── Styles ──────────────────────────────────────────────
-function s(t: Theme) {
+function styles(t: Theme) {
   return {
     container: {
       position: 'relative' as const,
@@ -225,11 +223,30 @@ function s(t: Theme) {
       zIndex: 2,
       flex: 1,
       overflowY: 'auto' as const,
-      padding: '16px 20px',
+      padding: '20px',
       whiteSpace: 'pre-wrap' as const,
       wordBreak: 'break-all' as const,
       scrollBehavior: 'smooth' as const,
       boxShadow: `inset 0 8px 12px -12px ${t.bgDark}`,
+    },
+    banner: {
+      marginBottom: 24,
+      padding: '18px 0',
+      borderTop: `1px solid ${t.accentAlt}55`,
+      borderBottom: `1px solid ${t.accentAlt}55`,
+      textAlign: 'center' as const,
+    },
+    bannerTitle: {
+      color: t.accent,
+      fontSize: 16,
+      fontWeight: 600 as const,
+      letterSpacing: 6,
+      textShadow: t.glow,
+      marginBottom: 10,
+    },
+    bannerHint: {
+      color: t.fgDim,
+      fontSize: 13,
     },
     inputBar: {
       position: 'relative' as const,
