@@ -8,7 +8,7 @@
     "dev:all": "concurrently -n client,server \"npm run dev\" \"npm run dev:server\"",
     "build": "vite build",
     "start:server": "cd server && npm start",
-    "test": "vitest run",
+    "test": "vitest run && cd server && npx vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:sweep": "npm run build && E2E_PROD=1 npm run test:e2e -- tests/e2e/game.spec.ts --project='Desktop Chrome'"
