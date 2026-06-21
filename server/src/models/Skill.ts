@@ -9,6 +9,7 @@ export interface SkillDef {
   damageScale: number;
   requireSkill?: string;
   requireLevel?: number;
+  schoolId?: string | null;
 }
 
 export interface PlayerSkill {

@@ -343,7 +343,9 @@ describe('CommandRouter', () => {
 
     it('learn allows skill after prerequisite met', () => {
       for (let i = 0; i < 10; i++) cmd('learn 基本拳脚');
-      expect(cmd('learn 太极拳')).toContain('你学会了太极拳');
+      const p = players.getPlayer(PLAYER_ID)!;
+    (p as any).schoolId = 'wudang'; p.currentRoom = 'wudang/hall';
+    expect(cmd('learn 太极拳')).toContain('你学会了太极拳');
     });
 
     it('exp and pot are visible in score', () => {

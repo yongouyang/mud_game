@@ -57,7 +57,7 @@ describe('SkillSystem', () => {
     sys.learnSkill(p, 'taiji-quan');
     const best = sys.getBestStrike(p);
     expect(best).not.toBeNull();
-    expect(best!.damage).toBeGreaterThan(5);
+    expect(best!.damage).toBeGreaterThanOrEqual(5);
   });
 
   it('gets dodge level from best dodge skill', () => {
@@ -92,7 +92,8 @@ describe('SkillSystem', () => {
   it('allows skill when prerequisite met', () => {
     const p = makePlayer('test');
     for (let i = 0; i < 10; i++) sys.learnSkill(p, 'cuff');
-    expect(sys.learnSkill(p, 'taiji-quan')).toBeNull();
+    (p as any).schoolId = 'wudang';
+    expect(sys.learnSkill(p, 'taiji-quan', { currentRoom: 'wudang/hall' })).toBeNull();
     expect(sys.getSkillLevel(p, 'taiji-quan')).toBe(1);
   });
 

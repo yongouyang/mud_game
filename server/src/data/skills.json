@@ -1,22 +1,204 @@
 [
-  {"id": "parry",      "name": "招架",         "type": "parry",   "description": "基本招架之术，格挡敌人攻击。",                                 "damageBase": 0, "damageScale": 0},
-  {"id": "sword",      "name": "基本剑法",     "type": "strike",  "description": "基本剑术，可用剑类武器施展。",                                 "damageBase": 3, "damageScale": 0.4},
-  {"id": "blade",      "name": "基本刀法",     "type": "strike",  "description": "基本刀术，可用刀类武器施展。",                                 "damageBase": 4, "damageScale": 0.4},
-  {"id": "staff",      "name": "基本杖法",     "type": "strike",  "description": "基本棍杖之术。",                                               "damageBase": 3, "damageScale": 0.5},
-  {"id": "throwing",   "name": "基本暗器",     "type": "strike",  "description": "基本暗器手法。",                                               "damageBase": 5, "damageScale": 0.3},
-  {"id": "whip",       "name": "基本鞭法",     "type": "strike",  "description": "基本鞭法之术。",                                               "damageBase": 3, "damageScale": 0.5},
-  {"id": "cuff",       "name": "基本拳脚",     "type": "strike",  "description": "基本拳脚功夫，入门必学。",                                     "damageBase": 2, "damageScale": 0.3},
-  {"id": "dodge",      "name": "基本轻功",     "type": "dodge",   "description": "基本轻功，用于闪避敌人攻击。",                                 "damageBase": 0, "damageScale": 0},
-  {"id": "force",      "name": "基本内功",     "type": "force",   "description": "基本内功心法，影响内力上限和护体效果。",                       "damageBase": 0, "damageScale": 0},
-  {"id": "taiji-quan", "name": "太极拳",       "type": "strike",  "description": "武当镇派拳法，以柔克刚。需基本拳脚≥10。",                     "damageBase": 6, "damageScale": 0.8,  "requireSkill": "cuff", "requireLevel": 10},
-  {"id": "luohan-quan", "name": "罗汉拳",      "type": "strike",  "description": "少林入门拳法。需基本拳脚≥5。",                                 "damageBase": 5, "damageScale": 0.6,  "requireSkill": "cuff", "requireLevel": 5},
-  {"id": "qinggong",    "name": "草上飞",      "type": "dodge",   "description": "轻功进阶，身法如飞。需基本轻功≥10。",                         "damageBase": 0, "damageScale": 0,    "requireSkill": "dodge", "requireLevel": 10},
-  {"id": "neigong-xinfa","name": "内功心法",    "type": "force",   "description": "内功进阶，加强内力修为。需基本内功≥10。",                     "damageBase": 0, "damageScale": 0,    "requireSkill": "force", "requireLevel": 10},
-  {"id": "huashan-jian", "name": "华山剑法",   "type": "strike",  "description": "华山独门剑法。需基本剑法≥10。",                               "damageBase": 6, "damageScale": 0.7,  "requireSkill": "sword", "requireLevel": 10},
-  {"id": "dugu-jiujian", "name": "独孤九剑",   "type": "strike",  "description": "剑魔绝学。需华山剑法≥20，基本剑法≥30。",                      "damageBase": 9, "damageScale": 1.2,  "requireSkill": "huashan-jian", "requireLevel": 20},
-  {"id": "dagou-bang",   "name": "打狗棒法",   "type": "strike",  "description": "丐帮镇帮棒法。需基本杖法≥15。",                               "damageBase": 7, "damageScale": 0.9,  "requireSkill": "staff", "requireLevel": 15},
-  {"id": "xianglong-zhang","name": "降龙十八掌","type": "strike", "description": "丐帮绝学。需基本拳脚≥20。",                                    "damageBase": 8, "damageScale": 1.0,  "requireSkill": "cuff", "requireLevel": 20},
-  {"id": "emei-jian",    "name": "峨眉剑法",   "type": "strike",  "description": "峨眉独门剑法。需基本剑法≥10。",                               "damageBase": 6, "damageScale": 0.7,  "requireSkill": "sword", "requireLevel": 10},
-  {"id": "yunu-xinjing", "name": "玉女心经",   "type": "force",   "description": "古墓派内功。需基本内功≥15。",                                  "damageBase": 0, "damageScale": 0,    "requireSkill": "force", "requireLevel": 15},
-  {"id": "anran-xiaohun", "name": "黯然销魂掌","type": "strike",  "description": "威力惊人的掌法。需基本拳脚≥15，玉女心经≥10。",                 "damageBase": 8, "damageScale": 1.1,  "requireSkill": "cuff", "requireLevel": 15}
+  {
+    "id": "parry",
+    "name": "招架",
+    "type": "parry",
+    "description": "基本招架之术，格挡敌人攻击。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": null
+  },
+  {
+    "id": "sword",
+    "name": "基本剑法",
+    "type": "strike",
+    "description": "基本剑术，可用剑类武器施展。",
+    "damageBase": 3,
+    "damageScale": 0.4,
+    "schoolId": null
+  },
+  {
+    "id": "blade",
+    "name": "基本刀法",
+    "type": "strike",
+    "description": "基本刀术，可用刀类武器施展。",
+    "damageBase": 4,
+    "damageScale": 0.4,
+    "schoolId": null
+  },
+  {
+    "id": "staff",
+    "name": "基本杖法",
+    "type": "strike",
+    "description": "基本棍杖之术。",
+    "damageBase": 3,
+    "damageScale": 0.5,
+    "schoolId": null
+  },
+  {
+    "id": "throwing",
+    "name": "基本暗器",
+    "type": "strike",
+    "description": "基本暗器手法。",
+    "damageBase": 5,
+    "damageScale": 0.3,
+    "schoolId": null
+  },
+  {
+    "id": "whip",
+    "name": "基本鞭法",
+    "type": "strike",
+    "description": "基本鞭法之术。",
+    "damageBase": 3,
+    "damageScale": 0.5,
+    "schoolId": null
+  },
+  {
+    "id": "cuff",
+    "name": "基本拳脚",
+    "type": "strike",
+    "description": "基本拳脚功夫，入门必学。",
+    "damageBase": 2,
+    "damageScale": 0.3,
+    "schoolId": null
+  },
+  {
+    "id": "dodge",
+    "name": "基本轻功",
+    "type": "dodge",
+    "description": "基本轻功，用于闪避敌人攻击。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": null
+  },
+  {
+    "id": "force",
+    "name": "基本内功",
+    "type": "force",
+    "description": "基本内功心法，影响内力上限和护体效果。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": null
+  },
+  {
+    "id": "taiji-quan",
+    "name": "太极拳",
+    "type": "strike",
+    "description": "武当镇派拳法，以柔克刚。需基本拳脚≥10。",
+    "damageBase": 6,
+    "damageScale": 0.8,
+    "requireSkill": "cuff",
+    "requireLevel": 10,
+    "schoolId": "wudang"
+  },
+  {
+    "id": "luohan-quan",
+    "name": "罗汉拳",
+    "type": "strike",
+    "description": "少林入门拳法。需基本拳脚≥5。",
+    "damageBase": 5,
+    "damageScale": 0.6,
+    "requireSkill": "cuff",
+    "requireLevel": 5,
+    "schoolId": "shaolin"
+  },
+  {
+    "id": "qinggong",
+    "name": "草上飞",
+    "type": "dodge",
+    "description": "轻功进阶，身法如飞。需基本轻功≥10。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "dodge",
+    "requireLevel": 10,
+    "schoolId": "wudang"
+  },
+  {
+    "id": "neigong-xinfa",
+    "name": "内功心法",
+    "type": "force",
+    "description": "内功进阶，加强内力修为。需基本内功≥10。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 10,
+    "schoolId": "wudang"
+  },
+  {
+    "id": "huashan-jian",
+    "name": "华山剑法",
+    "type": "strike",
+    "description": "华山独门剑法。需基本剑法≥10。",
+    "damageBase": 6,
+    "damageScale": 0.7,
+    "requireSkill": "sword",
+    "requireLevel": 10,
+    "schoolId": "huashan"
+  },
+  {
+    "id": "dugu-jiujian",
+    "name": "独孤九剑",
+    "type": "strike",
+    "description": "剑魔绝学。需华山剑法≥20，基本剑法≥30。",
+    "damageBase": 9,
+    "damageScale": 1.2,
+    "requireSkill": "huashan-jian",
+    "requireLevel": 20,
+    "schoolId": "huashan"
+  },
+  {
+    "id": "dagou-bang",
+    "name": "打狗棒法",
+    "type": "strike",
+    "description": "丐帮镇帮棒法。需基本杖法≥15。",
+    "damageBase": 7,
+    "damageScale": 0.9,
+    "requireSkill": "staff",
+    "requireLevel": 15,
+    "schoolId": "gaibang"
+  },
+  {
+    "id": "xianglong-zhang",
+    "name": "降龙十八掌",
+    "type": "strike",
+    "description": "丐帮绝学。需基本拳脚≥20。",
+    "damageBase": 8,
+    "damageScale": 1.0,
+    "requireSkill": "cuff",
+    "requireLevel": 20,
+    "schoolId": "gaibang"
+  },
+  {
+    "id": "emei-jian",
+    "name": "峨眉剑法",
+    "type": "strike",
+    "description": "峨眉独门剑法。需基本剑法≥10。",
+    "damageBase": 6,
+    "damageScale": 0.7,
+    "requireSkill": "sword",
+    "requireLevel": 10,
+    "schoolId": "emei"
+  },
+  {
+    "id": "yunu-xinjing",
+    "name": "玉女心经",
+    "type": "force",
+    "description": "古墓派内功。需基本内功≥15。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 15,
+    "schoolId": "gumu"
+  },
+  {
+    "id": "anran-xiaohun",
+    "name": "黯然销魂掌",
+    "type": "strike",
+    "description": "威力惊人的掌法。需基本拳脚≥15，玉女心经≥10。",
+    "damageBase": 8,
+    "damageScale": 1.1,
+    "requireSkill": "cuff",
+    "requireLevel": 15,
+    "schoolId": "gumu"
+  }
 ]

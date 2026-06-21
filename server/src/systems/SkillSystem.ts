@@ -19,7 +19,7 @@ export class SkillSystem {
   }
 
   /** Learn a skill. Returns error message or null for success. */
-  learnSkill(player: Player, skillId: string): string | null {
+  learnSkill(player: Player, skillId: string, opts?: { currentRoom?: string }): string | null {
     const def = this.defs.get(skillId);
     if (!def) return `没有"${skillId}"这个武功。`;
 
@@ -32,13 +32,33 @@ export class SkillSystem {
       }
     }
 
+    // School-specific skills: must be member + at master's room
+    if (def.schoolId) {
+      const pSchoolId = (player as any).schoolId;
+      if (pSchoolId !== def.schoolId) {
+        return `「${def.name}」是${def.schoolId === 'shaolin' ? '少林派' : def.schoolId === 'wudang' ? '武当派' : def.schoolId === 'gaibang' ? '丐帮' : def.schoolId === 'huashan' ? '华山派' : def.schoolId === 'emei' ? '峨眉派' : '古墓派'}独门武功，需先加入该门派。`;
+      }
+      const joinRoom = def.schoolId === 'shaolin' ? 'shaolin/hall' : def.schoolId === 'wudang' ? 'wudang/hall' : def.schoolId === 'gaibang' ? 'gaibang/hq' : def.schoolId === 'huashan' ? 'huashan/peak' : def.schoolId === 'emei' ? 'emei/golden' : 'gumu/chamber';
+      if (opts?.currentRoom !== joinRoom) {
+        return `需到师父面前学习${def.name}。`;
+      }
+    }
+
+    // Pot cost
+    const cost = def.schoolId ? Math.max(2, Math.floor(this.getSkillLevel(player, skillId) / 10) + 2) : 1;
+    if ((player.pot || 0) < cost) {
+      return `潜能不足！需 ${cost} 点（当前 ${player.pot || 0}）。`;
+    }
+
     if (!player.skills) player.skills = [];
     const existing = player.skills.find((s) => s.skillId === skillId);
     if (existing) {
       existing.level = Math.min(100, existing.level + 1);
+      player.pot -= cost;
       return null;
     }
     player.skills.push({ skillId, level: 1 });
+    player.pot -= cost;
     return null;
   }
 

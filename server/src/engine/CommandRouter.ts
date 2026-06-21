@@ -436,7 +436,7 @@ export class CommandRouter {
     if (!name) return '\n  你想学什么武功？用法：learn <武功名>\n';
     const def = this.skills.findDefByName(name);
     if (def) {
-      const err = this.skills.learnSkill(player, def.id);
+      const err = this.skills.learnSkill(player, def.id, { currentRoom: player.currentRoom });
       if (err) return `\n  ${err}\n`;
       const level = this.skills.getSkillLevel(player, def.id);
       return `\n  你学会了${name}！当前等级：Lv.${level}\n`;
