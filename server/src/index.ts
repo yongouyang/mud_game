@@ -76,7 +76,7 @@ if (savedPlayers.length === 0) {
   demo.pot = 10000;
   players.setPlayer(demo);
   persistence.saveAll(players.getAllPlayers());
-  conpot: 10000ole.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
+  console.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
 }
 
 // Register NPCs in the world
