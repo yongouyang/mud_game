@@ -7,3 +7,5 @@ playwright-report/
 test-results/
 data/players.json
 data/users.json
+server/src/data/players.json
+server/src/data/users.json
