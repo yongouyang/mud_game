@@ -190,7 +190,7 @@ Boss NPCs (marked with `boss: true`) are tougher, have longer respawn timers, an
 - Example: **黑风寨主** in `wilderness/cave` drops the rare weapon **黑风刀** and **寨主令**.
 - Drops are rolled on death and added to the killer's inventory automatically.
 
-## Game World (40 rooms, 90 NPCs)
+## Game World (63 rooms, 1,638 NPCs, 734 skills, 139 items)
 
 ```
                       shaolin/gate → shaolin/hall → shaolin/training
