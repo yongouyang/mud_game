@@ -26,6 +26,8 @@ export interface Player {
   inventory: InventoryItem[];
   equipped: string[];
   skills: PlayerSkill[];
+  conditions: string[];
+  schoolId?: string;
 }
 
 export function createPlayer(id: string, name: string, attrs: PlayerAttributes): Player {
@@ -47,6 +49,8 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     inventory: [],
     equipped: [],
     skills: [],
+    conditions: [],
+    schoolId: undefined,
   };
 }
 

@@ -5,6 +5,7 @@ import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
 import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { SchoolDef } from '../models/School.js';
 import { Player, PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
 
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
@@ -83,6 +84,8 @@ export class CommandRouter {
       case 'schools': return this.handleSchools(player, rest);
       case 'join': return this.handleJoin(player, rest);
       case 'buy': return this.handleBuy(player, rest);
+      case 'perform': case 'pfm': return this.handlePerform(player, rest);
+      case 'exert': case 'yun': return this.handleExert(player, rest);
       case 'ask': return this.handleAsk(player, rest);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
@@ -152,7 +155,8 @@ export class CommandRouter {
       '  hit             攻击',       '  flee / tao      逃跑',
       '  schools         门派列表',   '  join <门派>     加入门派',
       '  ask <NPC>       向NPC打听',  '  who             在线玩家',
-      '  help            显示帮助',   '  clear           清屏',
+      '  perform / pfm   施展绝招',   '  exert / yun    内功运用',
+      '  buy <物品>      购买物品',   '  help            显示帮助',
       '',
     ].join('\n') + '\n';
   }
@@ -452,6 +456,39 @@ export class CommandRouter {
       return `\n  你学会了${name}！当前等级：Lv.${level}\n`;
     }
     return `\n  没有"${name}"这个武功。\n`;
+  }
+
+  // ── Perform (绝招) ──────────────────────────────────────
+  private handlePerform(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  用法：perform <技能.绝招>\n';
+    const [skillPerform] = args;
+    const [skillName] = skillPerform?.split('.') || [''];
+    const def = this.skills.findDefByName(skillName || '');
+    if (!def) return `\n  你还没有学会${skillName || '该技能'}。\n`;
+    const level = this.skills.getSkillLevel(player, def.id);
+    if (level < 10) return `\n  你的${def.name}等级不够施展绝招（需Lv.10）。\n`;
+    const dmg = def.damageBase * 3 + def.damageScale * level * 2;
+    player.mp = Math.max(0, player.mp - 20);
+    if ((player.mp || 0) < 20) return '\n  内力不足！施展绝招需要 20 点内力。\n';
+    return `\n  你大喝一声，使出了「${def.name}」绝招！造成 ${Math.round(dmg)} 点伤害。\n`;
+  }
+
+  // ── Exert (内功运用) ─────────────────────────────────────
+  private handleExert(player: Player, args: string[]): string {
+    const action = args[0]?.toLowerCase();
+    if (!action) return '\n  用法：exert heal | yun heal（疗伤）\n';
+    if (action === 'heal') {
+      if ((player.mp || 0) < 30) return '\n  内力不足！疗伤需要 30 点内力。\n';
+      player.mp -= 30;
+      player.hp = Math.min(player.maxHp, player.hp + Math.floor(player.maxHp * 0.2));
+      return `\n  你盘膝坐下，运功疗伤……气血恢复至 ${player.hp}/${player.maxHp}。\n`;
+    }
+    if (action === 'powerup') {
+      if ((player.mp || 0) < 50) return '\n  内力不足！需要 50 点内力。\n';
+      player.mp -= 50;
+      return '\n  你深吸一口气，内力充盈全身！短时间内战斗力大幅提升。\n';
+    }
+    return `\n  没有"${action}"这个内功运用。可用：heal, powerup\n`;
   }
 
   // ── Shop ─────────────────────────────────────────────────
