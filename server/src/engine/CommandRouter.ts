@@ -167,22 +167,39 @@ export class CommandRouter {
       player.targetEnemy = 'npc:' + targetNpc.def.id;
       targetNpc.state = 'fighting';
       targetNpc.targetPlayerId = player.id;
-
-      // Perform the first attack immediately
-      const npcTarget = {
+      // First attack is performed by auto-tick; just show combat start
+      const pSkills = {
+        parryLv: this.skills.getParryLevel(player),
+        dodgeLv: this.skills.getDodgeLevel(player),
+        forceLv: this.skills.getForceLevel(player),
+        bestStrike: this.skills.getBestStrike(player),
+      };
+      const npcSkills = {
+        parryLv: targetNpc.def.attributes.str,
+        dodgeLv: targetNpc.def.attributes.dex,
+        forceLv: targetNpc.def.attributes.con,
+        bestStrike: this.npcs.getBestNpcStrike(targetNpc),
+      };
+      const enemyState = {
         name: targetNpc.def.name,
-        get hp() { return targetNpc.hp; },
-        set hp(v: number) { targetNpc.hp = v; },
+        get hp() { return targetNpc.hp; }, set hp(v: number) { targetNpc.hp = v; },
         maxHp: targetNpc.maxHp,
         attributes: targetNpc.def.attributes,
+        skills: npcSkills,
       };
-      const result = this.combat.attack(player, npcTarget);
+      const result = this.combat.executeRound(player, pSkills, enemyState, npcSkills, false);
       if (result.defenderDead) {
         player.state = 'playing'; player.targetEnemy = null;
         targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
+        return result.message + this.handleNpcDeath(player, targetNpc);
+      }
+      if (result.attackerDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
+        player.hp = 1;
         return result.message;
       }
-      return result.message + this.combat.formatCombatStatus(player, npcTarget);
+      return result.message;
     }
 
     // Check players in room
@@ -195,14 +212,25 @@ export class CommandRouter {
     player.targetEnemy = target.id;
     target.state = 'fighting';
     target.targetEnemy = player.id;
-
-    const result = this.combat.attack(player, target);
-    if (result.defenderDead) {
+    const pSkills = {
+      parryLv: this.skills.getParryLevel(player),
+      dodgeLv: this.skills.getDodgeLevel(player),
+      forceLv: this.skills.getForceLevel(player),
+      bestStrike: this.skills.getBestStrike(player),
+    };
+    const tSkills = {
+      parryLv: this.skills.getParryLevel(target),
+      dodgeLv: this.skills.getDodgeLevel(target),
+      forceLv: this.skills.getForceLevel(target),
+      bestStrike: this.skills.getBestStrike(target),
+    };
+    const result = this.combat.executeRound(player, pSkills, target, tSkills, false);
+    if (result.defenderDead || result.attackerDead) {
       player.state = 'playing'; player.targetEnemy = null;
       target.state = 'playing'; target.targetEnemy = null;
-      return result.message;
     }
-    return result.message + this.combat.formatCombatStatus(player, target);
+    if (result.attackerDead) player.hp = 1;
+    return result.message;
   }
 
   // ── Combat Round (called by auto-tick and manual hit) ──────
@@ -223,54 +251,86 @@ export class CommandRouter {
     return Math.max(600, 2000 - dex * 45 - dodgeLevel * 8);
   }
 
-  private doCombatRound(player: Player, targetId: string): string {
-    let msg = '';
-
+  private doCombatRound(player: Player, targetId: string, isExtraHit = false): string {
     if (targetId.startsWith('npc:')) {
       const npc = this.npcs.getNpc(targetId.slice(4));
-      if (!npc || npc.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; } return '\n  敌人已倒下，战斗结束。\n'; }
-      const npcTarget = {
+      if (!npc || npc.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
+        return this.handleNpcDeath(player, npc);
+      }
+      const pSkills = {
+        parryLv: this.skills.getParryLevel(player),
+        dodgeLv: this.skills.getDodgeLevel(player),
+        forceLv: this.skills.getForceLevel(player),
+        bestStrike: this.skills.getBestStrike(player),
+      };
+      const npcSkills = {
+        parryLv: npc.def.attributes.str,
+        dodgeLv: npc.def.attributes.dex,
+        forceLv: npc.def.attributes.con,
+        bestStrike: this.npcs.getBestNpcStrike(npc),
+      };
+      const enemyState = {
         name: npc.def.name,
         get hp() { return npc.hp; }, set hp(v: number) { npc.hp = v; },
         maxHp: npc.maxHp,
         attributes: npc.def.attributes,
+        skills: npcSkills,
       };
-      const result = this.combat.attack(player, npcTarget);
-      msg = `\n  [战斗] ${result.message.trim()}\n`;
+      const result = this.combat.executeRound(player, pSkills, enemyState, npcSkills, isExtraHit);
       if (result.defenderDead) {
         player.state = 'playing'; player.targetEnemy = null;
         npc.state = 'idle'; npc.targetPlayerId = null;
-        return msg + `\n  ${npc.def.name} 倒下了！\n`;
+        return result.message + this.handleNpcDeath(player, npc);
       }
-      const counter = this.combat.attack({ attributes: npc.def.attributes, name: npc.def.name }, player);
-      msg += `  ${counter.message.trim()}\n`;
-      if (counter.defenderDead) {
+      if (result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
         npc.state = 'idle'; npc.targetPlayerId = null;
         player.hp = 1;
-        return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
+        return result.message;
       }
-      return msg + this.combat.formatCombatStatus(player, npcTarget);
+      return result.message;
     } else {
       const target = this.players.getPlayer(targetId);
-      if (!target || target.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; if (target) { target.state = 'playing'; target.targetEnemy = null; } return '\n  敌人已倒下，战斗结束。\n'; }
-      const result = this.combat.attack(player, target);
-      msg = `\n  [战斗] ${result.message.trim()}\n`;
-      if (result.defenderDead) {
+      if (!target || target.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        if (target) { target.state = 'playing'; target.targetEnemy = null; }
+        return '\n  敌人已倒下，战斗结束。\n';
+      }
+      const pSkills = {
+        parryLv: this.skills.getParryLevel(player),
+        dodgeLv: this.skills.getDodgeLevel(player),
+        forceLv: this.skills.getForceLevel(player),
+        bestStrike: this.skills.getBestStrike(player),
+      };
+      const tSkills = {
+        parryLv: this.skills.getParryLevel(target),
+        dodgeLv: this.skills.getDodgeLevel(target),
+        forceLv: this.skills.getForceLevel(target),
+        bestStrike: this.skills.getBestStrike(target),
+      };
+      const result = this.combat.executeRound(player, pSkills, target, tSkills, isExtraHit);
+      if (result.defenderDead || result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
-        return msg + `\n  ${target.name} 倒下了！\n`;
       }
-      const counter = this.combat.attack(target, player);
-      msg += `  ${counter.message.trim()}\n`;
-      if (counter.defenderDead) {
-        player.state = 'playing'; player.targetEnemy = null;
-        target.state = 'playing'; target.targetEnemy = null;
-        player.hp = 1;
-        return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
-      }
-      return msg + this.combat.formatCombatStatus(player, target);
+      if (result.attackerDead) player.hp = 1;
+      return result.message;
     }
+  }
+
+  private handleNpcDeath(player: Player, npc: any): string {
+    if (!npc) return '';
+    const expGain = 10 + npc.def.attributes.str * 2 + npc.def.attributes.con;
+    const potGain = 5 + Math.floor(npc.def.attributes.int * 0.5);
+    player.exp += expGain;
+    player.pot += potGain;
+    let msg = `\n  你获得了 ${expGain} 点经验，${potGain} 点潜能。\n`;
+    const gold = 10 + Math.floor(Math.random() * 20);
+    this.items.addItem(player, 'silver', gold);
+    msg += `  从尸体上搜出 ${gold} 两银子。\n`;
+    return msg;
   }
 
   private handleCombat(player: Player, cmd: string, _args: string[]): string {
@@ -287,12 +347,12 @@ export class CommandRouter {
       return '\n  你转身逃走了……\n';
     }
     if (cmd === 'hp' || cmd === 'look' || cmd === 'l') {
-      return this.doCombatRound(player, player.targetEnemy!); // display only, no attack
+      return this.doCombatRound(player, player.targetEnemy!, false);
     }
     if (cmd === 'hit' || cmd === 'kill') {
-      return this.doCombatRound(player, player.targetEnemy!);
+      return this.doCombatRound(player, player.targetEnemy!, true);
     }
-    return '\n  战斗中可以使用：hit（攻击）、flee（逃跑）、hp（查看状态）\n';
+    return '\n  战斗中可使用：hit（抢攻）、flee（逃跑）、hp（查看状态）\n';
   }
 
   // ── Items ────────────────────────────────────────────────

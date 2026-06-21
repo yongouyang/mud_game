@@ -11,20 +11,26 @@ export class SkillSystem {
     }
   }
 
-  getDef(skillId: string): SkillDef | undefined {
-    return this.defs.get(skillId);
-  }
+  getDef(skillId: string): SkillDef | undefined { return this.defs.get(skillId); }
 
   findDefByName(name: string): SkillDef | undefined {
-    for (const def of this.defs.values()) {
-      if (def.name === name) return def;
-    }
+    for (const def of this.defs.values()) { if (def.name === name) return def; }
     return undefined;
   }
 
+  /** Learn a skill. Returns error message or null for success. */
   learnSkill(player: Player, skillId: string): string | null {
     const def = this.defs.get(skillId);
     if (!def) return `没有"${skillId}"这个武功。`;
+
+    // Check prerequisite
+    if (def.requireSkill && def.requireLevel) {
+      const prereqLevel = this.getSkillLevel(player, def.requireSkill);
+      if (prereqLevel < def.requireLevel) {
+        const prereqDef = this.defs.get(def.requireSkill);
+        return `学习${def.name}需要${prereqDef?.name || def.requireSkill}达到Lv.${def.requireLevel}（当前Lv.${prereqLevel}）。`;
+      }
+    }
 
     if (!player.skills) player.skills = [];
     const existing = player.skills.find((s) => s.skillId === skillId);
@@ -40,40 +46,51 @@ export class SkillSystem {
     return player.skills?.find((s) => s.skillId === skillId)?.level || 0;
   }
 
-  /** Get the highest-level strike skill for combat damage bonus */
-  getBestStrike(player: Player): { def: SkillDef; level: number } | null {
-    let best: { def: SkillDef; level: number } | null = null;
+  getBestStrike(player: Player): { name: string; damage: number } | null {
+    let best: { name: string; damage: number } | null = null;
     for (const s of player.skills || []) {
       const def = this.defs.get(s.skillId);
-      if (def && def.type === 'strike' && (!best || s.level > best.level)) {
-        best = { def, level: s.level };
+      if (def && def.type === 'strike') {
+        const dmg = def.damageBase + def.damageScale * s.level;
+        if (!best || dmg > best.damage) best = { name: def.name, damage: dmg };
       }
     }
     return best;
   }
 
-  /** Get dodge level for defense */
+  getParryLevel(player: Player): number {
+    let max = 0;
+    for (const s of player.skills || []) {
+      const def = this.defs.get(s.skillId);
+      if (def && def.type === 'parry' && s.level > max) max = s.level;
+    }
+    return max;
+  }
+
   getDodgeLevel(player: Player): number {
     let max = 0;
     for (const s of player.skills || []) {
       const def = this.defs.get(s.skillId);
-      if (def && def.type === 'dodge' && s.level > max) {
-        max = s.level;
-      }
+      if (def && def.type === 'dodge' && s.level > max) max = s.level;
+    }
+    return max;
+  }
+
+  getForceLevel(player: Player): number {
+    let max = 0;
+    for (const s of player.skills || []) {
+      const def = this.defs.get(s.skillId);
+      if (def && def.type === 'force' && s.level > max) max = s.level;
     }
     return max;
   }
 
   formatSkills(player: Player): string {
-    if (!player.skills || player.skills.length === 0) {
-      return '\n  你尚未学习任何武功。\n';
-    }
+    if (!player.skills || player.skills.length === 0) return '\n  你尚未学习任何武功。\n';
     const lines: string[] = ['', '  ─── 武功 ───', ''];
     for (const s of player.skills) {
       const def = this.defs.get(s.skillId);
-      if (def) {
-        lines.push(`  ${def.name}(${def.type})  Lv.${s.level}`);
-      }
+      if (def) lines.push(`  ${def.name}(${def.type})  Lv.${s.level}`);
     }
     return lines.join('\n') + '\n\n';
   }

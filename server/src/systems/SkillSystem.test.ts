@@ -54,11 +54,12 @@ describe('SkillSystem', () => {
   it('gets best strike skill', () => {
     const p = makePlayer('test');
     sys.learnSkill(p, 'luohan-quan');
-    sys.learnSkill(p, 'taiji-quan');
-    sys.learnSkill(p, 'taiji-quan');
+    for (let i = 0; i < 10; i++) sys.learnSkill(p, 'cuff');
+    sys.learnSkill(p, 'taiji-quan'); for (let i = 1; i < 2; i++) sys.learnSkill(p, 'taiji-quan');
+    sys.learnSkill(p, 'taiji-quan'); for (let i = 1; i < 2; i++) sys.learnSkill(p, 'taiji-quan');
     const best = sys.getBestStrike(p);
-    expect(best?.def.id).toBe('taiji-quan');
-    expect(best?.level).toBe(2);
+    expect(best?.name).toBe('太极拳');
+    expect(best?.damage).toBeGreaterThan(0);
   });
 
   it('gets dodge level from best dodge skill', () => {

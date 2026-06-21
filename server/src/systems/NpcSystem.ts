@@ -74,4 +74,16 @@ export class NpcSystem {
     }
     return Math.round(dmg);
   }
+  getBestNpcStrike(npc: NpcInstance): { name: string; damage: number } | null {
+    let best: { name: string; damage: number } | null = null;
+    for (const sk of npc.def.skills) {
+      const def = this.skillSystem.getDef(sk.skillId);
+      if (def && def.type === 'strike') {
+        const dmg = def.damageBase + def.damageScale * sk.level;
+        if (!best || dmg > best.damage) best = { name: def.name, damage: dmg };
+      }
+    }
+    return best;
+  }
+
 }

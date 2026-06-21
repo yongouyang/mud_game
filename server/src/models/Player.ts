@@ -18,6 +18,8 @@ export interface Player {
   maxHp: number;
   mp: number;
   maxMp: number;
+  exp: number;
+  pot: number;
   currentRoom: string;
   state: PlayerState;
   targetEnemy: string | null;
@@ -37,6 +39,8 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     maxHp,
     mp: maxMp,
     maxMp,
+    exp: 0,
+    pot: 100,
     currentRoom: 'town/square',
     state: 'playing',
     targetEnemy: null,

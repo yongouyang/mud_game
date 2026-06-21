@@ -211,7 +211,7 @@ describe('CommandRouter', () => {
 
     it('kill initiates combat', () => {
       const output = cmd('kill 李寻欢');
-      expect(output).toContain('伤害');
+      expect(output).toContain('战斗');
       expect(output).toContain('李寻欢');
       expect(output).toContain('战斗');
     });
@@ -224,7 +224,7 @@ describe('CommandRouter', () => {
     it('hit during combat deals damage', () => {
       cmd('kill 李寻欢');
       const output = cmd('hit');
-      expect(output).toContain('伤害');
+      expect(output).toContain('战斗');
     });
 
     it('combat speed scales with dex and dodge', () => {

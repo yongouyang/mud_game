@@ -33,7 +33,7 @@ describe('CombatSystem', () => {
   it('formatCombatStatus works with minimal CombatTarget', () => {
     const p = player({ name: 'hero', hp: 80, maxHp: 100 });
     // Should work without needing full Player — just name, hp, maxHp
-    const out = combat.formatCombatStatus(p, { name: 'bandit', hp: 50, maxHp: 80 } as any);
+    const out = combat.formatCombatStatus(p, p.mp || 0, p.maxMp || 0, { name: 'bandit', hp: 50, maxHp: 80 });
     expect(out).toContain('hero');
     expect(out).toContain('bandit');
     expect(out).toContain('80/100');
