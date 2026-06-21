@@ -84,7 +84,7 @@ export class PlayerManager {
       '',
       `  气血 ${hpBar} ${player.hp}/${player.maxHp}  内力 ${mpBar} ${player.mp}/${player.maxMp}`,
       '',
-      `  臂力(str): ${a.str}    悟性(int): ${a.int}`,
+      `  臂力(str): ${a.str}    悟性(int): ${a.int}    Lv.${Math.floor(Math.sqrt((player.exp || 0) / 100)) + 1}`,
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
       '',
       `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}`,

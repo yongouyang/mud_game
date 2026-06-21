@@ -294,7 +294,9 @@ export class CommandRouter {
         player.state = 'playing'; player.targetEnemy = null;
         npc.state = 'idle'; npc.targetPlayerId = null;
         player.hp = 1;
-        return result.message;
+        const expLoss = Math.floor((player.exp || 0) * 0.1);
+        player.exp = Math.max(0, (player.exp || 0) - expLoss);
+        return result.message + `\n  你损失了 ${expLoss} 点经验。\n`;
       }
       return result.message;
     } else {
@@ -321,7 +323,12 @@ export class CommandRouter {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
       }
-      if (result.attackerDead) player.hp = 1;
+      if (result.attackerDead) {
+        player.hp = 1;
+        const expLoss = Math.floor((player.exp || 0) * 0.1);
+        player.exp = Math.max(0, (player.exp || 0) - expLoss);
+        return result.message + `\n  你损失了 ${expLoss} 点经验。\n`;
+      }
       return result.message;
     }
   }
