@@ -193,5 +193,119 @@
     "name": "段氏皇族",
     "description": "大理段氏，六脉神剑一阳指威震南疆。",
     "joinRoomId": "duan/hall"
+  },
+  {
+    "id": "henshan",
+    "name": "衡山派",
+    "description": "南岳衡山上的剑派，剑法灵巧多变。",
+    "joinRoomId": "henshan/hall"
+  },
+  {
+    "id": "honghua",
+    "name": "红花会",
+    "description": "反清复明的秘密帮会，义薄云天。",
+    "joinRoomId": "honghua/hall"
+  },
+  {
+    "id": "hu",
+    "name": "胡家",
+    "description": "辽东胡家，胡家刀法威震辽东。",
+    "joinRoomId": "hu/hall"
+  },
+  {
+    "id": "jueqing",
+    "name": "绝情谷",
+    "description": "绝情谷中的隐世门派，情花之毒无人能解。",
+    "joinRoomId": "jueqing/hall"
+  },
+  {
+    "id": "lingxiao",
+    "name": "凌霄城",
+    "description": "西域凌霄城，雪山之巅的武道圣地。",
+    "joinRoomId": "lingxiao/hall"
+  },
+  {
+    "id": "meizhuang",
+    "name": "梅庄",
+    "description": "西湖梅庄，琴棋书画剑法无双。",
+    "joinRoomId": "meizhuang/hall"
+  },
+  {
+    "id": "miao",
+    "name": "苗家",
+    "description": "苗人凤世家，苗家剑法名震天下。",
+    "joinRoomId": "miao/hall"
+  },
+  {
+    "id": "ouyang",
+    "name": "欧阳世家",
+    "description": "西域欧阳氏，蛤蟆功独步天下。",
+    "joinRoomId": "ouyang/hall"
+  },
+  {
+    "id": "shang",
+    "name": "商家堡",
+    "description": "山东商家堡，八卦刀法威震一方。",
+    "joinRoomId": "shang/hall"
+  },
+  {
+    "id": "songshan",
+    "name": "嵩山派",
+    "description": "嵩山剑派，左冷禅执掌，五岳之首。",
+    "joinRoomId": "songshan/hall"
+  },
+  {
+    "id": "tianlongsi",
+    "name": "天龙寺",
+    "description": "大理天龙寺，枯荣禅功无上佛法。",
+    "joinRoomId": "tianlongsi/hall"
+  },
+  {
+    "id": "ultra",
+    "name": "绝世高手",
+    "description": "超越门派的绝世武学境界，只有转世者才能触及。",
+    "joinRoomId": "ultra/hall"
+  },
+  {
+    "id": "wudu",
+    "name": "五毒教",
+    "description": "苗疆五毒教，蛊术毒功变幻莫测。",
+    "joinRoomId": "wudu/hall"
+  },
+  {
+    "id": "xiakedao",
+    "name": "侠客岛",
+    "description": "海外侠客岛，太玄经蕴含武道至理。",
+    "joinRoomId": "xiakedao/hall"
+  },
+  {
+    "id": "xuanming",
+    "name": "玄冥谷",
+    "description": "西域玄冥谷，玄冥神掌阴毒无比。",
+    "joinRoomId": "xuanming/hall"
+  },
+  {
+    "id": "xuedao",
+    "name": "血刀门",
+    "description": "藏边血刀门，血刀大法凶狠毒辣。",
+    "joinRoomId": "xuedao/hall"
+  },
+  {
+    "id": "yunlong",
+    "name": "云龙门",
+    "description": "江南云龙门，云龙三折灵巧飘逸。",
+    "joinRoomId": "yunlong/hall"
+  },
+  {
+    "id": "zhenyuan",
+    "name": "震远镖局",
+    "description": "京师震远镖局，拳法刚猛护卫八方。",
+    "joinRoomId": "zhenyuan/hall"
+  },
+  {
+    "id": "hell",
+    "name": "修罗地狱",
+    "description": "九幽之下的修罗地狱，魔道中人汇聚之地。",
+    "joinRoomId": "hell/hall"
   }
 ]

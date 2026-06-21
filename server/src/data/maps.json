@@ -535,6 +535,215 @@
           "roomId": "wilderness/forest2"
         }
       ]
+    },
+    {
+      "id": "henshan/hall",
+      "name": "衡山·回雁楼",
+      "description": "衡山上的剑派重地，剑影纷飞。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "honghua/hall",
+      "name": "红花会·聚义厅",
+      "description": "红花会总舵聚义厅，四海兄弟云集。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "hu/hall",
+      "name": "胡家·演武场",
+      "description": "辽东胡家演武场，刀风呼啸。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "jueqing/hall",
+      "name": "绝情谷·情花谷",
+      "description": "绝情谷中情花盛开，暗藏杀机。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "lingxiao/hall",
+      "name": "凌霄城·雪峰殿",
+      "description": "西域凌霄城雪峰殿，寒光凛冽。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "meizhuang/hall",
+      "name": "梅庄·琴剑阁",
+      "description": "西湖梅庄琴剑阁，琴韵剑意交融。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "miao/hall",
+      "name": "苗家·剑庐",
+      "description": "苗人凤的剑庐，剑意凛然。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "ouyang/hall",
+      "name": "欧阳世家·白驼山",
+      "description": "西域白驼山欧阳世家，蛤蟆功名震天下。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "shang/hall",
+      "name": "商家堡·八卦堂",
+      "description": "商家堡八卦堂，刀光闪闪。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "songshan/hall",
+      "name": "嵩山·封禅台",
+      "description": "嵩山封禅台，五岳剑派之首的气派巍峨。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "tianlongsi/hall",
+      "name": "天龙寺·枯荣堂",
+      "description": "大理天龙寺枯荣堂，佛法无边。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "ultra/hall",
+      "name": "绝世·武境",
+      "description": "超越凡俗的武道至境，只有真正的强者才能踏足。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "wudu/hall",
+      "name": "五毒教·万蛊殿",
+      "description": "苗疆五毒教万蛊殿，蛊虫蠕动森然可怖。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "xiakedao/hall",
+      "name": "侠客岛·石室",
+      "description": "侠客岛石室，壁上刻满了蝌蚪文。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "xuanming/hall",
+      "name": "玄冥谷·冰窟",
+      "description": "玄冥谷冰窟，寒气刺骨。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "xuedao/hall",
+      "name": "血刀门·血池",
+      "description": "血刀门血池，血腥之气扑面而来。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "yunlong/hall",
+      "name": "云龙门·飞云阁",
+      "description": "云龙门飞云阁，登高望远心旷神怡。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "zhenyuan/hall",
+      "name": "震远镖局·练武厅",
+      "description": "震远镖局练武厅，器械整齐排列。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "hell/hall",
+      "name": "修罗地狱·血池",
+      "description": "九幽之下的修罗地狱，魔气滔天。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/cliff"
+        }
+      ]
     }
   ]
 }

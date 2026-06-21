@@ -10,6 +10,7 @@ export interface SkillDef {
   requireSkill?: string;
   requireLevel?: number;
   schoolId?: string | null;
+  performs?: { name: string; desc: string; multiplier: number }[];
 }
 
 export interface PlayerSkill {

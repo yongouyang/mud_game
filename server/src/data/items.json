@@ -1,9 +1,121 @@
 [
-  { "id": "wooden-sword",  "name": "木剑",     "type": "weapon",   "description": "一把普通的桃木剑。",                                   "attrBonus": { "str": 3 } },
-  { "id": "iron-sword",    "name": "铁剑",     "type": "weapon",   "description": "一把锋利的铁剑，剑身泛着寒光。",                       "attrBonus": { "str": 8 } },
-  { "id": "cloth-armor",   "name": "布衣",     "type": "armor",    "description": "粗布缝制的衣物，聊胜于无。",                           "attrBonus": { "con": 2 } },
-  { "id": "leather-armor", "name": "皮甲",     "type": "armor",    "description": "鞣制过的兽皮甲，有一定防御力。",                       "attrBonus": { "con": 5 } },
-  { "id": "jinchuang-yao", "name": "金疮药",   "type": "medicine", "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 30 点气血。",   "hpRestore": 30 },
-  { "id": "renshen-wan",   "name": "人参丸",   "type": "medicine", "description": "以长白山人参炼制的药丸，大补元气。恢复 80 点气血。",   "hpRestore": 80 },
-  { "id": "silver",        "name": "银子",     "type": "misc",     "description": "白花花的银子，可以买东西。" }
+  {
+    "id": "wooden-sword",
+    "name": "木剑",
+    "type": "weapon",
+    "description": "一把普通的桃木剑。",
+    "attrBonus": {
+      "str": 3
+    }
+  },
+  {
+    "id": "iron-sword",
+    "name": "铁剑",
+    "type": "weapon",
+    "description": "一把锋利的铁剑，剑身泛着寒光。",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "cloth-armor",
+    "name": "布衣",
+    "type": "armor",
+    "description": "粗布缝制的衣物，聊胜于无。",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "leather-armor",
+    "name": "皮甲",
+    "type": "armor",
+    "description": "鞣制过的兽皮甲，有一定防御力。",
+    "attrBonus": {
+      "con": 5
+    }
+  },
+  {
+    "id": "jinchuang-yao",
+    "name": "金疮药",
+    "type": "medicine",
+    "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 30 点气血。",
+    "hpRestore": 30
+  },
+  {
+    "id": "renshen-wan",
+    "name": "人参丸",
+    "type": "medicine",
+    "description": "以长白山人参炼制的药丸，大补元气。恢复 80 点气血。",
+    "hpRestore": 80
+  },
+  {
+    "id": "silver",
+    "name": "银子",
+    "type": "misc",
+    "description": "白花花的银子，可以买东西。"
+  },
+  {
+    "id": "shengji-wan",
+    "name": "生肌丸",
+    "type": "medicine",
+    "description": "生肌活血的疗伤圣药。",
+    "effect": {
+      "hp": 200
+    }
+  },
+  {
+    "id": "neili-dan",
+    "name": "内力丹",
+    "type": "medicine",
+    "description": "恢复内力的丹药。",
+    "effect": {
+      "mp": 50
+    }
+  },
+  {
+    "id": "jiedu-wan",
+    "name": "解毒丸",
+    "type": "medicine",
+    "description": "可解百毒的灵丹。",
+    "effect": {
+      "cure": "poison"
+    }
+  },
+  {
+    "id": "str-dan",
+    "name": "力量丹",
+    "type": "medicine",
+    "description": "永久提升1点臂力。",
+    "effect": {
+      "str": 1
+    }
+  },
+  {
+    "id": "con-dan",
+    "name": "根骨丹",
+    "type": "medicine",
+    "description": "永久提升1点根骨。",
+    "effect": {
+      "con": 1
+    }
+  },
+  {
+    "id": "dex-dan",
+    "name": "身法丹",
+    "type": "medicine",
+    "description": "永久提升1点身法。",
+    "effect": {
+      "dex": 1
+    }
+  },
+  {
+    "id": "int-dan",
+    "name": "悟性丹",
+    "type": "medicine",
+    "description": "永久提升1点悟性。",
+    "effect": {
+      "int": 1
+    }
+  }
 ]

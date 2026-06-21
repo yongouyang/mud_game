@@ -6,7 +6,14 @@
     "description": "基本招架之术，格挡敌人攻击。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "招架·绝",
+        "desc": "基本招架之术，格挡敌人攻击。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "sword",
@@ -15,7 +22,14 @@
     "description": "基本剑术，可用剑类武器施展。",
     "damageBase": 3,
     "damageScale": 0.4,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本剑法·绝",
+        "desc": "基本剑术，可用剑类武器施展。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "blade",
@@ -24,7 +38,14 @@
     "description": "基本刀术，可用刀类武器施展。",
     "damageBase": 4,
     "damageScale": 0.4,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本刀法·绝",
+        "desc": "基本刀术，可用刀类武器施展。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "staff",
@@ -33,7 +54,14 @@
     "description": "基本棍杖之术。",
     "damageBase": 3,
     "damageScale": 0.5,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本杖法·绝",
+        "desc": "基本棍杖之术。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "throwing",
@@ -42,7 +70,14 @@
     "description": "基本暗器手法。",
     "damageBase": 5,
     "damageScale": 0.3,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本暗器·绝",
+        "desc": "基本暗器手法。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "whip",
@@ -51,7 +86,14 @@
     "description": "基本鞭法之术。",
     "damageBase": 3,
     "damageScale": 0.5,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本鞭法·绝",
+        "desc": "基本鞭法之术。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "cuff",
@@ -60,7 +102,14 @@
     "description": "基本拳脚功夫，入门必学。",
     "damageBase": 2,
     "damageScale": 0.3,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "黑虎掏心",
+        "desc": "一记猛拳直击对方要害",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "dodge",
@@ -69,7 +118,14 @@
     "description": "基本轻功，用于闪避敌人攻击。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本轻功·绝",
+        "desc": "基本轻功，用于闪避敌人攻击。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "force",
@@ -78,7 +134,14 @@
     "description": "基本内功心法，影响内力上限和护体效果。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "基本内功·绝",
+        "desc": "基本内功心法，影响内力上限和护体效果。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "taiji-quan",
@@ -89,7 +152,14 @@
     "damageScale": 0.8,
     "requireSkill": "cuff",
     "requireLevel": 10,
-    "schoolId": "wudang"
+    "schoolId": "wudang",
+    "performs": [
+      {
+        "name": "如封似闭",
+        "desc": "太极拳意如封似闭，化开对方攻势",
+        "multiplier": 2.8
+      }
+    ]
   },
   {
     "id": "luohan-quan",
@@ -100,7 +170,14 @@
     "damageScale": 0.6,
     "requireSkill": "cuff",
     "requireLevel": 5,
-    "schoolId": "shaolin"
+    "schoolId": "shaolin",
+    "performs": [
+      {
+        "name": "罗汉降魔",
+        "desc": "双拳齐出，如罗汉降魔之势",
+        "multiplier": 2.5
+      }
+    ]
   },
   {
     "id": "qinggong",
@@ -111,7 +188,14 @@
     "damageScale": 0,
     "requireSkill": "dodge",
     "requireLevel": 10,
-    "schoolId": "wudang"
+    "schoolId": "wudang",
+    "performs": [
+      {
+        "name": "草上飞·绝",
+        "desc": "轻功进阶，身法如飞。需基本轻功≥10。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "neigong-xinfa",
@@ -122,7 +206,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 10,
-    "schoolId": "wudang"
+    "schoolId": "wudang",
+    "performs": [
+      {
+        "name": "内功心法·绝",
+        "desc": "内功进阶，加强内力修为。需基本内功≥10。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "huashan-jian",
@@ -133,7 +224,14 @@
     "damageScale": 0.7,
     "requireSkill": "sword",
     "requireLevel": 10,
-    "schoolId": "huashan"
+    "schoolId": "huashan",
+    "performs": [
+      {
+        "name": "华山剑法·绝",
+        "desc": "华山独门剑法。需基本剑法≥10。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "dugu-jiujian",
@@ -144,7 +242,14 @@
     "damageScale": 1.2,
     "requireSkill": "huashan-jian",
     "requireLevel": 20,
-    "schoolId": "huashan"
+    "schoolId": "huashan",
+    "performs": [
+      {
+        "name": "独孤九剑·绝",
+        "desc": "剑魔绝学。需华山剑法≥20，基本剑法≥30。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "dagou-bang",
@@ -155,7 +260,14 @@
     "damageScale": 0.9,
     "requireSkill": "staff",
     "requireLevel": 15,
-    "schoolId": "gaibang"
+    "schoolId": "gaibang",
+    "performs": [
+      {
+        "name": "打狗棒法·绝",
+        "desc": "丐帮镇帮棒法。需基本杖法≥15。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "xianglong-zhang",
@@ -166,7 +278,14 @@
     "damageScale": 1.0,
     "requireSkill": "cuff",
     "requireLevel": 20,
-    "schoolId": "gaibang"
+    "schoolId": "gaibang",
+    "performs": [
+      {
+        "name": "降龙十八掌·绝",
+        "desc": "丐帮绝学。需基本拳脚≥20。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "emei-jian",
@@ -177,7 +296,14 @@
     "damageScale": 0.7,
     "requireSkill": "sword",
     "requireLevel": 10,
-    "schoolId": "emei"
+    "schoolId": "emei",
+    "performs": [
+      {
+        "name": "峨眉剑法·绝",
+        "desc": "峨眉独门剑法。需基本剑法≥10。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "yunu-xinjing",
@@ -188,7 +314,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 15,
-    "schoolId": "gumu"
+    "schoolId": "gumu",
+    "performs": [
+      {
+        "name": "玉女心经·绝",
+        "desc": "古墓派内功。需基本内功≥15。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "anran-xiaohun",
@@ -199,7 +332,14 @@
     "damageScale": 1.1,
     "requireSkill": "cuff",
     "requireLevel": 15,
-    "schoolId": "gumu"
+    "schoolId": "gumu",
+    "performs": [
+      {
+        "name": "黯然销魂掌·绝",
+        "desc": "威力惊人的掌法。需基本拳脚≥15，玉女心经≥10。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "yiyang-zhi",
@@ -210,7 +350,14 @@
     "damageScale": 0.7,
     "requireSkill": "cuff",
     "requireLevel": 10,
-    "schoolId": "duan"
+    "schoolId": "duan",
+    "performs": [
+      {
+        "name": "一阳指·绝",
+        "desc": "大理段氏的独门指法，点穴无匹。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "liumai-shenjian",
@@ -221,7 +368,14 @@
     "damageScale": 1.0,
     "requireSkill": "yiyang-zhi",
     "requireLevel": 15,
-    "schoolId": "duan"
+    "schoolId": "duan",
+    "performs": [
+      {
+        "name": "六脉神剑·绝",
+        "desc": "以指代剑的绝世神技，六脉齐出无人可挡。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "poyu-quan",
@@ -232,7 +386,14 @@
     "damageScale": 0.6,
     "requireSkill": "cuff",
     "requireLevel": 5,
-    "schoolId": "huashan"
+    "schoolId": "huashan",
+    "performs": [
+      {
+        "name": "破玉拳·绝",
+        "desc": "华山拳法，力道刚猛如破玉。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "songfeng-jian",
@@ -243,7 +404,14 @@
     "damageScale": 0.6,
     "requireSkill": "sword",
     "requireLevel": 5,
-    "schoolId": "kunlun"
+    "schoolId": "kunlun",
+    "performs": [
+      {
+        "name": "松风剑法·绝",
+        "desc": "昆仑派松风剑法，清灵飘逸。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "zui-quan",
@@ -254,7 +422,14 @@
     "damageScale": 0.7,
     "requireSkill": "cuff",
     "requireLevel": 8,
-    "schoolId": null
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "醉拳·绝",
+        "desc": "形醉意不醉，步醉心不醉的奇门拳法。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "qiankun-danuoyi",
@@ -265,7 +440,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 15,
-    "schoolId": "mingjiao"
+    "schoolId": "mingjiao",
+    "performs": [
+      {
+        "name": "乾坤大挪移·绝",
+        "desc": "明教镇教神功，颠倒阴阳逆乱乾坤。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "xixing-dafa",
@@ -276,7 +458,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 12,
-    "schoolId": "riyue"
+    "schoolId": "riyue",
+    "performs": [
+      {
+        "name": "吸星大法·绝",
+        "desc": "吸收他人内力的霸道功夫。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "wuzhi-shengong",
@@ -287,7 +476,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 10,
-    "schoolId": "quanzhen"
+    "schoolId": "quanzhen",
+    "performs": [
+      {
+        "name": "无相神功·绝",
+        "desc": "全真教的内功心法，道家玄门正宗。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "tanzhi-shentong",
@@ -298,7 +494,14 @@
     "damageScale": 0.8,
     "requireSkill": "throwing",
     "requireLevel": 10,
-    "schoolId": "taohua"
+    "schoolId": "taohua",
+    "performs": [
+      {
+        "name": "弹指神通·绝",
+        "desc": "桃花岛绝学，弹指间取人性命。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "shengsi-fu",
@@ -309,7 +512,14 @@
     "damageScale": 0.8,
     "requireSkill": "throwing",
     "requireLevel": 12,
-    "schoolId": "lingjiu"
+    "schoolId": "lingjiu",
+    "performs": [
+      {
+        "name": "生死符·绝",
+        "desc": "灵鹫宫天山童姥的独门暗器。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "tieshang-quan",
@@ -320,7 +530,14 @@
     "damageScale": 0.7,
     "requireSkill": "cuff",
     "requireLevel": 8,
-    "schoolId": "tiezhang"
+    "schoolId": "tiezhang",
+    "performs": [
+      {
+        "name": "铁掌·绝",
+        "desc": "铁掌帮看家本领，刚猛霸道。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "xueshan-jian",
@@ -331,7 +548,14 @@
     "damageScale": 0.6,
     "requireSkill": "sword",
     "requireLevel": 5,
-    "schoolId": "xueshan"
+    "schoolId": "xueshan",
+    "performs": [
+      {
+        "name": "雪山剑法·绝",
+        "desc": "雪山派剑法，剑气如冰。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "douzhuan-xingyi",
@@ -342,7 +566,14 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 12,
-    "schoolId": "murong"
+    "schoolId": "murong",
+    "performs": [
+      {
+        "name": "斗转星移·绝",
+        "desc": "慕容世家不传之秘，以彼之道还施彼身。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "duoming-jinbiao",
@@ -353,7 +584,14 @@
     "damageScale": 0.7,
     "requireSkill": "throwing",
     "requireLevel": 5,
-    "schoolId": "tangmen"
+    "schoolId": "tangmen",
+    "performs": [
+      {
+        "name": "夺命金镖·绝",
+        "desc": "唐门夺命金镖，见血封喉。",
+        "multiplier": 2.0
+      }
+    ]
   },
   {
     "id": "huagong-dafa",
@@ -364,6 +602,112 @@
     "damageScale": 0,
     "requireSkill": "force",
     "requireLevel": 10,
-    "schoolId": "xingxiu"
+    "schoolId": "xingxiu",
+    "performs": [
+      {
+        "name": "化功大法·绝",
+        "desc": "星宿派化功大法，化去他人内力。",
+        "multiplier": 2.0
+      }
+    ]
+  },
+  {
+    "id": "xuanming-zhang",
+    "name": "玄冥神掌",
+    "type": "strike",
+    "description": "玄冥二老的独门掌法，阴毒无比。",
+    "damageBase": 10,
+    "damageScale": 0.9,
+    "requireSkill": "cuff",
+    "requireLevel": 12,
+    "schoolId": "xuanming"
+  },
+  {
+    "id": "xuehai-mogong",
+    "name": "血海魔功",
+    "type": "force",
+    "description": "血刀门的邪功，以血祭功。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 12,
+    "schoolId": "xuedao"
+  },
+  {
+    "id": "hamagong",
+    "name": "蛤蟆功",
+    "type": "force",
+    "description": "欧阳锋的独门内功，蓄力一击惊天动地。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 15,
+    "schoolId": "ouyang"
+  },
+  {
+    "id": "wudu-shengong",
+    "name": "五毒神功",
+    "type": "force",
+    "description": "五毒教的独门功法，练成后百毒不侵。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 10,
+    "schoolId": "wudu"
+  },
+  {
+    "id": "songfeng-jianfa",
+    "name": "松风剑法",
+    "type": "strike",
+    "description": "衡山派绝学，剑法轻灵多变。",
+    "damageBase": 7,
+    "damageScale": 0.6,
+    "requireSkill": "sword",
+    "requireLevel": 5,
+    "schoolId": "henshan"
+  },
+  {
+    "id": "bagua-dao",
+    "name": "八卦刀法",
+    "type": "strike",
+    "description": "商家堡的八卦刀法，步法玄妙。",
+    "damageBase": 7,
+    "damageScale": 0.6,
+    "requireSkill": "blade",
+    "requireLevel": 5,
+    "schoolId": "shang"
+  },
+  {
+    "id": "hujia-dao",
+    "name": "胡家刀法",
+    "type": "strike",
+    "description": "辽东胡家刀法，刚猛霸道。",
+    "damageBase": 8,
+    "damageScale": 0.7,
+    "requireSkill": "blade",
+    "requireLevel": 8,
+    "schoolId": "hu"
+  },
+  {
+    "id": "yunlong-sanxian",
+    "name": "云龙三折",
+    "type": "dodge",
+    "description": "云龙门的轻功绝学，如云龙翻腾。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "dodge",
+    "requireLevel": 8,
+    "schoolId": "yunlong"
+  },
+  {
+    "id": "taixuan-jing",
+    "name": "太玄经",
+    "type": "force",
+    "description": "侠客岛上的石壁经文，蕴含无上武道。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 20,
+    "schoolId": "xiakedao"
   }
 ]

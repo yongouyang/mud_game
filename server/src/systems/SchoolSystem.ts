@@ -11,6 +11,8 @@ export class SchoolSystem {
     }
   }
 
+  getAll(): SchoolDef[] { return this.schools; }
+
   getSchool(id: string): SchoolDef | undefined {
     return this.schools.get(id);
   }
