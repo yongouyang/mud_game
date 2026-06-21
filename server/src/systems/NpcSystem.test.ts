@@ -37,4 +37,14 @@ describe('NpcSystem', () => {
     expect(roomNpcs.length).toBeGreaterThanOrEqual(2);
     expect(roomNpcs.some((n) => n.def.id === 'master-shaolin')).toBe(true);
   });
+
+  it('rolls boss drops deterministically when chance is 1.0', () => {
+    const boss = system.getNpc('boss-heifeng');
+    expect(boss).toBeTruthy();
+    expect(boss!.def.boss).toBe(true);
+    const drops = system.rollDrops(boss!);
+    expect(drops.length).toBeGreaterThanOrEqual(2);
+    expect(drops.some((d) => d.itemId === 'black-wind-blade')).toBe(true);
+    expect(drops.some((d) => d.itemId === 'boss-token')).toBe(true);
+  });
 });

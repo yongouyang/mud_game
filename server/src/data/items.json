@@ -157,5 +157,21 @@
     "name": "狼皮",
     "type": "misc",
     "description": "一张从野狼身上剥下的毛皮，可以卖个好价钱。"
+  },
+  {
+    "id": "black-wind-blade",
+    "name": "黑风刀",
+    "type": "weapon",
+    "description": "黑风寨主的随身宝刀，刀刃上缭绕着森森煞气。",
+    "attrBonus": {
+      "str": 18,
+      "dex": 5
+    }
+  },
+  {
+    "id": "boss-token",
+    "name": "寨主令",
+    "type": "misc",
+    "description": "黑风寨主掉落的信物，据说可在某些势力处换取重赏。"
   }
 ]

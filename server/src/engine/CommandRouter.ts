@@ -532,6 +532,13 @@ export class CommandRouter {
     msg += `  从尸体上搜出 ${gold} 两银子。\n`;
     msg += this.recordNpcKill(player, npc);
     msg += this.quests.onNpcKill(player, npc.def.id);
+    const drops = this.npcs.rollDrops(npc);
+    if (drops.length > 0) {
+      for (const drop of drops) {
+        this.items.addItem(player, drop.itemId, drop.quantity);
+      }
+      msg += `  战利品：${drops.map((d) => `${this.items.getDef(d.itemId)?.name || d.itemId}×${d.quantity}`).join('、')}\n`;
+    }
     // Schedule respawn if configured.
     this.npcs.scheduleRespawn(npc.def.id);
     return msg;

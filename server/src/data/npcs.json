@@ -47,6 +47,36 @@
     "conditionLevel": 2
   },
   {
+    "id": "boss-heifeng",
+    "name": "黑风寨主",
+    "description": "黑风寨的大当家，手持一柄黑风刀，凶名赫赫。",
+    "roomId": "wilderness/cave",
+    "dialogue": [
+      "哈哈哈，又来个送死的！",
+      "留下命来，老子正好缺个祭刀的！"
+    ],
+    "attributes": {
+      "str": 25,
+      "int": 10,
+      "con": 25,
+      "dex": 15
+    },
+    "skills": [
+      {
+        "skillId": "blade",
+        "level": 30
+      }
+    ],
+    "aggressive": true,
+    "respawnSeconds": 300,
+    "boss": true,
+    "drops": [
+      { "itemId": "black-wind-blade", "chance": 1.0, "minQty": 1, "maxQty": 1 },
+      { "itemId": "boss-token", "chance": 1.0, "minQty": 1, "maxQty": 1 },
+      { "itemId": "silver", "chance": 1.0, "minQty": 50, "maxQty": 100 }
+    ]
+  },
+  {
     "id": "master-shaolin",
     "name": "玄慈方丈",
     "description": "少林寺方丈，慈眉善目，佛法精深。",

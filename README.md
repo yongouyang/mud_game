@@ -170,6 +170,11 @@ Quests are defined in `server/data/quests.json` and support multiple types:
 
 Rewards include exp, pot, shen, and items. Use `quest` to check progress and `quest <npc>` / `quest <npc> <id>` to interact with quest givers.
 
+### Bosses & Rare Loot
+Boss NPCs (marked with `boss: true`) are tougher, have longer respawn timers, and carry guaranteed or chance-based **drop tables**.
+- Example: **黑风寨主** in `wilderness/cave` drops the rare weapon **黑风刀** and **寨主令**.
+- Drops are rolled on death and added to the killer's inventory automatically.
+
 ## Game World (40 rooms, 90 NPCs)
 
 ```
@@ -255,7 +260,8 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
-| `NpcSystem.test.ts` | 3 | Master/disciple NPC coverage |
+| `NpcSystem.test.ts` | 4 | Master/disciple NPC coverage + boss drops |
+| `CommandRouter.boss.test.ts` | 1 | Boss kill + guaranteed loot |
 | `time.test.ts` | 8 | SystemClock + Scheduler |
 | `index.e2e.test.ts` | 18 | Full user journeys (auth, map, schools, combat) |
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |

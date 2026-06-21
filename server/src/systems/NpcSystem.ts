@@ -91,6 +91,22 @@ export class NpcSystem {
     }
     return best;
   }
+
+  /** Roll drops for an NPC. Returns items and quantities. */
+  rollDrops(npc: NpcInstance): { itemId: string; quantity: number }[] {
+    const drops = npc.def.drops;
+    if (!drops || drops.length === 0) return [];
+    const result: { itemId: string; quantity: number }[] = [];
+    for (const drop of drops) {
+      if (Math.random() > drop.chance) continue;
+      const min = drop.minQty ?? 1;
+      const max = drop.maxQty ?? min;
+      const qty = min + Math.floor(Math.random() * (max - min + 1));
+      if (qty > 0) result.push({ itemId: drop.itemId, quantity: qty });
+    }
+    return result;
+  }
+
   /** Respawn an NPC back to full health and idle state */
   respawn(npcId: string): void {
     const npc = this.npcs.get(npcId);

@@ -14,4 +14,6 @@ export interface NpcDef {
   conditionLevel?: number;   // overrides poisonLevel if set
   faction?: string;          // faction/school id for guarder aggro
   guarder?: boolean;         // true if this NPC will defend same-faction NPCs in the room
+  boss?: boolean;            // true if this is a boss/elite NPC
+  drops?: { itemId: string; chance: number; minQty?: number; maxQty?: number }[];
 }
