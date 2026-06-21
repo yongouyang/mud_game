@@ -13,9 +13,24 @@ import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
 import { SchoolSystem } from './systems/SchoolSystem.js';
 import { PersistenceSystem } from './systems/PersistenceSystem.js';
+import net from 'node:net';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = parseInt(process.env['PORT'] || '3000', 10);
+const BASE_PORT = parseInt(process.env['PORT'] || '3000', 10);
+
+function tryPort(port: number): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.unref();
+    server.on('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'EADDRINUSE') resolve(tryPort(port + 1));
+      else reject(err);
+    });
+    server.listen(port, () => {
+      server.close(() => resolve(port));
+    });
+  });
+}
 
 const app = express();
 const httpServer = createServer(app);
@@ -226,6 +241,10 @@ function clearCombatTick(socketId: string) {
 }
 function manageCombatTick(socket: any) {  const p = players.getPlayer(socket.id);  if (p && p.state === 'fighting') {    if (!combatTicks.has(socket.id)) {      const tick = setInterval(() => {        const roundResult = router.executeCombatRound(socket.id);        if (roundResult) socket.emit('output', { text: roundResult });        const updated = players.getPlayer(socket.id);        if (!updated || updated.state !== 'fighting') {          clearCombatTick(socket.id);          if (updated && updated.state === 'playing') {            persistence.saveAll(players.getAllPlayers());          }        }      }, router.getCombatSpeed(socket.id));      combatTicks.set(socket.id, tick);    }  } else {    clearCombatTick(socket.id);  }}// HP/MP regen when not fightingconst regenTicks = new Map<string, ReturnType<typeof setInterval>>();function manageRegen(socket: any) {  const p = players.getPlayer(socket.id);  if (p && p.state !== "fighting") {    if (!regenTicks.has(socket.id)) {      const tick = setInterval(() => {        const p2 = players.getPlayer(socket.id);        if (p2 && p2.state !== "fighting" && p2.state !== "creating") {          p2.hp = Math.min(p2.maxHp, p2.hp + Math.ceil(p2.maxHp * 0.03));          p2.mp = Math.min(p2.maxMp, p2.mp + Math.ceil(p2.maxMp * 0.04));        }      }, 3000);      regenTicks.set(socket.id, tick);    }  } else {    const t = regenTicks.get(socket.id);    if (t) { clearInterval(t); regenTicks.delete(socket.id); }  }}
 
-httpServer.listen(PORT, () => {
+tryPort(BASE_PORT).then((PORT) => {
+  httpServer.listen(PORT, () => {
+    console.log(`[server] Wuxia MUD running on http://localhost:${PORT}`);
+  });
+});
   console.log(`[server] Wuxia MUD running on http://localhost:${PORT}`);
 });
