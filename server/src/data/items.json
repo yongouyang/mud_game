@@ -127,5 +127,29 @@
     "name": "信件",
     "type": "misc",
     "description": "一封封口严密的信件，似乎是某位NPC托你转交的。"
+  },
+  {
+    "id": "iron-ore",
+    "name": "铁矿",
+    "type": "misc",
+    "description": "一块沉甸甸的铁矿石，是打造兵器的基础材料。"
+  },
+  {
+    "id": "leather",
+    "name": "皮革",
+    "type": "misc",
+    "description": "一张坚韧的兽皮，可用来缝制皮甲或包裹剑柄。"
+  },
+  {
+    "id": "cloth",
+    "name": "布料",
+    "type": "misc",
+    "description": "一匹普通的布料，可缝制布衣或作为内衬。"
+  },
+  {
+    "id": "herb",
+    "name": "草药",
+    "type": "misc",
+    "description": "一株常见的药草，可调配金疮药或解毒丸。"
   }
 ]

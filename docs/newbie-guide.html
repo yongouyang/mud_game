@@ -161,25 +161,64 @@ use 解毒丸                # 服用解毒丸直接清除</pre>
 <table>
 <tr><th>方式</th><th>说明</th></tr>
 <tr><td>杀野怪</td><td>山贼 / 野狼 / 黑熊死后掉落银两</td></tr>
-<tr><td>捡物品</td><td><code>look</code> 查看地上物品，<code>get 木剑</code> 捡起</td></tr>
+<tr><td>捡物品</td><td><code>look</code> 查看地上物品，<code>get 木剑</code> 捡起；<code>get 银子</code> 可拾取少量碎银</td></tr>
 <tr><td>做任务</td><td>送信任务不直接给银两，但升级后能去更强的地方</td></tr>
+<tr><td>卖物品</td><td>把打怪捡到的材料卖给商店</td></tr>
+<tr><td>拍卖行</td><td>把稀有物品上架，让其他玩家竞拍</td></tr>
 </table>
 
-<h3>🛒 商店（<code>shop</code> 命令）</h3>
+<h3>🛒 商店（<code>shop</code> / <code>list</code> 命令）</h3>
 <table>
-<tr><th>物品</th><th>ID</th><th>价格</th><th>效果</th></tr>
-<tr><td>金疮药</td><td><code>jinchuang-yao</code></td><td class="money">20 两</td><td>恢复 50 HP</td></tr>
+<tr><th>物品</th><th>ID</th><th>价格</th><th>说明</th></tr>
+<tr><td>金疮药</td><td><code>jinchuang-yao</code></td><td class="money">25 两</td><td>恢复 50 HP</td></tr>
 <tr><td>人参丸</td><td><code>renshen-wan</code></td><td class="money">50 两</td><td>恢复 100 HP</td></tr>
-<tr><td>内力丹</td><td><code>neili-dan</code></td><td class="money">30 两</td><td>恢复 50 MP</td></tr>
+<tr><td>内力丹</td><td><code>neili-dan</code></td><td class="money">35 两</td><td>恢复 50 MP</td></tr>
 <tr><td>解毒丸</td><td><code>jiedu-wan</code></td><td class="money">50 两</td><td>解除中毒状态</td></tr>
 <tr><td>木剑</td><td><code>wooden-sword</code></td><td class="money">30 两</td><td>臂力 +3</td></tr>
 <tr><td>铁剑</td><td><code>iron-sword</code></td><td class="money">80 两</td><td>臂力 +8</td></tr>
 <tr><td>皮甲</td><td><code>leather-armor</code></td><td class="money">60 两</td><td>根骨 +5</td></tr>
 <tr><td>布衣</td><td><code>cloth-armor</code></td><td class="money">20 两</td><td>根骨 +2</td></tr>
+<tr><td>铁矿</td><td><code>iron-ore</code></td><td class="money">5 两</td><td>打造兵器的材料</td></tr>
+<tr><td>皮革</td><td><code>leather</code></td><td class="money">5 两</td><td>缝制皮甲的材料</td></tr>
+<tr><td>布料</td><td><code>cloth</code></td><td class="money">3 两</td><td>缝制布衣的材料</td></tr>
+<tr><td>草药</td><td><code>herb</code></td><td class="money">3 两</td><td>调配丹药的材料</td></tr>
 </table>
-<pre>shop            # 查看商店商品
-buy 金疮药       # 购买金疮药
-buy 解毒丸       # 购买解毒丸</pre>
+<pre>shop              # 查看商店商品
+buy 金疮药         # 购买金疮药
+sell 铁矿 5        # 把 5 个铁矿卖给商店
+sell 布衣          # 出售 1 件布衣</pre>
+<div class="tip"><strong>回购折扣：</strong>商店按售价的 50% 收购物品，珍稀材料也能变现。</div>
+
+<h3>🏦 钱庄（<code>bank</code> / <code>cunku</code> 命令）</h3>
+<p>把钱和物品存入钱庄，死亡时不会掉落。</p>
+<pre>bank                       # 查看存银和存物
+deposit silver 100         # 存入 100 两银子
+withdraw silver 50         # 取出 50 两银子
+deposit 铁矿 10            # 存入 10 个铁矿
+withdraw 铁矿 5            # 取出 5 个铁矿</pre>
+
+<h3>🔨 制造（<code>craft</code> 命令）</h3>
+<p>收集材料后可以自己打造装备、调配丹药。</p>
+<pre>craft                      # 查看所有配方
+craft 铁剑                  # 消耗 3 铁矿 + 1 皮革，打造 1 把铁剑
+craft 金疮药                # 消耗 2 草药，制作 1 瓶金疮药</pre>
+<table>
+<tr><th>成品</th><th>材料</th></tr>
+<tr><td>铁剑</td><td>铁矿 × 3 + 皮革 × 1</td></tr>
+<tr><td>皮甲</td><td>皮革 × 3 + 布料 × 1</td></tr>
+<tr><td>布衣</td><td>布料 × 2</td></tr>
+<tr><td>金疮药</td><td>草药 × 2</td></tr>
+<tr><td>解毒丸</td><td>草药 × 3</td></tr>
+</table>
+
+<h3>🧧 拍卖行（<code>auction</code> 命令）</h3>
+<p>把身上的物品挂到拍卖行，其他玩家可以出价或一口价买走。</p>
+<pre>auction                              # 查看当前拍卖列表
+auction sell 草药 10                 # 以 10 两起拍上架 1 个草药
+auction sell 铁剑 50 200             # 起拍 50 两，一口价 200 两
+auction bid A1 20                    # 对编号 A1 出价 20 两
+auction buyout A1                    # 一口价拍下编号 A1</pre>
+<div class="warn"><strong>注意：</strong>拍卖列表保存在服务器内存中，重启后清空；竞拍时银子会被暂时冻结。</div>
 
 <h2>🛡 第七章：装备与恢复</h2>
 <div class="step">

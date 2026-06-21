@@ -7,6 +7,10 @@ import { NpcSystem, NpcInstance } from '../systems/NpcSystem.js';
 import { SchoolSystem } from '../systems/SchoolSystem.js';
 import { LevelSystem } from '../systems/LevelSystem.js';
 import { ConditionSystem } from '../systems/ConditionSystem.js';
+import { BankSystem } from '../systems/BankSystem.js';
+import { AuctionSystem } from '../systems/AuctionSystem.js';
+import { ShopSystem } from '../systems/ShopSystem.js';
+import { CraftingSystem } from '../systems/CraftingSystem.js';
 import { Scheduler } from '../time/Scheduler.js';
 import { SystemClock } from '../time/SystemClock.js';
 import { SchoolDef } from '../models/School.js';
@@ -30,6 +34,10 @@ export class CommandRouter {
     private schools: SchoolSystem,
     private levels: LevelSystem,
     private conditions: ConditionSystem,
+    private bank: BankSystem,
+    private auction: AuctionSystem,
+    private shop: ShopSystem,
+    private craft: CraftingSystem,
     private scheduler: Scheduler,
     private clock: SystemClock,
   ) {}
@@ -118,6 +126,12 @@ export class CommandRouter {
       case 'quest': return this.handleQuest(player, rest);
       case 'buy': return this.handleBuy(player, rest);
       case 'shop': case 'list': return this.handleShop(player);
+      case 'sell': return this.handleSell(player, rest);
+      case 'bank': case 'cunku': return this.bank.formatBank(player);
+      case 'deposit': return this.handleDeposit(player, rest);
+      case 'withdraw': return this.handleWithdraw(player, rest);
+      case 'auction': return this.handleAuction(player, rest);
+      case 'craft': return this.handleCraft(player, rest);
       case 'perform': case 'pfm': return this.handlePerform(player, rest);
       case 'exert': case 'yun': return this.handleExert(player, rest);
       case 'ask': return this.handleAsk(player, rest);
@@ -195,6 +209,10 @@ export class CommandRouter {
       '  ask <NPC>       向NPC打听',  '  who             在线玩家',
       '  perform / pfm   施展绝招',   '  exert / yun    内功运用',
       '  buy <物品>      购买物品',   '  shop / list     商店货物',
+      '  sell <物品> [数量] 出售物品', '  bank            钱庄存取',
+      '  deposit <物品> [数量]      存入物品', '  deposit silver <数量>      存银子',
+      '  withdraw <物品> [数量]     取出物品', '  withdraw silver <数量>     取银子',
+      '  auction         拍卖行',       '  craft           制作物品',
       '  quest <NPC>     接取/完成任务', '  dazuo [秒]     打坐恢复内力',
       '  practice <武功> 练习武功',   '  tianfu <属性>   分配属性点',
       '  level           查看等级',   '  help            显示帮助',
@@ -546,21 +564,134 @@ export class CommandRouter {
   }
 
   // ── Shop ─────────────────────────────────────────────────
-  private handleShop(_player: Player): string {
-    return [
-      '',
-      '  ─── 商店 ───',
-      '',
-      '  金疮药(jinchuang-yao)  — 20 两 (恢复 50 HP)',
-      '  人参丸(renshen-wan)     — 50 两 (恢复 100 HP)',
-      '  内力丹(neili-dan)       — 30 两 (恢复 50 MP)',
-      '  铁剑(iron-sword)        — 80 两 (臂力+8)',
-      '  皮甲(leather-armor)     — 60 两 (根骨+5)',
-      '  木剑(wooden-sword)      — 30 两 (臂力+3)',
-      '',
-      '  用法：buy <物品名>',
-      '',
-    ].join('\n') + '\n';
+  private handleShop(player: Player): string {
+    return this.shop.formatShop(player, player.currentRoom);
+  }
+
+  private handleBuy(player: Player, args: string[]): string {
+    const name = args.join(' ');
+    if (!name) return '\n  你想买什么？用法：buy <物品名>\n';
+    const result = this.shop.buy(player, player.currentRoom, name);
+    return `\n  ${result}\n`;
+  }
+
+  private handleSell(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  你想卖什么？用法：sell <物品名> [数量]\n';
+    const qty = args.length > 1 ? parseInt(args[args.length - 1], 10) : NaN;
+    let name: string;
+    let quantity = 1;
+    if (!isNaN(qty) && qty > 0) {
+      name = args.slice(0, -1).join(' ');
+      quantity = qty;
+    } else {
+      name = args.join(' ');
+    }
+    if (!name) return '\n  你想卖什么？用法：sell <物品名> [数量]\n';
+    const result = this.shop.sell(player, player.currentRoom, name, quantity);
+    return `\n  ${result}\n`;
+  }
+
+  // ── Bank ─────────────────────────────────────────────────
+  private handleDeposit(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  用法：deposit <物品> [数量] / deposit silver <数量>\n';
+    if (args[0].toLowerCase() === 'silver') {
+      const qty = parseInt(args[1] || '', 10);
+      const err = this.bank.depositSilver(player, qty);
+      if (err) return `\n  ${err}\n`;
+      return `\n  你存入了 ${qty} 两银子。\n`;
+    }
+    const qty = args.length > 1 ? parseInt(args[args.length - 1], 10) : NaN;
+    let name: string;
+    let quantity = 1;
+    if (!isNaN(qty) && qty > 0) {
+      name = args.slice(0, -1).join(' ');
+      quantity = qty;
+    } else {
+      name = args.join(' ');
+    }
+    const err = this.bank.depositItem(player, name, quantity);
+    if (err) return `\n  ${err}\n`;
+    return `\n  你存入了 ${quantity} 个${name}。\n`;
+  }
+
+  private handleWithdraw(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  用法：withdraw <物品> [数量] / withdraw silver <数量>\n';
+    if (args[0].toLowerCase() === 'silver') {
+      const qty = parseInt(args[1] || '', 10);
+      const err = this.bank.withdrawSilver(player, qty);
+      if (err) return `\n  ${err}\n`;
+      return `\n  你取出了 ${qty} 两银子。\n`;
+    }
+    const qty = args.length > 1 ? parseInt(args[args.length - 1], 10) : NaN;
+    let name: string;
+    let quantity = 1;
+    if (!isNaN(qty) && qty > 0) {
+      name = args.slice(0, -1).join(' ');
+      quantity = qty;
+    } else {
+      name = args.join(' ');
+    }
+    const err = this.bank.withdrawItem(player, name, quantity);
+    if (err) return `\n  ${err}\n`;
+    return `\n  你取出了 ${quantity} 个${name}。\n`;
+  }
+
+  // ── Auction ──────────────────────────────────────────────
+  private handleAuction(player: Player, args: string[]): string {
+    if (args.length === 0 || args[0] === 'list') {
+      return this.auction.formatListings();
+    }
+    const sub = args[0].toLowerCase();
+    if (sub === 'sell') {
+      if (args.length < 3) return '\n  用法：auction sell <物品> <起拍价> [一口价]\n';
+      let itemName: string;
+      let start: number;
+      let buyout: number | undefined;
+      if (args.length === 3) {
+        // auction sell <物品> <起拍价>
+        itemName = args[1];
+        start = parseInt(args[2], 10);
+        if (isNaN(start) || start <= 0) {
+          return '\n  用法：auction sell <物品> <起拍价> [一口价]\n';
+        }
+      } else {
+        // auction sell <物品> <起拍价> <一口价>  (item name may be multiple words)
+        const startPrice = parseInt(args[args.length - 2], 10);
+        const maybeBuyout = parseInt(args[args.length - 1], 10);
+        if (isNaN(startPrice) || startPrice <= 0 || isNaN(maybeBuyout) || maybeBuyout <= 0) {
+          return '\n  用法：auction sell <物品> <起拍价> [一口价]\n';
+        }
+        itemName = args.slice(1, -2).join(' ');
+        start = startPrice;
+        buyout = maybeBuyout;
+      }
+      const result = this.auction.createListing(player, itemName, 1, start, buyout);
+      if (result.error) return `\n  ${result.error}\n`;
+      return `\n  你上架了 ${itemName}，拍卖编号 ${result.id}。\n`;
+    }
+    if (sub === 'bid') {
+      if (args.length !== 3) return '\n  用法：auction bid <编号> <价格>\n';
+      const err = this.auction.bid(player, args[1], parseInt(args[2], 10));
+      if (err) return `\n  ${err}\n`;
+      return `\n  你出价 ${args[2]} 两。\n`;
+    }
+    if (sub === 'buyout') {
+      if (args.length !== 2) return '\n  用法：auction buyout <编号>\n';
+      const err = this.auction.buyout(player, args[1]);
+      if (err) return `\n  ${err}\n`;
+      return '\n  你一口价拿下了拍卖品！\n';
+    }
+    return '\n  用法：auction [list|sell|bid|buyout]\n';
+  }
+
+  // ── Craft ────────────────────────────────────────────────
+  private handleCraft(player: Player, args: string[]): string {
+    if (args.length === 0 || args[0] === 'list') {
+      return this.craft.formatRecipes();
+    }
+    const name = args.join(' ');
+    const result = this.craft.craft(player, name);
+    return `\n  ${result.message}\n`;
   }
 
   // ── Quest System ───────────────────────────────────────
@@ -789,33 +920,6 @@ export class CommandRouter {
     const err = this.levels.spendAttributePoint(player, attr, amount);
     if (err) return `\n  ${err}\n`;
     return `\n  你分配了 ${amount} 点属性点到 ${attr}。\n`;
-  }
-
-  // ── Shop ─────────────────────────────────────────────────
-  private handleBuy(player: Player, args: string[]): string {
-    const name = args.join(' ');
-    if (!name) return '\n  你想买什么？用法：buy <物品名>\n';
-    const def = this.items.findDefByName(name);
-    if (!def) return `\n  没有"${name}"这个物品。\n`;
-    const price = this.getShopPrice(def.id);
-    const silver = this.items.hasItem(player, 'silver', price);
-    if (!silver) return `\n  银两不足！${def.name} 售价 ${price} 两。\n`;
-    this.items.removeItem(player, 'silver', price);
-    this.items.addItem(player, def.id);
-    return `\n  你花 ${price} 两银子买了${def.name}。\n`;
-  }
-
-  private getShopPrice(itemId: string): number {
-    switch (itemId) {
-      case 'jinchuang-yao': return 20;
-      case 'renshen-wan': return 50;
-      case 'neili-dan': return 30;
-      case 'wooden-sword': return 30;
-      case 'iron-sword': return 80;
-      case 'leather-armor': return 60;
-      case 'cloth-armor': return 20;
-      default: return 50;
-    }
   }
 
   // ── NPC Interaction ──────────────────────────────────────

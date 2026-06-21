@@ -1,0 +1,49 @@
+[
+  {
+    "id": "iron-sword",
+    "name": "铁剑",
+    "description": "用铁矿和皮革打造一把锋利的铁剑。",
+    "ingredients": [
+      { "itemId": "iron-ore", "quantity": 3 },
+      { "itemId": "leather", "quantity": 1 }
+    ],
+    "result": { "itemId": "iron-sword", "quantity": 1 }
+  },
+  {
+    "id": "leather-armor",
+    "name": "皮甲",
+    "description": "用皮革和布料缝制一件皮甲。",
+    "ingredients": [
+      { "itemId": "leather", "quantity": 3 },
+      { "itemId": "cloth", "quantity": 1 }
+    ],
+    "result": { "itemId": "leather-armor", "quantity": 1 }
+  },
+  {
+    "id": "cloth-armor",
+    "name": "布衣",
+    "description": "用布料缝制一件简单的布衣。",
+    "ingredients": [
+      { "itemId": "cloth", "quantity": 2 }
+    ],
+    "result": { "itemId": "cloth-armor", "quantity": 1 }
+  },
+  {
+    "id": "jinchuang-yao",
+    "name": "金疮药",
+    "description": "用草药调配一瓶金疮药。",
+    "ingredients": [
+      { "itemId": "herb", "quantity": 2 }
+    ],
+    "result": { "itemId": "jinchuang-yao", "quantity": 1 }
+  },
+  {
+    "id": "jiedu-wan",
+    "name": "解毒丸",
+    "description": "用多种草药炼制一颗解毒丸。",
+    "ingredients": [
+      { "itemId": "herb", "quantity": 3 }
+    ],
+    "result": { "itemId": "jiedu-wan", "quantity": 1 }
+  }
+]

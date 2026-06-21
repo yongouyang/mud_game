@@ -1,0 +1,35 @@
+[
+  {
+    "id": "general-shop",
+    "name": "杂货铺",
+    "roomId": null,
+    "npcName": null,
+    "items": {
+      "wooden-sword": 30,
+      "iron-sword": 80,
+      "cloth-armor": 20,
+      "leather-armor": 60,
+      "jinchuang-yao": 25,
+      "neili-dan": 35,
+      "iron-ore": 5,
+      "leather": 5,
+      "cloth": 3,
+      "herb": 3
+    },
+    "buybackRate": 0.5
+  },
+  {
+    "id": "herb-shop",
+    "name": "药铺",
+    "roomId": "town/mainstreet",
+    "npcName": "药铺老板",
+    "items": {
+      "jinchuang-yao": 20,
+      "renshen-wan": 50,
+      "neili-dan": 30,
+      "jiedu-wan": 50,
+      "herb": 2
+    },
+    "buybackRate": 0.5
+  }
+]

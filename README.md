@@ -22,7 +22,7 @@ npm run dev:all        # Frontend (:5173) + Server (:3000)
 
 Open `http://localhost:5173` — `login demo some-secret` to jump straight in (preloaded with 10,000 pot).
 
-## Game Commands (22 total)
+## Game Commands (29 total)
 
 ### Movement & Info
 | Command | Description |
@@ -45,7 +45,21 @@ Open `http://localhost:5173` — `login demo some-secret` to jump straight in (p
 | `use <medicine>` | Use medicine (e.g. `use jinchuang-yao`) |
 | `wear <equipment>` | Equip weapon/armor |
 | `remove <equipment>` | Unequip |
+
+### Economy
+| Command | Description |
+|---|---|
+| `shop` / `list` | Show shop goods |
 | `buy <item>` | Purchase from a shop (costs silver) |
+| `sell <item> [qty]` | Sell items to a shop |
+| `bank` / `cunku` | View banked silver and items |
+| `deposit <item> [qty]` / `deposit silver <qty>` | Deposit into bank |
+| `withdraw <item> [qty]` / `withdraw silver <qty>` | Withdraw from bank |
+| `auction` | List auction house postings |
+| `auction sell <item> <start> [buyout]` | Post an auction |
+| `auction bid <id> <amount>` | Bid on an auction |
+| `auction buyout <id>` | Buy an auction instantly |
+| `craft` / `craft <recipe>` | Craft items from materials |
 
 ### Combat & NPCs
 | Command | Description |
@@ -159,12 +173,12 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (187 tests)
+## Testing (250 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
 cd server && npx vitest     # Server only
-npm run test:e2e            # Playwright UI E2E (36 tests)
+npm run test:e2e            # Playwright UI E2E (48 tests)
 ```
 
 ### Test Coverage
@@ -178,6 +192,7 @@ npm run test:e2e            # Playwright UI E2E (36 tests)
 | `CommandRouter.progression.test.ts` | 8 | Leveling, attribute points, practice, dazuo |
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
+| `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
 | `SkillSystem.test.ts` | 15 | Learning, prerequisites, school lock |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 8 | Condition apply/tick/dispel/cure |
@@ -188,6 +203,7 @@ npm run test:e2e            # Playwright UI E2E (36 tests)
 | `leveling.spec.ts` (Playwright) | 3 | Leveling + attribute points |
 | `conditions.spec.ts` (Playwright) | 3 | Wolf poison + antidote |
 | `schools.spec.ts` (Playwright) | 3 | Joining a school + signature skill |
+| `economy.spec.ts` (Playwright) | 12 | Bank, shop, auction, crafting flows |
 
 ## Production
 

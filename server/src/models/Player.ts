@@ -36,6 +36,8 @@ export interface Player {
   powerupExpiry?: number;
   isMeditating?: boolean;
   meditationTaskId?: string;
+  bankSilver: number;
+  bankInventory: InventoryItem[];
 }
 
 export function recalcPlayerStats(player: Player): void {
@@ -71,6 +73,8 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     quest: null,
     powerupExpiry: undefined,
     isMeditating: false,
+    bankSilver: 0,
+    bankInventory: [],
   };
 }
 

@@ -7,6 +7,10 @@ import { NpcSystem } from './systems/NpcSystem.js';
 import { SchoolSystem } from './systems/SchoolSystem.js';
 import { LevelSystem } from './systems/LevelSystem.js';
 import { ConditionSystem } from './systems/ConditionSystem.js';
+import { BankSystem } from './systems/BankSystem.js';
+import { AuctionSystem } from './systems/AuctionSystem.js';
+import { ShopSystem } from './systems/ShopSystem.js';
+import { CraftingSystem } from './systems/CraftingSystem.js';
 import { CommandRouter } from './engine/CommandRouter.js';
 import { TestSystemClock } from './time/SystemClock.js';
 import { Scheduler } from './time/Scheduler.js';
@@ -23,6 +27,10 @@ export interface TestGameContext {
   schools: SchoolSystem;
   levels: LevelSystem;
   conditions: ConditionSystem;
+  bank: BankSystem;
+  auction: AuctionSystem;
+  shop: ShopSystem;
+  craft: CraftingSystem;
   router: CommandRouter;
 }
 
@@ -38,9 +46,13 @@ export function createTestContext(initialTime: number = 0, existingPlayers?: Pla
   const items = new ItemSystem(conditions);
   const npcs = new NpcSystem(skills, scheduler);
   const levels = new LevelSystem();
+  const bank = new BankSystem(items);
+  const auction = new AuctionSystem(items, scheduler);
+  const shop = new ShopSystem(items);
+  const craft = new CraftingSystem(items, skills);
   const router = new CommandRouter(
     players, map, combat, skills, items, npcs, schools,
-    levels, conditions, scheduler, clock,
+    levels, conditions, bank, auction, shop, craft, scheduler, clock,
   );
-  return { clock, scheduler, players, map, combat, skills, items, npcs, schools, levels, conditions, router };
+  return { clock, scheduler, players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, router };
 }

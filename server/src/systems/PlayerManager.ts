@@ -33,6 +33,8 @@ export class PlayerManager {
       skills: [],
       powerupExpiry: undefined,
       isMeditating: false,
+      bankSilver: 0,
+      bankInventory: [],
     });
   }
 

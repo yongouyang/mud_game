@@ -83,7 +83,7 @@ describe('Progression commands', () => {
     const npcs = (router as any).npcs;
     npcs.register({
       id: 'weak-rat', name: '老鼠', description: '一只小老鼠',
-      roomId: 'town/square', dialogue: ['吱吱'], attributes: { str: 1, int: 1, con: 1, dex: 1 },
+      roomId: 'town/square', dialogue: ['吱吱'], attributes: { str: 0, int: 1, con: 1, dex: 0 },
       skills: [], aggressive: false,
     });
     const rat = npcs.getNpc('weak-rat');
