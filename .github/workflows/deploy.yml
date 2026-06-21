@@ -23,6 +23,12 @@ jobs:
       - run: npm run build
       - run: npm test
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E tests
+        run: npm run test:e2e
+
   build-and-deploy:
     # Temporarily disabled while AWS credentials / infra are not configured.
     if: false
