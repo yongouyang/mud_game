@@ -24,6 +24,8 @@ jobs:
       - run: cd server && npm ci && npx vitest run
 
   build-and-deploy:
+    # Temporarily disabled while AWS credentials / infra are not configured.
+    if: false
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -57,6 +59,8 @@ jobs:
             --region ${{ env.AWS_REGION }}
 
   smoke-test:
+    # Temporarily disabled while AWS credentials / infra are not configured.
+    if: false
     needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
