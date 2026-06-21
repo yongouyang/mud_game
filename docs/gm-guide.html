@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>炎黄群侠传 · GM / 管理员指南</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;padding:32px;max-width:900px;margin:0 auto;line-height:1.7}
+h1{color:#ffd700;font-size:28px;margin-bottom:8px;text-align:center;letter-spacing:4px}
+h2{color:#e0c060;font-size:20px;margin:28px 0 12px;border-left:3px solid #ffd700;padding-left:10px}
+h3{color:#88ccff;font-size:16px;margin:16px 0 8px}
+code{background:#21262d;color:#ffa657;padding:2px 6px;border-radius:3px;font-size:14px}
+pre{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px 16px;overflow-x:auto;font-size:13px;margin:8px 0;color:#c9d1d9}
+.step{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin:12px 0}
+.tip{background:#1b3a1b;border-left:3px solid #3fb950;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+.warn{background:#3a1b1b;border-left:3px solid #f85149;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
+th,td{border:1px solid #30363d;padding:6px 10px;text-align:left}
+th{background:#21262d;color:#e0c060}
+a{color:#58a6ff}
+</style>
+</head>
+<body>
+<h1>炎黄群侠传 · GM / 管理员指南</h1>
+<p style="text-align:center;color:#888;margin-bottom:24px">管理服务器、维护秩序、调试内容的命令参考</p>
+
+<h2>🔑 第一章：获得管理员权限</h2>
+<p>GM 命令只对 <code>isAdmin = true</code> 的玩家生效。目前需要在服务器数据文件中手动设置：</p>
+<div class="step">
+<pre># 1. 让目标玩家先登录一次，使其数据写入 server/data/players.json
+# 2. 停止服务器（避免存档覆盖）
+# 3. 编辑 server/data/players.json，在该玩家对象中加入：
+"isAdmin": true
+# 4. 重新启动服务器</pre>
+</div>
+<div class="warn"><strong>安全提示：</strong>不要给普通玩家随意开启管理员权限。目前认证系统主要依赖账号密码，GM 账号请使用强密码。</div>
+
+<h2>🎛 第二章：GM 命令一览</h2>
+<p>所有 GM 命令均以 <code>gm</code> 开头：</p>
+<table>
+<tr><th>命令</th><th>参数</th><th>作用</th></tr>
+<tr><td><code>gm list</code></td><td>无</td><td>列出当前在线玩家及其所在房间</td></tr>
+<tr><td><code>gm inspect &lt;玩家名&gt;</code></td><td>玩家名</td><td>查看指定玩家的完整状态（气血、内力、经验、潜能、善恶值、装备等）</td></tr>
+<tr><td><code>gm kick &lt;玩家名&gt;</code></td><td>玩家名</td><td>将指定玩家移出游戏</td></tr>
+<tr><td><code>gm goto &lt;roomId&gt;</code></td><td>房间 ID</td><td>传送到任意房间，例如 <code>gm goto wilderness/cave</code></td></tr>
+<tr><td><code>gm spawn &lt;npcId&gt;</code></td><td>NPC ID</td><td>在当前房间召唤一个该 NPC 的克隆体，例如 <code>gm spawn bandit</code></td></tr>
+<tr><td><code>gm set &lt;玩家名&gt; &lt;字段&gt; &lt;值&gt;</code></td><td>玩家名、字段、值</td><td>修改玩家属性或状态</td></tr>
+</table>
+
+<h2>📝 第三章：gm set 可修改字段</h2>
+<table>
+<tr><th>字段</th><th>说明</th><th>示例</th></tr>
+<tr><td><code>hp</code></td><td>气血</td><td><code>gm set 张无忌 hp 100</code></td></tr>
+<tr><td><code>mp</code></td><td>内力</td><td><code>gm set 张无忌 mp 200</code></td></tr>
+<tr><td><code>exp</code></td><td>经验</td><td><code>gm set 张无忌 exp 1000</code></td></tr>
+<tr><td><code>pot</code></td><td>潜能</td><td><code>gm set 张无忌 pot 500</code></td></tr>
+<tr><td><code>shen</code></td><td>善恶值</td><td><code>gm set 张无忌 shen 0</code></td></tr>
+<tr><td><code>room</code></td><td>当前房间 ID</td><td><code>gm set 张无忌 room town/square</code></td></tr>
+<tr><td><code>str / int / con / dex / per / kar</code></td><td>六维属性</td><td><code>gm set 张无忌 str 20</code></td></tr>
+</table>
+<div class="tip"><strong>提示：</strong>修改属性后会自动重新计算气血/内力上限；修改 <code>room</code> 时会校验房间是否存在。</div>
+
+<h2>🐉 第四章：常用 GM 工作流</h2>
+<h3>4.1 快速巡查在线玩家</h3>
+<pre>gm list
+# 输出示例：张无忌 (zhangwuji) — town/square</pre>
+
+<h3>4.2 调查可疑玩家</h3>
+<pre>gm inspect 张无忌</pre>
+
+<h3>4.3 踢出捣乱玩家</h3>
+<pre>gm kick 捣乱者</pre>
+
+<h3>4.4 举办活动 / 测试战斗</h3>
+<pre>gm goto wilderness/cave
+gm spawn boss-heifeng
+# 召唤一个黑风寨主克隆体用于测试或活动</pre>
+
+<h3>4.5 修正玩家异常状态</h3>
+<pre>gm set 张无忌 hp 1
+gm set 张无忌 room town/square</pre>
+
+<h2>⚠ 第五章：注意事项</h2>
+<ul style="margin-left:20px">
+<li>GM 命令执行结果只返回给执行者，不会被其他玩家看到。</li>
+<li><code>gm spawn</code> 召唤的是 NPC 克隆体，ID 带有时间戳，不会覆盖原 NPC。</li>
+<li>修改玩家数据会触发自动存档；如需批量修改，建议直接编辑 <code>server/data/players.json</code> 并重启服务器。</li>
+<li>目前不支持运行时动态授予/撤销管理员权限，必须通过数据文件修改。</li>
+</ul>
+
+<h2>📚 相关文档</h2>
+<ul style="margin-left:20px">
+<li><a href="newbie-guide.html">新手指南</a></li>
+<li><a href="map.html">世界地图</a></li>
+<li><a href="oiuv_reference.md">炎黄 MUD 参考</a></li>
+</ul>
+
+<p style="text-align:center;color:#888;margin-top:32px">维护江湖秩序，辛苦 GM 了！</p>
+</body>
+</html>

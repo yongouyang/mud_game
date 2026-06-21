@@ -61,6 +61,7 @@ for (const school of schools) {
 }
 
 function npcLabel(npc) {
+  if (npc.boss) return 'boss';
   if (masterNames.has(npc.name)) return 'master';
   if (npc.aggressive) return 'aggressive';
   return 'npc';
@@ -151,7 +152,7 @@ const roomRows = sections.map(sec => {
     const steps = paths.get(room.id);
     const roomNpcs = npcsByRoom.get(room.id) || [];
     const npcHtml = roomNpcs.length
-      ? roomNpcs.map(n => `<span class="npc ${npcLabel(n)}">${n.name}${n.aggressive ? ' ⚔' : ''}</span>`).join(' ')
+      ? roomNpcs.map(n => `<span class="npc ${npcLabel(n)}">${n.name}${n.boss ? ' 👹' : n.aggressive ? ' ⚔' : ''}</span>`).join(' ')
       : '<span class="npc-none">(无人)</span>';
     return `  <div class="room">
     <div class="room-name">${room.name}</div>
@@ -186,6 +187,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
 .npc-npc{color:#ffaa44}
 .npc-master{color:#66ccff;font-weight:bold}
 .npc-aggressive{color:#ff4444;font-weight:bold}
+.npc-boss{color:#ff00ff;font-weight:bold}
 .npc-none{color:#555}
 .legend{font-size:11px;color:#888;margin-bottom:10px}
 .generated{color:#555;font-size:11px;margin-top:24px}
@@ -201,6 +203,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
   <span style="color:#66ccff;margin-left:10px">🔵 师父</span>
   <span style="color:#ffaa44;margin-left:10px">🟠 NPC</span>
   <span style="color:#ff4444;margin-left:10px">⛔ 主动攻击</span>
+  <span style="color:#ff00ff;margin-left:10px">👹 Boss</span>
 </div>
 
 ${roomRows}

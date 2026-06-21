@@ -21,6 +21,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
 .npc-npc{color:#ffaa44}
 .npc-master{color:#66ccff;font-weight:bold}
 .npc-aggressive{color:#ff4444;font-weight:bold}
+.npc-boss{color:#ff00ff;font-weight:bold}
 .npc-none{color:#555}
 .legend{font-size:11px;color:#888;margin-bottom:10px}
 .generated{color:#555;font-size:11px;margin-top:24px}
@@ -28,7 +29,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
 </head>
 <body>
 <h1>炎黄群侠传 世界地图</h1>
-<div class="stats">59 房间 · 22 NPC · 39 门派 · 44 武功 · 起点: 小镇广场</div>
+<div class="stats">59 房间 · 91 NPC · 39 门派 · 49 武功 · 起点: 小镇广场</div>
 <div class="legend">
   <span style="color:#6699cc">🟦 到达路径</span>
   <span style="color:#ffd700;margin-left:10px">🟡 房间</span>
@@ -36,6 +37,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
   <span style="color:#66ccff;margin-left:10px">🔵 师父</span>
   <span style="color:#ffaa44;margin-left:10px">🟠 NPC</span>
   <span style="color:#ff4444;margin-left:10px">⛔ 主动攻击</span>
+  <span style="color:#ff00ff;margin-left:10px">👹 Boss</span>
 </div>
 
 <h2>无名小镇</h2>
@@ -102,7 +104,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">山林·洞穴</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>w</span></div>
     <div class="exits">出口: east→山林·深处 │ southwest→星宿派·星宿海</div>
-    <div class="npcs"><span class="npc aggressive">黑熊 ⚔</span></div>
+    <div class="npcs"><span class="npc boss">黑风寨主 👹</span> <span class="npc aggressive">黑熊 ⚔</span></div>
   </div>
 </div>
 
@@ -118,7 +120,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">少林寺·大雄宝殿</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>s</span><span>w</span></div>
     <div class="exits">出口: east→少林寺·山门 │ north→少林寺·练功房</div>
-    <div class="npcs"><span class="npc master">玄慈方丈</span></div>
+    <div class="npcs"><span class="npc master">玄慈方丈</span> <span class="npc npc">少林派弟子</span></div>
   </div>
   <div class="room">
     <div class="room-name">少林寺·练功房</div>
@@ -140,7 +142,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">武当山·紫霄宫</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>e</span><span>w</span></div>
     <div class="exits">出口: east→武当山·山门 │ north→武当山·练武场</div>
-    <div class="npcs"><span class="npc master">冲虚道长</span></div>
+    <div class="npcs"><span class="npc master">冲虚道长</span> <span class="npc npc">武当派弟子</span></div>
   </div>
   <div class="room">
     <div class="room-name">武当山·练武场</div>
@@ -156,7 +158,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">丐帮·总舵</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>w</span><span>e</span></div>
     <div class="exits">出口: west→丐帮·杏子林入口</div>
-    <div class="npcs"><span class="npc master">洪七公</span></div>
+    <div class="npcs"><span class="npc master">洪七公</span> <span class="npc npc">丐帮弟子</span></div>
   </div>
   <div class="room">
     <div class="room-name">丐帮·杏子林入口</div>
@@ -190,7 +192,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">华山·之巅</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>e</span><span>n</span><span>n</span></div>
     <div class="exits">出口: south→华山·山道</div>
-    <div class="npcs"><span class="npc master">岳不群</span></div>
+    <div class="npcs"><span class="npc master">岳不群</span> <span class="npc npc">华山派弟子</span></div>
   </div>
 </div>
 
@@ -206,7 +208,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">峨眉·金顶</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>n</span><span>n</span></div>
     <div class="exits">出口: south→峨眉·山门</div>
-    <div class="npcs"><span class="npc master">灭绝师太</span></div>
+    <div class="npcs"><span class="npc master">灭绝师太</span> <span class="npc npc">峨眉派弟子</span></div>
   </div>
 </div>
 
@@ -222,7 +224,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">古墓·密室</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>n</span><span>n</span></div>
     <div class="exits">出口: south→古墓·入口</div>
-    <div class="npcs"><span class="npc master">小龙女</span></div>
+    <div class="npcs"><span class="npc master">小龙女</span> <span class="npc npc">古墓派弟子</span></div>
   </div>
 </div>
 
@@ -232,7 +234,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">昆仑·三清殿</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>northwest</span></div>
     <div class="exits">出口: east→山林·断崖</div>
-    <div class="npcs"><span class="npc master">何太冲</span></div>
+    <div class="npcs"><span class="npc master">何太冲</span> <span class="npc npc">昆仑派弟子</span></div>
   </div>
 </div>
 
@@ -242,7 +244,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">明教·光明顶</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>northeast</span></div>
     <div class="exits">出口: west→山林·深处</div>
-    <div class="npcs"><span class="npc master">张无忌</span></div>
+    <div class="npcs"><span class="npc master">张无忌</span> <span class="npc npc">明教弟子</span></div>
   </div>
 </div>
 
@@ -252,7 +254,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">全真教·重阳宫</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>southwest</span></div>
     <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc master">王重阳</span></div>
+    <div class="npcs"><span class="npc master">王重阳</span> <span class="npc npc">全真教弟子</span></div>
   </div>
 </div>
 
@@ -262,7 +264,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">星宿派·星宿海</div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>w</span><span>southwest</span></div>
     <div class="exits">出口: east→山林·洞穴</div>
-    <div class="npcs"><span class="npc master">丁春秋</span></div>
+    <div class="npcs"><span class="npc master">丁春秋</span> <span class="npc npc">星宿派弟子</span></div>
   </div>
 </div>
 
@@ -272,7 +274,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">逍遥派·琅嬛阁</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">逍遥派掌门</span> <span class="npc npc">逍遥派弟子</span></div>
   </div>
 </div>
 
@@ -282,7 +284,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">桃花岛·试剑亭</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">桃花岛掌门</span> <span class="npc npc">桃花岛弟子</span></div>
   </div>
 </div>
 
@@ -292,7 +294,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">灵鹫宫·缥缈峰</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">灵鹫宫掌门</span> <span class="npc npc">灵鹫宫弟子</span></div>
   </div>
 </div>
 
@@ -302,7 +304,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">神龙教·神龙岛</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">神龙教掌门</span> <span class="npc npc">神龙教弟子</span></div>
   </div>
 </div>
 
@@ -312,7 +314,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">日月神教·黑木崖</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">日月神教掌门</span> <span class="npc npc">日月神教弟子</span></div>
   </div>
 </div>
 
@@ -322,7 +324,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">雪山派·凌霄阁</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">雪山派掌门</span> <span class="npc npc">雪山派弟子</span></div>
   </div>
 </div>
 
@@ -332,7 +334,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">铁掌帮·铁掌峰</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">铁掌帮掌门</span> <span class="npc npc">铁掌帮弟子</span></div>
   </div>
 </div>
 
@@ -342,7 +344,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">唐门·唐家堡</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">唐门掌门</span> <span class="npc npc">唐门弟子</span></div>
   </div>
 </div>
 
@@ -352,7 +354,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">慕容世家·燕子坞</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">慕容世家掌门</span> <span class="npc npc">慕容世家弟子</span></div>
   </div>
 </div>
 
@@ -362,7 +364,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">段氏·天龙寺</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">段氏皇族掌门</span> <span class="npc npc">段氏皇族弟子</span></div>
   </div>
 </div>
 
@@ -372,7 +374,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">衡山·回雁楼</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">衡山派掌门</span> <span class="npc npc">衡山派弟子</span></div>
   </div>
 </div>
 
@@ -382,7 +384,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">红花会·聚义厅</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">红花会掌门</span> <span class="npc npc">红花会弟子</span></div>
   </div>
 </div>
 
@@ -392,7 +394,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">胡家·演武场</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">胡家掌门</span> <span class="npc npc">胡家弟子</span></div>
   </div>
 </div>
 
@@ -402,7 +404,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">绝情谷·情花谷</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">绝情谷掌门</span> <span class="npc npc">绝情谷弟子</span></div>
   </div>
 </div>
 
@@ -412,7 +414,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">凌霄城·雪峰殿</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">凌霄城掌门</span> <span class="npc npc">凌霄城弟子</span></div>
   </div>
 </div>
 
@@ -422,7 +424,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">梅庄·琴剑阁</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">梅庄掌门</span> <span class="npc npc">梅庄弟子</span></div>
   </div>
 </div>
 
@@ -432,7 +434,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">苗家·剑庐</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">苗家掌门</span> <span class="npc npc">苗家弟子</span></div>
   </div>
 </div>
 
@@ -442,7 +444,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">欧阳世家·白驼山</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">欧阳世家掌门</span> <span class="npc npc">欧阳世家弟子</span></div>
   </div>
 </div>
 
@@ -452,7 +454,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">商家堡·八卦堂</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">商家堡掌门</span> <span class="npc npc">商家堡弟子</span></div>
   </div>
 </div>
 
@@ -462,7 +464,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">嵩山·封禅台</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">嵩山派掌门</span> <span class="npc npc">嵩山派弟子</span></div>
   </div>
 </div>
 
@@ -472,7 +474,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">天龙寺·枯荣堂</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">天龙寺掌门</span> <span class="npc npc">天龙寺弟子</span></div>
   </div>
 </div>
 
@@ -482,7 +484,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">绝世·武境</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">绝世高手掌门</span> <span class="npc npc">绝世高手弟子</span></div>
   </div>
 </div>
 
@@ -492,7 +494,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">五毒教·万蛊殿</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">五毒教掌门</span> <span class="npc npc">五毒教弟子</span></div>
   </div>
 </div>
 
@@ -502,7 +504,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">侠客岛·石室</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">侠客岛掌门</span> <span class="npc npc">侠客岛弟子</span></div>
   </div>
 </div>
 
@@ -512,7 +514,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">玄冥谷·冰窟</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">玄冥谷掌门</span> <span class="npc npc">玄冥谷弟子</span></div>
   </div>
 </div>
 
@@ -522,7 +524,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">血刀门·血池</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: south→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">血刀门掌门</span> <span class="npc npc">血刀门弟子</span></div>
   </div>
 </div>
 
@@ -532,7 +534,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">云龙门·飞云阁</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: east→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">云龙门掌门</span> <span class="npc npc">云龙门弟子</span></div>
   </div>
 </div>
 
@@ -542,7 +544,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">震远镖局·练武厅</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">震远镖局掌门</span> <span class="npc npc">震远镖局弟子</span></div>
   </div>
 </div>
 
@@ -552,7 +554,7 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
     <div class="room-name">修罗地狱·血池</div>
     <div class="path">🟦 <span class="unreachable">无法从广场到达</span></div>
     <div class="exits">出口: west→山林·断崖</div>
-    <div class="npcs"><span class="npc-none">(无人)</span></div>
+    <div class="npcs"><span class="npc npc">修罗地狱掌门</span> <span class="npc npc">修罗地狱弟子</span></div>
   </div>
 </div>
 
