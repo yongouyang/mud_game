@@ -121,17 +121,27 @@ describe('SkillSystem', () => {
 
   it('computes skill-based attribute bonus', () => {
     const p = makePlayer('test');
+    p.pot = 500;
     expect(sys.getAttributeBonus(p)).toEqual({ str: 0, int: 0, con: 0, dex: 0 });
 
     for (let i = 0; i < 25; i++) sys.learnSkill(p, 'cuff');
+    for (let i = 0; i < 35; i++) sys.learnSkill(p, 'finger');
     for (let i = 0; i < 15; i++) sys.learnSkill(p, 'force');
     for (let i = 0; i < 10; i++) sys.learnSkill(p, 'dodge');
     for (let i = 0; i < 30; i++) sys.learnSkill(p, 'literate');
 
     const bonus = sys.getAttributeBonus(p);
-    expect(bonus.str).toBe(2); // cuff is strike type, level 25
+    expect(bonus.str).toBe(3); // highest attack skill is finger level 35
     expect(bonus.con).toBe(1); // force level 15
     expect(bonus.dex).toBe(1); // dodge level 10
     expect(bonus.int).toBe(3); // literate level 30
+  });
+
+  it('recognizes unarmed skills as attack types', () => {
+    const p = makePlayer('test');
+    for (let i = 0; i < 20; i++) sys.learnSkill(p, 'claw');
+    const best = sys.getBestStrike(p);
+    expect(best).not.toBeNull();
+    expect(best!.name).toBe('基本爪法');
   });
 });

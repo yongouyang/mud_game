@@ -74,7 +74,7 @@ export class NpcSystem {
     let dmg = 5 + npc.def.attributes.str * 1.5;
     for (const sk of npc.def.skills) {
       const def = this.skillSystem.getDef(sk.skillId);
-      if (def && def.type === 'strike') {
+      if (def && this.skillSystem.isAttackType(def.type)) {
         dmg += def.damageBase + def.damageScale * sk.level;
       }
     }
@@ -84,7 +84,7 @@ export class NpcSystem {
     let best: { name: string; damage: number } | null = null;
     for (const sk of npc.def.skills) {
       const def = this.skillSystem.getDef(sk.skillId);
-      if (def && def.type === 'strike') {
+      if (def && this.skillSystem.isAttackType(def.type)) {
         const dmg = def.damageBase + def.damageScale * sk.level;
         if (!best || dmg > best.damage) best = { name: def.name, damage: dmg };
       }

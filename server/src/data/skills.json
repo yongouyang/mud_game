@@ -21,7 +21,7 @@
       {
         "name": "招架·绝",
         "desc": "基本招架之术，格挡敌人攻击。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -37,7 +37,7 @@
       {
         "name": "基本剑法·绝",
         "desc": "基本剑术，可用剑类武器施展。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -53,7 +53,7 @@
       {
         "name": "基本刀法·绝",
         "desc": "基本刀术，可用刀类武器施展。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -69,7 +69,7 @@
       {
         "name": "基本杖法·绝",
         "desc": "基本棍杖之术。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -85,7 +85,7 @@
       {
         "name": "基本暗器·绝",
         "desc": "基本暗器手法。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -101,15 +101,15 @@
       {
         "name": "基本鞭法·绝",
         "desc": "基本鞭法之术。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
   {
     "id": "cuff",
     "name": "基本拳脚",
-    "type": "strike",
-    "description": "基本拳脚功夫，入门必学。",
+    "type": "unarmed",
+    "description": "基本拳脚功夫，入门必学，是各类拳掌指爪的基础。",
     "damageBase": 2,
     "damageScale": 0.3,
     "schoolId": null,
@@ -117,7 +117,71 @@
       {
         "name": "黑虎掏心",
         "desc": "一记猛拳直击对方要害",
-        "multiplier": 2.0
+        "multiplier": 2
+      }
+    ]
+  },
+  {
+    "id": "finger",
+    "name": "基本指法",
+    "type": "finger",
+    "description": "基本指法，以指力伤人。",
+    "damageBase": 3,
+    "damageScale": 0.35,
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "一指禅",
+        "desc": "一指点出，劲透穴道。",
+        "multiplier": 2
+      }
+    ]
+  },
+  {
+    "id": "hand",
+    "name": "基本掌法",
+    "type": "hand",
+    "description": "基本掌法，以掌风拍击敌人。",
+    "damageBase": 4,
+    "damageScale": 0.35,
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "劈空掌",
+        "desc": "掌风隔空击出。",
+        "multiplier": 2
+      }
+    ]
+  },
+  {
+    "id": "claw",
+    "name": "基本爪法",
+    "type": "claw",
+    "description": "基本爪法，以利爪撕裂对手。",
+    "damageBase": 4,
+    "damageScale": 0.35,
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "鹰爪功",
+        "desc": "爪势凌厉，直取要害。",
+        "multiplier": 2
+      }
+    ]
+  },
+  {
+    "id": "quan",
+    "name": "基本拳法",
+    "type": "cuff",
+    "description": "基本拳法，刚猛直接。",
+    "damageBase": 3,
+    "damageScale": 0.35,
+    "schoolId": null,
+    "performs": [
+      {
+        "name": "黑虎掏心",
+        "desc": "一记猛拳直击对方要害",
+        "multiplier": 2
       }
     ]
   },
@@ -133,7 +197,7 @@
       {
         "name": "基本轻功·绝",
         "desc": "基本轻功，用于闪避敌人攻击。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -149,7 +213,7 @@
       {
         "name": "基本内功·绝",
         "desc": "基本内功心法，影响内力上限和护体效果。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -168,6 +232,11 @@
         "name": "如封似闭",
         "desc": "太极拳意如封似闭，化开对方攻势",
         "multiplier": 2.8
+      },
+      {
+        "name": "揽雀尾",
+        "desc": "以柔克刚，借力打力。",
+        "multiplier": 2.2
       }
     ]
   },
@@ -186,6 +255,11 @@
         "name": "罗汉降魔",
         "desc": "双拳齐出，如罗汉降魔之势",
         "multiplier": 2.5
+      },
+      {
+        "name": "韦陀献杵",
+        "desc": "罗汉降魔，势大力沉。",
+        "multiplier": 2.2
       }
     ]
   },
@@ -203,7 +277,7 @@
       {
         "name": "草上飞·绝",
         "desc": "轻功进阶，身法如飞。需基本轻功≥10。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -221,7 +295,7 @@
       {
         "name": "内功心法·绝",
         "desc": "内功进阶，加强内力修为。需基本内功≥10。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -239,7 +313,12 @@
       {
         "name": "华山剑法·绝",
         "desc": "华山独门剑法。需基本剑法≥10。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "夺命连环三仙剑",
+        "desc": "连环三剑，迅疾无伦。",
+        "multiplier": 2.3
       }
     ]
   },
@@ -257,7 +336,12 @@
       {
         "name": "独孤九剑·绝",
         "desc": "剑魔绝学。需华山剑法≥20，基本剑法≥30。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "破剑式",
+        "desc": "破尽天下剑法。",
+        "multiplier": 2.4
       }
     ]
   },
@@ -275,7 +359,12 @@
       {
         "name": "打狗棒法·绝",
         "desc": "丐帮镇帮棒法。需基本杖法≥15。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "天下无狗",
+        "desc": "棒影如山，封死退路。",
+        "multiplier": 2.2
       }
     ]
   },
@@ -285,7 +374,7 @@
     "type": "strike",
     "description": "丐帮绝学。需基本拳脚≥20。",
     "damageBase": 8,
-    "damageScale": 1.0,
+    "damageScale": 1,
     "requireSkill": "cuff",
     "requireLevel": 20,
     "schoolId": "gaibang",
@@ -293,7 +382,12 @@
       {
         "name": "降龙十八掌·绝",
         "desc": "丐帮绝学。需基本拳脚≥20。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "亢龙有悔",
+        "desc": "降龙十八掌最强一式。",
+        "multiplier": 2.5
       }
     ]
   },
@@ -311,7 +405,12 @@
       {
         "name": "峨眉剑法·绝",
         "desc": "峨眉独门剑法。需基本剑法≥10。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "佛光普照",
+        "desc": "剑光如佛光普照，笼罩四方。",
+        "multiplier": 2.2
       }
     ]
   },
@@ -329,7 +428,7 @@
       {
         "name": "玉女心经·绝",
         "desc": "古墓派内功。需基本内功≥15。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -347,7 +446,7 @@
       {
         "name": "黯然销魂掌·绝",
         "desc": "威力惊人的掌法。需基本拳脚≥15，玉女心经≥10。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -365,7 +464,12 @@
       {
         "name": "一阳指·绝",
         "desc": "大理段氏的独门指法，点穴无匹。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "阳关三叠",
+        "desc": "一指三劲，连绵不绝。",
+        "multiplier": 2.2
       }
     ]
   },
@@ -375,7 +479,7 @@
     "type": "strike",
     "description": "以指代剑的绝世神技，六脉齐出无人可挡。",
     "damageBase": 12,
-    "damageScale": 1.0,
+    "damageScale": 1,
     "requireSkill": "yiyang-zhi",
     "requireLevel": 15,
     "schoolId": "duan",
@@ -383,7 +487,7 @@
       {
         "name": "六脉神剑·绝",
         "desc": "以指代剑的绝世神技，六脉齐出无人可挡。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -401,7 +505,7 @@
       {
         "name": "破玉拳·绝",
         "desc": "华山拳法，力道刚猛如破玉。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -419,7 +523,7 @@
       {
         "name": "松风剑法·绝",
         "desc": "昆仑派松风剑法，清灵飘逸。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -437,7 +541,12 @@
       {
         "name": "醉拳·绝",
         "desc": "形醉意不醉，步醉心不醉的奇门拳法。",
-        "multiplier": 2.0
+        "multiplier": 2
+      },
+      {
+        "name": "醉卧云端",
+        "desc": "形醉意不醉，借势反击。",
+        "multiplier": 2.1
       }
     ]
   },
@@ -455,7 +564,7 @@
       {
         "name": "乾坤大挪移·绝",
         "desc": "明教镇教神功，颠倒阴阳逆乱乾坤。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -473,7 +582,7 @@
       {
         "name": "吸星大法·绝",
         "desc": "吸收他人内力的霸道功夫。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -491,7 +600,7 @@
       {
         "name": "无相神功·绝",
         "desc": "全真教的内功心法，道家玄门正宗。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -509,7 +618,7 @@
       {
         "name": "弹指神通·绝",
         "desc": "桃花岛绝学，弹指间取人性命。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -527,7 +636,7 @@
       {
         "name": "生死符·绝",
         "desc": "灵鹫宫天山童姥的独门暗器。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -545,7 +654,7 @@
       {
         "name": "铁掌·绝",
         "desc": "铁掌帮看家本领，刚猛霸道。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -563,7 +672,7 @@
       {
         "name": "雪山剑法·绝",
         "desc": "雪山派剑法，剑气如冰。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -581,7 +690,7 @@
       {
         "name": "斗转星移·绝",
         "desc": "慕容世家不传之秘，以彼之道还施彼身。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -599,7 +708,7 @@
       {
         "name": "夺命金镖·绝",
         "desc": "唐门夺命金镖，见血封喉。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -617,7 +726,7 @@
       {
         "name": "化功大法·绝",
         "desc": "星宿派化功大法，化去他人内力。",
-        "multiplier": 2.0
+        "multiplier": 2
       }
     ]
   },
@@ -685,7 +794,14 @@
     "damageScale": 0.6,
     "requireSkill": "blade",
     "requireLevel": 5,
-    "schoolId": "shang"
+    "schoolId": "shang",
+    "performs": [
+      {
+        "name": "八卦六十四刀",
+        "desc": "刀走八卦，连绵不断。",
+        "multiplier": 2.2
+      }
+    ]
   },
   {
     "id": "hujia-dao",
@@ -696,7 +812,14 @@
     "damageScale": 0.7,
     "requireSkill": "blade",
     "requireLevel": 8,
-    "schoolId": "hu"
+    "schoolId": "hu",
+    "performs": [
+      {
+        "name": "八方藏刀",
+        "desc": "刀光八方环绕，防不胜防。",
+        "multiplier": 2.2
+      }
+    ]
   },
   {
     "id": "yunlong-sanxian",

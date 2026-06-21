@@ -1,4 +1,7 @@
-export type SkillType = 'parry' | 'dodge' | 'force' | 'strike';
+export type SkillType =
+  | 'parry' | 'dodge' | 'force' | 'strike'
+  | 'unarmed' | 'cuff' | 'finger' | 'hand' | 'claw'
+  | 'literate';
 
 export interface SkillDef {
   id: string;
@@ -23,4 +26,10 @@ export const SKILL_TYPE_NAMES: Record<SkillType, string> = {
   dodge: '轻功',
   force: '内功',
   strike: '招式',
+  unarmed: '拳脚',
+  cuff: '拳法',
+  finger: '指法',
+  hand: '掌法',
+  claw: '爪法',
+  literate: '读书识字',
 };

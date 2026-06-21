@@ -101,7 +101,7 @@ Turn-based auto-combat with MUD-style chain:
 Critical hits: 10% chance, 1.8x damage. Speed scales with dex + dodge level.
 
 ### Skills & Progression
-- **45 martial arts** across parry/dodge/force/weapons/strikes/literate
+- **49 martial arts** across parry/dodge/force/unarmed/finger/hand/claw/strike/literate
 - Basic skills learn anywhere (1 pot); school skills require **membership + location** (2+ pot)
 - **Prerequisites**: e.g. 太极拳 requires 基本拳脚 ≥ Lv.10
 - Max level: 100 per skill
@@ -127,7 +127,7 @@ Level = `floor(sqrt(exp / 100)) + 1`. Displayed in `score`.
 | 福缘 | `kar` | Luck on random events |
 
 Attributes improve as you train:
-- `str` + highest `strike` skill level / 10
+- `str` + highest `unarmed/cuff/finger/strike/hand/claw` skill level / 10
 - `int` + highest `literate` skill level / 10
 - `con` + highest `force` skill level / 10
 - `dex` + highest `dodge` skill level / 10
@@ -176,11 +176,12 @@ Original MUD reference: `docs/oiuv_reference.md`
 | 全真教 | 重阳宫 | 王重阳 | +2 悟性 +1 根骨 | 无相神功 |
 | 星宿派 | 星宿海 | 丁春秋 | +2 悟性 +1 身法 | 化功大法 |
 
-### Skills (45 total)
+### Skills (49 total)
 
 | Type | Skills |
 |---|---|
-| Basic | 招架(parry), 基本拳脚(cuff), 基本轻功(dodge), 基本内功(force) |
+| Basic | 招架(parry), 基本内功(force), 基本轻功(dodge), 读书识字(literate) |
+| Unarmed | 基本拳脚(unarmed), 基本拳法(cuff), 基本指法(finger), 基本掌法(hand), 基本爪法(claw) |
 | Weapons | 基本剑法(sword), 基本刀法(blade), 基本杖法(staff), 基本暗器(throwing), 基本鞭法(whip) |
 | Shaolin | 罗汉拳(luohan-quan) |
 | Wudang | 太极拳(taiji-quan), 草上飞(qinggong), 内功心法(neigong-xinfa) |
@@ -193,7 +194,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (256 tests)
+## Testing (257 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
@@ -213,7 +214,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
-| `SkillSystem.test.ts` | 16 | Learning, prerequisites, school lock, attribute bonus |
+| `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |

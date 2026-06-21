@@ -70,11 +70,17 @@ export class SkillSystem {
     return player.skills?.find((s) => s.skillId === skillId)?.level || 0;
   }
 
+  private attackTypes = new Set<SkillType>(['strike', 'unarmed', 'cuff', 'finger', 'hand', 'claw']);
+
+  isAttackType(type: SkillType): boolean {
+    return this.attackTypes.has(type);
+  }
+
   getBestStrike(player: Player): { name: string; damage: number } | null {
     let best: { name: string; damage: number } | null = null;
     for (const s of player.skills || []) {
       const def = this.defs.get(s.skillId);
-      if (def && def.type === 'strike') {
+      if (def && this.isAttackType(def.type)) {
         const dmg = def.damageBase + def.damageScale * s.level;
         if (!best || dmg > best.damage) best = { name: def.name, damage: dmg };
       }
@@ -111,20 +117,20 @@ export class SkillSystem {
 
   /** Return attribute bonuses derived from highest relevant skill levels. */
   getAttributeBonus(player: Player): { str: number; int: number; con: number; dex: number } {
-    let bestStrike = 0;
+    let bestStrSkill = 0;
     let bestLiterate = 0;
     let bestForce = 0;
     let bestDodge = 0;
     for (const s of player.skills || []) {
       const def = this.defs.get(s.skillId);
       if (!def) continue;
-      if (def.type === 'strike' && s.level > bestStrike) bestStrike = s.level;
+      if (this.isAttackType(def.type) && s.level > bestStrSkill) bestStrSkill = s.level;
       if (def.type === 'literate' && s.level > bestLiterate) bestLiterate = s.level;
       if (def.type === 'force' && s.level > bestForce) bestForce = s.level;
       if (def.type === 'dodge' && s.level > bestDodge) bestDodge = s.level;
     }
     return {
-      str: Math.floor(bestStrike / 10),
+      str: Math.floor(bestStrSkill / 10),
       int: Math.floor(bestLiterate / 10),
       con: Math.floor(bestForce / 10),
       dex: Math.floor(bestDodge / 10),
