@@ -205,75 +205,84 @@ export class CommandRouter {
     return result.message + this.combat.formatCombatStatus(player, target);
   }
 
-  private handleCombat(player: Player, cmd: string, _args: string[]): string {
-    const targetId = player.targetEnemy;
-    if (!targetId) { player.state = 'playing'; return '\n  战斗已结束。\n'; }
+  // ── Combat Round (called by auto-tick and manual hit) ──────
+  /** Public: execute one combat round. Called by server tick and manual hit. */
+  executeCombatRound(playerId: string): string {
+    const player = this.players.getPlayer(playerId);
+    if (!player || player.state !== 'fighting' || !player.targetEnemy) return '';
+    return this.doCombatRound(player, player.targetEnemy);
+  }
 
-    let enemyHp = 0, enemyMaxHp = 0, enemyName = '';
+  private doCombatRound(player: Player, targetId: string): string {
+    let msg = '';
 
     if (targetId.startsWith('npc:')) {
       const npc = this.npcs.getNpc(targetId.slice(4));
-      if (!npc || npc.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; return '\n  敌人已倒下，战斗结束。\n'; }
-      enemyHp = npc.hp; enemyMaxHp = npc.maxHp; enemyName = npc.def.name;
+      if (!npc || npc.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; } return '\n  敌人已倒下，战斗结束。\n'; }
+      const npcTarget = {
+        name: npc.def.name,
+        get hp() { return npc.hp; }, set hp(v: number) { npc.hp = v; },
+        maxHp: npc.maxHp,
+        attributes: npc.def.attributes,
+      };
+      const result = this.combat.attack(player, npcTarget);
+      msg = `\n  [战斗] ${result.message.trim()}\n`;
+      if (result.defenderDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        npc.state = 'idle'; npc.targetPlayerId = null;
+        return msg + `\n  ${npc.def.name} 倒下了！\n`;
+      }
+      const counter = this.combat.attack({ attributes: npc.def.attributes, name: npc.def.name }, player);
+      msg += `  ${counter.message.trim()}\n`;
+      if (counter.defenderDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        npc.state = 'idle'; npc.targetPlayerId = null;
+        player.hp = 1;
+        return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
+      }
+      return msg + this.combat.formatCombatStatus(player, npcTarget);
     } else {
       const target = this.players.getPlayer(targetId);
-      if (!target || target.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; return '\n  敌人已倒下，战斗结束。\n'; }
-      enemyHp = target.hp; enemyMaxHp = target.maxHp; enemyName = target.name;
-    }
-
-    if (cmd === 'hit' || cmd === 'kill') {
-      let msg = '';
-
-      if (targetId.startsWith('npc:')) {
-        const npc = this.npcs.getNpc(targetId.slice(4))!;
-        const npcTarget = {
-          name: npc.def.name,
-          get hp() { return npc.hp; },
-          set hp(v: number) { npc.hp = v; },
-          maxHp: npc.maxHp,
-          attributes: npc.def.attributes,
-        };
-        const result = this.combat.attack(player, npcTarget);
-        msg = result.message;
-        if (result.defenderDead) {
-          player.state = 'playing'; player.targetEnemy = null;
-          npc.state = 'idle'; npc.targetPlayerId = null;
-          return msg;
-        }
-        // NPC counter-attacks
-        const counter = this.combat.attack({ attributes: npc.def.attributes, name: npc.def.name }, player);
-        msg += counter.message;
-        if (counter.defenderDead) {
-          player.state = 'playing'; player.targetEnemy = null;
-          npc.state = 'idle'; npc.targetPlayerId = null;
-          player.hp = 1;
-          return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
-        }
-        return msg + this.combat.formatCombatStatus(player, npcTarget);
-      } else {
-        const target = this.players.getPlayer(targetId)!;
-        const result = this.combat.attack(player, target);
-        msg = result.message;
-        if (result.defenderDead) {
-          player.state = 'playing'; player.targetEnemy = null;
-          target.state = 'playing'; target.targetEnemy = null;
-          return msg;
-        }
-        const counter = this.combat.attack(target, player);
-        msg += counter.message;
-        if (counter.defenderDead) {
-          player.state = 'playing'; player.targetEnemy = null;
-          target.state = 'playing'; target.targetEnemy = null;
-          player.hp = 1;
-          return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
-        }
-        return msg + this.combat.formatCombatStatus(player, target);
+      if (!target || target.hp <= 0) { player.state = 'playing'; player.targetEnemy = null; if (target) { target.state = 'playing'; target.targetEnemy = null; } return '\n  敌人已倒下，战斗结束。\n'; }
+      const result = this.combat.attack(player, target);
+      msg = `\n  [战斗] ${result.message.trim()}\n`;
+      if (result.defenderDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        target.state = 'playing'; target.targetEnemy = null;
+        return msg + `\n  ${target.name} 倒下了！\n`;
       }
+      const counter = this.combat.attack(target, player);
+      msg += `  ${counter.message.trim()}\n`;
+      if (counter.defenderDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        target.state = 'playing'; target.targetEnemy = null;
+        player.hp = 1;
+        return msg + '\n  你被击败了……但挣扎着站了起来（HP 恢复至 1）。\n';
+      }
+      return msg + this.combat.formatCombatStatus(player, target);
+    }
+  }
+
+  private handleCombat(player: Player, cmd: string, _args: string[]): string {
+    if (cmd === 'flee' || cmd === 'tao') {
+      const targetId = player.targetEnemy;
+      player.state = 'playing'; player.targetEnemy = null;
+      if (targetId?.startsWith('npc:')) {
+        const npc = this.npcs.getNpc(targetId.slice(4));
+        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
+      } else if (targetId) {
+        const target = this.players.getPlayer(targetId);
+        if (target) { target.state = 'playing'; target.targetEnemy = null; }
+      }
+      return '\n  你转身逃走了……\n';
     }
     if (cmd === 'hp' || cmd === 'look' || cmd === 'l') {
-      return this.combat.formatCombatStatus(player, { name: enemyName, hp: enemyHp, maxHp: enemyMaxHp });
+      return this.doCombatRound(player, player.targetEnemy!); // display only, no attack
     }
-    return '\n  战斗中只能使用 hit、hp、look。\n';
+    if (cmd === 'hit' || cmd === 'kill') {
+      return this.doCombatRound(player, player.targetEnemy!);
+    }
+    return '\n  战斗中可以使用：hit（攻击）、flee（逃跑）、hp（查看状态）\n';
   }
 
   // ── Items ────────────────────────────────────────────────

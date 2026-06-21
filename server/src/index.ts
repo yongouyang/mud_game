@@ -127,6 +127,9 @@ const router = new CommandRouter(players, map, combat, skills, items, npcs, scho
 // Track auth state per socket
 const socketAuth = new Map<string, { authState: string; username?: string }>();
 
+// Auto-combat tick intervals per socket
+const combatTicks = new Map<string, ReturnType<typeof setInterval>>();
+
 io.on('connection', (socket) => {
   console.log(`[connect] ${socket.id}`);
 
@@ -204,13 +207,44 @@ io.on('connection', (socket) => {
     if (p && p.state === 'playing') {
       persistence.saveAll(players.getAllPlayers());
     }
+
+    // Auto-combat tick: start/stop based on fighting state
+    manageCombatTick(socket);
   });
 
   socket.on('disconnect', () => {
     console.log(`[disconnect] ${socket.id}`);
+    clearCombatTick(socket.id);
     socketAuth.delete(socket.id);
   });
 });
+
+function clearCombatTick(socketId: string) {
+  const tick = combatTicks.get(socketId);
+  if (tick) { clearInterval(tick); combatTicks.delete(socketId); }
+}
+
+function manageCombatTick(socket: any) {
+  const p = players.getPlayer(socket.id);
+  if (p && p.state === 'fighting') {
+    if (!combatTicks.has(socket.id)) {
+      const tick = setInterval(() => {
+        const roundResult = router.executeCombatRound(socket.id);
+        if (roundResult) socket.emit('output', { text: roundResult });
+        const updated = players.getPlayer(socket.id);
+        if (!updated || updated.state !== 'fighting') {
+          clearCombatTick(socket.id);
+          if (updated && updated.state === 'playing') {
+            persistence.saveAll(players.getAllPlayers());
+          }
+        }
+      }, 1500); // 1.5 seconds per round
+      combatTicks.set(socket.id, tick);
+    }
+  } else {
+    clearCombatTick(socket.id);
+  }
+}
 
 httpServer.listen(PORT, () => {
   console.log(`[server] Wuxia MUD running on http://localhost:${PORT}`);
