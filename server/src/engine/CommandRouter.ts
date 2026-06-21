@@ -85,6 +85,7 @@ export class CommandRouter {
       case 'join': return this.handleJoin(player, rest);
       case 'quest': return this.handleQuest(player, rest);
       case 'buy': return this.handleBuy(player, rest);
+      case 'shop': case 'list': return this.handleShop(player);
       case 'perform': case 'pfm': return this.handlePerform(player, rest);
       case 'exert': case 'yun': return this.handleExert(player, rest);
       case 'ask': return this.handleAsk(player, rest);
@@ -457,6 +458,23 @@ export class CommandRouter {
       return `\n  你学会了${name}！当前等级：Lv.${level}\n`;
     }
     return `\n  没有"${name}"这个武功。\n`;
+  }
+
+  // ── Shop ─────────────────────────────────────────────────
+  private handleShop(player: Player): string {
+    return [
+      '',
+      '  ─── 商店 ───',
+      '',
+      '  金疮药(jinchuang-yao)  — 20 两 (恢复50HP)',
+      '  人参丸(renshen-wan)     — 50 两 (恢复100HP)',
+      '  铁剑(iron-sword)        — 80 两 (攻击+10)',
+      '  皮甲(leather-armor)     — 60 两 (防御+5)',
+      '  木剑(wooden-sword)      — 30 两 (攻击+3)',
+      '',
+      '  用法：buy <物品名>',
+      '',
+    ].join('\n') + '\n';
   }
 
   // ── Quest System ───────────────────────────────────────

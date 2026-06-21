@@ -200,5 +200,170 @@
     "requireSkill": "cuff",
     "requireLevel": 15,
     "schoolId": "gumu"
+  },
+  {
+    "id": "yiyang-zhi",
+    "name": "一阳指",
+    "type": "strike",
+    "description": "大理段氏的独门指法，点穴无匹。",
+    "damageBase": 8,
+    "damageScale": 0.7,
+    "requireSkill": "cuff",
+    "requireLevel": 10,
+    "schoolId": "duan"
+  },
+  {
+    "id": "liumai-shenjian",
+    "name": "六脉神剑",
+    "type": "strike",
+    "description": "以指代剑的绝世神技，六脉齐出无人可挡。",
+    "damageBase": 12,
+    "damageScale": 1.0,
+    "requireSkill": "yiyang-zhi",
+    "requireLevel": 15,
+    "schoolId": "duan"
+  },
+  {
+    "id": "poyu-quan",
+    "name": "破玉拳",
+    "type": "strike",
+    "description": "华山拳法，力道刚猛如破玉。",
+    "damageBase": 6,
+    "damageScale": 0.6,
+    "requireSkill": "cuff",
+    "requireLevel": 5,
+    "schoolId": "huashan"
+  },
+  {
+    "id": "songfeng-jian",
+    "name": "松风剑法",
+    "type": "strike",
+    "description": "昆仑派松风剑法，清灵飘逸。",
+    "damageBase": 7,
+    "damageScale": 0.6,
+    "requireSkill": "sword",
+    "requireLevel": 5,
+    "schoolId": "kunlun"
+  },
+  {
+    "id": "zui-quan",
+    "name": "醉拳",
+    "type": "strike",
+    "description": "形醉意不醉，步醉心不醉的奇门拳法。",
+    "damageBase": 7,
+    "damageScale": 0.7,
+    "requireSkill": "cuff",
+    "requireLevel": 8,
+    "schoolId": null
+  },
+  {
+    "id": "qiankun-danuoyi",
+    "name": "乾坤大挪移",
+    "type": "force",
+    "description": "明教镇教神功，颠倒阴阳逆乱乾坤。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 15,
+    "schoolId": "mingjiao"
+  },
+  {
+    "id": "xixing-dafa",
+    "name": "吸星大法",
+    "type": "force",
+    "description": "吸收他人内力的霸道功夫。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 12,
+    "schoolId": "riyue"
+  },
+  {
+    "id": "wuzhi-shengong",
+    "name": "无相神功",
+    "type": "force",
+    "description": "全真教的内功心法，道家玄门正宗。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 10,
+    "schoolId": "quanzhen"
+  },
+  {
+    "id": "tanzhi-shentong",
+    "name": "弹指神通",
+    "type": "strike",
+    "description": "桃花岛绝学，弹指间取人性命。",
+    "damageBase": 9,
+    "damageScale": 0.8,
+    "requireSkill": "throwing",
+    "requireLevel": 10,
+    "schoolId": "taohua"
+  },
+  {
+    "id": "shengsi-fu",
+    "name": "生死符",
+    "type": "strike",
+    "description": "灵鹫宫天山童姥的独门暗器。",
+    "damageBase": 10,
+    "damageScale": 0.8,
+    "requireSkill": "throwing",
+    "requireLevel": 12,
+    "schoolId": "lingjiu"
+  },
+  {
+    "id": "tieshang-quan",
+    "name": "铁掌",
+    "type": "strike",
+    "description": "铁掌帮看家本领，刚猛霸道。",
+    "damageBase": 8,
+    "damageScale": 0.7,
+    "requireSkill": "cuff",
+    "requireLevel": 8,
+    "schoolId": "tiezhang"
+  },
+  {
+    "id": "xueshan-jian",
+    "name": "雪山剑法",
+    "type": "strike",
+    "description": "雪山派剑法，剑气如冰。",
+    "damageBase": 7,
+    "damageScale": 0.6,
+    "requireSkill": "sword",
+    "requireLevel": 5,
+    "schoolId": "xueshan"
+  },
+  {
+    "id": "douzhuan-xingyi",
+    "name": "斗转星移",
+    "type": "force",
+    "description": "慕容世家不传之秘，以彼之道还施彼身。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 12,
+    "schoolId": "murong"
+  },
+  {
+    "id": "duoming-jinbiao",
+    "name": "夺命金镖",
+    "type": "strike",
+    "description": "唐门夺命金镖，见血封喉。",
+    "damageBase": 8,
+    "damageScale": 0.7,
+    "requireSkill": "throwing",
+    "requireLevel": 5,
+    "schoolId": "tangmen"
+  },
+  {
+    "id": "huagong-dafa",
+    "name": "化功大法",
+    "type": "force",
+    "description": "星宿派化功大法，化去他人内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "requireSkill": "force",
+    "requireLevel": 10,
+    "schoolId": "xingxiu"
   }
 ]

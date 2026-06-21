@@ -257,8 +257,8 @@ describe('CommandRouter', () => {
     });
 
     it('learn rejects unknown skill', () => {
-      const output = cmd('learn 六脉神剑');
-      expect(output).toContain('没有"六脉神剑"这个武功');
+      const output = cmd('learn 不存在的武功');
+      expect(output).toContain('没有"不存在的武功"这个武功');
     });
 
     it('skills lists learned skills', () => {

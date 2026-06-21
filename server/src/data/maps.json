@@ -381,6 +381,160 @@
           "roomId": "gumu/entrance"
         }
       ]
+    },
+    {
+      "id": "kunlun/hall",
+      "name": "昆仑·三清殿",
+      "description": "昆仑山上的道观正殿，供奉着三清道祖。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "mingjiao/hall",
+      "name": "明教·光明顶",
+      "description": "明教总坛光明顶，矗立于西域群山之巅。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "quanzhen/hall",
+      "name": "全真教·重阳宫",
+      "description": "终南山上的全真教祖庭，道气缭绕。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "xingxiu/hall",
+      "name": "星宿派·星宿海",
+      "description": "星宿海上的诡异门派，空气中弥漫着药味。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/cave"
+        }
+      ]
+    },
+    {
+      "id": "xiaoyao/hall",
+      "name": "逍遥派·琅嬛阁",
+      "description": "逍遥派藏书阁，收录天下武学。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "taohua/hall",
+      "name": "桃花岛·试剑亭",
+      "description": "桃花岛上的试剑亭，四周桃林如阵。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "lingjiu/hall",
+      "name": "灵鹫宫·缥缈峰",
+      "description": "天山缥缈峰上的灵鹫宫，云雾缭绕。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "shenlong/hall",
+      "name": "神龙教·神龙岛",
+      "description": "神龙岛上的教坛，神秘莫测。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "riyue/hall",
+      "name": "日月神教·黑木崖",
+      "description": "黑木崖上的日月神教总坛，威严肃穆。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "xueshan/hall",
+      "name": "雪山派·凌霄阁",
+      "description": "大雪山上的凌霄阁，冰风凛冽剑意如霜。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/cliff"
+        }
+      ]
+    },
+    {
+      "id": "tiezhang/hall",
+      "name": "铁掌帮·铁掌峰",
+      "description": "铁掌山上的铁掌帮，铁掌功夫名震湘西。",
+      "exits": [
+        {
+          "direction": "north",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "tangmen/hall",
+      "name": "唐门·唐家堡",
+      "description": "蜀中唐门，暗器与毒药冠绝天下。",
+      "exits": [
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "murong/hall",
+      "name": "慕容世家·燕子坞",
+      "description": "姑苏慕容燕子坞，斗转星移魂牵梦萦。",
+      "exits": [
+        {
+          "direction": "east",
+          "roomId": "wilderness/forest2"
+        }
+      ]
+    },
+    {
+      "id": "duan/hall",
+      "name": "段氏·天龙寺",
+      "description": "大理段氏天龙寺，佛光普照剑气纵横。",
+      "exits": [
+        {
+          "direction": "south",
+          "roomId": "wilderness/forest2"
+        }
+      ]
     }
   ]
 }

@@ -109,5 +109,89 @@
       "yunu-xinjing",
       "anran-xiaohun"
     ]
+  },
+  {
+    "id": "kunlun",
+    "name": "昆仑派",
+    "description": "昆仑山上的名门正派，剑法飘逸，内功深厚。",
+    "joinRoomId": "kunlun/hall"
+  },
+  {
+    "id": "mingjiao",
+    "name": "明教",
+    "description": "源自西域的神秘教派，武功诡异莫测。",
+    "joinRoomId": "mingjiao/hall"
+  },
+  {
+    "id": "quanzhen",
+    "name": "全真教",
+    "description": "道家正宗，王重阳所创，剑法道术冠绝天下。",
+    "joinRoomId": "quanzhen/hall"
+  },
+  {
+    "id": "xingxiu",
+    "name": "星宿派",
+    "description": "星宿海上的邪派，擅长用毒和诡异手法。",
+    "joinRoomId": "xingxiu/hall"
+  },
+  {
+    "id": "xiaoyao",
+    "name": "逍遥派",
+    "description": "飘渺难觅的隐世门派，武功潇洒自如。",
+    "joinRoomId": "xiaoyao/hall"
+  },
+  {
+    "id": "taohua",
+    "name": "桃花岛",
+    "description": "黄药师隐居之处，奇门遁甲与弹指神通独步天下。",
+    "joinRoomId": "taohua/hall"
+  },
+  {
+    "id": "lingjiu",
+    "name": "灵鹫宫",
+    "description": "天山缥缈峰上的隐秘宫门，生死符令江湖人闻风丧胆。",
+    "joinRoomId": "lingjiu/hall"
+  },
+  {
+    "id": "shenlong",
+    "name": "神龙教",
+    "description": "神龙岛上的隐秘教派，教主武功通天。",
+    "joinRoomId": "shenlong/hall"
+  },
+  {
+    "id": "riyue",
+    "name": "日月神教",
+    "description": "黑木崖上的庞大教派，吸星大法威慑武林。",
+    "joinRoomId": "riyue/hall"
+  },
+  {
+    "id": "xueshan",
+    "name": "雪山派",
+    "description": "大雪山上的正派，剑法凌厉如冰雪。",
+    "joinRoomId": "xueshan/hall"
+  },
+  {
+    "id": "tiezhang",
+    "name": "铁掌帮",
+    "description": "湘西铁掌山上的帮会，铁掌功夫凌厉无比。",
+    "joinRoomId": "tiezhang/hall"
+  },
+  {
+    "id": "tangmen",
+    "name": "唐门",
+    "description": "蜀中唐家堡，暗器与毒药天下无双。",
+    "joinRoomId": "tangmen/hall"
+  },
+  {
+    "id": "murong",
+    "name": "慕容世家",
+    "description": "姑苏慕容氏，斗转星移以彼之道还施彼身。",
+    "joinRoomId": "murong/hall"
+  },
+  {
+    "id": "duan",
+    "name": "段氏皇族",
+    "description": "大理段氏，六脉神剑一阳指威震南疆。",
+    "joinRoomId": "duan/hall"
   }
 ]
