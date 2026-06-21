@@ -1,164 +1,32 @@
 [
   {
-    "id": "wooden-sword",
-    "name": "木剑",
+    "id": "arrow",
+    "name": "羽箭",
     "type": "weapon",
-    "weaponType": "sword",
-    "description": "一把普通的桃木剑。",
+    "description": "一根细长的箭，箭翎修长，簇失锋利。\\n",
+    "weaponType": "throwing",
     "attrBonus": {
-      "str": 3
+      "str": 67
     }
   },
   {
-    "id": "iron-sword",
-    "name": "铁剑",
+    "id": "baipao",
+    "name": "白袍",
+    "type": "armor",
+    "description": "这是件轻纱制成的白色长袍。\\n",
+    "attrBonus": {
+      "con": 16
+    }
+  },
+  {
+    "id": "bian",
+    "name": "羊鞭",
     "type": "weapon",
-    "weaponType": "sword",
-    "description": "一把锋利的铁剑，剑身泛着寒光。",
+    "description": "这是一柄普通的羊鞭，做工粗糙。\\n",
+    "weaponType": "whip",
     "attrBonus": {
-      "str": 8
+      "str": 2
     }
-  },
-  {
-    "id": "cloth-armor",
-    "name": "布衣",
-    "type": "armor",
-    "description": "粗布缝制的衣物，聊胜于无。",
-    "attrBonus": {
-      "con": 2
-    }
-  },
-  {
-    "id": "leather-armor",
-    "name": "皮甲",
-    "type": "armor",
-    "description": "鞣制过的兽皮甲，有一定防御力。",
-    "attrBonus": {
-      "con": 5
-    }
-  },
-  {
-    "id": "jinchuang-yao",
-    "name": "金疮药",
-    "type": "medicine",
-    "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 50 点气血。",
-    "effect": {
-      "hp": 50
-    }
-  },
-  {
-    "id": "renshen-wan",
-    "name": "人参丸",
-    "type": "medicine",
-    "description": "以长白山人参炼制的药丸，大补元气。恢复 100 点气血。",
-    "effect": {
-      "hp": 100
-    }
-  },
-  {
-    "id": "silver",
-    "name": "银子",
-    "type": "misc",
-    "description": "白花花的银子，可以买东西。"
-  },
-  {
-    "id": "shengji-wan",
-    "name": "生肌丸",
-    "type": "medicine",
-    "description": "生肌活血的疗伤圣药。恢复 200 点气血。",
-    "effect": {
-      "hp": 200
-    }
-  },
-  {
-    "id": "neili-dan",
-    "name": "内力丹",
-    "type": "medicine",
-    "description": "恢复内力的丹药，可恢复 50 点内力。",
-    "effect": {
-      "mp": 50
-    }
-  },
-  {
-    "id": "jiedu-wan",
-    "name": "解毒丸",
-    "type": "medicine",
-    "description": "可解百毒的灵丹，能清除各类毒伤。",
-    "effect": {
-      "cureCategory": "poison"
-    }
-  },
-  {
-    "id": "str-dan",
-    "name": "力量丹",
-    "type": "medicine",
-    "description": "永久提升1点臂力。",
-    "effect": {
-      "str": 1
-    }
-  },
-  {
-    "id": "con-dan",
-    "name": "根骨丹",
-    "type": "medicine",
-    "description": "永久提升1点根骨。",
-    "effect": {
-      "con": 1
-    }
-  },
-  {
-    "id": "dex-dan",
-    "name": "身法丹",
-    "type": "medicine",
-    "description": "永久提升1点身法。",
-    "effect": {
-      "dex": 1
-    }
-  },
-  {
-    "id": "int-dan",
-    "name": "悟性丹",
-    "type": "medicine",
-    "description": "永久提升1点悟性。",
-    "effect": {
-      "int": 1
-    }
-  },
-  {
-    "id": "letter",
-    "name": "信件",
-    "type": "misc",
-    "description": "一封封口严密的信件，似乎是某位NPC托你转交的。"
-  },
-  {
-    "id": "iron-ore",
-    "name": "铁矿",
-    "type": "misc",
-    "description": "一块沉甸甸的铁矿石，是打造兵器的基础材料。"
-  },
-  {
-    "id": "leather",
-    "name": "皮革",
-    "type": "misc",
-    "description": "一张坚韧的兽皮，可用来缝制皮甲或包裹剑柄。"
-  },
-  {
-    "id": "cloth",
-    "name": "布料",
-    "type": "misc",
-    "description": "一匹普通的布料，可缝制布衣或作为内衬。"
-  },
-  {
-    "id": "herb",
-    "name": "草药",
-    "type": "misc",
-    "description": "一株常见的药草，可调配金疮药或解毒丸。"
-  },
-  {
-    "id": "wolf-pelt",
-    "name": "狼皮",
-    "type": "misc",
-    "description": "一张从野狼身上剥下的毛皮，可以卖个好价钱。"
   },
   {
     "id": "black-wind-blade",
@@ -172,9 +40,1132 @@
     }
   },
   {
+    "id": "blade",
+    "name": "钢刀",
+    "type": "weapon",
+    "description": "这是一柄亮晃晃的钢刀，普通官兵的常备武器。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 7
+    }
+  },
+  {
+    "id": "blood",
+    "name": "碧魄",
+    "type": "medicine",
+    "description": "晶莹剔透的血精，乃大雪山玄冰赤蟒的鲜血结",
+    "effect": {
+      "mp": 50
+    }
+  },
+  {
     "id": "boss-token",
     "name": "寨主令",
     "type": "misc",
     "description": "黑风寨主掉落的信物，据说可在某些势力处换取重赏。"
+  },
+  {
+    "id": "bow",
+    "name": "短弓",
+    "type": "weapon",
+    "description": "一张短弓，打造得颇为精致，具有不错的准确度。\\n"
+  },
+  {
+    "id": "bupao",
+    "name": "青布袍",
+    "type": "armor",
+    "description": "一个青布袍。",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "c-jiasha",
+    "name": "青色袈裟",
+    "type": "armor",
+    "description": "一个青色袈裟。",
+    "attrBonus": {
+      "con": 40
+    }
+  },
+  {
+    "id": "chaidao",
+    "name": "柴刀",
+    "type": "weapon",
+    "description": "这是一柄普通的柴刀，不过上面已满是铁锈。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 5
+    }
+  },
+  {
+    "id": "changbian",
+    "name": "长鞭",
+    "type": "weapon",
+    "description": "这是一根普通的长鞭，由水牛皮精工编织而成。\\n",
+    "weaponType": "whip",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "changjian",
+    "name": "长剑",
+    "type": "weapon",
+    "description": "这是一柄普通的精钢剑，一般的剑客都配带此剑。\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "changpao",
+    "name": "波斯长袍",
+    "type": "armor",
+    "description": "这是一件脏兮兮的波斯长袍。\\n",
+    "attrBonus": {
+      "con": 20
+    }
+  },
+  {
+    "id": "changqiang",
+    "name": "长枪",
+    "type": "weapon",
+    "description": "这是一根白缨长钢枪，长可丈二，枪头隐隐透出寒光。\\n",
+    "weaponType": "club",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "ciguarrow",
+    "name": "刺骨箭",
+    "type": "weapon",
+    "description": "一根细长的羽箭，箭尖相当尖锐，势道十分凶猛。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 133
+    }
+  },
+  {
+    "id": "cloth",
+    "name": "布料",
+    "type": "misc",
+    "description": "一匹普通的布料，可缝制布衣或作为内衬。"
+  },
+  {
+    "id": "cloth-armor",
+    "name": "布衣",
+    "type": "armor",
+    "description": "粗布缝制的衣物，聊胜于无。",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "con-dan",
+    "name": "根骨丹",
+    "type": "medicine",
+    "description": "永久提升1点根骨。",
+    "effect": {
+      "con": 1
+    }
+  },
+  {
+    "id": "crossbow",
+    "name": "弩",
+    "type": "weapon",
+    "description": "一张弩，打造得极为精致，具有极好的准确度。\\n"
+  },
+  {
+    "id": "cuttonp",
+    "name": "棉衣",
+    "type": "armor",
+    "description": "一个棉衣。",
+    "attrBonus": {
+      "con": 10
+    }
+  },
+  {
+    "id": "dadao",
+    "name": "大刀",
+    "type": "weapon",
+    "description": "这是一柄亮晃晃的大刀。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 13
+    }
+  },
+  {
+    "id": "dagger",
+    "name": "普通匕首",
+    "type": "weapon",
+    "description": "这是一把普通的小匕首。用来暗算别人比较合适。\\n",
+    "weaponType": "dagger"
+  },
+  {
+    "id": "dao-cloth",
+    "name": "青色道袍",
+    "type": "armor",
+    "description": "一件普普通通的青布道袍。\\n",
+    "attrBonus": {
+      "con": 4
+    }
+  },
+  {
+    "id": "dao-xie",
+    "name": "麻鞋",
+    "type": "armor",
+    "description": "一双青布麻鞋。\\n"
+  },
+  {
+    "id": "daogu-cloth",
+    "name": "花格道袍",
+    "type": "armor",
+    "description": "一件普普通通的花格道袍。\\n",
+    "attrBonus": {
+      "con": 4
+    }
+  },
+  {
+    "id": "dex-dan",
+    "name": "身法丹",
+    "type": "medicine",
+    "description": "永久提升1点身法。",
+    "effect": {
+      "dex": 1
+    }
+  },
+  {
+    "id": "dimai",
+    "name": "地脉血泉",
+    "type": "medicine",
+    "description": "这是一块散发着血色光泽的晶体，世间罕有。\\n"
+  },
+  {
+    "id": "duanjian",
+    "name": "短剑",
+    "type": "weapon",
+    "description": "这是一柄剑身短小的精钢剑，一般的剑客都配带此剑。\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 5
+    }
+  },
+  {
+    "id": "feihuangshi",
+    "name": "飞蝗石",
+    "type": "weapon",
+    "description": "仔细挑选的鹅卵石，大小一致，个个都滴溜溜圆。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 5
+    }
+  },
+  {
+    "id": "female-shoe",
+    "name": "绣花小鞋",
+    "type": "armor",
+    "description": "一双女人穿的缝制得很精美的绣花鞋。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "female1-cloth",
+    "name": "粉红绸衫",
+    "type": "armor",
+    "description": "这件粉红色的绸衫上面绣着几只黄鹊，闻起来还有一股淡香。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "female2-cloth",
+    "name": "白绸衫",
+    "type": "armor",
+    "description": "一件轻盈漂动的白绸轻衫。\\n",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "female3-cloth",
+    "name": "湖绿长裙",
+    "type": "armor",
+    "description": "一件清新可人的湖绿长裙。\\n",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "female4-cloth",
+    "name": "鹅黄夹袄",
+    "type": "armor",
+    "description": "一件女孩喜欢的鹅黄夹袄。\\n",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "female5-cloth",
+    "name": "青衫小袖",
+    "type": "armor",
+    "description": "一件女孩喜欢的青衫小袖。\\n",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "female6-cloth",
+    "name": "天青小袂",
+    "type": "armor",
+    "description": "一件女孩喜欢的天青小袂。\\n",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "female7-cloth",
+    "name": "散花衣",
+    "type": "armor",
+    "description": "这件红色的散花衣轻轻爽爽，很是飘逸。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "female8-cloth",
+    "name": "紫纱小夹衫",
+    "type": "armor",
+    "description": "这是件紫纱小夹衫。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "fengweiarrow",
+    "name": "凤尾箭",
+    "type": "weapon",
+    "description": "一根细长的羽箭，可以连珠箭发，势道十分凶猛。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 133
+    }
+  },
+  {
+    "id": "flower_leaf",
+    "name": "花瓣",
+    "type": "weapon",
+    "description": "新鲜的玫瑰花的花瓣，上面还挂这晶莹的露珠。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 1
+    }
+  },
+  {
+    "id": "food",
+    "name": "干粮",
+    "type": "medicine",
+    "description": "一个干粮。"
+  },
+  {
+    "id": "food1",
+    "name": "养生丹",
+    "type": "medicine",
+    "description": "以名贵药材精炼而成，乃是高丽国的贡物。\\n"
+  },
+  {
+    "id": "full1",
+    "name": "活骨灵药",
+    "type": "medicine",
+    "description": "这是一粒灿金色的药丸，在武林中被喻为是疗伤圣药。\\n"
+  },
+  {
+    "id": "gangdao",
+    "name": "钢刀",
+    "type": "weapon",
+    "description": "这是一柄亮晃晃的钢刀，普通官兵的常备武器。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "gangjian",
+    "name": "钢剑",
+    "type": "weapon",
+    "description": "这是一柄精工制成的钢剑，这种剑在将领之间非常流行。\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "gangzhang",
+    "name": "钢杖",
+    "type": "weapon",
+    "description": "这是一根粗重的钢杖。\\n",
+    "weaponType": "staff",
+    "attrBonus": {
+      "str": 10
+    }
+  },
+  {
+    "id": "goldbow",
+    "name": "点金盘龙弓",
+    "type": "weapon",
+    "description": "这是一张金铜所铸，盘龙雕纹，制作非常精细的长弓。\\n"
+  },
+  {
+    "id": "goldbow2",
+    "name": "赤鸳弩",
+    "type": "weapon",
+    "description": "这是一张铅铁所铸，舞凤雕纹，制作非常精细的弩。\\n"
+  },
+  {
+    "id": "goldbow3",
+    "name": "射",
+    "type": "weapon",
+    "description": "这是一张神弓，威力无穷，据说连天上的太阳都能射落。\\n"
+  },
+  {
+    "id": "green_sword",
+    "name": "凝碧剑",
+    "type": "weapon",
+    "description": "这是一把通体晶莹剔透的剑，非常美丽！\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 17
+    }
+  },
+  {
+    "id": "hammer",
+    "name": "铁锤",
+    "type": "weapon",
+    "description": "这是一把沈重的铁锤，打造的相当坚实。\\n",
+    "weaponType": "hammer",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "herb",
+    "name": "草药",
+    "type": "misc",
+    "description": "一株常见的药草，可调配金疮药或解毒丸。"
+  },
+  {
+    "id": "int-dan",
+    "name": "悟性丹",
+    "type": "medicine",
+    "description": "永久提升1点悟性。",
+    "effect": {
+      "int": 1
+    }
+  },
+  {
+    "id": "iron-ore",
+    "name": "铁矿",
+    "type": "misc",
+    "description": "一块沉甸甸的铁矿石，是打造兵器的基础材料。"
+  },
+  {
+    "id": "iron-sword",
+    "name": "铁剑",
+    "type": "weapon",
+    "weaponType": "sword",
+    "description": "一把锋利的铁剑，剑身泛着寒光。",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "jianqi",
+    "name": "剑气",
+    "type": "weapon",
+    "description": "这是一束由内力化成的剑气。\\n",
+    "weaponType": "sword"
+  },
+  {
+    "id": "jiedao",
+    "name": "戒刀",
+    "type": "weapon",
+    "description": "这是一柄尺半长的戒刀，刀光闪闪，入手沉重，似是精铁打成。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "jiedu-wan",
+    "name": "解毒丸",
+    "type": "medicine",
+    "description": "可解百毒的灵丹，能清除各类毒伤。",
+    "effect": {
+      "cureCategory": "poison"
+    }
+  },
+  {
+    "id": "jili",
+    "name": "铁蒺藜",
+    "type": "weapon",
+    "description": "铁蒺藜经常用于淬毒暗器，寸许大小。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 17
+    }
+  },
+  {
+    "id": "jinchuang-yao",
+    "name": "金疮药",
+    "type": "medicine",
+    "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 50 点气血。",
+    "effect": {
+      "hp": 50
+    }
+  },
+  {
+    "id": "jinduan",
+    "name": "锦缎",
+    "type": "armor",
+    "description": "这是一件装饰秀丽的锦缎。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "jpn-dao",
+    "name": "东洋刀",
+    "type": "weapon",
+    "description": "这是一柄细长略弯的东洋长刀，形状怪异，似剑似刀。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 17
+    }
+  },
+  {
+    "id": "jsbaojia",
+    "name": "真丝",
+    "type": "weapon",
+    "description": "一个真丝。"
+  },
+  {
+    "id": "junfu",
+    "name": "军服",
+    "type": "armor",
+    "description": "这是一件有点旧的官兵服。\\n",
+    "attrBonus": {
+      "con": 20
+    }
+  },
+  {
+    "id": "leather",
+    "name": "皮革",
+    "type": "misc",
+    "description": "一张坚韧的兽皮，可用来缝制皮甲或包裹剑柄。"
+  },
+  {
+    "id": "leather-armor",
+    "name": "皮甲",
+    "type": "armor",
+    "description": "鞣制过的兽皮甲，有一定防御力。",
+    "attrBonus": {
+      "con": 5
+    }
+  },
+  {
+    "id": "letter",
+    "name": "信件",
+    "type": "misc",
+    "description": "一封封口严密的信件，似乎是某位NPC托你转交的。"
+  },
+  {
+    "id": "liang-xie",
+    "name": "凉鞋",
+    "type": "armor",
+    "description": "一双细带黑皮平底小凉鞋。\\n"
+  },
+  {
+    "id": "lianzi",
+    "name": "铁莲子",
+    "type": "weapon",
+    "description": "铁莲子是一种以量取胜的暗器，沉颠颠的。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 8
+    }
+  },
+  {
+    "id": "linghui1",
+    "name": "昊天果",
+    "type": "medicine",
+    "description": "这是一枚金黄色的果实，服用后能增加人的灵慧。\\n"
+  },
+  {
+    "id": "linghui2",
+    "name": "昊天丹",
+    "type": "medicine",
+    "description": "这是一颗精炼而成的昊天丹，服用后能增加灵慧。\\n"
+  },
+  {
+    "id": "lingzhi1",
+    "name": "百年灵芝",
+    "type": "medicine",
+    "description": "产于高山上的珍贵药材，服用后可提升内功等级。\\n",
+    "effect": {
+      "mp": 200
+    }
+  },
+  {
+    "id": "lingzhi2",
+    "name": "千年灵芝",
+    "type": "medicine",
+    "description": "产于高山上的珍贵药材，服用后可提升内功等级。\\n",
+    "effect": {
+      "mp": 350
+    }
+  },
+  {
+    "id": "lingzhi3",
+    "name": "百年灵芝丸",
+    "type": "medicine",
+    "description": "由百年灵芝混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "mp": 300
+    }
+  },
+  {
+    "id": "lingzhi4",
+    "name": "千年灵芝丸",
+    "type": "medicine",
+    "description": "由千年灵芝混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "mp": 400
+    }
+  },
+  {
+    "id": "longbow",
+    "name": "长弓",
+    "type": "weapon",
+    "description": "一张长弓，打造得颇为精致，具有相当好的准确度。\\n"
+  },
+  {
+    "id": "male-shoe",
+    "name": "皮靴",
+    "type": "armor",
+    "description": "这是一双用上好牛皮作的皮靴。\\n"
+  },
+  {
+    "id": "male1-cloth",
+    "name": "布衣",
+    "type": "armor",
+    "description": "一件很普通的布衣。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male2-cloth",
+    "name": "青衫",
+    "type": "armor",
+    "description": "一件很普通的粗布青衫。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male3-cloth",
+    "name": "黑色劲装",
+    "type": "armor",
+    "description": "一件很笔挺的黑色劲装。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male4-cloth",
+    "name": "短打劲装",
+    "type": "armor",
+    "description": "一件很利索的短打劲装。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male5-cloth",
+    "name": "紫蟒袍",
+    "type": "armor",
+    "description": "一件很重的紫蟒袍。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male6-cloth",
+    "name": "蓝马褂",
+    "type": "armor",
+    "description": "这是一件蓝马褂。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male7-cloth",
+    "name": "明黄锦袍",
+    "type": "armor",
+    "description": "这是一件明黄锦袍。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "male8-cloth",
+    "name": "天蓝长袍",
+    "type": "armor",
+    "description": "这是一件天蓝长袍。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "mudao",
+    "name": "木刀",
+    "type": "weapon",
+    "description": "这是一柄木制的短刀，胡家弟子用此刀练习刀法。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 1
+    }
+  },
+  {
+    "id": "neili-dan",
+    "name": "内力丹",
+    "type": "medicine",
+    "description": "恢复内力的丹药，可恢复 50 点内力。",
+    "effect": {
+      "mp": 50
+    }
+  },
+  {
+    "id": "neili1",
+    "name": "朱果",
+    "type": "medicine",
+    "description": "这是一枚火红色的朱果，能起到调息内力的作用。\\n"
+  },
+  {
+    "id": "neili2",
+    "name": "火龙果",
+    "type": "medicine",
+    "description": "这是一枚拳头大小的火龙果，能起到调息内力的作用。\\n"
+  },
+  {
+    "id": "ni-cloth",
+    "name": "青布缁衣",
+    "type": "armor",
+    "description": "一件出家人穿的青布缁衣。\\n",
+    "attrBonus": {
+      "con": 16
+    }
+  },
+  {
+    "id": "ni-xie",
+    "name": "青布尼鞋",
+    "type": "armor",
+    "description": "一双青布尼鞋。\\n"
+  },
+  {
+    "id": "pill",
+    "name": "补药",
+    "type": "medicine",
+    "description": "这是一颗增加内功的补药。\\n",
+    "effect": {
+      "mp": 200
+    }
+  },
+  {
+    "id": "puti1",
+    "name": "血菩提",
+    "type": "medicine",
+    "description": "此万年菩提树之实，采自灵山佛祖座前，珍稀无比。\\n"
+  },
+  {
+    "id": "puti2",
+    "name": "心菩提",
+    "type": "medicine",
+    "description": "此万年菩提树之实，采自灵山佛祖座前，珍稀无比。\\n"
+  },
+  {
+    "id": "puti3",
+    "name": "冰菩提",
+    "type": "medicine",
+    "description": "此万年菩提树之实，采自灵山佛祖座前，珍稀无比。\\n"
+  },
+  {
+    "id": "puti4",
+    "name": "菩提子",
+    "type": "medicine",
+    "description": "此万年菩提树之实，采自灵山佛祖座前，珍稀无比。\\n"
+  },
+  {
+    "id": "qimeigun",
+    "name": "齐眉棍",
+    "type": "weapon",
+    "description": "这是一根桦木白腊棍，举可齐眉，轻重合宜，可攻击大片敌人。\\n",
+    "weaponType": "club",
+    "attrBonus": {
+      "str": 5
+    }
+  },
+  {
+    "id": "qingyi",
+    "name": "青布袍",
+    "type": "armor",
+    "description": "这是一件质地上佳的青衣。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "qishiji",
+    "name": "圣骑士戟",
+    "type": "weapon",
+    "description": "这是一根银制的长戟，沉重无比，在中原很难见到。\\n",
+    "weaponType": "club",
+    "attrBonus": {
+      "str": 30
+    }
+  },
+  {
+    "id": "renshen-wan",
+    "name": "人参丸",
+    "type": "medicine",
+    "description": "以长白山人参炼制的药丸，大补元气。恢复 100 点气血。",
+    "effect": {
+      "hp": 100
+    }
+  },
+  {
+    "id": "renshen1",
+    "name": "百年人参",
+    "type": "medicine",
+    "description": "产于高山上的珍贵药材，服用后可提升内功等级。\\n",
+    "effect": {
+      "mp": 200
+    }
+  },
+  {
+    "id": "renshen2",
+    "name": "千年人参",
+    "type": "medicine",
+    "description": "产于高山上的珍贵药材，服用后可提升内功等级。\\n",
+    "effect": {
+      "mp": 350
+    }
+  },
+  {
+    "id": "renshen3",
+    "name": "百年参心丹",
+    "type": "medicine",
+    "description": "由百年人参混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "mp": 300
+    }
+  },
+  {
+    "id": "renshen4",
+    "name": "千年参心丹",
+    "type": "medicine",
+    "description": "由千年人参混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "mp": 400
+    }
+  },
+  {
+    "id": "rousisuo",
+    "name": "柔丝索",
+    "type": "weapon",
+    "description": "一卷非常柔软的细丝，乃天蚕丝所织，是星宿三宝之一。\\n",
+    "weaponType": "whip",
+    "attrBonus": {
+      "str": 12
+    }
+  },
+  {
+    "id": "seng-cloth",
+    "name": "灰布袈裟",
+    "type": "armor",
+    "description": "一件出家人常穿的灰布袈裟。\\n",
+    "attrBonus": {
+      "con": 16
+    }
+  },
+  {
+    "id": "seng-xie",
+    "name": "僧鞋",
+    "type": "armor",
+    "description": "一双出家人用的青布僧鞋。\\n"
+  },
+  {
+    "id": "sheli1",
+    "name": "舍利子",
+    "type": "medicine",
+    "description": "佛门高僧在圆寂前通常都将毕生功力注入舍利子中。\\n"
+  },
+  {
+    "id": "sheli2",
+    "name": "佛尊舍利",
+    "type": "medicine",
+    "description": "佛门高僧在圆寂前通常都将毕生功力注入舍利子中。\\n"
+  },
+  {
+    "id": "sheli3",
+    "name": "帝者舍利",
+    "type": "medicine",
+    "description": "佛门高僧在圆寂前通常都将毕生功力注入舍利子中。\\n"
+  },
+  {
+    "id": "sheli4",
+    "name": "圣舍利",
+    "type": "medicine",
+    "description": "佛门高僧在圆寂前通常都将毕生功力注入舍利子中。\\n"
+  },
+  {
+    "id": "shengji-wan",
+    "name": "生肌丸",
+    "type": "medicine",
+    "description": "生肌活血的疗伤圣药。恢复 200 点气血。",
+    "effect": {
+      "hp": 200
+    }
+  },
+  {
+    "id": "silver",
+    "name": "银子",
+    "type": "misc",
+    "description": "白花花的银子，可以买东西。"
+  },
+  {
+    "id": "str-dan",
+    "name": "力量丹",
+    "type": "medicine",
+    "description": "永久提升1点臂力。",
+    "effect": {
+      "str": 1
+    }
+  },
+  {
+    "id": "tea-leaf",
+    "name": "茶叶",
+    "type": "weapon",
+    "description": "才采的新茶，发出一股淡淡的香气。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 0
+    }
+  },
+  {
+    "id": "tiegun",
+    "name": "铁棍",
+    "type": "weapon",
+    "description": "这是一根浑铁棍，似乎威力不大。\\n",
+    "weaponType": "club",
+    "attrBonus": {
+      "str": 3
+    }
+  },
+  {
+    "id": "tiejia",
+    "name": "铁甲",
+    "type": "weapon",
+    "description": "一个铁甲。"
+  },
+  {
+    "id": "tielianzi",
+    "name": "铁莲子",
+    "type": "weapon",
+    "description": "精铁打制的莲子状暗器。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 4
+    }
+  },
+  {
+    "id": "tudao",
+    "name": "屠刀",
+    "type": "weapon",
+    "description": "这是一血淋淋的屠刀。\\n",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 10
+    }
+  },
+  {
+    "id": "wandao",
+    "name": "阿拉伯弯刀",
+    "type": "weapon",
+    "description": "这是一柄亮晃晃的阿拉伯弯刀，刀身呈新月状，是中东",
+    "weaponType": "blade",
+    "attrBonus": {
+      "str": 12
+    }
+  },
+  {
+    "id": "water",
+    "name": "牛皮水袋",
+    "type": "medicine",
+    "description": "一个牛皮水袋。"
+  },
+  {
+    "id": "wcloth",
+    "name": "维吾尔族长袍",
+    "type": "armor",
+    "description": "这是一件色彩斑斓的维吾尔族长袍\\n",
+    "attrBonus": {
+      "con": 4
+    }
+  },
+  {
+    "id": "wolf-pelt",
+    "name": "狼皮",
+    "type": "misc",
+    "description": "一张从野狼身上剥下的毛皮，可以卖个好价钱。"
+  },
+  {
+    "id": "wolfarrow",
+    "name": "狼牙箭",
+    "type": "weapon",
+    "description": "一根细长的箭，簇失略弯，如同狼牙一般阴森森的。\\n",
+    "weaponType": "throwing",
+    "attrBonus": {
+      "str": 100
+    }
+  },
+  {
+    "id": "wooden-sword",
+    "name": "木剑",
+    "type": "weapon",
+    "weaponType": "sword",
+    "description": "一把普通的桃木剑。",
+    "attrBonus": {
+      "str": 3
+    }
+  },
+  {
+    "id": "xianlv",
+    "name": "仙履",
+    "type": "armor",
+    "description": "一双仙人才穿的鞋，看起来普普通通的。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "xiyang-sword",
+    "name": "西洋剑",
+    "type": "weapon",
+    "description": "这是一柄细长的长剑，是西洋武士惯用的武器。\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 18
+    }
+  },
+  {
+    "id": "xuelian1",
+    "name": "天山雪莲",
+    "type": "medicine",
+    "description": "产于大雪山之上的珍贵药材，服用后可提升轻功等级。\\n",
+    "effect": {
+      "hp": 200
+    }
+  },
+  {
+    "id": "xuelian2",
+    "name": "千年雪莲",
+    "type": "medicine",
+    "description": "产于大雪山之上的珍贵药材，服用后可提升轻功等级。\\n",
+    "effect": {
+      "hp": 380
+    }
+  },
+  {
+    "id": "xuelian3",
+    "name": "天山雪莲膏",
+    "type": "medicine",
+    "description": "由天山雪莲混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "hp": 330
+    }
+  },
+  {
+    "id": "xuelian4",
+    "name": "千年雪莲膏",
+    "type": "medicine",
+    "description": "由千年雪莲混合数种珍贵药材所炼制的灵药。\\n",
+    "effect": {
+      "hp": 500
+    }
+  },
+  {
+    "id": "y-jiasha",
+    "name": "黄色袈裟",
+    "type": "armor",
+    "description": "一个黄色袈裟。",
+    "attrBonus": {
+      "con": 40
+    }
+  },
+  {
+    "id": "yaodai",
+    "name": "腰带",
+    "type": "armor",
+    "description": "一个腰带。",
+    "attrBonus": {
+      "con": 6
+    }
+  },
+  {
+    "id": "yinjia",
+    "name": "银铠甲",
+    "type": "armor",
+    "description": "一副全银制的重铠甲，在中原很难见到。\\n",
+    "attrBonus": {
+      "con": 400
+    }
+  },
+  {
+    "id": "yulu",
+    "name": "天香玉露",
+    "type": "medicine",
+    "description": "采自灵山，千年来以灵芝为母，不断的"
+  },
+  {
+    "id": "yunshang",
+    "name": "云裳",
+    "type": "armor",
+    "description": "这是一件织女裁剪西天之云织成的云裳。\\n",
+    "attrBonus": {
+      "con": 2
+    }
+  },
+  {
+    "id": "zhubang",
+    "name": "竹棒",
+    "type": "weapon",
+    "description": "这是一根发黄的竹棒，入手沉甸甸的，似乎相当结实。\\n",
+    "weaponType": "staff",
+    "attrBonus": {
+      "str": 3
+    }
+  },
+  {
+    "id": "zhujian",
+    "name": "竹剑",
+    "type": "weapon",
+    "description": "这是一把练习剑法用的竹剑。\\n",
+    "weaponType": "sword",
+    "attrBonus": {
+      "str": 2
+    }
   }
 ]

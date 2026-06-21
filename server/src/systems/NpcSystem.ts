@@ -76,7 +76,13 @@ export class NpcSystem {
   formatNpcsInRoom(roomId: string): string {
     const npcs = this.getNpcsInRoom(roomId);
     if (npcs.length === 0) return '';
-    return npcs.map((n) => `  ${n.def.name} - ${n.def.description}`).join('\n') + '\n';
+    const maxShown = 10;
+    const shown = npcs.slice(0, maxShown);
+    let msg = shown.map((n) => `  ${n.def.name} - ${n.def.description}`).join('\n') + '\n';
+    if (npcs.length > maxShown) {
+      msg += `  ……还有 ${npcs.length - maxShown} 人在这里。\n`;
+    }
+    return msg;
   }
 
   getDialogue(npcId: string): string {

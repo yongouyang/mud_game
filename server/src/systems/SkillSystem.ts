@@ -77,7 +77,7 @@ export class SkillSystem {
     return player.skills?.find((s) => s.skillId === skillId)?.level || 0;
   }
 
-  private attackTypes = new Set<SkillType>(['strike', 'unarmed', 'cuff', 'finger', 'hand', 'claw']);
+  private attackTypes = new Set<SkillType>(['strike', 'unarmed', 'cuff', 'finger', 'hand', 'claw', 'sword', 'blade', 'staff', 'throwing', 'whip']);
 
   isAttackType(type: SkillType): boolean {
     return this.attackTypes.has(type);

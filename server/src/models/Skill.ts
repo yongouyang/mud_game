@@ -1,6 +1,7 @@
 export type SkillType =
   | 'parry' | 'dodge' | 'force' | 'strike'
   | 'unarmed' | 'cuff' | 'finger' | 'hand' | 'claw'
+  | 'sword' | 'blade' | 'staff' | 'throwing' | 'whip'
   | 'literate';
 
 export interface SkillPerformDef {
@@ -49,5 +50,10 @@ export const SKILL_TYPE_NAMES: Record<SkillType, string> = {
   finger: '指法',
   hand: '掌法',
   claw: '爪法',
+  sword: '剑法',
+  blade: '刀法',
+  staff: '杖法',
+  throwing: '暗器',
+  whip: '鞭法',
   literate: '读书识字',
 };
