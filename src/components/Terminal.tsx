@@ -18,6 +18,15 @@ export function Terminal({ theme }: TerminalProps) {
   const outputRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Command history (persisted in sessionStorage)
+  const HISTORY_KEY = 'wuxia-cmd-history';
+  const [history, setHistory] = useState<string[]>(() => {
+    try { return JSON.parse(sessionStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
+  });
+  const [historyIdx, setHistoryIdx] = useState(-1);
+  const historyRef = useRef(history);
+  historyRef.current = history;
+
   useEffect(() => {
     const socket = io();
     socketRef.current = socket;
@@ -59,6 +68,14 @@ export function Terminal({ theme }: TerminalProps) {
 
     setLines((prev) => [...prev, `  > ${trimmed}`]);
     socketRef.current.emit('command', { input: trimmed });
+
+    // Save to history (deduplicate consecutive, cap at 100)
+    setHistory((prev) => {
+      const next = prev[prev.length - 1] === trimmed ? prev : [...prev, trimmed].slice(-100);
+      sessionStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+      return next;
+    });
+    setHistoryIdx(-1);
     setInput('');
   }, [input]);
 
@@ -66,6 +83,25 @@ export function Terminal({ theme }: TerminalProps) {
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
         sendCommand();
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setHistoryIdx((prev) => {
+          const next = prev < historyRef.current.length - 1 ? prev + 1 : prev;
+          setInput(historyRef.current[historyRef.current.length - 1 - next] || '');
+          return next;
+        });
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setHistoryIdx((prev) => {
+          const next = prev > 0 ? prev - 1 : -1;
+          setInput(next >= 0 ? historyRef.current[historyRef.current.length - 1 - next] : '');
+          return next;
+        });
+        return;
       }
     },
     [sendCommand],
