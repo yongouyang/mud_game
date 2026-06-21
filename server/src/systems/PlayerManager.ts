@@ -65,7 +65,15 @@ export class PlayerManager {
   }
 
   getAllPlayers(): Player[] {
-    return [...this.players.values()].filter((p) => p.state !== 'creating');
+    const seen = new Set<string>();
+    const result: Player[] = [];
+    for (const p of this.players.values()) {
+      if (p.state !== 'creating' && !seen.has(p.id)) {
+        seen.add(p.id);
+        result.push(p);
+      }
+    }
+    return result;
   }
 
   setPlayerName(id: string, name: string): string | null {

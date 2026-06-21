@@ -20,6 +20,7 @@ import { AuctionSystem } from './systems/AuctionSystem.js';
 import { ShopSystem } from './systems/ShopSystem.js';
 import { CraftingSystem } from './systems/CraftingSystem.js';
 import { PersistenceSystem } from './systems/PersistenceSystem.js';
+import { PersistenceManager } from './engine/PersistenceManager.js';
 import { RealSystemClock } from './time/SystemClock.js';
 import { Scheduler } from './time/Scheduler.js';
 import net from 'node:net';
@@ -73,6 +74,7 @@ const auction = new AuctionSystem(items, scheduler);
 const shop = new ShopSystem(items);
 const craft = new CraftingSystem(items, skills);
 const persistence = new PersistenceSystem();
+const persistenceManager = new PersistenceManager(players, persistence, scheduler, clock);
 
 const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, scheduler, clock);
 
@@ -82,10 +84,8 @@ app.get('/health', (_req, res) => {
 });
 
 // Load saved players on startup
-const savedPlayers = persistence.loadAll();
-for (const p of savedPlayers) {
-  players.setPlayer(p);
-}
+persistenceManager.loadAll();
+const savedPlayers = players.getAllPlayers();
 console.log(`[server] Loaded ${savedPlayers.length} saved player(s)`);
 
 // Seed demo account on first start
@@ -95,9 +95,21 @@ if (savedPlayers.length === 0) {
   const demo = createPlayer("demo", "无名侠客", { str: 15, int: 10, con: 15, dex: 10, per: 10, kar: 10 });
   demo.pot = 10000;
   players.setPlayer(demo);
-  persistence.saveAll(players.getAllPlayers());
+  persistenceManager.saveAll();
   console.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
 }
+
+// Periodic autosave
+persistenceManager.startAutosave();
+
+// Graceful shutdown
+function gracefulShutdown(signal: string) {
+  console.log(`[server] Received ${signal}, saving players...`);
+  persistenceManager.shutdown();
+  process.exit(0);
+}
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 // Global scheduler heartbeat: 100ms resolution is enough for game ticks.
 setInterval(() => {
@@ -190,7 +202,7 @@ io.on('connection', (socket) => {
       if (p && p.state === 'playing') {
         socketAuth.set(socket.id, { authState: 'playing', username: auth.username });
         p.id = auth.username!;
-        persistence.saveAll(players.getAllPlayers());
+        persistenceManager.saveAll();
       }
       return;
     }
@@ -199,7 +211,7 @@ io.on('connection', (socket) => {
     socket.emit('output', { text: response });
     const p = players.getPlayer(socket.id);
     if (p && p.state === 'playing') {
-      persistence.saveAll(players.getAllPlayers());
+      persistenceManager.saveAll();
     }
 
     // Auto-combat tick: start/stop based on fighting state
@@ -209,6 +221,8 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log(`[disconnect] ${socket.id}`);
     clearCombatTick(socket.id);
+    const auth = socketAuth.get(socket.id);
+    persistenceManager.onDisconnect(socket.id, auth?.username);
     socketAuth.delete(socket.id);
   });
 });
@@ -234,7 +248,7 @@ function manageCombatTick(socket: any) {
         if (!updated || updated.state !== 'fighting') {
           clearCombatTick(socket.id);
           if (updated && updated.state === 'playing') {
-            persistence.saveAll(players.getAllPlayers());
+            persistenceManager.saveAll();
           }
         }
       }, router.getCombatSpeed(socket.id));

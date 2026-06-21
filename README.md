@@ -151,6 +151,13 @@ Every player has a **善恶值** (`shen`) and a kill record shown in `score`.
 - Being killed records the killer's name as "上次死于" in `score`.
 - Alignment titles range from `一代大侠` to `武林公敌`.
 
+### Persistence
+Player data is persisted to `server/data/players.json`:
+- Loaded on server startup.
+- Saved after character creation, after each command while playing, when combat ends, and on disconnect.
+- Autosaved every **60 seconds**.
+- Graceful shutdown saves on `SIGINT` / `SIGTERM`.
+
 ## Game World (40 rooms, 90 NPCs)
 
 ```
@@ -228,6 +235,8 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
 | `CommandRouter.multi.test.ts` | 4 | Multi-enemy combat + guarder aggro |
 | `CommandRouter.shen.test.ts` | 5 | Shen alignment + killer tracking |
+| `Persistence.test.ts` | 4 | Save/load player JSON |
+| `PersistenceManager.test.ts` | 4 | Autosave, disconnect cleanup, load |
 | `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
