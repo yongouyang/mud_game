@@ -28,6 +28,7 @@ export interface Player {
   currentRoom: string;
   state: PlayerState;
   targetEnemy: string | null;
+  combatTargets: string[]; // active enemies in multi-enemy combat
   inventory: InventoryItem[];
   equipped: string[];
   skills: PlayerSkill[];
@@ -67,6 +68,7 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     currentRoom: 'town/square',
     state: 'playing',
     targetEnemy: null,
+    combatTargets: [],
     inventory: [],
     equipped: [],
     skills: [],

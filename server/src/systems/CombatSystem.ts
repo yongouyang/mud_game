@@ -95,6 +95,76 @@ export class CombatSystem {
   }
 
   /**
+   * Execute a round against multiple enemies.
+   * The player strikes the primary target, then every active enemy counter-attacks.
+   */
+  executeMultiRound(
+    player: {
+      name: string; hp: number; maxHp: number; mp: number; maxMp: number;
+      attributes: { str: number; dex: number };
+    },
+    playerSkills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null },
+    primary: {
+      name: string; hp: number; maxHp: number; mp: number; maxMp: number;
+      attributes: { str: number; dex: number };
+      skills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null };
+    },
+    extras: {
+      name: string; hp: number; maxHp: number; mp: number; maxMp: number;
+      attributes: { str: number; dex: number };
+      skills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null };
+    }[],
+  ): CombatRoundResult {
+    let msg = '';
+    let enemyHitPlayer = false;
+
+    // Player attacks primary target.
+    const strikeDmg = Math.round(playerSkills.bestStrike
+      ? playerSkills.bestStrike.damage
+      : 5 + player.attributes.str * 1.5);
+    const primaryAtk = this.resolveAttack(
+      player.name, player.attributes, playerSkills, primary, primary.skills, strikeDmg, false,
+    );
+    msg += primaryAtk.message;
+    if (primaryAtk.defenderDead) {
+      return { message: msg, defenderDead: true, attackerDead: false, enemyHitPlayer: false };
+    }
+
+    // Primary enemy counter.
+    const primaryDmg = Math.round(primary.skills.bestStrike
+      ? primary.skills.bestStrike.damage
+      : 5 + primary.attributes.str * 1.5);
+    const primaryCounter = this.resolveAttack(
+      primary.name, primary.attributes, primary.skills, player, playerSkills, primaryDmg, false,
+    );
+    if (primaryCounter.hit) enemyHitPlayer = true;
+    msg += primaryCounter.message;
+    if (primaryCounter.defenderDead) {
+      return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer };
+    }
+
+    // Each extra enemy gets a counter-attack.
+    for (const enemy of extras) {
+      if (player.hp <= 0) break;
+      const enemyDmg = Math.round(enemy.skills.bestStrike
+        ? enemy.skills.bestStrike.damage
+        : 5 + enemy.attributes.str * 1.5);
+      const counter = this.resolveAttack(
+        enemy.name, enemy.attributes, enemy.skills, player, playerSkills, enemyDmg, false,
+      );
+      if (counter.hit) enemyHitPlayer = true;
+      msg += counter.message;
+      if (counter.defenderDead) {
+        return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer };
+      }
+    }
+
+    // Status shows player + primary only to keep output readable.
+    msg += this.formatCombatStatus(player, player.mp, player.maxMp, primary);
+    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer };
+  }
+
+  /**
    * Single attack resolution with parry → dodge → force absorb → HP damage chain.
    * Returns whether defender died.
    */

@@ -67,7 +67,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shaolin",
+    "guarder": false
   },
   {
     "id": "master-wudang",
@@ -90,7 +92,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "wudang",
+    "guarder": false
   },
   {
     "id": "master-gaibang",
@@ -117,7 +121,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "gaibang",
+    "guarder": false
   },
   {
     "id": "master-huashan",
@@ -144,7 +150,9 @@
         "level": 40
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "huashan",
+    "guarder": false
   },
   {
     "id": "master-emei",
@@ -167,7 +175,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "emei",
+    "guarder": false
   },
   {
     "id": "master-gumu",
@@ -194,7 +204,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "gumu",
+    "guarder": false
   },
   {
     "id": "storyteller",
@@ -421,7 +433,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "kunlun",
+    "guarder": false
   },
   {
     "id": "master-mingjiao",
@@ -444,7 +458,9 @@
         "level": 60
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "mingjiao",
+    "guarder": false
   },
   {
     "id": "master-quanzhen",
@@ -467,7 +483,9 @@
         "level": 55
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "quanzhen",
+    "guarder": false
   },
   {
     "id": "master-xingxiu",
@@ -490,7 +508,9 @@
         "level": 50
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xingxiu",
+    "guarder": false
   },
   {
     "id": "disciple-shaolin-1",
@@ -513,7 +533,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shaolin",
+    "guarder": true
   },
   {
     "id": "disciple-wudang-1",
@@ -536,7 +558,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "wudang",
+    "guarder": true
   },
   {
     "id": "disciple-gaibang-1",
@@ -559,7 +583,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "gaibang",
+    "guarder": true
   },
   {
     "id": "disciple-huashan-1",
@@ -582,7 +608,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "huashan",
+    "guarder": true
   },
   {
     "id": "disciple-emei-1",
@@ -605,7 +633,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "emei",
+    "guarder": true
   },
   {
     "id": "disciple-gumu-1",
@@ -628,7 +658,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "gumu",
+    "guarder": true
   },
   {
     "id": "disciple-kunlun-1",
@@ -651,7 +683,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "kunlun",
+    "guarder": true
   },
   {
     "id": "disciple-mingjiao-1",
@@ -674,7 +708,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "mingjiao",
+    "guarder": true
   },
   {
     "id": "disciple-quanzhen-1",
@@ -697,7 +733,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "quanzhen",
+    "guarder": true
   },
   {
     "id": "disciple-xingxiu-1",
@@ -720,7 +758,9 @@
         "level": 15
       }
     ],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xingxiu",
+    "guarder": true
   },
   {
     "id": "master-xiaoyao",
@@ -738,7 +778,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xiaoyao",
+    "guarder": false
   },
   {
     "id": "disciple-xiaoyao-1",
@@ -756,7 +798,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xiaoyao",
+    "guarder": true
   },
   {
     "id": "master-taohua",
@@ -774,7 +818,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "taohua",
+    "guarder": false
   },
   {
     "id": "disciple-taohua-1",
@@ -792,7 +838,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "taohua",
+    "guarder": true
   },
   {
     "id": "master-lingjiu",
@@ -810,7 +858,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "lingjiu",
+    "guarder": false
   },
   {
     "id": "disciple-lingjiu-1",
@@ -828,7 +878,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "lingjiu",
+    "guarder": true
   },
   {
     "id": "master-shenlong",
@@ -846,7 +898,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shenlong",
+    "guarder": false
   },
   {
     "id": "disciple-shenlong-1",
@@ -864,7 +918,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shenlong",
+    "guarder": true
   },
   {
     "id": "master-riyue",
@@ -882,7 +938,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "riyue",
+    "guarder": false
   },
   {
     "id": "disciple-riyue-1",
@@ -900,7 +958,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "riyue",
+    "guarder": true
   },
   {
     "id": "master-xueshan",
@@ -918,7 +978,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xueshan",
+    "guarder": false
   },
   {
     "id": "disciple-xueshan-1",
@@ -936,7 +998,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xueshan",
+    "guarder": true
   },
   {
     "id": "master-tiezhang",
@@ -954,7 +1018,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tiezhang",
+    "guarder": false
   },
   {
     "id": "disciple-tiezhang-1",
@@ -972,7 +1038,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tiezhang",
+    "guarder": true
   },
   {
     "id": "master-tangmen",
@@ -990,7 +1058,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tangmen",
+    "guarder": false
   },
   {
     "id": "disciple-tangmen-1",
@@ -1008,7 +1078,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tangmen",
+    "guarder": true
   },
   {
     "id": "master-murong",
@@ -1026,7 +1098,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "murong",
+    "guarder": false
   },
   {
     "id": "disciple-murong-1",
@@ -1044,7 +1118,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "murong",
+    "guarder": true
   },
   {
     "id": "master-duan",
@@ -1062,7 +1138,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "duan",
+    "guarder": false
   },
   {
     "id": "disciple-duan-1",
@@ -1080,7 +1158,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "duan",
+    "guarder": true
   },
   {
     "id": "master-henshan",
@@ -1098,7 +1178,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "henshan",
+    "guarder": false
   },
   {
     "id": "disciple-henshan-1",
@@ -1116,7 +1198,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "henshan",
+    "guarder": true
   },
   {
     "id": "master-honghua",
@@ -1134,7 +1218,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "honghua",
+    "guarder": false
   },
   {
     "id": "disciple-honghua-1",
@@ -1152,7 +1238,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "honghua",
+    "guarder": true
   },
   {
     "id": "master-hu",
@@ -1170,7 +1258,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "hu",
+    "guarder": false
   },
   {
     "id": "disciple-hu-1",
@@ -1188,7 +1278,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "hu",
+    "guarder": true
   },
   {
     "id": "master-jueqing",
@@ -1206,7 +1298,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "jueqing",
+    "guarder": false
   },
   {
     "id": "disciple-jueqing-1",
@@ -1224,7 +1318,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "jueqing",
+    "guarder": true
   },
   {
     "id": "master-lingxiao",
@@ -1242,7 +1338,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "lingxiao",
+    "guarder": false
   },
   {
     "id": "disciple-lingxiao-1",
@@ -1260,7 +1358,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "lingxiao",
+    "guarder": true
   },
   {
     "id": "master-meizhuang",
@@ -1278,7 +1378,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "meizhuang",
+    "guarder": false
   },
   {
     "id": "disciple-meizhuang-1",
@@ -1296,7 +1398,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "meizhuang",
+    "guarder": true
   },
   {
     "id": "master-miao",
@@ -1314,7 +1418,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "miao",
+    "guarder": false
   },
   {
     "id": "disciple-miao-1",
@@ -1332,7 +1438,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "miao",
+    "guarder": true
   },
   {
     "id": "master-ouyang",
@@ -1350,7 +1458,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "ouyang",
+    "guarder": false
   },
   {
     "id": "disciple-ouyang-1",
@@ -1368,7 +1478,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "ouyang",
+    "guarder": true
   },
   {
     "id": "master-shang",
@@ -1386,7 +1498,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shang",
+    "guarder": false
   },
   {
     "id": "disciple-shang-1",
@@ -1404,7 +1518,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "shang",
+    "guarder": true
   },
   {
     "id": "master-songshan",
@@ -1422,7 +1538,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "songshan",
+    "guarder": false
   },
   {
     "id": "disciple-songshan-1",
@@ -1440,7 +1558,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "songshan",
+    "guarder": true
   },
   {
     "id": "master-tianlongsi",
@@ -1458,7 +1578,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tianlongsi",
+    "guarder": false
   },
   {
     "id": "disciple-tianlongsi-1",
@@ -1476,7 +1598,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "tianlongsi",
+    "guarder": true
   },
   {
     "id": "master-ultra",
@@ -1494,7 +1618,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "ultra",
+    "guarder": false
   },
   {
     "id": "disciple-ultra-1",
@@ -1512,7 +1638,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "ultra",
+    "guarder": true
   },
   {
     "id": "master-wudu",
@@ -1530,7 +1658,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "wudu",
+    "guarder": false
   },
   {
     "id": "disciple-wudu-1",
@@ -1548,7 +1678,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "wudu",
+    "guarder": true
   },
   {
     "id": "master-xiakedao",
@@ -1566,7 +1698,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xiakedao",
+    "guarder": false
   },
   {
     "id": "disciple-xiakedao-1",
@@ -1584,7 +1718,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xiakedao",
+    "guarder": true
   },
   {
     "id": "master-xuanming",
@@ -1602,7 +1738,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xuanming",
+    "guarder": false
   },
   {
     "id": "disciple-xuanming-1",
@@ -1620,7 +1758,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xuanming",
+    "guarder": true
   },
   {
     "id": "master-xuedao",
@@ -1638,7 +1778,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xuedao",
+    "guarder": false
   },
   {
     "id": "disciple-xuedao-1",
@@ -1656,7 +1798,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "xuedao",
+    "guarder": true
   },
   {
     "id": "master-yunlong",
@@ -1674,7 +1818,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "yunlong",
+    "guarder": false
   },
   {
     "id": "disciple-yunlong-1",
@@ -1692,7 +1838,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "yunlong",
+    "guarder": true
   },
   {
     "id": "master-zhenyuan",
@@ -1710,7 +1858,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "zhenyuan",
+    "guarder": false
   },
   {
     "id": "disciple-zhenyuan-1",
@@ -1728,7 +1878,9 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "zhenyuan",
+    "guarder": true
   },
   {
     "id": "master-hell",
@@ -1746,7 +1898,9 @@
       "dex": 12
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "hell",
+    "guarder": false
   },
   {
     "id": "disciple-hell-1",
@@ -1764,6 +1918,8 @@
       "dex": 8
     },
     "skills": [],
-    "aggressive": false
+    "aggressive": false,
+    "faction": "hell",
+    "guarder": true
   }
 ]

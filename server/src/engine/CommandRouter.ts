@@ -239,47 +239,45 @@ export class CommandRouter {
     const roomNpcs = this.npcs.getNpcsInRoom(player.currentRoom);
     const targetNpc = roomNpcs.find((n) => n.def.name === targetName || n.def.id === targetName);
     if (targetNpc) {
+      const targetId = 'npc:' + targetNpc.def.id;
+      if (player.combatTargets.includes(targetId)) {
+        return '\n  你已经在和 ' + targetNpc.def.name + ' 战斗了。\n';
+      }
+      if (player.combatTargets.length >= 4) {
+        return '\n  你同时应付的敌人太多了，无法再招惹更多。\n';
+      }
+
+      const wasFighting = player.state === 'fighting';
       player.state = 'fighting';
-      player.targetEnemy = 'npc:' + targetNpc.def.id;
+      if (!wasFighting) {
+        player.targetEnemy = targetId;
+        player.combatTargets = [targetId];
+      } else {
+        player.combatTargets.push(targetId);
+      }
       targetNpc.state = 'fighting';
       targetNpc.targetPlayerId = player.id;
-      // First attack is performed by auto-tick; just show combat start
-      const effAttr = this.effectiveAttributes(player);
-      const pSkills = {
-        parryLv: this.skills.getParryLevel(player),
-        dodgeLv: this.skills.getDodgeLevel(player),
-        forceLv: this.skills.getForceLevel(player),
-        bestStrike: this.poweredBestStrike(player),
-      };
-      const npcSkills = {
-        parryLv: targetNpc.def.attributes.str,
-        dodgeLv: targetNpc.def.attributes.dex,
-        forceLv: targetNpc.def.attributes.con,
-        bestStrike: this.npcs.getBestNpcStrike(targetNpc),
-      };
-      const enemyState = {
-        mp: 0,
-        maxMp: 0,
-        name: targetNpc.def.name,
-        get hp() { return targetNpc.hp; }, set hp(v: number) { targetNpc.hp = v; },
-        maxHp: targetNpc.maxHp,
-        attributes: targetNpc.def.attributes,
-        skills: npcSkills,
-      };
-      const combatPlayer = { ...player, attributes: effAttr };
-      const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, false);
-      if (result.defenderDead) {
-        player.state = 'playing'; player.targetEnemy = null;
-        targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
-        return result.message + this.handleNpcDeath(player, targetNpc);
+
+      // Guarder aggro: same-faction guarder NPCs in the room join the fight.
+      const guarders = roomNpcs.filter((n) =>
+        n !== targetNpc &&
+        n.def.faction &&
+        n.def.faction === targetNpc.def.faction &&
+        n.def.guarder &&
+        n.state !== 'fighting' &&
+        n.hp > 0,
+      );
+      for (const guarder of guarders) {
+        if (player.combatTargets.length >= 4) break;
+        const guarderId = 'npc:' + guarder.def.id;
+        if (!player.combatTargets.includes(guarderId)) {
+          player.combatTargets.push(guarderId);
+          guarder.state = 'fighting';
+          guarder.targetPlayerId = player.id;
+        }
       }
-      if (result.attackerDead) {
-        player.state = 'playing'; player.targetEnemy = null;
-        targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
-        player.hp = 1;
-        return result.message;
-      }
-      return result.message;
+
+      return this.resolveCombatRound(player);
     }
 
     // Check players in room
@@ -323,6 +321,118 @@ export class CommandRouter {
     return result.message;
   }
 
+  // ── Combat helpers ───────────────────────────────────────
+  private makeNpcCombatState(npc: any) {
+    return {
+      mp: 0,
+      maxMp: 0,
+      name: npc.def.name,
+      get hp() { return npc.hp; },
+      set hp(v: number) { npc.hp = v; },
+      maxHp: npc.maxHp,
+      attributes: npc.def.attributes,
+      skills: {
+        parryLv: npc.def.attributes.str,
+        dodgeLv: npc.def.attributes.dex,
+        forceLv: npc.def.attributes.con,
+        bestStrike: this.npcs.getBestNpcStrike(npc),
+      },
+    };
+  }
+
+  private removeFromCombat(player: Player, targetId: string): void {
+    player.combatTargets = player.combatTargets.filter((id) => id !== targetId);
+    if (targetId.startsWith('npc:')) {
+      const npc = this.npcs.getNpc(targetId.slice(4));
+      if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
+    }
+    if (player.targetEnemy === targetId) {
+      player.targetEnemy = player.combatTargets.length > 0 ? player.combatTargets[0] : null;
+      if (!player.targetEnemy) player.state = 'playing';
+    }
+  }
+
+  private clearCombat(player: Player): void {
+    // Reset any standalone PvP target as well.
+    if (player.targetEnemy && !player.targetEnemy.startsWith('npc:')) {
+      const target = this.players.getPlayer(player.targetEnemy);
+      if (target) { target.state = 'playing'; target.targetEnemy = null; }
+    }
+    for (const id of player.combatTargets) {
+      if (id.startsWith('npc:')) {
+        const npc = this.npcs.getNpc(id.slice(4));
+        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
+      } else {
+        const target = this.players.getPlayer(id);
+        if (target) { target.state = 'playing'; target.targetEnemy = null; }
+      }
+    }
+    player.combatTargets = [];
+    player.targetEnemy = null;
+    player.state = 'playing';
+  }
+
+  private resolveCombatRound(player: Player): string {
+    const primaryId = player.targetEnemy;
+    if (!primaryId || !primaryId.startsWith('npc:')) return '';
+    const primaryNpc = this.npcs.getNpc(primaryId.slice(4));
+    if (!primaryNpc || primaryNpc.hp <= 0) {
+      this.removeFromCombat(player, primaryId);
+      return primaryNpc ? this.handleNpcDeath(player, primaryNpc) : '';
+    }
+
+    const effAttr = this.effectiveAttributes(player);
+    const combatPlayer = { ...player, attributes: effAttr };
+    const pSkills = {
+      parryLv: this.skills.getParryLevel(player),
+      dodgeLv: this.skills.getDodgeLevel(player),
+      forceLv: this.skills.getForceLevel(player),
+      bestStrike: this.poweredBestStrike(player),
+    };
+
+    const primaryState = this.makeNpcCombatState(primaryNpc);
+    const extras: any[] = [];
+    const extraNpcs: any[] = [];
+    for (const id of player.combatTargets) {
+      if (id === primaryId) continue;
+      if (!id.startsWith('npc:')) continue;
+      const npc = this.npcs.getNpc(id.slice(4));
+      if (!npc || npc.hp <= 0) continue;
+      extras.push(this.makeNpcCombatState(npc));
+      extraNpcs.push(npc);
+    }
+
+    const result = this.combat.executeMultiRound(combatPlayer, pSkills, primaryState, extras);
+
+    let conditionMsg = '';
+    if (result.enemyHitPlayer) {
+      const allNpcs = [primaryNpc, ...extraNpcs];
+      for (const npc of allNpcs) {
+        if (npc.def.poisonChance && Math.random() < npc.def.poisonChance) {
+          const condId = npc.def.conditionId || 'poison';
+          const condLevel = npc.def.conditionLevel || npc.def.poisonLevel || 1;
+          const applied = this.conditions.applyCondition(player, condId, condLevel, npc.def.name);
+          if (applied) conditionMsg += applied;
+        }
+      }
+    }
+
+    if (result.defenderDead) {
+      const msg = result.message + conditionMsg + this.handleNpcDeath(player, primaryNpc);
+      this.removeFromCombat(player, primaryId);
+      return msg;
+    }
+    if (result.attackerDead) {
+      const msg = result.message + conditionMsg;
+      this.clearCombat(player);
+      player.hp = 1;
+      const expLoss = Math.floor((player.exp || 0) * 0.1);
+      player.exp = Math.max(0, (player.exp || 0) - expLoss);
+      return msg + `\n  你损失了 ${expLoss} 点经验。\n`;
+    }
+    return result.message + conditionMsg;
+  }
+
   // ── Combat Round (called by auto-tick and manual hit) ──────
   /** Public: execute one combat round. Called by server tick and manual hit. */
   executeCombatRound(playerId: string): string {
@@ -341,59 +451,11 @@ export class CommandRouter {
     return Math.max(600, 2000 - dex * 45 - dodgeLevel * 8);
   }
 
-  private doCombatRound(player: Player, targetId: string, isExtraHit = false): string {
+  private doCombatRound(player: Player, targetId: string, _isExtraHit = false): string {
     const effAttr = this.effectiveAttributes(player);
     const combatPlayer = { ...player, attributes: effAttr };
     if (targetId.startsWith('npc:')) {
-      const npc = this.npcs.getNpc(targetId.slice(4));
-      if (!npc || npc.hp <= 0) {
-        player.state = 'playing'; player.targetEnemy = null;
-        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
-        return this.handleNpcDeath(player, npc);
-      }
-      const pSkills = {
-        parryLv: this.skills.getParryLevel(player),
-        dodgeLv: this.skills.getDodgeLevel(player),
-        forceLv: this.skills.getForceLevel(player),
-        bestStrike: this.poweredBestStrike(player),
-      };
-      const npcSkills = {
-        parryLv: npc.def.attributes.str,
-        dodgeLv: npc.def.attributes.dex,
-        forceLv: npc.def.attributes.con,
-        bestStrike: this.npcs.getBestNpcStrike(npc),
-      };
-      const enemyState = {
-        mp: 0,
-        maxMp: 0,
-        name: npc.def.name,
-        get hp() { return npc.hp; }, set hp(v: number) { npc.hp = v; },
-        maxHp: npc.maxHp,
-        attributes: npc.def.attributes,
-        skills: npcSkills,
-      };
-      const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, isExtraHit);
-      let conditionMsg = '';
-      if (result.enemyHitPlayer && npc.def.poisonChance && Math.random() < npc.def.poisonChance) {
-        const condId = npc.def.conditionId || 'poison';
-        const condLevel = npc.def.conditionLevel || npc.def.poisonLevel || 1;
-        const applied = this.conditions.applyCondition(player, condId, condLevel, npc.def.name);
-        if (applied) conditionMsg = applied;
-      }
-      if (result.defenderDead) {
-        player.state = 'playing'; player.targetEnemy = null;
-        npc.state = 'idle'; npc.targetPlayerId = null;
-        return result.message + conditionMsg + this.handleNpcDeath(player, npc);
-      }
-      if (result.attackerDead) {
-        player.state = 'playing'; player.targetEnemy = null;
-        npc.state = 'idle'; npc.targetPlayerId = null;
-        player.hp = 1;
-        const expLoss = Math.floor((player.exp || 0) * 0.1);
-        player.exp = Math.max(0, (player.exp || 0) - expLoss);
-        return result.message + conditionMsg + `\n  你损失了 ${expLoss} 点经验。\n`;
-      }
-      return result.message + conditionMsg;
+      return this.resolveCombatRound(player);
     } else {
       const target = this.players.getPlayer(targetId);
       if (!target || target.hp <= 0) {
@@ -421,7 +483,7 @@ export class CommandRouter {
         get hp() { return target.hp; },
         set hp(v: number) { target.hp = v; },
       };
-      const result = this.combat.executeRound(combatPlayer, pSkills, combatTarget, isExtraHit);
+      const result = this.combat.executeRound(combatPlayer, pSkills, combatTarget, false);
       if (result.defenderDead || result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
@@ -457,22 +519,17 @@ export class CommandRouter {
 
   private handleCombat(player: Player, cmd: string, _args: string[]): string {
     if (cmd === 'flee' || cmd === 'tao') {
-      const targetId = player.targetEnemy;
-      player.state = 'playing'; player.targetEnemy = null;
-      if (targetId?.startsWith('npc:')) {
-        const npc = this.npcs.getNpc(targetId.slice(4));
-        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
-      } else if (targetId) {
-        const target = this.players.getPlayer(targetId);
-        if (target) { target.state = 'playing'; target.targetEnemy = null; }
-      }
+      this.clearCombat(player);
       return '\n  你转身逃走了……\n';
     }
     if (cmd === 'hp' || cmd === 'look' || cmd === 'l') {
       return this.doCombatRound(player, player.targetEnemy!, false);
     }
-    if (cmd === 'hit' || cmd === 'kill') {
+    if (cmd === 'hit' || (cmd === 'kill' && _args.length === 0)) {
       return this.doCombatRound(player, player.targetEnemy!, true);
+    }
+    if (cmd === 'kill' && _args.length > 0) {
+      return this.handleKill(player, _args);
     }
     if (cmd === 'perform' || cmd === 'pfm') {
       return this.handlePerform(player, _args);
@@ -792,16 +849,16 @@ export class CommandRouter {
     if (targetId.startsWith('npc:')) {
       const npc = this.npcs.getNpc(targetId.slice(4));
       if (!npc || npc.hp <= 0) {
-        player.state = 'playing'; player.targetEnemy = null;
-        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
-        return this.handleNpcDeath(player, npc);
+        const msg = npc ? this.handleNpcDeath(player, npc) : '';
+        this.removeFromCombat(player, targetId);
+        return msg;
       }
       npc.hp = Math.max(0, npc.hp - dmg);
+      const npcTargetId = 'npc:' + npc.def.id;
       let msg = `\n  你大喝一声，使出了「${def.name}」绝招！对 ${npc.def.name} 造成 ${dmg} 点伤害。\n`;
       if (npc.hp <= 0) {
-        player.state = 'playing'; player.targetEnemy = null;
-        npc.state = 'idle'; npc.targetPlayerId = null;
         msg += this.handleNpcDeath(player, npc);
+        this.removeFromCombat(player, npcTargetId);
       }
       return msg;
     } else {

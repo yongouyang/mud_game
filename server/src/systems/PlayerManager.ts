@@ -25,6 +25,7 @@ export class PlayerManager {
       currentRoom: 'town/square',
       state: 'creating',
       targetEnemy: null,
+      combatTargets: [],
       conditions: [],
       schoolId: undefined,
       quest: null,

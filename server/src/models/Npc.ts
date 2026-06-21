@@ -12,3 +12,6 @@ export interface NpcDef {
   poisonLevel?: number;      // level of condition applied (legacy default: poison)
   conditionId?: string;      // condition id to apply (defaults to 'poison')
   conditionLevel?: number;   // overrides poisonLevel if set
+  faction?: string;          // faction/school id for guarder aggro
+  guarder?: boolean;         // true if this NPC will defend same-faction NPCs in the room
+}

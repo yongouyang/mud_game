@@ -22,7 +22,7 @@ npm run dev:all        # Frontend (:5173) + Server (:3000)
 
 Open `http://localhost:5173` — `login demo some-secret` to jump straight in (preloaded with 10,000 pot).
 
-## Game Commands (29 total)
+## Game Commands (30 total)
 
 ### Movement & Info
 | Command | Description |
@@ -97,6 +97,10 @@ Turn-based auto-combat with MUD-style chain:
 2. **躲避 (Dodge)** — chance based on dodge level
 3. **内力护体 (Force Absorb)** — absorbs damage, costs MP (requires force level > 0)
 4. **HP Damage** — remaining damage applied
+
+**Multi-enemy combat**: a player can fight up to **4 enemies** at once. Use `kill <target>` while already fighting to add another NPC to the melee. Each extra enemy gets its own counter-attack each round.
+
+**Guarder aggro**: NPCs with the same `faction` and `guarder=true` will automatically defend their ally when that ally is attacked in the same room.
 
 Critical hits: 10% chance, 1.8x damage. Speed scales with dex + dodge level.
 
@@ -194,7 +198,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (260 tests)
+## Testing (270+ tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
@@ -214,13 +218,14 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
+| `CommandRouter.multi.test.ts` | 4 | Multi-enemy combat + guarder aggro |
 | `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
 | `NpcSystem.test.ts` | 3 | Master/disciple NPC coverage |
 | `time.test.ts` | 8 | SystemClock + Scheduler |
-| `index.e2e.test.ts` | 20 | Full user journeys (auth, map, schools, combat) |
+| `index.e2e.test.ts` | 18 | Full user journeys (auth, map, schools, combat) |
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |
 | `leveling.spec.ts` (Playwright) | 3 | Leveling + attribute points |
 | `conditions.spec.ts` (Playwright) | 3 | Wolf poison + antidote |
