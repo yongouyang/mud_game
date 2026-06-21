@@ -82,6 +82,7 @@ export class CommandRouter {
       case 'learn': return this.handleLearn(player, rest);
       case 'schools': return this.handleSchools(player, rest);
       case 'join': return this.handleJoin(player, rest);
+      case 'buy': return this.handleBuy(player, rest);
       case 'ask': return this.handleAsk(player, rest);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
@@ -451,6 +452,20 @@ export class CommandRouter {
       return `\n  你学会了${name}！当前等级：Lv.${level}\n`;
     }
     return `\n  没有"${name}"这个武功。\n`;
+  }
+
+  // ── Shop ─────────────────────────────────────────────────
+  private handleBuy(player: Player, args: string[]): string {
+    const name = args.join(' ');
+    if (!name) return '\n  你想买什么？用法：buy <物品名>\n';
+    const def = this.items.findDefByName(name);
+    if (!def) return `\n  没有"${name}"这个物品。\n`;
+    const price = def.id === 'jinchuang-yao' ? 20 : def.id === 'wooden-sword' ? 30 : def.id === 'iron-sword' ? 80 : 50;
+    const silver = this.items.hasItem(player, 'silver', price);
+    if (!silver) return `\n  银两不足！${def.name} 售价 ${price} 两。\n`;
+    this.items.removeItem(player, 'silver', price);
+    this.items.addItem(player, def.id);
+    return `\n  你花 ${price} 两银子买了${def.name}。\n`;
   }
 
   // ── NPC Interaction ──────────────────────────────────────

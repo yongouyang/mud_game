@@ -85,5 +85,13 @@ export class NpcSystem {
     }
     return best;
   }
+  /** Respawn an NPC back to full health and idle state */
+  respawn(npcId: string): void {
+    const npc = this.npcs.get(npcId);
+    if (!npc) return;
+    npc.hp = npc.maxHp;
+    npc.state = 'idle';
+    npc.targetPlayerId = null;
+  }
 
 }
