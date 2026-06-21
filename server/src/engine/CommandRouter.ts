@@ -11,6 +11,7 @@ import { BankSystem } from '../systems/BankSystem.js';
 import { AuctionSystem } from '../systems/AuctionSystem.js';
 import { ShopSystem } from '../systems/ShopSystem.js';
 import { CraftingSystem } from '../systems/CraftingSystem.js';
+import { QuestSystem } from '../systems/QuestSystem.js';
 import { Scheduler } from '../time/Scheduler.js';
 import { SystemClock } from '../time/SystemClock.js';
 import { SchoolDef } from '../models/School.js';
@@ -38,6 +39,7 @@ export class CommandRouter {
     private auction: AuctionSystem,
     private shop: ShopSystem,
     private craft: CraftingSystem,
+    private quests: QuestSystem,
     private scheduler: Scheduler,
     private clock: SystemClock,
   ) {}
@@ -222,7 +224,8 @@ export class CommandRouter {
       '  deposit <物品> [数量]      存入物品', '  deposit silver <数量>      存银子',
       '  withdraw <物品> [数量]     取出物品', '  withdraw silver <数量>     取银子',
       '  auction         拍卖行',       '  craft           制作物品',
-      '  quest <NPC>     接取/完成任务', '  dazuo [秒]     打坐恢复内力',
+      '  quest           查看当前任务', '  quest <NPC>     交/列任务',
+      '  quest <NPC> <ID> 接取任务',      '  dazuo [秒]     打坐恢复内力',
       '  practice <武功> 练习武功',   '  tianfu <属性>   分配属性点',
       '  level           查看等级',   '  help            显示帮助',
       '',
@@ -528,6 +531,7 @@ export class CommandRouter {
     this.items.addItem(player, 'silver', gold);
     msg += `  从尸体上搜出 ${gold} 两银子。\n`;
     msg += this.recordNpcKill(player, npc);
+    msg += this.quests.onNpcKill(player, npc.def.id);
     // Schedule respawn if configured.
     this.npcs.scheduleRespawn(npc.def.id);
     return msg;
@@ -806,67 +810,52 @@ export class CommandRouter {
 
   // ── Quest System ───────────────────────────────────────
   private handleQuest(player: Player, args: string[]): string {
-    const name = args.join(' ');
-    if (!name) return '\n  用法：quest <NPC名> — 向NPC接取或完成任务\n';
+    if (args.length === 0) {
+      return this.quests.formatActive(player);
+    }
+
     const roomNpcs = this.npcs.getNpcsInRoom(player.currentRoom);
-    const npc = roomNpcs.find((n) => n.def.name === name || n.def.id === name);
-    if (!npc) return `\n  这里没有叫${name}的人。\n`;
+    const npcName = args[0];
+    const npc = roomNpcs.find((n) => n.def.name === npcName || n.def.id === npcName);
+    if (!npc) return `\n  这里没有叫${npcName}的人。\n`;
 
-    // Special delivery quest: 说书人 in town/square -> 王掌柜 in town/inn
-    if (npc.def.id === 'storyteller') {
-      if (player.quest) {
-        return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
+    // quest <NPC> <questId> — accept a specific quest
+    if (args.length >= 2) {
+      const questId = args[1];
+      const available = this.quests.availableQuests(npc.def.id);
+      if (!available.some((q) => q.id === questId)) {
+        return `\n  ${npc.def.name} 没有发布这个任务。\n`;
       }
-      const exp = 20 + Math.floor(Math.random() * 10) + Math.floor((player.exp || 0) / 10000);
-      const pot = 10 + Math.floor(Math.random() * 5);
-      player.quest = { type: 'letter', target: '王掌柜', exp, pot, itemId: 'letter' };
-      this.items.addItem(player, 'letter');
-      return `\n  ${npc.def.name}低声道：「少侠，请将这封信交给客栈的王掌柜，切记不可让旁人看见。」\n  你获得了一封信件。\n`;
+      const result = this.quests.accept(player, questId);
+      return `\n  ${result.message}\n`;
     }
 
-    // Complete special delivery quest at 王掌柜
-    if (player.quest && player.quest.type === 'letter' && npc.def.id === 'wang') {
-      if (!this.items.hasItem(player, 'letter')) {
-        return `\n  ${npc.def.name}疑惑地看着你：「信呢？说书人没把信交给你吗？」\n`;
+    // quest <NPC> — try to complete, or list available quests
+    const active = player.quest;
+    if (active) {
+      const result = this.quests.complete(player, npc.def.id);
+      if (result.completed) {
+        return `\n  ${npc.def.name}点了点头。\n  ${result.message}\n`;
       }
-      this.items.removeItem(player, 'letter');
-      const exp = player.quest.exp;
-      const pot = player.quest.pot;
-      player.exp = (player.exp || 0) + exp;
-      player.pot = (player.pot || 0) + pot;
-      player.quest = null;
-      let msg = `\n  ${npc.def.name}接过信件，脸色微变，随即收起。\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
-      const levelResult = this.levels.checkLevelUp(player);
-      if (levelResult.leveledUp) {
-        msg += '  ' + levelResult.messages.join('\n  ') + '\n';
-      }
-      return msg;
+      return `\n  ${result.message}\n`;
     }
 
-    // Generic self-completing quest for any other NPC (backward-compatible behavior)
-    if (player.quest) {
-      // If the active quest was given by this same NPC, complete it.
-      if (player.quest.target === npc.def.name) {
-        const exp = player.quest.exp;
-        const pot = player.quest.pot;
-        player.exp = (player.exp || 0) + exp;
-        player.pot = (player.pot || 0) + pot;
-        player.quest = null;
-        let msg = `\n  ${npc.def.name}点了点头：「做得很好！」\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
-        const levelResult = this.levels.checkLevelUp(player);
-        if (levelResult.leveledUp) {
-          msg += '  ' + levelResult.messages.join('\n  ') + '\n';
-        }
-        return msg;
-      }
-      return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
+    const available = this.quests.availableQuests(npc.def.id);
+    if (available.length === 0) {
+      return `\n  ${npc.def.name} 这里没有适合你的任务。\n`;
     }
+    const lines = available.map((q) => `    ${q.id} — ${q.title}（${this.describeQuestType(q)}）`).join('\n');
+    return `\n  ${npc.def.name} 发布的任务：\n${lines}\n  输入 quest ${npcName} <任务ID> 接取。\n`;
+  }
 
-    // Accept a generic quest from this NPC.
-    const exp = 10 + Math.floor(Math.random() * 10) + Math.floor((player.exp || 0) / 10000);
-    const pot = 5 + Math.floor(Math.random() * 5);
-    player.quest = { type: 'task', target: npc.def.name, exp, pot };
-    return `\n  ${npc.def.name}对你说：「少侠，请帮我跑个腿，完事后再来找我。」\n`;
+  private describeQuestType(q: { type: string; targetCount: number; targetId: string }): string {
+    switch (q.type) {
+      case 'kill': return `杀死 ${q.targetCount} 个目标`;
+      case 'collect': return `收集 ${q.targetCount} 个${q.targetId}`;
+      case 'delivery': return '递送物品';
+      case 'talk': return '对话';
+      default: return q.type;
+    }
   }
 
   // ── Perform (绝招) ──────────────────────────────────────

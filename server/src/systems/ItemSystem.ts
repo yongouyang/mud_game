@@ -49,6 +49,11 @@ export class ItemSystem {
     return !!item && item.quantity >= qty;
   }
 
+  getItemCount(player: Player, itemId: string): number {
+    const item = player.inventory?.find((i) => i.itemId === itemId);
+    return item?.quantity || 0;
+  }
+
   /** Apply weapon/armor stat bonuses to player */
   getEquipBonus(player: Player): Partial<Record<string, number>> {
     const bonus: Record<string, number> = {};

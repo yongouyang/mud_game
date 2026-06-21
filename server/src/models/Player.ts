@@ -35,7 +35,19 @@ export interface Player {
   conditions: PlayerCondition[];
   schoolId?: string;
   schoolName?: string;
-  quest: { type: string; target: string; exp: number; pot: number; itemId?: string } | null;
+  quest: {
+    questId?: string;
+    type: string;
+    target: string; // NPC name, NPC id, item id, etc.
+    targetId?: string; // canonical id for kill/collect targets
+    targetCount?: number;
+    progress?: number;
+    exp: number;
+    pot: number;
+    itemId?: string; // delivery / collect item
+    rewardShen?: number;
+    rewardItemId?: string;
+  } | null;
   powerupExpiry?: number;
   isMeditating?: boolean;
   meditationTaskId?: string;

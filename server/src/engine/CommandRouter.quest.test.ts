@@ -18,8 +18,19 @@ describe('Quest System', () => {
     router = ctx.router;
     players = ctx.players;
     npcs = ctx.npcs;
-    // Register quest NPC
+    // Register a simple talk quest NPC
     npcs.register({ id: "quest-master", name: "任务使者", description: "发布了任务的NPC", roomId: "town/square", dialogue: ["有任务要交给你"], attributes: {str:10,int:10,con:10,dex:10}, skills: [], aggressive: false });
+    ctx.quests.register({
+      id: 'talk-intro',
+      title: '初识江湖',
+      giverNpcId: 'quest-master',
+      completerNpcId: 'quest-master',
+      type: 'talk',
+      targetId: 'quest-master',
+      targetCount: 1,
+      rewardExp: 50,
+      rewardPot: 10,
+    });
     players.createPlayer(PLAYER_ID);
     cmd('楚留香'); cmd('done');
     players.getPlayer(PLAYER_ID)!.exp = 10000;
@@ -27,22 +38,23 @@ describe('Quest System', () => {
   });
 
   describe('quest command', () => {
-    it('quest without NPC shows usage', () => {
-      expect(cmd('quest')).toContain('用法');
+    it('quest without NPC shows active quest status', () => {
+      expect(cmd('quest')).toContain('当前没有任务');
     });
 
-    it('quest from NPC gives task', () => {
+    it('quest from NPC lists available quests', () => {
       const out = cmd('quest 任务使者');
-      expect(out).toContain('任务');
+      expect(out).toContain('初识江湖');
+      expect(out).toContain('talk-intro');
     });
   });
 
   describe('quest completion', () => {
     it('completing quest gives exp and pot', () => {
       // Accept quest
-      cmd('quest 任务使者');
+      cmd('quest 任务使者 talk-intro');
       const p = players.getPlayer(PLAYER_ID)!;
-      expect(p.quest).toBeDefined();
+      expect(p.quest).not.toBeNull();
       // Complete quest
       const out = cmd('quest 任务使者');
       expect(out).toContain('完成');

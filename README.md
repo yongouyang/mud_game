@@ -69,6 +69,9 @@ Open `http://localhost:5173` — `login demo some-secret` to jump straight in (p
 | `flee` / `tao` | Flee combat |
 | `perform <skill.move>` / `pfm` | Execute a special move (requires skill ≥ Lv.10, costs 20 MP) |
 | `ask <npc>` | Talk to NPC (English ID works) |
+| `quest` | Show active quest |
+| `quest <npc>` | List/complete quests from an NPC |
+| `quest <npc> <id>` | Accept a specific quest |
 
 ### Schools
 | Command | Description |
@@ -158,6 +161,15 @@ Player data is persisted to `server/data/players.json`:
 - Autosaved every **60 seconds**.
 - Graceful shutdown saves on `SIGINT` / `SIGTERM`.
 
+### Quests
+Quests are defined in `server/data/quests.json` and support multiple types:
+- **Kill**: slay a number of specific NPCs (progress updates automatically).
+- **Collect**: gather a number of specific items and return them.
+- **Delivery**: carry an item to another NPC.
+- **Talk**: simply speak to the target NPC.
+
+Rewards include exp, pot, shen, and items. Use `quest` to check progress and `quest <npc>` / `quest <npc> <id>` to interact with quest givers.
+
 ## Game World (40 rooms, 90 NPCs)
 
 ```
@@ -237,6 +249,8 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.shen.test.ts` | 5 | Shen alignment + killer tracking |
 | `Persistence.test.ts` | 4 | Save/load player JSON |
 | `PersistenceManager.test.ts` | 4 | Autosave, disconnect cleanup, load |
+| `CommandRouter.quest.test.ts` | 3 | Quest accept/complete flow |
+| `CommandRouter.quests.test.ts` | 3 | Kill/collect quest progress and rewards |
 | `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |

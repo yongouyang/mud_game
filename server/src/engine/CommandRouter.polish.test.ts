@@ -161,8 +161,8 @@ describe('Polish: minimum playable loop', () => {
     it('accept from 说书人 and complete at 王掌柜', () => {
       const p = players.getPlayer(PLAYER_ID)!;
       // 说书人 is in town/square (starting room)
-      const accept = cmd('quest 说书人');
-      expect(accept).toContain('信件');
+      const accept = cmd('quest 说书人 letter-delivery');
+      expect(accept).toContain('密信');
       expect(p.quest).not.toBeNull();
       expect(items.hasItem(p, 'letter')).toBe(true);
 
@@ -176,11 +176,11 @@ describe('Polish: minimum playable loop', () => {
 
     it('cannot complete delivery quest without letter', () => {
       const p = players.getPlayer(PLAYER_ID)!;
-      cmd('quest 说书人');
+      cmd('quest 说书人 letter-delivery');
       items.removeItem(p, 'letter');
       cmd('e');
       const out = cmd('quest 王掌柜');
-      expect(out).toContain('信呢');
+      expect(out).toContain('还没有拿到');
       expect(p.quest).not.toBeNull();
     });
   });

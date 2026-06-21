@@ -1,0 +1,38 @@
+[
+  {
+    "id": "kill-wolves",
+    "title": "清理野狼",
+    "giverNpcId": "wang",
+    "completerNpcId": "wang",
+    "type": "kill",
+    "targetId": "wolf",
+    "targetCount": 3,
+    "rewardExp": 50,
+    "rewardPot": 20,
+    "rewardShen": 10,
+    "rewardItemId": "wolf-pelt"
+  },
+  {
+    "id": "collect-herbs",
+    "title": "采集草药",
+    "giverNpcId": "storyteller",
+    "completerNpcId": "storyteller",
+    "type": "collect",
+    "targetId": "herb",
+    "targetCount": 3,
+    "rewardExp": 30,
+    "rewardPot": 15,
+    "rewardShen": 5
+  },
+  {
+    "id": "letter-delivery",
+    "title": "密信",
+    "giverNpcId": "storyteller",
+    "completerNpcId": "wang",
+    "type": "delivery",
+    "targetId": "letter",
+    "targetCount": 1,
+    "rewardExp": 40,
+    "rewardPot": 15
+  }
+]

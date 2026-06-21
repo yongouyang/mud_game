@@ -151,5 +151,11 @@
     "name": "草药",
     "type": "misc",
     "description": "一株常见的药草，可调配金疮药或解毒丸。"
+  },
+  {
+    "id": "wolf-pelt",
+    "name": "狼皮",
+    "type": "misc",
+    "description": "一张从野狼身上剥下的毛皮，可以卖个好价钱。"
   }
 ]

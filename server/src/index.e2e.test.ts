@@ -17,6 +17,7 @@ import { BankSystem } from './systems/BankSystem.js';
 import { AuctionSystem } from './systems/AuctionSystem.js';
 import { ShopSystem } from './systems/ShopSystem.js';
 import { CraftingSystem } from './systems/CraftingSystem.js';
+import { QuestSystem } from './systems/QuestSystem.js';
 import { Scheduler } from './time/Scheduler.js';
 import { RealSystemClock } from './time/SystemClock.js';
 import { AddressInfo } from 'node:net';
@@ -49,6 +50,7 @@ beforeAll(async () => {
   const auction = new AuctionSystem(items, scheduler);
   const shop = new ShopSystem(items);
   const craft = new CraftingSystem(items, skills);
+  const quests = new QuestSystem(items, levels);
 
   npcs.register({
     id: 'wang', name: '王掌柜', description: 'test',
@@ -59,7 +61,7 @@ beforeAll(async () => {
     aggressive: false,
   });
 
-  const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, scheduler, clock);
+  const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, quests, scheduler, clock);
 
   // Drive the scheduler with real time.
   schedulerInterval = setInterval(() => scheduler.tick(), 100);

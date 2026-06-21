@@ -19,6 +19,7 @@ import { BankSystem } from './systems/BankSystem.js';
 import { AuctionSystem } from './systems/AuctionSystem.js';
 import { ShopSystem } from './systems/ShopSystem.js';
 import { CraftingSystem } from './systems/CraftingSystem.js';
+import { QuestSystem } from './systems/QuestSystem.js';
 import { PersistenceSystem } from './systems/PersistenceSystem.js';
 import { PersistenceManager } from './engine/PersistenceManager.js';
 import { RealSystemClock } from './time/SystemClock.js';
@@ -73,10 +74,11 @@ const bank = new BankSystem(items);
 const auction = new AuctionSystem(items, scheduler);
 const shop = new ShopSystem(items);
 const craft = new CraftingSystem(items, skills);
+const quests = new QuestSystem(items, levels);
 const persistence = new PersistenceSystem();
 const persistenceManager = new PersistenceManager(players, persistence, scheduler, clock);
 
-const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, scheduler, clock);
+const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, quests, scheduler, clock);
 
 app.get('/health', (_req, res) => {
   const online = players.getAllPlayers();
