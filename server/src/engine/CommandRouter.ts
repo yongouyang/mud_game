@@ -167,8 +167,22 @@ export class CommandRouter {
       player.targetEnemy = 'npc:' + targetNpc.def.id;
       targetNpc.state = 'fighting';
       targetNpc.targetPlayerId = player.id;
-      return `\n  你向 ${targetNpc.def.name} 发起了攻击！\n` +
-        this.combat.formatCombatStatus(player, { name: targetNpc.def.name, hp: targetNpc.hp, maxHp: targetNpc.maxHp });
+
+      // Perform the first attack immediately
+      const npcTarget = {
+        name: targetNpc.def.name,
+        get hp() { return targetNpc.hp; },
+        set hp(v: number) { targetNpc.hp = v; },
+        maxHp: targetNpc.maxHp,
+        attributes: targetNpc.def.attributes,
+      };
+      const result = this.combat.attack(player, npcTarget);
+      if (result.defenderDead) {
+        player.state = 'playing'; player.targetEnemy = null;
+        targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
+        return result.message;
+      }
+      return result.message + this.combat.formatCombatStatus(player, npcTarget);
     }
 
     // Check players in room
@@ -181,7 +195,14 @@ export class CommandRouter {
     player.targetEnemy = target.id;
     target.state = 'fighting';
     target.targetEnemy = player.id;
-    return `\n  你向 ${target.name} 发起了攻击！\n` + this.combat.formatCombatStatus(player, target);
+
+    const result = this.combat.attack(player, target);
+    if (result.defenderDead) {
+      player.state = 'playing'; player.targetEnemy = null;
+      target.state = 'playing'; target.targetEnemy = null;
+      return result.message;
+    }
+    return result.message + this.combat.formatCombatStatus(player, target);
   }
 
   private handleCombat(player: Player, cmd: string, _args: string[]): string {

@@ -211,7 +211,7 @@ describe('CommandRouter', () => {
 
     it('kill initiates combat', () => {
       const output = cmd('kill 李寻欢');
-      expect(output).toContain('发起了攻击');
+      expect(output).toContain('伤害');
       expect(output).toContain('李寻欢');
       expect(output).toContain('战斗');
     });
