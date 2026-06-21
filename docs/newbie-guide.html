@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>炎黄群侠传 · 新手指南</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;padding:32px;max-width:900px;margin:0 auto;line-height:1.7}
+h1{color:#ffd700;font-size:28px;margin-bottom:8px;text-align:center;letter-spacing:4px}
+h2{color:#e0c060;font-size:20px;margin:28px 0 12px;border-left:3px solid #ffd700;padding-left:10px}
+h3{color:#88ccff;font-size:16px;margin:16px 0 8px}
+code{background:#21262d;color:#ffa657;padding:2px 6px;border-radius:3px;font-size:14px}
+pre{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px 16px;overflow-x:auto;font-size:13px;margin:8px 0;color:#c9d1d9}
+.step{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin:12px 0}
+.step-num{display:inline-block;background:#ffd700;color:#0d1117;width:24px;height:24px;text-align:center;border-radius:50%;font-weight:bold;font-size:14px;margin-right:8px}
+.tip{background:#1b3a1b;border-left:3px solid #3fb950;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+.warn{background:#3a1b1b;border-left:3px solid #f85149;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
+th,td{border:1px solid #30363d;padding:6px 10px;text-align:left}
+th{background:#21262d;color:#e0c060}
+.path{color:#6699cc;font-family:monospace;font-size:13px}
+.money{color:#ffa657}
+</style>
+</head>
+<body>
+<h1>炎黄群侠传 · 新手指南</h1>
+<p style="text-align:center;color:#888;margin-bottom:24px">从零开始闯荡江湖 — 练功 · 打怪 · 拜师 · 变强</p>
+
+<h2>📋 第一章：初入江湖</h2>
+<div class="step">
+<span class="step-num">1</span><strong>注册和创建角色</strong>
+<pre>register 张无忌 123456    # 注册一个账号
+login 张无忌 123456       # 登录已有账号</pre>
+<p>或者直接用演示账号：<code>login demo some-secret</code>（预设属性，10000 潜能）</p>
+</div>
+
+<div class="step">
+<span class="step-num">2</span><strong>分配属性</strong>
+<p>创建角色后，输入角色名（必须是中文），然后分配 <strong>10 点自由属性</strong>：</p>
+<pre>set str 20    # 臂力（影响攻击力）
+set con 20    # 根骨（影响 HP 上限）
+set dex 15    # 身法（影响闪避、战斗速度）
+set int 10    # 悟性（影响 MP 上限、练习效率）
+done          # 确认完成创建</pre>
+<div class="tip"><strong>推荐新手上路加点：</strong> str=15, con=15（高攻击+高血量，打怪不死）</div>
+</div>
+
+<div class="step">
+<span class="step-num">3</span><strong>熟悉基本命令</strong>
+<pre>look          # 查看四周（会显示地上物品和 NPC）
+hp / score    # 查看状态（HP/MP/经验/潜能/等级/属性点）
+level         # 查看等级、经验进度和属性点
+help          # 显示所有命令
+skills        # 查看已学武功
+i             # 查看背包物品
+who           # 查看在线玩家</pre>
+</div>
+
+<h2>📈 第二章：学习武功</h2>
+<p>武功分两类：<strong>基本武功</strong>随处可学，<strong>独门武功</strong>需先拜师。</p>
+
+<h3>🔹 基本武功（消耗 1 潜能/次）</h3>
+<table>
+<tr><th>武功名</th><th>ID</th><th>用途</th></tr>
+<tr><td>招架</td><td><code>parry</code></td><td>基本招架之术，格挡敌人攻击。</td></tr>
+<tr><td>基本剑法</td><td><code>sword</code></td><td>基本剑术，可用剑类武器施展。</td></tr>
+<tr><td>基本刀法</td><td><code>blade</code></td><td>基本刀术，可用刀类武器施展。</td></tr>
+<tr><td>基本杖法</td><td><code>staff</code></td><td>基本棍杖之术。</td></tr>
+<tr><td>基本暗器</td><td><code>throwing</code></td><td>基本暗器手法。</td></tr>
+<tr><td>基本鞭法</td><td><code>whip</code></td><td>基本鞭法之术。</td></tr>
+<tr><td>基本拳脚</td><td><code>cuff</code></td><td>基本拳脚功夫，入门必学。</td></tr>
+<tr><td>基本轻功</td><td><code>dodge</code></td><td>基本轻功，用于闪避敌人攻击。</td></tr>
+<tr><td>基本内功</td><td><code>force</code></td><td>基本内功心法，影响内力上限和护体效果。</td></tr>
+<tr><td>醉拳</td><td><code>zui-quan</code></td><td>形醉意不醉的奇门拳法。</td></tr>
+</table>
+<pre>learn 基本拳脚    # 学一级拳脚（也可以用英文 ID learn cuff）
+learn 基本拳脚    # 重复输入升级，每次升 1 级</pre>
+<div class="tip"><strong>升级技巧：</strong>用 ↑↓ 箭头键调出历史命令，快速重复 learn！</div>
+
+<h3>🔹 练习武功（practice）</h3>
+<p>不想消耗潜能？可以自行练习已学会的武功：</p>
+<pre>practice 基本拳脚     # 不消耗潜能，提升 1 级
+practice dodge        # 练习轻功</pre>
+<div class="warn"><strong>注意：</strong>练习有冷却时间，且武功等级不能超过 <code>玩家等级 × 10</code>。想要突破上限，先去升级！</div>
+
+<h3>🔹 打坐恢复（dazuo）</h3>
+<p>学会基本内功后，可以通过打坐把气血转化为内力：</p>
+<pre>learn 基本内功        # 先学会内功
+dazuo 30              # 打坐 30 秒恢复内力</pre>
+<div class="tip">打坐时无法移动或战斗，血量会缓慢下降，内力会持续回复。</div>
+
+<h3>🔹 独门武功 — 先拜师！</h3>
+<p>高级武功需要：① 已加入对应门派 ② 在师父房间 ③ 基础武功达标</p>
+<div class="step">
+<pre># 第1步：在广场练基本功（消耗潜能，打山贼获得）
+learn 基本拳脚    × 10次 → Lv.10
+learn 基本轻功    × 5次  → 提高闪避
+learn 基本内功    × 5次  → 提高内力吸收
+
+# 第2步：去少林拜师（路径：n n n e s w）
+join 少林派
+
+# 第3步：在师父面前学独门武功
+learn 罗汉拳      → 消耗 2 潜能，需要拳脚 ≥ Lv.5
+learn 太极拳      → 消耗 2 潜能，需要拳脚 ≥ Lv.10</pre>
+</div>
+
+<h2>🎖 第三章：等级与属性点</h2>
+<p>江湖之路，等级是实力的重要标志。获得经验即可升级，每次升级奖励 <strong>2 点属性点</strong>。</p>
+<pre>level             # 查看当前等级、经验进度、属性点
+tianfu str 2      # 分配 2 点属性点到臂力
+tianfu 根骨 1     # 也可以写中文属性名</pre>
+<table>
+<tr><th>经验来源</th><th>说明</th></tr>
+<tr><td>杀怪</td><td>山贼、野狼、黑熊等都会给经验和银两</td></tr>
+<tr><td>任务</td><td>说书人的送信任务给大量经验</td></tr>
+<tr><td>绝招杀敌</td><td>施展 perform 击杀也能获得经验</td></tr>
+</table>
+<div class="tip"><strong>升级奖励：</strong>每升 1 级，气血上限和内力上限会按根骨/悟性提升，并获得 2 点自由属性点。</div>
+
+<h2>⚔ 第四章：打怪升级</h2>
+<p>山林中有主动攻击的野怪，杀死获得经验 + 潜能 + 银两。</p>
+<table>
+<tr><th>野怪</th><th>ID</th><th>位置</th><th>路径</th><th>难度</th></tr>
+<tr><td>山贼</td><td><code>bandit</code></td><td>山林·入口</td><td class="path">nnn</td><td>易</td></tr>
+<tr><td>野狼</td><td><code>wolf</code></td><td>山林·深处</td><td class="path">nnnn</td><td>中</td></tr>
+<tr><td>黑熊</td><td><code>bear</code></td><td>山林·洞穴</td><td class="path">nnnnw</td><td>难</td></tr>
+</table>
+
+<div class="step">
+<pre># 打山贼（新手首选）
+n n n              # 走到山林入口
+kill 山贼           # 发起战斗（也可以用英文 ID kill bandit）
+# 自动回合制战斗，等几轮后山贼倒下
+# 获得经验、潜能和银两！
+
+# 逃跑（打不过就溜）
+flee / tao
+</pre>
+<div class="warn"><strong>⚠ 注意：</strong>战死后会扣 10% 经验！血少的时候先用 <code>exert heal</code> 疗伤（消耗 30 内力，恢复 20% HP）。如果内力不足，远离战斗等自动恢复（每 5 秒恢复 3% HP / 4% MP）。</div>
+</div>
+
+<h2>🦠 第五章：状态与解毒</h2>
+<p>某些怪物攻击会附带负面状态（如野狼、山贼的毒）。状态会在 <code>score</code> 中显示。</p>
+<table>
+<tr><th>状态</th><th>来源</th><th>处理</th></tr>
+<tr><td>中毒（poison）</td><td>野狼、山贼等攻击概率附带</td><td><code>use 解毒丸</code> 或 <code>exert dispel poison</code></td></tr>
+</table>
+<pre>score                    # 查看是否中毒
+exert dispel poison      # 用内功逼毒（需要基本内功）
+use 解毒丸                # 服用解毒丸直接清除</pre>
+<div class="tip"><strong>提示：</strong>解毒丸在主街药铺老板处购买（50 两银子）。</div>
+
+<h2>💰 第六章：获取金钱和物品</h2>
+<table>
+<tr><th>方式</th><th>说明</th></tr>
+<tr><td>杀野怪</td><td>山贼 / 野狼 / 黑熊死后掉落银两</td></tr>
+<tr><td>捡物品</td><td><code>look</code> 查看地上物品，<code>get 木剑</code> 捡起</td></tr>
+<tr><td>做任务</td><td>送信任务不直接给银两，但升级后能去更强的地方</td></tr>
+</table>
+
+<h3>🛒 商店（<code>shop</code> 命令）</h3>
+<table>
+<tr><th>物品</th><th>ID</th><th>价格</th><th>效果</th></tr>
+<tr><td>金疮药</td><td><code>jinchuang-yao</code></td><td class="money">20 两</td><td>恢复 50 HP</td></tr>
+<tr><td>人参丸</td><td><code>renshen-wan</code></td><td class="money">50 两</td><td>恢复 100 HP</td></tr>
+<tr><td>内力丹</td><td><code>neili-dan</code></td><td class="money">30 两</td><td>恢复 50 MP</td></tr>
+<tr><td>解毒丸</td><td><code>jiedu-wan</code></td><td class="money">50 两</td><td>解除中毒状态</td></tr>
+<tr><td>木剑</td><td><code>wooden-sword</code></td><td class="money">30 两</td><td>臂力 +3</td></tr>
+<tr><td>铁剑</td><td><code>iron-sword</code></td><td class="money">80 两</td><td>臂力 +8</td></tr>
+<tr><td>皮甲</td><td><code>leather-armor</code></td><td class="money">60 两</td><td>根骨 +5</td></tr>
+<tr><td>布衣</td><td><code>cloth-armor</code></td><td class="money">20 两</td><td>根骨 +2</td></tr>
+</table>
+<pre>shop            # 查看商店商品
+buy 金疮药       # 购买金疮药
+buy 解毒丸       # 购买解毒丸</pre>
+
+<h2>🛡 第七章：装备与恢复</h2>
+<div class="step">
+<pre>wear 铁剑        # 装备武器（+8 臂力）
+wear 皮甲        # 装备防具（+5 根骨）
+remove 铁剑      # 脱下装备
+
+use 金疮药       # 使用金疮药恢复 50 HP
+use 人参丸       # 使用人参丸恢复 100 HP
+use 内力丹       # 恢复 50 MP
+use 解毒丸       # 解除中毒
+
+i                # 查看背包物品
+</pre>
+</div>
+
+<h2>🎯 第八章：任务系统</h2>
+<div class="step">
+<pre>quest 说书人         # 在广场向说书人接取送信任务
+quest 王掌柜         # 去客栈找王掌柜交任务，获得经验 + 潜能
+</pre>
+<div class="tip"><strong>提示：</strong>接任务找 <code>说书人</code>，交任务找 <code>王掌柜</code>。送信是新手最快的升级方式之一。</div>
+</div>
+
+<h2>⚡ 第九章：进阶技巧</h2>
+<h3>绝招（perform）</h3>
+<pre># 武功升到 Lv.10 后可施展绝招
+learn 基本拳脚    × 10 次（升到 Lv.10）
+perform 基本拳脚.黑虎掏心   # 施展绝招（消耗 20 内力，伤害 2 倍）</pre>
+
+<h3>内功运用（exert / yun）</h3>
+<pre>exert heal              # 疗伤：消耗 30 内力，恢复 20% HP
+yun heal                # yun 是 exert 的别名
+exert powerup           # 战力爆发：消耗 50 内力，30 秒内攻防提升
+exert dispel poison     # 运功逼毒（需要基本内功）</pre>
+
+<h3>独门绝招</h3>
+<p>各门派独门武功有更强的绝招（在师父房间学得）。学到 Lv.10 后 <code>perform 武功名.招式名</code> 施放。</p>
+
+<h2>🗺 第十章：世界地图导航</h2>
+<p>以下是主要地点的到达路径（从起点广场出发）：</p>
+<table>
+<tr><th>地点</th><th>路径</th><th>NPC</th></tr>
+<tr><td>无名小镇·练武场</td><td class="path">s</td><td>武师</td></tr>
+<tr><td>无名小镇·主街</td><td class="path">n</td><td>药铺老板</td></tr>
+<tr><td>无名小镇·客栈</td><td class="path">e</td><td>王掌柜</td></tr>
+<tr><td>山林·入口</td><td class="path">nnn</td><td>山贼</td></tr>
+<tr><td>山林·深处</td><td class="path">nnnn</td><td>野狼</td></tr>
+<tr><td>山林·断崖</td><td class="path">nnne</td><td>采药人</td></tr>
+<tr><td>山林·洞穴</td><td class="path">nnnnw</td><td>黑熊</td></tr>
+<tr><td>少林寺·大雄宝殿</td><td class="path">nnnesw</td><td>玄慈方丈</td></tr>
+<tr><td>武当山·紫霄宫</td><td class="path">nnneew</td><td>冲虚道长</td></tr>
+<tr><td>丐帮·总舵</td><td class="path">nnnwe</td><td>洪七公</td></tr>
+<tr><td>华山·之巅</td><td class="path">nnnnenn</td><td>岳不群</td></tr>
+<tr><td>峨眉·金顶</td><td class="path">nnnenn</td><td>灭绝师太</td></tr>
+<tr><td>古墓·密室</td><td class="path">nnnnnn</td><td>小龙女</td></tr>
+</table>
+<p style="margin-top:12px">完整 59 房间地图请查看 <code>docs/map.html</code></p>
+
+<h2>📊 第十一章：属性说明</h2>
+<table>
+<tr><th>属性</th><th>英文</th><th>影响</th></tr>
+<tr><td>臂力</td><td>str</td><td>攻击力、装备武器要求</td></tr>
+<tr><td>悟性</td><td>int</td><td>MP 上限、练习效率</td></tr>
+<tr><td>根骨</td><td>con</td><td>HP 上限、防御、内力护体强度</td></tr>
+<tr><td>身法</td><td>dex</td><td>闪避、招架、战斗速度</td></tr>
+</table>
+
+<h2>🏁 快速上手指南（一步到位）</h2>
+<div class="step">
+<pre># 1. 登录 demo 账号
+login demo some-secret
+
+# 2. 学基本功
+learn 基本拳脚 × 10 次
+learn 基本轻功 × 5 次
+learn 基本内功 × 5 次
+
+# 3. 做送信任务升级
+quest 说书人      # 在广场接信
+e                 # 向东去客栈
+quest 王掌柜      # 交任务获得经验
+
+# 4. 分配属性点
+level
+tianfu str 2
+
+# 5. 买装备
+shop
+buy 铁剑
+buy 皮甲
+
+# 6. 去少林拜师
+n n n e s w
+join 少林派
+learn 罗汉拳
+learn 太极拳
+
+# 7. 天下我有！</pre>
+</div>
+
+<p style="text-align:center;color:#888;margin-top:32px">江湖路远，少侠珍重！</p>
+</body>
+</html>

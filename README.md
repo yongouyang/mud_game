@@ -123,7 +123,9 @@ town/inn ← town/inn_upstairs ← town/square → town/mainstreet → town/gate
             (inn rooms)                         (above)
 ```
 
-Full interactive map: `server/src/data/map.html`
+Full interactive map: `docs/map.html`  
+Player guide: `docs/newbie-guide.html`  
+Original MUD reference: `docs/oiuv_reference.md`
 
 ### Schools & Class Bonuses
 
@@ -136,7 +138,7 @@ Full interactive map: `server/src/data/map.html`
 | 峨眉派 | 峨眉金顶 | 灭绝师太 | +3 悟性 | 峨眉剑法 |
 | 古墓派 | 终南山古墓 | 小龙女 | +3 身法 +1 悟性 | 玉女心经, 黯然销魂掌 |
 
-### Skills (20 total)
+### Skills (44 total)
 
 | Type | Skills |
 |---|---|
@@ -149,12 +151,12 @@ Full interactive map: `server/src/data/map.html`
 | Emei | 峨眉剑法(emei-jian) |
 | Gumu | 玉女心经(yunu-xinjing), 黯然销魂掌(anran-xiaohun) |
 
-## Testing (130 tests)
+## Testing (175 tests)
 
 ```bash
-npm test                    # All 130 tests (6 UI + 124 server)
+npm test                    # All tests (Vitest unit + server + Playwright E2E)
 cd server && npx vitest     # Server only
-npm run test:e2e            # Playwright UI E2E (6 tests)
+npm run test:e2e            # Playwright UI E2E (33 tests)
 ```
 
 ### Test Coverage
@@ -163,13 +165,19 @@ npm run test:e2e            # Playwright UI E2E (6 tests)
 |---|---|---|
 | `Terminal.test.tsx` | 6 | UI rendering + input |
 | `CommandRouter.test.ts` | 51 | Commands, creation, movement, combat, skills |
-| `CommandRouter.classic.test.ts` | 6 | Perform, exert, conditions, class bonuses |
-| `CommandRouter.gap.test.ts` | 0 | (cleaned) |
+| `CommandRouter.classic.test.ts` | 6 | Perform, exert, class bonuses |
+| `CommandRouter.conditions.test.ts` | 4 | Conditions, antidote, dispel |
+| `CommandRouter.progression.test.ts` | 8 | Leveling, attribute points, practice, dazuo |
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `SkillSystem.test.ts` | 15 | Learning, prerequisites, school lock |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
+| `ConditionSystem.test.ts` | 8 | Condition apply/tick/dispel/cure |
+| `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
+| `time.test.ts` | 8 | SystemClock + Scheduler |
 | `index.e2e.test.ts` | 20 | Full user journeys (auth, map, schools, combat) |
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |
+| `leveling.spec.ts` (Playwright) | 3 | Leveling + attribute points |
+| `conditions.spec.ts` (Playwright) | 3 | Wolf poison + antidote |
 
 ## Production
 
@@ -191,13 +199,17 @@ mud_game/
 ├── tests/
 │   ├── unit/Terminal.test.tsx
 │   └── e2e/game.spec.ts      # Playwright E2E
+├── docs/
+│   ├── map.html               # Interactive world map (auto-generated)
+│   ├── newbie-guide.html      # Player guide
+│   └── oiuv_reference.md      # Original oiuv_mud reference
 ├── server/
 │   ├── src/
-│   │   ├── index.ts           # Express + Socket.io + NPC registration
+│   │   ├── index.ts           # Express + Socket.io + game loop
 │   │   ├── engine/CommandRouter.ts   # All game logic + commands
-│   │   ├── systems/           # 7 systems (skills, combat, items, NPCs, etc.)
-│   │   ├── models/            # 6 data models
-│   │   ├── data/              # JSON data + map.html
+│   │   ├── systems/           # Game systems (skills, combat, items, NPCs, levels, conditions, etc.)
+│   │   ├── models/            # Data models
+│   │   ├── data/              # JSON data files
 │   │   └── utils.ts
 │   └── vitest.config.ts
 ├── terraform/main.tf
