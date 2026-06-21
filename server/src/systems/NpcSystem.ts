@@ -1,6 +1,7 @@
 import { Player } from '../models/Player.js';
 import { NpcDef } from '../models/Npc.js';
 import { SkillSystem } from './SkillSystem.js';
+import npcsData from '../data/npcs.json' assert { type: 'json' };
 
 export interface NpcInstance {
   def: NpcDef;
@@ -14,7 +15,11 @@ export class NpcSystem {
   private npcs = new Map<string, NpcInstance>();
   private defs = new Map<string, NpcDef>();
 
-  constructor(private skillSystem: SkillSystem) {}
+  constructor(private skillSystem: SkillSystem) {
+    for (const def of npcsData as NpcDef[]) {
+      this.register(def);
+    }
+  }
 
   register(def: NpcDef): void {
     this.defs.set(def.id, def);
@@ -34,7 +39,7 @@ export class NpcSystem {
   getNpcsInRoom(roomId: string): NpcInstance[] {
     const result: NpcInstance[] = [];
     for (const npc of this.npcs.values()) {
-      if (npc.def.roomId === roomId && npc.state === 'idle') {
+      if (npc.def.roomId === roomId && npc.state === 'idle' && npc.hp > 0) {
         result.push(npc);
       }
     }
@@ -94,4 +99,18 @@ export class NpcSystem {
     npc.targetPlayerId = null;
   }
 
+  /**
+   * Schedule NPC respawn after death. Returns the scheduled timeout handle.
+   * If the NPC has no respawnSeconds configured, returns undefined.
+   */
+  scheduleRespawn(npcId: string, callback?: () => void): ReturnType<typeof setTimeout> | undefined {
+    const npc = this.npcs.get(npcId);
+    if (!npc) return undefined;
+    const seconds = npc.def.respawnSeconds ?? 0;
+    if (seconds <= 0) return undefined;
+    return setTimeout(() => {
+      this.respawn(npcId);
+      if (callback) callback();
+    }, seconds * 1000);
+  }
 }

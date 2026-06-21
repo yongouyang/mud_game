@@ -1,12 +1,24 @@
 export type ItemType = 'weapon' | 'armor' | 'medicine' | 'misc';
 
+export interface ItemEffect {
+  hp?: number;           // restore HP
+  mp?: number;           // restore MP
+  cure?: string;         // condition id to remove, e.g. 'poison'
+  str?: number;          // permanent attribute boost
+  int?: number;
+  con?: number;
+  dex?: number;
+}
+
 export interface ItemDef {
   id: string;
   name: string;
   type: ItemType;
   description: string;
   attrBonus?: Partial<Record<string, number>>; // e.g. { str: 5 } for a weapon
-  hpRestore?: number;  // for medicine
+  effect?: ItemEffect;   // for medicine / consumables
+  /** @deprecated use effect.hp instead */
+  hpRestore?: number;
 }
 
 export interface InventoryItem {

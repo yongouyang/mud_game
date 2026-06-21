@@ -26,6 +26,21 @@ export class CommandRouter {
     private schools: SchoolSystem,
   ) {}
 
+  /** Return player attributes including equipment bonuses. */
+  private effectiveAttributes(player: Player): { str: number; int: number; con: number; dex: number } {
+    return this.items.getEffectiveAttributes(player);
+  }
+
+  /** Return the player's best strike, boosted if powerup is active. */
+  private poweredBestStrike(player: Player): { name: string; damage: number } | null {
+    const strike = this.skills.getBestStrike(player);
+    if (!strike) return null;
+    if (player.powerupExpiry && player.powerupExpiry > Date.now()) {
+      return { name: strike.name, damage: Math.round(strike.damage * 1.3) };
+    }
+    return strike;
+  }
+
   handle(input: string, playerId: string): string {
     const trimmed = input.trim();
 
@@ -158,7 +173,8 @@ export class CommandRouter {
       '  schools         门派列表',   '  join <门派>     加入门派',
       '  ask <NPC>       向NPC打听',  '  who             在线玩家',
       '  perform / pfm   施展绝招',   '  exert / yun    内功运用',
-      '  buy <物品>      购买物品',   '  help            显示帮助',
+      '  buy <物品>      购买物品',   '  shop / list     商店货物',
+      '  quest <NPC>     接取/完成任务', '  help            显示帮助',
       '',
     ].join('\n') + '\n';
   }
@@ -177,11 +193,12 @@ export class CommandRouter {
       targetNpc.state = 'fighting';
       targetNpc.targetPlayerId = player.id;
       // First attack is performed by auto-tick; just show combat start
+      const effAttr = this.effectiveAttributes(player);
       const pSkills = {
         parryLv: this.skills.getParryLevel(player),
         dodgeLv: this.skills.getDodgeLevel(player),
         forceLv: this.skills.getForceLevel(player),
-        bestStrike: this.skills.getBestStrike(player),
+        bestStrike: this.poweredBestStrike(player),
       };
       const npcSkills = {
         parryLv: targetNpc.def.attributes.str,
@@ -198,7 +215,8 @@ export class CommandRouter {
         attributes: targetNpc.def.attributes,
         skills: npcSkills,
       };
-      const result = this.combat.executeRound(player, pSkills, enemyState, npcSkills, false);
+      const combatPlayer = { ...player, attributes: effAttr };
+      const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, false);
       if (result.defenderDead) {
         player.state = 'playing'; player.targetEnemy = null;
         targetNpc.state = 'idle'; targetNpc.targetPlayerId = null;
@@ -223,19 +241,29 @@ export class CommandRouter {
     player.targetEnemy = target.id;
     target.state = 'fighting';
     target.targetEnemy = player.id;
+    const effAttr = this.effectiveAttributes(player);
+    const targetEffAttr = this.effectiveAttributes(target);
     const pSkills = {
       parryLv: this.skills.getParryLevel(player),
       dodgeLv: this.skills.getDodgeLevel(player),
       forceLv: this.skills.getForceLevel(player),
-      bestStrike: this.skills.getBestStrike(player),
+      bestStrike: this.poweredBestStrike(player),
     };
     const tSkills = {
       parryLv: this.skills.getParryLevel(target),
       dodgeLv: this.skills.getDodgeLevel(target),
       forceLv: this.skills.getForceLevel(target),
-      bestStrike: this.skills.getBestStrike(target),
+      bestStrike: this.poweredBestStrike(target),
     };
-    const result = this.combat.executeRound(player, pSkills, target, tSkills, false);
+    const combatPlayer = { ...player, attributes: effAttr };
+    const combatTarget = {
+      ...target,
+      attributes: targetEffAttr,
+      skills: tSkills,
+      get hp() { return target.hp; },
+      set hp(v: number) { target.hp = v; },
+    };
+    const result = this.combat.executeRound(combatPlayer, pSkills, combatTarget, false);
     if (result.defenderDead || result.attackerDead) {
       player.state = 'playing'; player.targetEnemy = null;
       target.state = 'playing'; target.targetEnemy = null;
@@ -263,6 +291,8 @@ export class CommandRouter {
   }
 
   private doCombatRound(player: Player, targetId: string, isExtraHit = false): string {
+    const effAttr = this.effectiveAttributes(player);
+    const combatPlayer = { ...player, attributes: effAttr };
     if (targetId.startsWith('npc:')) {
       const npc = this.npcs.getNpc(targetId.slice(4));
       if (!npc || npc.hp <= 0) {
@@ -274,7 +304,7 @@ export class CommandRouter {
         parryLv: this.skills.getParryLevel(player),
         dodgeLv: this.skills.getDodgeLevel(player),
         forceLv: this.skills.getForceLevel(player),
-        bestStrike: this.skills.getBestStrike(player),
+        bestStrike: this.poweredBestStrike(player),
       };
       const npcSkills = {
         parryLv: npc.def.attributes.str,
@@ -291,7 +321,7 @@ export class CommandRouter {
         attributes: npc.def.attributes,
         skills: npcSkills,
       };
-      const result = this.combat.executeRound(player, pSkills, enemyState, npcSkills, isExtraHit);
+      const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, isExtraHit);
       if (result.defenderDead) {
         player.state = 'playing'; player.targetEnemy = null;
         npc.state = 'idle'; npc.targetPlayerId = null;
@@ -313,19 +343,27 @@ export class CommandRouter {
         if (target) { target.state = 'playing'; target.targetEnemy = null; }
         return '\n  敌人已倒下，战斗结束。\n';
       }
+      const targetEffAttr = this.effectiveAttributes(target);
       const pSkills = {
         parryLv: this.skills.getParryLevel(player),
         dodgeLv: this.skills.getDodgeLevel(player),
         forceLv: this.skills.getForceLevel(player),
-        bestStrike: this.skills.getBestStrike(player),
+        bestStrike: this.poweredBestStrike(player),
       };
       const tSkills = {
         parryLv: this.skills.getParryLevel(target),
         dodgeLv: this.skills.getDodgeLevel(target),
         forceLv: this.skills.getForceLevel(target),
-        bestStrike: this.skills.getBestStrike(target),
+        bestStrike: this.poweredBestStrike(target),
       };
-      const result = this.combat.executeRound(player, pSkills, target, tSkills, isExtraHit);
+      const combatTarget = {
+        ...target,
+        attributes: targetEffAttr,
+        skills: tSkills,
+        get hp() { return target.hp; },
+        set hp(v: number) { target.hp = v; },
+      };
+      const result = this.combat.executeRound(combatPlayer, pSkills, combatTarget, isExtraHit);
       if (result.defenderDead || result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
@@ -350,6 +388,8 @@ export class CommandRouter {
     const gold = 10 + Math.floor(Math.random() * 20);
     this.items.addItem(player, 'silver', gold);
     msg += `  从尸体上搜出 ${gold} 两银子。\n`;
+    // Schedule respawn if configured.
+    this.npcs.scheduleRespawn(npc.def.id);
     return msg;
   }
 
@@ -372,7 +412,13 @@ export class CommandRouter {
     if (cmd === 'hit' || cmd === 'kill') {
       return this.doCombatRound(player, player.targetEnemy!, true);
     }
-    return '\n  战斗中可使用：hit（抢攻）、flee（逃跑）、hp（查看状态）\n';
+    if (cmd === 'perform' || cmd === 'pfm') {
+      return this.handlePerform(player, _args);
+    }
+    if (cmd === 'exert' || cmd === 'yun') {
+      return this.handleExert(player, _args);
+    }
+    return '\n  战斗中可使用：hit（抢攻）、flee（逃跑）、hp（查看状态）、perform（绝招）、exert（运功）\n';
   }
 
   // ── Items ────────────────────────────────────────────────
@@ -386,8 +432,12 @@ export class CommandRouter {
     if (roomItems && roomItems.includes(name)) {
       const def = this.items.findDefByName(name);
       if (def) {
-        this.items.addItem(player, def.id);
-        return `\n  你捡起了${name}。\n`;
+        const removed = this.map.removeItemFromRoom(player.currentRoom, name);
+        if (removed) {
+          this.items.addItem(player, def.id);
+          this.map.scheduleItemRespawn(player.currentRoom, name);
+          return `\n  你捡起了${name}。\n`;
+        }
       }
     }
 
@@ -411,10 +461,12 @@ export class CommandRouter {
     // Find item by Chinese name
     for (const inv of player.inventory || []) {
       const def = this.items.getDef(inv.itemId);
-      if (def && def.name === name && def.type === 'medicine' && def.hpRestore) {
+      if (!def || def.name !== name) continue;
+      if (def.type !== 'medicine' && def.type !== 'misc') continue;
+      const result = this.items.applyConsumable(player, def);
+      if (result) {
         this.items.removeItem(player, inv.itemId);
-        player.hp = Math.min(player.maxHp, player.hp + def.hpRestore);
-        return `\n  你服下了${name}，恢复了 ${def.hpRestore} 点气血。\n  当前气血：${player.hp}/${player.maxHp}\n`;
+        return `\n  ${result}\n`;
       }
     }
     return `\n  你没有可以使用的"${name}"。\n`;
@@ -461,16 +513,17 @@ export class CommandRouter {
   }
 
   // ── Shop ─────────────────────────────────────────────────
-  private handleShop(player: Player): string {
+  private handleShop(_player: Player): string {
     return [
       '',
       '  ─── 商店 ───',
       '',
-      '  金疮药(jinchuang-yao)  — 20 两 (恢复50HP)',
-      '  人参丸(renshen-wan)     — 50 两 (恢复100HP)',
-      '  铁剑(iron-sword)        — 80 两 (攻击+10)',
-      '  皮甲(leather-armor)     — 60 两 (防御+5)',
-      '  木剑(wooden-sword)      — 30 两 (攻击+3)',
+      '  金疮药(jinchuang-yao)  — 20 两 (恢复 50 HP)',
+      '  人参丸(renshen-wan)     — 50 两 (恢复 100 HP)',
+      '  内力丹(neili-dan)       — 30 两 (恢复 50 MP)',
+      '  铁剑(iron-sword)        — 80 两 (臂力+8)',
+      '  皮甲(leather-armor)     — 60 两 (根骨+5)',
+      '  木剑(wooden-sword)      — 30 两 (臂力+3)',
       '',
       '  用法：buy <物品名>',
       '',
@@ -485,24 +538,51 @@ export class CommandRouter {
     const npc = roomNpcs.find((n) => n.def.name === name || n.def.id === name);
     if (!npc) return `\n  这里没有叫${name}的人。\n`;
 
-    // Completing a quest?
+    // Special delivery quest: 说书人 in town/square -> 王掌柜 in town/inn
+    if (npc.def.id === 'storyteller') {
+      if (player.quest) {
+        return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
+      }
+      const exp = 20 + Math.floor(Math.random() * 10) + Math.floor((player.exp || 0) / 10000);
+      const pot = 10 + Math.floor(Math.random() * 5);
+      player.quest = { type: 'letter', target: '王掌柜', exp, pot, itemId: 'letter' };
+      this.items.addItem(player, 'letter');
+      return `\n  ${npc.def.name}低声道：「少侠，请将这封信交给客栈的王掌柜，切记不可让旁人看见。」\n  你获得了一封信件。\n`;
+    }
+
+    // Complete special delivery quest at 王掌柜
+    if (player.quest && player.quest.type === 'letter' && npc.def.id === 'wang') {
+      if (!this.items.hasItem(player, 'letter')) {
+        return `\n  ${npc.def.name}疑惑地看着你：「信呢？说书人没把信交给你吗？」\n`;
+      }
+      this.items.removeItem(player, 'letter');
+      const exp = player.quest.exp;
+      const pot = player.quest.pot;
+      player.exp = (player.exp || 0) + exp;
+      player.pot = (player.pot || 0) + pot;
+      player.quest = null;
+      return `\n  ${npc.def.name}接过信件，脸色微变，随即收起。\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+    }
+
+    // Generic self-completing quest for any other NPC (backward-compatible behavior)
     if (player.quest) {
-      if (player.quest.type === 'letter') {
+      // If the active quest was given by this same NPC, complete it.
+      if (player.quest.target === npc.def.name) {
         const exp = player.quest.exp;
         const pot = player.quest.pot;
         player.exp = (player.exp || 0) + exp;
         player.pot = (player.pot || 0) + pot;
         player.quest = null;
-        return `\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+        return `\n  ${npc.def.name}点了点头：「做得很好！」\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
       }
       return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
     }
 
-    // Accept new quest
+    // Accept a generic quest from this NPC.
     const exp = 10 + Math.floor(Math.random() * 10) + Math.floor((player.exp || 0) / 10000);
     const pot = 5 + Math.floor(Math.random() * 5);
-    player.quest = { type: 'letter', target: npc.def.name, exp, pot };
-    return `\n  ${npc.def.name}对你说：「少侠，请帮我把这封信送到目的地！」（quest 再来找我就算完成）\n`;
+    player.quest = { type: 'task', target: npc.def.name, exp, pot };
+    return `\n  ${npc.def.name}对你说：「少侠，请帮我跑个腿，完事后再来找我。」\n`;
   }
 
   // ── Perform (绝招) ──────────────────────────────────────
@@ -514,10 +594,46 @@ export class CommandRouter {
     if (!def) return `\n  你还没有学会${skillName || '该技能'}。\n`;
     const level = this.skills.getSkillLevel(player, def.id);
     if (level < 10) return `\n  你的${def.name}等级不够施展绝招（需Lv.10）。\n`;
-    const dmg = def.damageBase * 3 + def.damageScale * level * 2;
-    player.mp = Math.max(0, player.mp - 20);
+    if (player.state !== 'fighting' || !player.targetEnemy) {
+      return '\n  你必须在战斗中才能施展绝招。\n';
+    }
     if ((player.mp || 0) < 20) return '\n  内力不足！施展绝招需要 20 点内力。\n';
-    return `\n  你大喝一声，使出了「${def.name}」绝招！造成 ${Math.round(dmg)} 点伤害。\n`;
+    player.mp -= 20;
+    const powerupMult = player.powerupExpiry && player.powerupExpiry > Date.now() ? 1.3 : 1;
+    const baseDmg = def.damageBase * 3 + def.damageScale * level * 2;
+    const dmg = Math.round(baseDmg * powerupMult);
+
+    const targetId = player.targetEnemy;
+    if (targetId.startsWith('npc:')) {
+      const npc = this.npcs.getNpc(targetId.slice(4));
+      if (!npc || npc.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        if (npc) { npc.state = 'idle'; npc.targetPlayerId = null; }
+        return this.handleNpcDeath(player, npc);
+      }
+      npc.hp = Math.max(0, npc.hp - dmg);
+      let msg = `\n  你大喝一声，使出了「${def.name}」绝招！对 ${npc.def.name} 造成 ${dmg} 点伤害。\n`;
+      if (npc.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        npc.state = 'idle'; npc.targetPlayerId = null;
+        msg += this.handleNpcDeath(player, npc);
+      }
+      return msg;
+    } else {
+      const target = this.players.getPlayer(targetId);
+      if (!target || target.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        if (target) { target.state = 'playing'; target.targetEnemy = null; }
+        return '\n  敌人已倒下，战斗结束。\n';
+      }
+      target.hp = Math.max(0, target.hp - dmg);
+      let msg = `\n  你大喝一声，使出了「${def.name}」绝招！对 ${target.name} 造成 ${dmg} 点伤害。\n`;
+      if (target.hp <= 0) {
+        player.state = 'playing'; player.targetEnemy = null;
+        target.state = 'playing'; target.targetEnemy = null;
+      }
+      return msg;
+    }
   }
 
   // ── Exert (内功运用) ─────────────────────────────────────
@@ -533,7 +649,9 @@ export class CommandRouter {
     if (action === 'powerup') {
       if ((player.mp || 0) < 50) return '\n  内力不足！需要 50 点内力。\n';
       player.mp -= 50;
-      return '\n  你深吸一口气，内力充盈全身！短时间内战斗力大幅提升。\n';
+      const durationMs = 30000;
+      player.powerupExpiry = Date.now() + durationMs;
+      return '\n  你深吸一口气，内力充盈全身！30 秒内战斗力大幅提升。\n';
     }
     return `\n  没有"${action}"这个内功运用。可用：heal, powerup\n`;
   }
@@ -544,12 +662,25 @@ export class CommandRouter {
     if (!name) return '\n  你想买什么？用法：buy <物品名>\n';
     const def = this.items.findDefByName(name);
     if (!def) return `\n  没有"${name}"这个物品。\n`;
-    const price = def.id === 'jinchuang-yao' ? 20 : def.id === 'wooden-sword' ? 30 : def.id === 'iron-sword' ? 80 : 50;
+    const price = this.getShopPrice(def.id);
     const silver = this.items.hasItem(player, 'silver', price);
     if (!silver) return `\n  银两不足！${def.name} 售价 ${price} 两。\n`;
     this.items.removeItem(player, 'silver', price);
     this.items.addItem(player, def.id);
     return `\n  你花 ${price} 两银子买了${def.name}。\n`;
+  }
+
+  private getShopPrice(itemId: string): number {
+    switch (itemId) {
+      case 'jinchuang-yao': return 20;
+      case 'renshen-wan': return 50;
+      case 'neili-dan': return 30;
+      case 'wooden-sword': return 30;
+      case 'iron-sword': return 80;
+      case 'leather-armor': return 60;
+      case 'cloth-armor': return 20;
+      default: return 50;
+    }
   }
 
   // ── NPC Interaction ──────────────────────────────────────

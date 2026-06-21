@@ -28,7 +28,15 @@ export interface Player {
   skills: PlayerSkill[];
   conditions: string[];
   schoolId?: string;
-  quest: { type: string; target: string; exp: number; pot: number } | null;
+  quest: { type: string; target: string; exp: number; pot: number; itemId?: string } | null;
+  powerupExpiry?: number;
+}
+
+export function recalcPlayerStats(player: Player): void {
+  player.maxHp = 80 + player.attributes.con * 10;
+  player.maxMp = 50 + player.attributes.int * 8;
+  player.hp = Math.min(player.hp, player.maxHp);
+  player.mp = Math.min(player.mp, player.maxMp);
 }
 
 export function createPlayer(id: string, name: string, attrs: PlayerAttributes): Player {
@@ -53,6 +61,7 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     conditions: [],
     schoolId: undefined,
     quest: null,
+    powerupExpiry: undefined,
   };
 }
 

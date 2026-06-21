@@ -32,6 +32,10 @@ export class MapSystem {
 
   constructor() {
     for (const room of mapsData.rooms as Room[]) {
+      // Seed current items from initialItems if not already set.
+      if (room.initialItems && (!room.items || room.items.length === 0)) {
+        room.items = [...room.initialItems];
+      }
       this.rooms.set(room.id, room);
     }
   }
@@ -87,5 +91,30 @@ export class MapSystem {
       return { success: false, message: `\n  这条路似乎走不通……\n` };
     }
     return { success: true, newRoomId: exit.roomId, message: this.formatRoom(newRoom) };
+  }
+
+  /** Remove an item from a room by its displayed name. Returns true if removed. */
+  removeItemFromRoom(roomId: string, itemName: string): boolean {
+    const room = this.rooms.get(roomId);
+    if (!room || !room.items) return false;
+    const idx = room.items.indexOf(itemName);
+    if (idx === -1) return false;
+    room.items.splice(idx, 1);
+    return true;
+  }
+
+  /** Schedule a single item to respawn in its room after the room's configured interval. */
+  scheduleItemRespawn(roomId: string, itemName: string, callback?: () => void): ReturnType<typeof setTimeout> | undefined {
+    const room = this.rooms.get(roomId);
+    if (!room) return undefined;
+    const seconds = room.itemRespawnSeconds ?? 60;
+    if (seconds <= 0) return undefined;
+    return setTimeout(() => {
+      if (!room.items) room.items = [];
+      if (!room.items.includes(itemName)) {
+        room.items.push(itemName);
+      }
+      if (callback) callback();
+    }, seconds * 1000);
   }
 }

@@ -1,4 +1,4 @@
-import { Player } from '../models/Player.js';
+import { Player, recalcPlayerStats } from '../models/Player.js';
 import { ItemDef, InventoryItem, ItemType } from '../models/Item.js';
 import itemsData from '../data/items.json' assert { type: 'json' };
 
@@ -56,11 +56,75 @@ export class ItemSystem {
       const def = this.defs.get(itemId);
       if (def?.attrBonus) {
         for (const [key, val] of Object.entries(def.attrBonus)) {
-          bonus[key] = (bonus[key] || 0) + val;
+          if (val !== undefined) {
+            bonus[key] = (bonus[key] || 0) + val;
+          }
         }
       }
     }
     return bonus;
+  }
+
+  /**
+   * Compute player attributes including equipment bonuses.
+   * Important: permanent attribute pills should already be applied to player.attributes.
+   */
+  getEffectiveAttributes(player: Player): { str: number; int: number; con: number; dex: number } {
+    const bonus = this.getEquipBonus(player);
+    return {
+      str: player.attributes.str + (bonus.str || 0),
+      int: player.attributes.int + (bonus.int || 0),
+      con: player.attributes.con + (bonus.con || 0),
+      dex: player.attributes.dex + (bonus.dex || 0),
+    };
+  }
+
+  /**
+   * Apply a medicine/consumable effect. Returns a user-facing result message,
+   * or null if the item is not a usable consumable.
+   */
+  applyConsumable(player: Player, def: ItemDef): string | null {
+    const effect = def.effect || (def.hpRestore ? { hp: def.hpRestore } : undefined);
+    if (!effect) return null;
+
+    const parts: string[] = [];
+
+    if (effect.hp) {
+      const before = player.hp;
+      player.hp = Math.min(player.maxHp, player.hp + effect.hp);
+      const healed = player.hp - before;
+      if (healed > 0) parts.push(`恢复了 ${healed} 点气血`);
+    }
+
+    if (effect.mp) {
+      const before = player.mp;
+      player.mp = Math.min(player.maxMp, player.mp + effect.mp);
+      const restored = player.mp - before;
+      if (restored > 0) parts.push(`恢复了 ${restored} 点内力`);
+    }
+
+    if (effect.cure) {
+      const idx = player.conditions?.indexOf(effect.cure) ?? -1;
+      if (idx !== -1) {
+        player.conditions.splice(idx, 1);
+        parts.push(`解除了 ${effect.cure} 状态`);
+      } else {
+        parts.push(`你并没有 ${effect.cure} 状态`);
+      }
+    }
+
+    const attrKeys: Array<keyof typeof effect & ('str' | 'int' | 'con' | 'dex')> = ['str', 'int', 'con', 'dex'];
+    for (const key of attrKeys) {
+      const val = effect[key];
+      if (val && val > 0) {
+        player.attributes[key] += val;
+        recalcPlayerStats(player);
+        parts.push(`${key === 'str' ? '臂力' : key === 'int' ? '悟性' : key === 'con' ? '根骨' : '身法'}永久 +${val}`);
+      }
+    }
+
+    if (parts.length === 0) return null;
+    return `你服下了${def.name}，` + parts.join('，') + `。\n  当前气血：${player.hp}/${player.maxHp}，内力：${player.mp}/${player.maxMp}`;
   }
 
   formatInventory(player: Player): string {

@@ -62,10 +62,11 @@
     },
     {
       "id": "town/training",
-      "items": [
+      "initialItems": [
         "木剑",
         "金疮药"
       ],
+      "itemRespawnSeconds": 60,
       "name": "无名小镇·练武场",
       "description": "一片空旷的练武场。地面铺着青石板，四周立着木人桩。\n几个年轻的武者在练习基本功。北边通向小镇广场。",
       "exits": [

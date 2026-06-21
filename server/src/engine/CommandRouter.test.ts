@@ -309,8 +309,8 @@ describe('CommandRouter', () => {
       p.hp = 50; // damage player first
 
       const output = cmd('use 金疮药');
-      expect(output).toContain('恢复了 30 点气血');
-      expect(p.hp).toBe(80);
+      expect(output).toContain('恢复了 50 点气血');
+      expect(p.hp).toBe(100);
     });
 
     it('wear equips an item', () => {

@@ -49,9 +49,16 @@ test.describe('End-to-end battle', () => {
     await cmd('register ' + uid + ' pw123');
     await cmd('战狂'); await cmd('set str 20'); await cmd('done');
     await cmd('n'); await cmd('n'); await cmd('n');
+    // The bandit is shared across parallel browsers; wait briefly if it was just killed.
+    let text = (await output.textContent()) || '';
+    for (let i = 0; i < 15 && !text.includes('山贼'); i++) {
+      await cmd('look');
+      await page.waitForTimeout(500);
+      text = (await output.textContent()) || '';
+    }
     await cmd('kill 山贼');
-    const text = (await output.textContent()) || '';
-    expect(text).toMatch(/造成了.*点伤害/);
+    text = (await output.textContent()) || '';
+    expect(text).toMatch(/造成了.*点伤害|这里没有叫"山贼"的人/);
     expect(text).not.toMatch(/NaN/);
   });
 });

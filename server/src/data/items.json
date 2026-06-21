@@ -39,15 +39,19 @@
     "id": "jinchuang-yao",
     "name": "金疮药",
     "type": "medicine",
-    "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 30 点气血。",
-    "hpRestore": 30
+    "description": "江湖郎中配制的金疮药，可治疗外伤。恢复 50 点气血。",
+    "effect": {
+      "hp": 50
+    }
   },
   {
     "id": "renshen-wan",
     "name": "人参丸",
     "type": "medicine",
-    "description": "以长白山人参炼制的药丸，大补元气。恢复 80 点气血。",
-    "hpRestore": 80
+    "description": "以长白山人参炼制的药丸，大补元气。恢复 100 点气血。",
+    "effect": {
+      "hp": 100
+    }
   },
   {
     "id": "silver",
@@ -59,7 +63,7 @@
     "id": "shengji-wan",
     "name": "生肌丸",
     "type": "medicine",
-    "description": "生肌活血的疗伤圣药。",
+    "description": "生肌活血的疗伤圣药。恢复 200 点气血。",
     "effect": {
       "hp": 200
     }
@@ -68,7 +72,7 @@
     "id": "neili-dan",
     "name": "内力丹",
     "type": "medicine",
-    "description": "恢复内力的丹药。",
+    "description": "恢复内力的丹药，可恢复 50 点内力。",
     "effect": {
       "mp": 50
     }
@@ -117,5 +121,11 @@
     "effect": {
       "int": 1
     }
+  },
+  {
+    "id": "letter",
+    "name": "信件",
+    "type": "misc",
+    "description": "一封封口严密的信件，似乎是某位NPC托你转交的。"
   }
 ]

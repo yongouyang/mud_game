@@ -15,6 +15,8 @@ export class PlayerManager {
       maxHp: 0,
       mp: 0,
       maxMp: 0,
+      exp: 0,
+      pot: 0,
       currentRoom: 'town/square',
       state: 'creating',
       targetEnemy: null,
@@ -24,6 +26,7 @@ export class PlayerManager {
       inventory: [],
       equipped: [],
       skills: [],
+      powerupExpiry: undefined,
     });
   }
 
@@ -81,6 +84,12 @@ export class PlayerManager {
     const a = player.attributes;
     const hpBar = bar(player.hp, player.maxHp, 10);
     const mpBar = bar(player.mp, player.maxMp, 10);
+    const powerupLeft = player.powerupExpiry && player.powerupExpiry > Date.now()
+      ? Math.ceil((player.powerupExpiry - Date.now()) / 1000)
+      : 0;
+    const extras: string[] = [];
+    if (powerupLeft > 0) extras.push(`战力提升（剩余 ${powerupLeft} 秒）`);
+    if (player.conditions && player.conditions.length > 0) extras.push(`状态：${player.conditions.join('、')}`);
     return [
       '',
       `  ─── ${player.name} ───`,
@@ -91,6 +100,7 @@ export class PlayerManager {
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
       '',
       `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}`,
+      extras.length > 0 ? `  ${extras.join('    ')}` : '',
       '',
     ].join('\n') + '\n';
   }
