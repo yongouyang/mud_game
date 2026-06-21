@@ -47,4 +47,41 @@ describe('NpcSystem', () => {
     expect(drops.some((d) => d.itemId === 'black-wind-blade')).toBe(true);
     expect(drops.some((d) => d.itemId === 'boss-token')).toBe(true);
   });
+
+  it('computes NPC damage based on attributes and attack skills', () => {
+    const npc = system.getNpc('bandit');
+    expect(npc).toBeTruthy();
+    const dmg = system.getNpcDamage(npc!);
+    expect(dmg).toBeGreaterThan(0);
+    const best = system.getBestNpcStrike(npc!);
+    expect(best).toBeTruthy();
+    expect(best!.damage).toBeGreaterThan(0);
+  });
+
+  it('returns dialogue or silence', () => {
+    const npc = system.getNpc('storyteller');
+    expect(npc).toBeTruthy();
+    const text = system.getDialogue(npc!.def.id);
+    expect(typeof text).toBe('string');
+    expect(text.length).toBeGreaterThan(0);
+    expect(system.getDialogue('nonexistent-npc')).toContain('沉默不语');
+  });
+
+  it('respawns an NPC and schedules respawn without scheduler', () => {
+    const npc = system.getNpc('bandit')!;
+    npc.hp = 0;
+    npc.state = 'dead';
+    system.respawn(npc.def.id);
+    expect(npc.hp).toBe(npc.maxHp);
+    expect(npc.state).toBe('idle');
+
+    const cancel = system.scheduleRespawn(npc.def.id);
+    expect(cancel).toBeDefined();
+    cancel!();
+  });
+
+  it('caps formatted NPC room listing', () => {
+    const formatted = system.formatNpcsInRoom('shaolin/hall');
+    expect(formatted).toContain('……还有');
+  });
 });

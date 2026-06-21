@@ -98,4 +98,38 @@ describe('ConditionSystem', () => {
     }
     expect(system.hasCondition(player, 'poison')).toBe(false);
   });
+
+  it('returns null for unknown condition id', () => {
+    expect(system.applyCondition(player, 'not-real', 1)).toBeNull();
+    expect(system.cureByItem(player, 'not-real')).toBeNull();
+    expect(system.dispelCondition(player, 'not-real', 100)).toBeNull();
+  });
+
+  it('getCondition and removeCondition work', () => {
+    expect(system.getCondition(player, 'poison')).toBeUndefined();
+    expect(system.removeCondition(player, 'poison')).toBe(false);
+    system.applyCondition(player, 'poison', 2);
+    expect(system.getCondition(player, 'poison')).toBeDefined();
+    expect(system.removeCondition(player, 'poison')).toBe(true);
+    expect(system.hasCondition(player, 'poison')).toBe(false);
+  });
+
+  it('ticks mp damage conditions', () => {
+    system.applyCondition(player, 'flower_poison', 2);
+    const beforeMp = player.mp;
+    const result = system.tick(player, 0);
+    expect(result.damageMp).toBeGreaterThan(0);
+    expect(player.mp).toBeLessThan(beforeMp);
+  });
+
+  it('reports partial dispel progress on failure', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(1); // force failure
+    system.applyCondition(player, 'poison', 1);
+    player.mp = 100;
+    const cond = system.getCondition(player, 'poison')!;
+    const beforeRemain = cond.remain;
+    const msg = system.dispelCondition(player, 'poison', 5);
+    expect(msg).toContain('压制');
+    expect(cond.remain).toBeLessThan(beforeRemain);
+  });
 });
