@@ -37,12 +37,6 @@ test.describe('MUD Game', () => {
   });
 });
 
-test.describe('End-to-end battle', () => {
-  test('full battle: kill bandit, verify damage and rewards', async ({ page }) => {
-    test.setTimeout(60000);
-    await page.goto('/');
-    const input = page.locator('input[placeholder="输入命令..."]');
-    const sendBtn = page.getByRole('button', { name: '发送' });
     const output = page.locator('#root');
 
     async function cmd(text: string) {
@@ -91,6 +85,45 @@ test.describe('End-to-end battle', () => {
       expect(finalText).toMatch(/获得了.*经验/);
       expect(finalText).toMatch(/潜能/);
       expect(finalText).toMatch(/银子/);
+    }
+  });
+});
+test.describe('End-to-end battle', () => {
+  test('battle start shows damage and no NaN', async ({ page }) => {
+    test.setTimeout(30000);
+    await page.goto('/');
+    const input = page.locator('input[placeholder="输入命令..."]');
+    const sendBtn = page.getByRole('button', { name: '发送' });
+    const output = page.locator('#root');
+
+    async function cmd(text: string) {
+      await input.fill(text);
+      await sendBtn.click();
+      await page.waitForTimeout(200);
+    }
+
+    const uid = 'pw' + Date.now();
+    await cmd('register ' + uid + ' pw123');
+    await cmd('战狂');
+    await cmd('set str 20');
+    await cmd('done');
+    await expect(output).toContainText('角色创建成功');
+
+    await cmd('n'); await cmd('n'); await cmd('n');
+    await expect(output).toContainText('山林·入口');
+
+    await cmd('kill 山贼');
+
+    const text = (await output.textContent()) || '';
+    expect(text).toMatch(/造成了.*点伤害/);
+    expect(text).not.toMatch(/NaN/);
+
+    const damages = text.match(/造成了 (\d+) 点伤害/g) || [];
+    expect(damages.length).toBeGreaterThanOrEqual(1);
+    for (const d of damages) {
+      const val = parseInt(d.match(/\d+/)![0], 10);
+      expect(val).toBeGreaterThan(0);
+      expect(val).toBeLessThan(200);
     }
   });
 });
