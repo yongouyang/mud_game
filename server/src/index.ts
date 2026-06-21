@@ -73,9 +73,10 @@ if (savedPlayers.length === 0) {
   const demoHash = Buffer.from("demo:some-secret").toString("base64");
   persistence.saveUser("demo", demoHash);
   const demo = createPlayer("demo", "无名侠客", { str: 15, int: 10, con: 15, dex: 10 });
+  demo.pot = 10000;
   players.setPlayer(demo);
   persistence.saveAll(players.getAllPlayers());
-  console.log("[server] Seeded demo account (login: demo / pass: some-secret)");
+  conpot: 10000ole.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
 }
 
 // Register NPCs in the world
