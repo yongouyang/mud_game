@@ -21,7 +21,7 @@ test.describe('Leveling & attributes', () => {
     await expect(output).toContainText('角色创建成功');
 
     // Complete the town delivery quest for deterministic EXP (no shared mob competition).
-    await cmd('quest 说书人');
+    await cmd('quest 说书人 letter-delivery');
     await cmd('e');
     await cmd('quest 王掌柜');
     await expect(output).toContainText('任务完成');
