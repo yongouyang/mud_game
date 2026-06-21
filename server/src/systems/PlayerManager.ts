@@ -88,6 +88,8 @@ export class PlayerManager {
       `  臂力(str): ${a.str}    悟性(int): ${a.int}`,
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
       '',
+      `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}`,
+      '',
     ].join('\n') + '\n';
   }
 

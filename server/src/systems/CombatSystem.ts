@@ -34,7 +34,7 @@ export class CombatSystem {
       attributes: { str: number; dex: number };
     },
     playerSkills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null },
-    enemy: {
+    enemy: { mp: number; maxMp: number;
       name: string; hp: number; maxHp: number;
       attributes: { str: number; dex: number };
       skills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null };

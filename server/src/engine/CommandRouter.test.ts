@@ -336,6 +336,20 @@ describe('CommandRouter', () => {
       expect(output).toContain('你没有装备"铁剑"');
     });
 
+
+    it('learn rejects unmet prerequisite', () => {
+      expect(cmd('learn 太极拳')).toContain('需要基本拳脚');
+    });
+
+    it('learn allows skill after prerequisite met', () => {
+      for (let i = 0; i < 10; i++) cmd('learn 基本拳脚');
+      expect(cmd('learn 太极拳')).toContain('你学会了太极拳');
+    });
+
+    it('exp and pot are visible in score', () => {
+      expect(cmd('score')).toContain('经验');
+    });
+
     it('ask talks to NPC', () => {
       const npcs = new NpcSystem(new SkillSystem());
       npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });

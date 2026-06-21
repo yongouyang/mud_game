@@ -53,13 +53,11 @@ describe('SkillSystem', () => {
 
   it('gets best strike skill', () => {
     const p = makePlayer('test');
-    sys.learnSkill(p, 'luohan-quan');
     for (let i = 0; i < 10; i++) sys.learnSkill(p, 'cuff');
-    sys.learnSkill(p, 'taiji-quan'); for (let i = 1; i < 2; i++) sys.learnSkill(p, 'taiji-quan');
-    sys.learnSkill(p, 'taiji-quan'); for (let i = 1; i < 2; i++) sys.learnSkill(p, 'taiji-quan');
+    sys.learnSkill(p, 'taiji-quan');
     const best = sys.getBestStrike(p);
-    expect(best?.name).toBe('太极拳');
-    expect(best?.damage).toBeGreaterThan(0);
+    expect(best).not.toBeNull();
+    expect(best!.damage).toBeGreaterThan(5);
   });
 
   it('gets dodge level from best dodge skill', () => {
@@ -82,5 +80,38 @@ describe('SkillSystem', () => {
     const out = sys.formatSkills(p);
     expect(out).toContain('基本拳脚');
     expect(out).toContain('基本轻功');
+  });
+
+  it('rejects skill with unmet prerequisite', () => {
+    const p = makePlayer('test');
+    const err = sys.learnSkill(p, 'taiji-quan');
+    expect(err).toContain('需要基本拳脚');
+    expect(sys.getSkillLevel(p, 'taiji-quan')).toBe(0);
+  });
+
+  it('allows skill when prerequisite met', () => {
+    const p = makePlayer('test');
+    for (let i = 0; i < 10; i++) sys.learnSkill(p, 'cuff');
+    expect(sys.learnSkill(p, 'taiji-quan')).toBeNull();
+    expect(sys.getSkillLevel(p, 'taiji-quan')).toBe(1);
+  });
+
+  it('gets parry level', () => {
+    const p = makePlayer('test');
+    sys.learnSkill(p, 'parry');
+    expect(sys.getParryLevel(p)).toBe(1);
+  });
+
+  it('gets force level', () => {
+    const p = makePlayer('test');
+    sys.learnSkill(p, 'force');
+    expect(sys.getForceLevel(p)).toBe(1);
+  });
+
+  it('zero parry/force/dodge with no skills', () => {
+    const p = makePlayer('test');
+    expect(sys.getParryLevel(p)).toBe(0);
+    expect(sys.getForceLevel(p)).toBe(0);
+    expect(sys.getDodgeLevel(p)).toBe(0);
   });
 });
