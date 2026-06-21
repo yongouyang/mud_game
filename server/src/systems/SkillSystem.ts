@@ -14,7 +14,7 @@ export class SkillSystem {
   getDef(skillId: string): SkillDef | undefined { return this.defs.get(skillId); }
 
   findDefByName(name: string): SkillDef | undefined {
-    for (const def of this.defs.values()) { if (def.name === name) return def; }
+    for (const def of this.defs.values()) { if (def.name === name || def.id === name) return def; }
     return undefined;
   }
 

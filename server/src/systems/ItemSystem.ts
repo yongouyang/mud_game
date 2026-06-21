@@ -17,7 +17,7 @@ export class ItemSystem {
 
   findDefByName(name: string): ItemDef | undefined {
     for (const def of this.defs.values()) {
-      if (def.name === name) return def;
+      if (def.name === name || def.id === name) return def;
     }
     return undefined;
   }

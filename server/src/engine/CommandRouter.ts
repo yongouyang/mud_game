@@ -163,7 +163,7 @@ export class CommandRouter {
 
     // Check NPCs in room
     const roomNpcs = this.npcs.getNpcsInRoom(player.currentRoom);
-    const targetNpc = roomNpcs.find((n) => n.def.name === targetName);
+    const targetNpc = roomNpcs.find((n) => n.def.name === targetName || n.def.id === targetName);
     if (targetNpc) {
       player.state = 'fighting';
       player.targetEnemy = 'npc:' + targetNpc.def.id;
@@ -451,7 +451,7 @@ export class CommandRouter {
     const name = args.join(' ');
     if (!name) return '\n  你想向谁打听？用法：ask <NPC名>\n';
     const npcs = this.npcs.getNpcsInRoom(player.currentRoom);
-    const npc = npcs.find((n) => n.def.name === name);
+    const npc = npcs.find((n) => n.def.name === name || n.def.id === name);
     if (!npc) return `\n  这里没有"${name}"。\n`;
     return `\n  ${npc.def.name}说道：「${this.npcs.getDialogue(npc.def.id)}」\n`;
   }
