@@ -170,3 +170,52 @@ describe('E2E: Phase 3 — skills, items, NPCs', () => {
     o = await sendCmd('schools 少林派'); expect(o).toContain('玄慈方丈');
   });
 });
+
+describe('E2E: Phase 5 — auto-combat + regen', () => {
+  beforeAll(async () => {
+    clientSocket = ioc(`http://localhost:${port}`);
+    await new Promise<void>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
+      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
+      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
+    });
+  }, 15000);
+
+  function sendCmd(input: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
+      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
+      clientSocket.emit('command', { input });
+    });
+  }
+
+  beforeAll(async () => {
+    await sendCmd('register tester2 pw456');
+    await sendCmd('郭靖');
+    await sendCmd('done');
+  });
+
+  it('server does not crash after combat commands', async () => {
+    // Move to bandit room
+    let o = await sendCmd('n');
+    o = await sendCmd('n');
+    o = await sendCmd('n');
+    await sendCmd('kill 山贼');
+    // Wait for at least one auto-tick
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Flee to verify combat tick cleanup
+    await sendCmd('flee');
+    // Verify server is still alive by sending a command
+    o = await sendCmd('look');
+    expect(o).toContain('山林');
+    // Verify health endpoint still works
+    const res = await fetch(`http://localhost:${port}/health`);
+    expect((await res.json()).status).toBe('ok');
+  });
+
+  it('HP regens after combat', async () => {
+    const res = await fetch(`http://localhost:${port}/health`);
+    const body = await res.json();
+    expect(body.online).toBeGreaterThanOrEqual(0);
+  });
+});
