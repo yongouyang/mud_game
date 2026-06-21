@@ -13,7 +13,11 @@ import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
 import { SchoolSystem } from './systems/SchoolSystem.js';
+import { LevelSystem } from './systems/LevelSystem.js';
+import { ConditionSystem } from './systems/ConditionSystem.js';
 import { PersistenceSystem } from './systems/PersistenceSystem.js';
+import { RealSystemClock } from './time/SystemClock.js';
+import { Scheduler } from './time/Scheduler.js';
 import net from 'node:net';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -46,20 +50,28 @@ if (fs.existsSync(distDir)) {
   console.log('[server] No dist/ found — running in dev mode (Vite proxies requests)');
 }
 
-app.get('/health', (_req, res) => {
-    const online = players.getAllPlayers();
-    res.json({ status: 'ok', uptime: process.uptime().toFixed(0), online: online.length, players: online.map(p => p.name) });
-});
+// Time & scheduling
+const clock = new RealSystemClock();
+const scheduler = new Scheduler(clock);
 
-// Wire up game systems
-const players = new PlayerManager();
-const map = new MapSystem();
+// Wire up game systems (order matters for dependencies)
+const players = new PlayerManager(clock);
+const map = new MapSystem(scheduler);
 const combat = new CombatSystem();
 const skills = new SkillSystem();
-const items = new ItemSystem();
-const npcs = new NpcSystem(skills);
+const conditions = new ConditionSystem(clock);
+const items = new ItemSystem(conditions);
+const npcs = new NpcSystem(skills, scheduler);
 const schools = new SchoolSystem();
+const levels = new LevelSystem();
 const persistence = new PersistenceSystem();
+
+const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, scheduler, clock);
+
+app.get('/health', (_req, res) => {
+  const online = players.getAllPlayers();
+  res.json({ status: 'ok', uptime: process.uptime().toFixed(0), online: online.length, players: online.map(p => p.name) });
+});
 
 // Load saved players on startup
 const savedPlayers = persistence.loadAll();
@@ -79,15 +91,30 @@ if (savedPlayers.length === 0) {
   console.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
 }
 
-// NPCs are loaded from server/src/data/npcs.json by NpcSystem.
+// Global scheduler heartbeat: 100ms resolution is enough for game ticks.
+setInterval(() => {
+  scheduler.tick();
+}, 100);
 
-const router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
+// Global condition/regen tick: every 5 seconds, process conditions and passive regen for all online players.
+scheduler.schedule('global-condition-tick', 5000, () => {
+  for (const player of players.getAllPlayers()) {
+    if (player.state === 'creating') continue;
+    const forceLv = skills.getForceLevel(player);
+    conditions.tick(player, forceLv);
+    // Passive regen when not fighting or meditating.
+    if (player.state !== 'fighting' && !player.isMeditating) {
+      player.hp = Math.min(player.maxHp, player.hp + Math.ceil(player.maxHp * 0.03));
+      player.mp = Math.min(player.maxMp, player.mp + Math.ceil(player.maxMp * 0.04));
+    }
+  }
+}, 5000);
 
 // Track auth state per socket
 const socketAuth = new Map<string, { authState: string; username?: string }>();
 
-// Auto-combat tick intervals per socket
-const combatTicks = new Map<string, ReturnType<typeof setInterval>>();
+// Per-socket combat tick task id
+const combatTickTasks = new Map<string, string>();
 
 io.on('connection', (socket) => {
   console.log(`[connect] ${socket.id}`);
@@ -114,7 +141,7 @@ io.on('connection', (socket) => {
           socket.emit('output', { text: '\n  用户名已存在。请换一个或输入 login <用户名> <密码> 登录。\n' });
           return;
         }
-        const hash = Buffer.from(username + ':' + password).toString('base64');
+        const hash = Buffer.from(username + ':' + password).toString("base64");
         persistence.saveUser(username, hash);
         socketAuth.set(socket.id, { authState: 'creating', username });
         players.createPlayer(socket.id);
@@ -126,7 +153,7 @@ io.on('connection', (socket) => {
         const username = parts[1].toLowerCase();
         const password = parts.slice(2).join('');
         const storedHash = persistence.getUserHash(username);
-        const inputHash = Buffer.from(username + ':' + password).toString('base64');
+        const inputHash = Buffer.from(username + ':' + password).toString("base64");
         if (!storedHash || storedHash !== inputHash) {
           socket.emit('output', { text: '\n  用户名或密码错误。\n' });
           return;
@@ -169,7 +196,6 @@ io.on('connection', (socket) => {
 
     // Auto-combat tick: start/stop based on fighting state
     manageCombatTick(socket);
-    manageRegen(socket);
   });
 
   socket.on('disconnect', () => {
@@ -180,15 +206,20 @@ io.on('connection', (socket) => {
 });
 
 function clearCombatTick(socketId: string) {
-  const tick = combatTicks.get(socketId);
-  if (tick) { clearInterval(tick); combatTicks.delete(socketId); }
+  const taskId = combatTickTasks.get(socketId);
+  if (taskId) {
+    scheduler.cancel(taskId);
+    combatTickTasks.delete(socketId);
+  }
 }
 
 function manageCombatTick(socket: any) {
   const p = players.getPlayer(socket.id);
   if (p && p.state === 'fighting') {
-    if (!combatTicks.has(socket.id)) {
-      const tick = setInterval(() => {
+    if (!combatTickTasks.has(socket.id)) {
+      const taskId = `combat:${socket.id}`;
+      combatTickTasks.set(socket.id, taskId);
+      scheduler.schedule(taskId, router.getCombatSpeed(socket.id), () => {
         const roundResult = router.executeCombatRound(socket.id);
         if (roundResult) socket.emit('output', { text: roundResult });
         const updated = players.getPlayer(socket.id);
@@ -199,31 +230,9 @@ function manageCombatTick(socket: any) {
           }
         }
       }, router.getCombatSpeed(socket.id));
-      combatTicks.set(socket.id, tick);
     }
   } else {
     clearCombatTick(socket.id);
-  }
-}
-
-// HP/MP regen when not fighting
-const regenTicks = new Map<string, ReturnType<typeof setInterval>>();
-function manageRegen(socket: any) {
-  const p = players.getPlayer(socket.id);
-  if (p && p.state !== 'fighting') {
-    if (!regenTicks.has(socket.id)) {
-      const tick = setInterval(() => {
-        const p2 = players.getPlayer(socket.id);
-        if (p2 && p2.state !== 'fighting' && p2.state !== 'creating') {
-          p2.hp = Math.min(p2.maxHp, p2.hp + Math.ceil(p2.maxHp * 0.03));
-          p2.mp = Math.min(p2.maxMp, p2.mp + Math.ceil(p2.maxMp * 0.04));
-        }
-      }, 3000);
-      regenTicks.set(socket.id, tick);
-    }
-  } else {
-    const t = regenTicks.get(socket.id);
-    if (t) { clearInterval(t); regenTicks.delete(socket.id); }
   }
 }
 

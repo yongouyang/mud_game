@@ -1,12 +1,11 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
-import { SkillSystem } from '../systems/SkillSystem.js';
-import { ItemSystem } from '../systems/ItemSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
-import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { ItemSystem } from '../systems/ItemSystem.js';
+import { TestSystemClock } from '../time/SystemClock.js';
+import { Scheduler } from '../time/Scheduler.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'gap2-player';
 
@@ -15,18 +14,19 @@ describe('Remaining Gaps', () => {
   let players: PlayerManager;
   let npcs: NpcSystem;
   let items: ItemSystem;
+  let clock: TestSystemClock;
+  let scheduler: Scheduler;
 
   function cmd(input: string): string { return router.handle(input, PLAYER_ID); }
 
   beforeEach(() => {
-    players = new PlayerManager();
-    const map = new MapSystem();
-    const combat = new CombatSystem();
-    const skills = new SkillSystem();
-    items = new ItemSystem();
-    npcs = new NpcSystem(skills);
-    const schools = new SchoolSystem();
-    router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
+    const ctx = createTestContext();
+    router = ctx.router;
+    players = ctx.players;
+    npcs = ctx.npcs;
+    items = ctx.items;
+    clock = ctx.clock;
+    scheduler = ctx.scheduler;
     players.createPlayer(PLAYER_ID);
     cmd('楚留香'); cmd('done');
   });

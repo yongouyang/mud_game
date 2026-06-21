@@ -1,0 +1,46 @@
+import { PlayerManager } from './systems/PlayerManager.js';
+import { MapSystem } from './systems/MapSystem.js';
+import { CombatSystem } from './systems/CombatSystem.js';
+import { SkillSystem } from './systems/SkillSystem.js';
+import { ItemSystem } from './systems/ItemSystem.js';
+import { NpcSystem } from './systems/NpcSystem.js';
+import { SchoolSystem } from './systems/SchoolSystem.js';
+import { LevelSystem } from './systems/LevelSystem.js';
+import { ConditionSystem } from './systems/ConditionSystem.js';
+import { CommandRouter } from './engine/CommandRouter.js';
+import { TestSystemClock } from './time/SystemClock.js';
+import { Scheduler } from './time/Scheduler.js';
+
+export interface TestGameContext {
+  clock: TestSystemClock;
+  scheduler: Scheduler;
+  players: PlayerManager;
+  map: MapSystem;
+  combat: CombatSystem;
+  skills: SkillSystem;
+  items: ItemSystem;
+  npcs: NpcSystem;
+  schools: SchoolSystem;
+  levels: LevelSystem;
+  conditions: ConditionSystem;
+  router: CommandRouter;
+}
+
+export function createTestContext(initialTime: number = 0, existingPlayers?: PlayerManager): TestGameContext {
+  const clock = new TestSystemClock(initialTime);
+  const scheduler = new Scheduler(clock);
+  const players = existingPlayers || new PlayerManager(clock);
+  const map = new MapSystem(scheduler);
+  const combat = new CombatSystem();
+  const skills = new SkillSystem();
+  const conditions = new ConditionSystem(clock);
+  const items = new ItemSystem(conditions);
+  const npcs = new NpcSystem(skills, scheduler);
+  const schools = new SchoolSystem();
+  const levels = new LevelSystem();
+  const router = new CommandRouter(
+    players, map, combat, skills, items, npcs, schools,
+    levels, conditions, scheduler, clock,
+  );
+  return { clock, scheduler, players, map, combat, skills, items, npcs, schools, levels, conditions, router };
+}

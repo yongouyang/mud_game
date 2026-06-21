@@ -1,5 +1,6 @@
 import { InventoryItem } from './Item.js';
 import { PlayerSkill } from './Skill.js';
+import { PlayerCondition } from './Condition.js';
 
 export interface PlayerAttributes {
   str: number; // 臂力 — affects attack damage
@@ -20,16 +21,20 @@ export interface Player {
   maxMp: number;
   exp: number;
   pot: number;
+  level: number;
+  attrPoints: number;
   currentRoom: string;
   state: PlayerState;
   targetEnemy: string | null;
   inventory: InventoryItem[];
   equipped: string[];
   skills: PlayerSkill[];
-  conditions: string[];
+  conditions: PlayerCondition[];
   schoolId?: string;
   quest: { type: string; target: string; exp: number; pot: number; itemId?: string } | null;
   powerupExpiry?: number;
+  isMeditating?: boolean;
+  meditationTaskId?: string;
 }
 
 export function recalcPlayerStats(player: Player): void {
@@ -52,6 +57,8 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     maxMp,
     exp: 0,
     pot: 100,
+    level: 1,
+    attrPoints: 0,
     currentRoom: 'town/square',
     state: 'playing',
     targetEnemy: null,
@@ -62,6 +69,7 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     schoolId: undefined,
     quest: null,
     powerupExpiry: undefined,
+    isMeditating: false,
   };
 }
 

@@ -1,12 +1,12 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
-import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
+import { SkillSystem } from '../systems/SkillSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
-import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { TestSystemClock } from '../time/SystemClock.js';
+import { Scheduler } from '../time/Scheduler.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'polish-player';
 
@@ -16,18 +16,20 @@ describe('Polish: minimum playable loop', () => {
   let items: ItemSystem;
   let skills: SkillSystem;
   let npcs: NpcSystem;
+  let clock: TestSystemClock;
+  let scheduler: Scheduler;
 
   function cmd(input: string): string { return router.handle(input, PLAYER_ID); }
 
   beforeEach(() => {
-    players = new PlayerManager();
-    const map = new MapSystem();
-    const combat = new CombatSystem();
-    skills = new SkillSystem();
-    items = new ItemSystem();
-    npcs = new NpcSystem(skills);
-    const schools = new SchoolSystem();
-    router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
+    const ctx = createTestContext();
+    router = ctx.router;
+    players = ctx.players;
+    skills = ctx.skills;
+    items = ctx.items;
+    npcs = ctx.npcs;
+    clock = ctx.clock;
+    scheduler = ctx.scheduler;
     players.createPlayer(PLAYER_ID);
     cmd('楚留香');
     cmd('done');
@@ -38,7 +40,7 @@ describe('Polish: minimum playable loop', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    scheduler.clear();
   });
 
   describe('equipment bonuses', () => {
@@ -85,7 +87,7 @@ describe('Polish: minimum playable loop', () => {
       p.skills.push({ skillId: 'cuff', level: 20 });
       p.mp = 100;
       cmd('exert powerup');
-      expect(p.powerupExpiry).toBeGreaterThan(Date.now());
+      expect(p.powerupExpiry).toBeGreaterThan(clock.now());
       const strike = (router as any).poweredBestStrike(p);
       expect(strike.damage).toBeGreaterThan(2 + 0.3 * 20); // unboosted base
     });
@@ -111,10 +113,10 @@ describe('Polish: minimum playable loop', () => {
     it('jiedu-wan cures poison', () => {
       const p = players.getPlayer(PLAYER_ID)!;
       items.addItem(p, 'jiedu-wan', 1);
-      p.conditions.push('poison');
+      p.conditions.push({ id: 'poison', name: '中毒', level: 1, remain: 5, appliedAt: clock.now() });
       const out = cmd('use 解毒丸');
       expect(out).toContain('解除了 poison 状态');
-      expect(p.conditions).not.toContain('poison');
+      expect(p.conditions).toHaveLength(0);
     });
 
     it('attribute pill permanently raises attribute and recalculates stats', () => {
@@ -129,14 +131,14 @@ describe('Polish: minimum playable loop', () => {
 
   describe('NPC respawn', () => {
     it('dead NPC respawns after configured seconds', () => {
-      vi.useFakeTimers();
       const bandit = npcs.getNpc('bandit')!;
       bandit.hp = 0;
       bandit.state = 'idle';
       bandit.targetPlayerId = null;
       expect(npcs.getNpcsInRoom('wilderness/forest1')).toHaveLength(0);
       npcs.scheduleRespawn('bandit');
-      vi.advanceTimersByTime(30000);
+      clock.advance(30000);
+      scheduler.tick();
       expect(bandit.hp).toBe(bandit.maxHp);
       expect(npcs.getNpcsInRoom('wilderness/forest1')).toHaveLength(1);
     });
@@ -149,7 +151,8 @@ describe('Polish: minimum playable loop', () => {
       cmd('s'); // town/training
       expect(cmd('get 木剑')).toContain('捡起了木剑');
       expect(map.getRoom('town/training')!.items).not.toContain('木剑');
-      vi.advanceTimersByTime(60000);
+      clock.advance(60000);
+      scheduler.tick();
       expect(map.getRoom('town/training')!.items).toContain('木剑');
     });
   });

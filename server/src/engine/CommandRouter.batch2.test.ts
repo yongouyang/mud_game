@@ -1,12 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
-import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
-import { NpcSystem } from '../systems/NpcSystem.js';
-import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'batch2-player';
 
@@ -18,11 +14,10 @@ describe('Batch 2: Shop + Conditions', () => {
   function cmd(input: string): string { return router.handle(input, PLAYER_ID); }
 
   beforeEach(() => {
-    players = new PlayerManager();
-    items = new ItemSystem();
-    const skills = new SkillSystem();
-    const npcs = new NpcSystem(skills);
-    router = new CommandRouter(players, new MapSystem(), new CombatSystem(), skills, items, npcs, new SchoolSystem());
+    const ctx = createTestContext();
+    router = ctx.router;
+    players = ctx.players;
+    items = ctx.items;
     players.createPlayer(PLAYER_ID);
     cmd('楚留香'); cmd('done');
   });

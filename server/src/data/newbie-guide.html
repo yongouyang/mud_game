@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>炎黄群侠传 · 新手指南</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;padding:32px;max-width:900px;margin:0 auto;line-height:1.7}
+h1{color:#ffd700;font-size:28px;margin-bottom:8px;text-align:center;letter-spacing:4px}
+h2{color:#e0c060;font-size:20px;margin:28px 0 12px;border-left:3px solid #ffd700;padding-left:10px}
+h3{color:#88ccff;font-size:16px;margin:16px 0 8px}
+code{background:#21262d;color:#ffa657;padding:2px 6px;border-radius:3px;font-size:14px}
+pre{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px 16px;overflow-x:auto;font-size:13px;margin:8px 0;color:#c9d1d9}
+.step{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin:12px 0}
+.step-num{display:inline-block;background:#ffd700;color:#0d1117;width:24px;height:24px;text-align:center;border-radius:50%;font-weight:bold;font-size:14px;margin-right:8px}
+.tip{background:#1b3a1b;border-left:3px solid #3fb950;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+.warn{background:#3a1b1b;border-left:3px solid #f85149;padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
+th,td{border:1px solid #30363d;padding:6px 10px;text-align:left}
+th{background:#21262d;color:#e0c060}
+.path{color:#6699cc;font-family:monospace;font-size:13px}
+.school-card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:10px 14px;margin:6px 0;display:inline-block;min-width:240px}
+.school-name{color:#ffd700;font-weight:bold}
+.school-bonus{color:#3fb950;font-size:13px}
+.money{color:#ffa657}
+</style></head><body>
+<h1>炎黄群侠传 · 新手指南</h1>
+<p style="text-align:center;color:#888;margin-bottom:24px">从零开始闯荡江湖 — 练功 · 打怪 · 拜师 · 变强</p>
+
+<h2>📋 第一章：初入江湖</h2>
+<div class="step">
+<span class="step-num">1</span><strong>注册和创建角色</strong>
+<pre>register 张无忌 123456    # 注册一个账号
+login 张无忌 123456       # 登录已有账号</pre>
+<p>或者直接用演示账号：<code>login demo some-secret</code>（预设属性，10000潜能）</p>
+</div>
+
+<div class="step">
+<span class="step-num">2</span><strong>分配属性</strong>
+<p>创建角色后，输入角色名（必须是中文），然后分配 <strong>10点自由属性</strong>：</p>
+<pre>set str 20    # 臂力（影响攻击力 + HP上限）
+set con 20    # 根骨（影响HP上限 + 防御）
+done          # 确认完成创建</pre>
+<div class="tip"><strong>推荐新手上路加点：</strong> str=15, con=15（高攻击+高血量，打怪不死）</div>
+</div>
+
+<div class="step">
+<span class="step-num">3</span><strong>熟悉基本命令</strong>
+<pre>look          # 查看四周（会显示地上物品）
+hp / score    # 查看状态（HP/MP/经验/潜能/Lv等级）
+help          # 显示所有命令
+skills        # 查看已学武功
+i             # 查看背包物品
+who           # 查看在线玩家</pre>
+</div>
+
+<h2>📈 第二章：学习武功</h2>
+
+<p>武功分两类：<strong>基本武功</strong>随处可学，<strong>独门武功</strong>需先拜师。</p>
+
+<h3>🔹 基本武功（消耗 1 潜能/次）</h3>
+<table>
+<tr><th>武功名</th><th>ID</th><th>用途</th></tr>
+<tr><td>招架</td><td><code>parry</code></td><td>基本招架之术，格挡敌人攻击。</td></tr>
+<tr><td>基本剑法</td><td><code>sword</code></td><td>基本剑术，可用剑类武器施展。</td></tr>
+<tr><td>基本刀法</td><td><code>blade</code></td><td>基本刀术，可用刀类武器施展。</td></tr>
+<tr><td>基本杖法</td><td><code>staff</code></td><td>基本棍杖之术。</td></tr>
+<tr><td>基本暗器</td><td><code>throwing</code></td><td>基本暗器手法。</td></tr>
+<tr><td>基本鞭法</td><td><code>whip</code></td><td>基本鞭法之术。</td></tr>
+<tr><td>基本拳脚</td><td><code>cuff</code></td><td>基本拳脚功夫，入门必学。</td></tr>
+<tr><td>基本轻功</td><td><code>dodge</code></td><td>基本轻功，用于闪避敌人攻击。</td></tr>
+<tr><td>基本内功</td><td><code>force</code></td><td>基本内功心法，影响内力上限和护体效果。</td></tr>
+<tr><td>醉拳</td><td><code>zui-quan</code></td><td>形醉意不醉，步醉心不醉的奇门拳法。</td></tr>
+</table>
+<pre>learn 基本拳脚    # 学一级拳脚（也可以用英文ID learn cuff）
+learn 基本拳脚    # 重复输入升级！每次升1级，最高100级</pre>
+<div class="tip"><strong>升级技巧：</strong>用 ↑↓ 箭头键调出历史命令，快速重复 learn！</div>
+
+<h3>🔹 独门武功 — 先拜师！</h3>
+<p>高级武功需要：① 已加入对应门派 ② 在师父房间 ③ 基础武功达标
+<h3>🔹 练功顺序推荐</h3><div class="step">
+<pre># 第1步：在广场练基本功（消耗潜能，打山贼获得）
+learn 基本拳脚    × 10次 → Lv.10
+learn 基本轻功    × 5次  → 提高闪避
+learn 基本内功    × 5次  → 提高内力吸收
+
+# 第2步：去少林拜师（路径：n n n e s w）
+join 少林派
+
+# 第3步：学独门武功（在师父面前）
+learn 罗汉拳      → 消耗2潜能，需要拳脚≥Lv.5
+learn 太极拳      → 消耗2潜能，需要拳脚≥Lv.10</pre>
+</div>
+<h2>⚔ 第三章：打怪升级</h2><p>山林中有主动攻击的野怪，杀死获得经验+潜能+银两。</p><table><tr><th>野怪</th><th>ID</th><th>位置</th><th>路径</th><th>难度</th></tr><tr><td>山贼</td><td><code>bandit</code></td><td>山林·入口</td><td class="path">nnn</td><td>易</td></tr>
+<tr><td>野狼</td><td><code>wolf</code></td><td>山林·深处</td><td class="path">nnnn</td><td>中</td></tr>
+<tr><td>黑熊</td><td><code>bear</code></td><td>山林·洞穴</td><td class="path">nnnnw</td><td>难</td></tr>
+</table>
+
+<div class="step">
+<pre># 打山贼（新手首选）
+n n n              # 走到山林入口（路径 n n n）
+kill 山贼           # 发起战斗（也可以用英文ID kill bandit）
+# 自动回合制战斗，等几轮后山贼倒下
+# 获得经验和潜能！
+
+# 逃跑（打不过就溜）
+flee / tao
+</pre>
+<div class="warn"><strong>⚠ 注意：</strong>战死后会扣 10% 经验！血少的时候先用 <code>exert heal</code> 疗伤（消耗30内力，恢复20%HP）。如果内力不足，远离战斗等自动恢复（每3秒恢复4%MP）。</div>
+</div>
+
+<h2>💰 第四章：获取金钱和物品</h2>
+<table>
+<tr><th>方式</th><th>说明</th></tr>
+<tr><td>杀野怪</td><td>山贼/野狼/黑熊死后掉落银两</td></tr>
+<tr><td>搜尸</td><td>杀怪后 <code>get silver</code> 捡起尸体上的银两</td></tr>
+<tr><td>捡物品</td><td><code>look</code> 查看地上物品，<code>get 木剑</code> 捡起</td></tr>
+</table>
+
+<h3>🛒 商店（<code>shop</code> 命令）</h3>
+<table>
+<tr><th>物品</th><th>ID</th><th>价格</th><th>效果</th></tr><tr><td>金疮药</td><td><code>jinchuang-yao</code></td><td class="money">20两</td><td>江湖郎中配制的金疮药，可治疗外伤。恢复 50 点气血。</td></tr>
+<tr><td>人参丸</td><td><code>renshen-wan</code></td><td class="money">50两</td><td>以长白山人参炼制的药丸，大补元气。恢复 100 点气血。</td></tr>
+<tr><td>铁剑</td><td><code>iron-sword</code></td><td class="money">80两</td><td>一把锋利的铁剑，剑身泛着寒光。</td></tr>
+<tr><td>皮甲</td><td><code>leather-armor</code></td><td class="money">60两</td><td>鞣制过的兽皮甲，有一定防御力。</td></tr>
+<tr><td>木剑</td><td><code>wooden-sword</code></td><td class="money">30两</td><td>一把普通的桃木剑。</td></tr>
+</table>
+<pre>shop            # 查看商店商品
+buy 金疮药       # 购买金疮药（恢复50HP）
+</pre>
+
+<h2>🛡 第五章：装备与恢复</h2>
+<div class="step">
+<pre>wear 铁剑        # 装备武器（+10攻击）
+wear 皮甲        # 装备防具（+5防御）
+remove 铁剑      # 脱下装备
+
+use 金疮药       # 使用金疮药恢复50HP
+use 人参丸       # 使用人参丸恢复100HP
+use 内力丹       # 恢复50MP
+
+i                # 查看背包物品
+</pre>
+</div>
+
+<h2>🎯 第六章：任务系统</h2>
+<div class="step">
+<pre>quest 王掌柜         # 向王掌柜接任务（在客栈）
+quest 王掌柜         # 再次找同一NPC完成任务，获得经验+潜能奖励
+</pre>
+<div class="tip"><strong>提示：</strong>接任务和交任务都是 <code>quest NPC名</code>。任务类型为送信，多刷任务可获得大量经验。</div>
+</div>
+
+<h2>⚡ 第七章：进阶技巧</h2>
+
+<h3>绝招（perform）</h3>
+<pre># 武功升到 Lv.10 后可施展绝招
+learn 基本拳脚    × 9次（升到Lv.10）
+perform cuff.quan # 施展基本拳脚的绝招（消耗20内力，伤害3倍）</pre>
+
+<h3>内功运用（exert / yun）</h3>
+<pre>exert heal        # 疗伤：消耗30内力，恢复20%HP
+yun heal          # yun 是 exert 的别名
+exert powerup     # 战力爆发：消耗50内力，短时间内攻防提升</pre>
+
+<h3>独门绝招</h3>
+<p>各门派独门武功有更强的绝招（在师父房间学得）。学到Lv.10后 <code>perform 武功名.招式名</code> 施放。</p>
+
+<h2>🗺 第八章：世界地图导航</h2>
+<p>以下是主要地点的到达路径（从起点广场出发）：</p>
+<table>
+<tr><th>地点</th><th>路径</th><th>NPC</th></tr><tr><td>无名小镇·练武场</td><td class="path">s</td><td>武师</td></tr>
+<tr><td>山林·入口</td><td class="path">nnn</td><td>山贼</td></tr>
+<tr><td>山林·深处</td><td class="path">nnnn</td><td>野狼</td></tr>
+<tr><td>山林·断崖</td><td class="path">nnne</td><td>采药人</td></tr>
+<tr><td>山林·洞穴</td><td class="path">nnnnw</td><td>黑熊</td></tr>
+<tr><td>少林寺·大雄宝殿</td><td class="path">nnnesw</td><td>玄慈方丈</td></tr>
+<tr><td>武当山·紫霄宫</td><td class="path">nnneew</td><td>冲虚道长</td></tr>
+<tr><td>丐帮·总舵</td><td class="path">nnnwe</td><td>洪七公</td></tr>
+<tr><td>华山·之巅</td><td class="path">nnnnenn</td><td>岳不群</td></tr>
+<tr><td>峨眉·金顶</td><td class="path">nnnenn</td><td>灭绝师太</td></tr>
+<tr><td>古墓·密室</td><td class="path">nnnnnn</td><td>小龙女</td></tr>
+<tr><td>明教·光明顶</td><td class="path"></td><td>—</td></tr>
+<tr><td>全真教·重阳宫</td><td class="path"></td><td>—</td></tr>
+<tr><td>桃花岛·试剑亭</td><td class="path"></td><td>—</td></tr>
+<tr><td>慕容世家·燕子坞</td><td class="path"></td><td>—</td></tr>
+</table>
+<p style="margin-top:12px">完整59房间地图请查看 <code>server/src/data/map.html</code></p>
+
+<h2>📊 第九章：属性说明</h2>
+<table>
+<tr><th>属性</th><th>英文</th><th>影响</th></tr>
+<tr><td>臂力</td><td>str</td><td>攻击力、HP上限</td></tr>
+<tr><td>悟性</td><td>int</td><td>MP上限、技能学习效率</td></tr>
+<tr><td>根骨</td><td>con</td><td>HP上限、防御、内力护体强度</td></tr>
+<tr><td>身法</td><td>dex</td><td>闪避、招架、战斗速度</td></tr>
+<tr><td>容貌</td><td>per</td><td>影响NPC对话</td></tr>
+<tr><td>福缘</td><td>kar</td><td>冒险运气</td></tr>
+</table>
+
+<h2>🏁 快速上手指南（一步到位）</h2>
+<div class="step">
+<pre># 1. 登录 demo 账号
+login demo some-secret
+
+# 2. 学基本功
+learn 基本拳脚 ×10次
+learn 基本轻功 ×5次
+
+# 3. 打山贼攒钱攒经验
+n n n
+kill 山贼      # 重复几次
+
+# 4. 买装备
+shop
+buy 铁剑
+buy 皮甲
+
+# 5. 去少林拜师
+n n n e s w
+join 少林派
+learn 罗汉拳
+learn 太极拳
+
+# 6. 天下我有！</pre>
+</div>
+
+<p style="text-align:center;color:#888;margin-top:32px">江湖路远，少侠珍重！</p>
+</body></html>

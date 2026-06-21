@@ -18,7 +18,9 @@
     "attributes": { "str": 12, "int": 5, "con": 10, "dex": 8 },
     "skills": [{ "skillId": "luohan-quan", "level": 3 }],
     "aggressive": true,
-    "respawnSeconds": 30
+    "respawnSeconds": 30,
+    "poisonChance": 0.15,
+    "poisonLevel": 2
   },
   {
     "id": "master-shaolin",
@@ -139,7 +141,9 @@
     "attributes": { "str": 10, "int": 3, "con": 8, "dex": 12 },
     "skills": [{ "skillId": "cuff", "level": 5 }],
     "aggressive": true,
-    "respawnSeconds": 30
+    "respawnSeconds": 30,
+    "poisonChance": 0.25,
+    "poisonLevel": 1
   },
   {
     "id": "herb-collector",

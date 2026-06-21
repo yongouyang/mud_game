@@ -1,11 +1,12 @@
 import { Player, recalcPlayerStats } from '../models/Player.js';
 import { ItemDef, InventoryItem, ItemType } from '../models/Item.js';
+import { ConditionSystem } from './ConditionSystem.js';
 import itemsData from '../data/items.json' assert { type: 'json' };
 
 export class ItemSystem {
   private defs = new Map<string, ItemDef>();
 
-  constructor() {
+  constructor(private conditions?: ConditionSystem) {
     for (const item of itemsData as ItemDef[]) {
       this.defs.set(item.id, item);
     }
@@ -104,12 +105,22 @@ export class ItemSystem {
     }
 
     if (effect.cure) {
-      const idx = player.conditions?.indexOf(effect.cure) ?? -1;
-      if (idx !== -1) {
-        player.conditions.splice(idx, 1);
-        parts.push(`解除了 ${effect.cure} 状态`);
+      if (this.conditions) {
+        const cured = this.conditions.cureByItem(player, effect.cure);
+        if (cured) {
+          parts.push(`解除了 ${effect.cure} 状态`);
+        } else {
+          parts.push(`你并没有 ${effect.cure} 状态`);
+        }
       } else {
-        parts.push(`你并没有 ${effect.cure} 状态`);
+        // Fallback if no ConditionSystem is injected (legacy/tests).
+        const idx = player.conditions?.findIndex((c) => c.id === effect.cure) ?? -1;
+        if (idx !== -1) {
+          player.conditions.splice(idx, 1);
+          parts.push(`解除了 ${effect.cure} 状态`);
+        } else {
+          parts.push(`你并没有 ${effect.cure} 状态`);
+        }
       }
     }
 

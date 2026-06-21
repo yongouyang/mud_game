@@ -1,12 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
-import { ItemSystem } from '../systems/ItemSystem.js';
-import { NpcSystem } from '../systems/NpcSystem.js';
 import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'full-player';
 
@@ -14,17 +11,17 @@ describe('Full Implementation', () => {
   let skills: SkillSystem;
   let schools: SchoolSystem;
   let player: ReturnType<typeof PlayerManager.prototype.createPlayer>;
+  let router: CommandRouter;
 
   beforeEach(() => {
-    skills = new SkillSystem();
-    schools = new SchoolSystem();
-    const players = new PlayerManager();
-    const npcs = new NpcSystem(skills);
-    const router = new CommandRouter(players, new MapSystem(), new CombatSystem(), skills, new ItemSystem(), npcs, schools);
-    players.createPlayer(PLAYER_ID);
+    const ctx = createTestContext();
+    skills = ctx.skills;
+    schools = ctx.schools;
+    router = ctx.router;
+    ctx.players.createPlayer(PLAYER_ID);
     router.handle('楚留香', PLAYER_ID);
     router.handle('done', PLAYER_ID);
-    player = players.getPlayer(PLAYER_ID)!;
+    player = ctx.players.getPlayer(PLAYER_ID)!;
     player.pot = 5000;
   });
 
@@ -36,11 +33,11 @@ describe('Full Implementation', () => {
   });
 
   it('poison condition causes periodic HP loss', () => {
-    player.conditions.push('poison');
+    player.conditions.push({ id: 'poison', name: '中毒', level: 1, remain: 5, appliedAt: 0 });
     player.hp = 100;
     // Simulate condition tick
     const hpBefore = player.hp;
-    if (player.conditions.includes('poison')) {
+    if (player.conditions.some((c) => c.id === 'poison')) {
       player.hp = Math.max(1, player.hp - 5);
     }
     expect(player.hp).toBeLessThan(hpBefore);

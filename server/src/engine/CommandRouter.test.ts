@@ -1,27 +1,21 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
-import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
-import { NpcSystem } from '../systems/NpcSystem.js';
-import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'test-player';
 
 describe('CommandRouter', () => {
   let router: CommandRouter;
   let players: PlayerManager;
+  let items: ItemSystem;
 
   beforeEach(() => {
-    players = new PlayerManager();
-    const map = new MapSystem();
-    const combat = new CombatSystem();
-    const skills = new SkillSystem();
-    const items = new ItemSystem();
-    const npcs = new NpcSystem(skills);
-    router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem());
+    const ctx = createTestContext();
+    router = ctx.router;
+    players = ctx.players;
+    items = ctx.items;
     players.createPlayer(PLAYER_ID);
   });
 
@@ -203,7 +197,8 @@ describe('CommandRouter', () => {
       // Create a second player for combat
       player2Id = 'test-player-2';
       players.createPlayer(player2Id);
-      const router2 = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), new NpcSystem(new SkillSystem()), new SchoolSystem());
+      const ctx2 = createTestContext(0, players);
+      const router2 = ctx2.router;
       router2.handle('李寻欢', player2Id);
       router2.handle('done', player2Id);
       router2.handle('s', player2Id); // Move to same room
@@ -304,7 +299,6 @@ describe('CommandRouter', () => {
     it('use consumes medicine and heals', () => {
       // Give player a medicine via inventory directly
       const p = players.getPlayer(PLAYER_ID)!;
-      const items = new ItemSystem();
       items.addItem(p, 'jinchuang-yao', 1);
       p.hp = 50; // damage player first
 
@@ -315,7 +309,6 @@ describe('CommandRouter', () => {
 
     it('wear equips an item', () => {
       const p = players.getPlayer(PLAYER_ID)!;
-      const items = new ItemSystem();
       items.addItem(p, 'iron-sword', 1);
 
       const output = cmd('wear 铁剑');
@@ -353,9 +346,9 @@ describe('CommandRouter', () => {
     });
 
     it('ask talks to NPC', () => {
-      const npcs = new NpcSystem(new SkillSystem());
-      npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
-      const newRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), new SkillSystem(), new ItemSystem(), npcs, new SchoolSystem());
+      const ctx2 = createTestContext(0, players);
+      const newRouter = ctx2.router;
+      ctx2.npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
       cmd = (input: string) => newRouter.handle(input, PLAYER_ID);
       newRouter.handle("楚留香", PLAYER_ID);
       newRouter.handle("done", PLAYER_ID);
@@ -370,16 +363,14 @@ describe('CommandRouter', () => {
     let npcRouter: CommandRouter;
 
     beforeEach(() => {
-      players = new PlayerManager();
-      npcs = new NpcSystem(new SkillSystem());
+      const ctx2 = createTestContext();
+      players = ctx2.players;
+      npcs = ctx2.npcs;
       // Register a few test NPCs
       npcs.register({ id: "test-merchant", name: "商人", description: "a merchant", roomId: "town/square", dialogue: ["欢迎光临"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
       npcs.register({ id: "test-wolf", name: "野狼", description: "a wolf", roomId: "town/mainstreet", dialogue: ["嗷呜"], attributes: {str:8,int:3,con:6,dex:10}, skills: [], aggressive: true });
       npcs.register({ id: "test-master", name: "师父", description: "master", roomId: "town/training", dialogue: ["刻苦练功"], attributes: {str:10,int:10,con:10,dex:10}, skills: [], aggressive: false });
-      const skills = new SkillSystem();
-      const items = new ItemSystem();
-      const schools = new SchoolSystem();
-      npcRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), skills, items, npcs, schools);
+      npcRouter = ctx2.router;
       players.createPlayer(PLAYER_ID);
       npcRouter.handle("楚留香", PLAYER_ID);
       npcRouter.handle("done", PLAYER_ID);

@@ -11,12 +11,17 @@ import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
 import { NpcSystem } from './systems/NpcSystem.js';
 import { SchoolSystem } from './systems/SchoolSystem.js';
+import { LevelSystem } from './systems/LevelSystem.js';
+import { ConditionSystem } from './systems/ConditionSystem.js';
+import { Scheduler } from './time/Scheduler.js';
+import { RealSystemClock } from './time/SystemClock.js';
 import { AddressInfo } from 'node:net';
 
 let httpServer: HttpServer;
 let port: number;
 let clientSocket: ClientSocket;
 let players: PlayerManager;
+let schedulerInterval: ReturnType<typeof setInterval> | undefined;
 
 beforeAll(async () => {
   const app = express();
@@ -25,12 +30,16 @@ beforeAll(async () => {
   httpServer = createServer(app);
   const io = new SocketIOServer(httpServer);
 
-  players = new PlayerManager();
-  const map = new MapSystem();
+  const clock = new RealSystemClock();
+  const scheduler = new Scheduler(clock);
+  players = new PlayerManager(clock);
+  const map = new MapSystem(scheduler);
   const combat = new CombatSystem();
   const skills = new SkillSystem();
-  const items = new ItemSystem();
-  const npcs = new NpcSystem(skills);
+  const conditions = new ConditionSystem(clock);
+  const items = new ItemSystem(conditions);
+  const npcs = new NpcSystem(skills, scheduler);
+  const levels = new LevelSystem();
 
   npcs.register({
     id: 'wang', name: '王掌柜', description: 'test',
@@ -41,7 +50,10 @@ beforeAll(async () => {
     aggressive: false,
   });
 
-  const router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem());
+  const router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem(), levels, conditions, scheduler, clock);
+
+  // Drive the scheduler with real time.
+  schedulerInterval = setInterval(() => scheduler.tick(), 100);
 
   io.on('connection', (socket) => {
     players.createPlayer(socket.id);
@@ -63,6 +75,7 @@ beforeAll(async () => {
 }, 15000);
 
 afterAll(() => {
+  if (schedulerInterval) clearInterval(schedulerInterval);
   clientSocket?.disconnect();
   httpServer?.close();
 });

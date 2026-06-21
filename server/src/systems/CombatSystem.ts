@@ -1,4 +1,7 @@
 import { bar } from '../utils.js';
+import { ConditionSystem } from './ConditionSystem.js';
+import { Player } from '../models/Player.js';
+import { NpcInstance } from './NpcSystem.js';
 
 export interface CombatTarget {
   name: string;
@@ -15,6 +18,7 @@ export interface CombatRoundResult {
   message: string;
   defenderDead: boolean;
   attackerDead: boolean;
+  enemyHitPlayer: boolean;
 }
 
 /**
@@ -42,6 +46,7 @@ export class CombatSystem {
     isPlayerExtraHit: boolean = false,
   ): CombatRoundResult {
     let msg = '';
+    let enemyHitPlayer = false;
 
     // ── Player attacks enemy ──
     const strikeDmg = Math.round(playerSkills.bestStrike
@@ -59,7 +64,7 @@ export class CombatSystem {
     );
     msg += atkResult.message;
     if (atkResult.defenderDead) {
-      return { message: msg + `\n  ${enemy.name} 倒下了！\n`, defenderDead: true, attackerDead: false };
+      return { message: msg + `\n  ${enemy.name} 倒下了！\n`, defenderDead: true, attackerDead: false, enemyHitPlayer: false };
     }
 
     // ── Enemy counter-attacks ──
@@ -77,15 +82,16 @@ export class CombatSystem {
         enemyDmg,
         false,
       );
+      enemyHitPlayer = defResult.hit;
       msg += defResult.message;
       if (defResult.defenderDead) {
-        return { message: msg + '\n  你被击败了……\n', attackerDead: true, defenderDead: false };
+        return { message: msg + '\n  你被击败了……\n', attackerDead: true, defenderDead: false, enemyHitPlayer };
       }
     }
 
     // ── Format status ──
     msg += this.formatCombatStatus(player, player.mp, player.maxMp, enemy);
-    return { message: msg, defenderDead: false, attackerDead: false };
+    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer };
   }
 
   /**
@@ -100,7 +106,7 @@ export class CombatSystem {
     defenderSkills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null },
     rawDmg: number,
     isExtraHit: boolean,
-  ): { message: string; defenderDead: boolean } {
+  ): { message: string; defenderDead: boolean; hit: boolean } {
     const strikeName = attackerSkills.bestStrike?.name || '普通攻击';
 
     // 1. 招架 (parry) check: chance = parryLv / (parryLv + attackerDodge*2)
@@ -109,6 +115,7 @@ export class CombatSystem {
       return {
         message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}被 ${defender.name} 招架开了。\n`,
         defenderDead: false,
+        hit: false,
       };
     }
 
@@ -118,6 +125,7 @@ export class CombatSystem {
       return {
         message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}${defender.name} 身形一闪躲开了。\n`,
         defenderDead: false,
+        hit: false,
       };
     }
 
@@ -139,12 +147,14 @@ export class CombatSystem {
       return {
         message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
         defenderDead: true,
+        hit: true,
       };
     }
 
     return {
       message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
       defenderDead: false,
+      hit: true,
     };
   }
 

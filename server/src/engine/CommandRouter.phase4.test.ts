@@ -1,12 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
-import { MapSystem } from '../systems/MapSystem.js';
-import { CombatSystem } from '../systems/CombatSystem.js';
-import { SkillSystem } from '../systems/SkillSystem.js';
-import { ItemSystem } from '../systems/ItemSystem.js';
-import { NpcSystem } from '../systems/NpcSystem.js';
-import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'test-player';
 
@@ -19,13 +14,9 @@ describe('Phase 4: Schools', () => {
   }
 
   beforeEach(() => {
-    players = new PlayerManager();
-    const map = new MapSystem();
-    const combat = new CombatSystem();
-    const skills = new SkillSystem();
-    const items = new ItemSystem();
-    const npcs = new NpcSystem(skills);
-    router = new CommandRouter(players, map, combat, skills, items, npcs, new SchoolSystem());
+    const ctx = createTestContext();
+    router = ctx.router;
+    players = ctx.players;
     players.createPlayer(PLAYER_ID);
     cmd('楚留香');
     cmd('done');

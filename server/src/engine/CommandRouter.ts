@@ -3,8 +3,12 @@ import { MapSystem } from '../systems/MapSystem.js';
 import { CombatSystem } from '../systems/CombatSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
-import { NpcSystem } from '../systems/NpcSystem.js';
+import { NpcSystem, NpcInstance } from '../systems/NpcSystem.js';
 import { SchoolSystem } from '../systems/SchoolSystem.js';
+import { LevelSystem } from '../systems/LevelSystem.js';
+import { ConditionSystem } from '../systems/ConditionSystem.js';
+import { Scheduler } from '../time/Scheduler.js';
+import { SystemClock } from '../time/SystemClock.js';
 import { SchoolDef } from '../models/School.js';
 import { Player, PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
 
@@ -24,6 +28,10 @@ export class CommandRouter {
     private items: ItemSystem,
     private npcs: NpcSystem,
     private schools: SchoolSystem,
+    private levels: LevelSystem,
+    private conditions: ConditionSystem,
+    private scheduler: Scheduler,
+    private clock: SystemClock,
   ) {}
 
   /** Return player attributes including equipment bonuses. */
@@ -35,10 +43,18 @@ export class CommandRouter {
   private poweredBestStrike(player: Player): { name: string; damage: number } | null {
     const strike = this.skills.getBestStrike(player);
     if (!strike) return null;
-    if (player.powerupExpiry && player.powerupExpiry > Date.now()) {
+    if (player.powerupExpiry && player.powerupExpiry > this.clock.now()) {
       return { name: strike.name, damage: Math.round(strike.damage * 1.3) };
     }
     return strike;
+  }
+
+  private stopMeditation(player: Player): void {
+    if (player.isMeditating && player.meditationTaskId) {
+      this.scheduler.cancel(player.meditationTaskId);
+      player.isMeditating = false;
+      player.meditationTaskId = undefined;
+    }
   }
 
   handle(input: string, playerId: string): string {
@@ -59,6 +75,7 @@ export class CommandRouter {
     // Movement
     const moveResult = this.map.movePlayer(player.currentRoom, cmdLower);
     if (moveResult.success && moveResult.newRoomId) {
+      this.stopMeditation(player);
       player.currentRoom = moveResult.newRoomId;
       const others = this.players.getPlayersInRoom(moveResult.newRoomId).filter((p) => p.id !== playerId);
       let msg = moveResult.message;
@@ -104,6 +121,10 @@ export class CommandRouter {
       case 'perform': case 'pfm': return this.handlePerform(player, rest);
       case 'exert': case 'yun': return this.handleExert(player, rest);
       case 'ask': return this.handleAsk(player, rest);
+      case 'dazuo': case 'exercise': case 'tuna': return this.handleDazuo(player, rest);
+      case 'practice': case 'lian': return this.handlePractice(player, rest);
+      case 'tianfu': case 'setattr': return this.handleTianfu(player, rest);
+      case 'level': return this.levels.formatLevelInfo(player);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
     }
@@ -174,7 +195,9 @@ export class CommandRouter {
       '  ask <NPC>       向NPC打听',  '  who             在线玩家',
       '  perform / pfm   施展绝招',   '  exert / yun    内功运用',
       '  buy <物品>      购买物品',   '  shop / list     商店货物',
-      '  quest <NPC>     接取/完成任务', '  help            显示帮助',
+      '  quest <NPC>     接取/完成任务', '  dazuo [秒]     打坐恢复内力',
+      '  practice <武功> 练习武功',   '  tianfu <属性>   分配属性点',
+      '  level           查看等级',   '  help            显示帮助',
       '',
     ].join('\n') + '\n';
   }
@@ -183,6 +206,7 @@ export class CommandRouter {
   private handleKill(player: Player, args: string[]): string {
     const targetName = args.join(' ');
     if (!targetName) return '\n  你想攻击谁？用法：kill <名字>\n';
+    this.stopMeditation(player);
 
     // Check NPCs in room
     const roomNpcs = this.npcs.getNpcsInRoom(player.currentRoom);
@@ -322,10 +346,15 @@ export class CommandRouter {
         skills: npcSkills,
       };
       const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, isExtraHit);
+      let conditionMsg = '';
+      if (result.enemyHitPlayer && npc.def.poisonChance && npc.def.poisonLevel && Math.random() < npc.def.poisonChance) {
+        const applied = this.conditions.applyCondition(player, 'poison', npc.def.poisonLevel, npc.def.name);
+        if (applied) conditionMsg = applied;
+      }
       if (result.defenderDead) {
         player.state = 'playing'; player.targetEnemy = null;
         npc.state = 'idle'; npc.targetPlayerId = null;
-        return result.message + this.handleNpcDeath(player, npc);
+        return result.message + conditionMsg + this.handleNpcDeath(player, npc);
       }
       if (result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
@@ -333,9 +362,9 @@ export class CommandRouter {
         player.hp = 1;
         const expLoss = Math.floor((player.exp || 0) * 0.1);
         player.exp = Math.max(0, (player.exp || 0) - expLoss);
-        return result.message + `\n  你损失了 ${expLoss} 点经验。\n`;
+        return result.message + conditionMsg + `\n  你损失了 ${expLoss} 点经验。\n`;
       }
-      return result.message;
+      return result.message + conditionMsg;
     } else {
       const target = this.players.getPlayer(targetId);
       if (!target || target.hp <= 0) {
@@ -385,6 +414,10 @@ export class CommandRouter {
     player.exp += expGain;
     player.pot += potGain;
     let msg = `\n  你获得了 ${expGain} 点经验，${potGain} 点潜能。\n`;
+    const levelResult = this.levels.checkLevelUp(player);
+    if (levelResult.leveledUp) {
+      msg += '  ' + levelResult.messages.join('\n  ') + '\n';
+    }
     const gold = 10 + Math.floor(Math.random() * 20);
     this.items.addItem(player, 'silver', gold);
     msg += `  从尸体上搜出 ${gold} 两银子。\n`;
@@ -561,7 +594,12 @@ export class CommandRouter {
       player.exp = (player.exp || 0) + exp;
       player.pot = (player.pot || 0) + pot;
       player.quest = null;
-      return `\n  ${npc.def.name}接过信件，脸色微变，随即收起。\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+      let msg = `\n  ${npc.def.name}接过信件，脸色微变，随即收起。\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+      const levelResult = this.levels.checkLevelUp(player);
+      if (levelResult.leveledUp) {
+        msg += '  ' + levelResult.messages.join('\n  ') + '\n';
+      }
+      return msg;
     }
 
     // Generic self-completing quest for any other NPC (backward-compatible behavior)
@@ -573,7 +611,12 @@ export class CommandRouter {
         player.exp = (player.exp || 0) + exp;
         player.pot = (player.pot || 0) + pot;
         player.quest = null;
-        return `\n  ${npc.def.name}点了点头：「做得很好！」\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+        let msg = `\n  ${npc.def.name}点了点头：「做得很好！」\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+        const levelResult = this.levels.checkLevelUp(player);
+        if (levelResult.leveledUp) {
+          msg += '  ' + levelResult.messages.join('\n  ') + '\n';
+        }
+        return msg;
       }
       return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
     }
@@ -639,7 +682,7 @@ export class CommandRouter {
   // ── Exert (内功运用) ─────────────────────────────────────
   private handleExert(player: Player, args: string[]): string {
     const action = args[0]?.toLowerCase();
-    if (!action) return '\n  用法：exert heal | yun heal（疗伤）\n';
+    if (!action) return '\n  用法：exert heal | yun heal（疗伤）；exert powerup；exert dispel [状态]\n';
     if (action === 'heal') {
       if ((player.mp || 0) < 30) return '\n  内力不足！疗伤需要 30 点内力。\n';
       player.mp -= 30;
@@ -650,10 +693,102 @@ export class CommandRouter {
       if ((player.mp || 0) < 50) return '\n  内力不足！需要 50 点内力。\n';
       player.mp -= 50;
       const durationMs = 30000;
-      player.powerupExpiry = Date.now() + durationMs;
+      player.powerupExpiry = this.clock.now() + durationMs;
       return '\n  你深吸一口气，内力充盈全身！30 秒内战斗力大幅提升。\n';
     }
-    return `\n  没有"${action}"这个内功运用。可用：heal, powerup\n`;
+    if (action === 'dispel') {
+      const condId = args[1]?.toLowerCase() || 'poison';
+      const forceLv = this.skills.getForceLevel(player);
+      const result = this.conditions.dispelCondition(player, condId, forceLv);
+      if (!result) return `\n  你并没有 ${condId} 状态。\n`;
+      return `\n  ${result}\n`;
+    }
+    return `\n  没有"${action}"这个内功运用。可用：heal, powerup, dispel\n`;
+  }
+
+  // ── Dazuo / Meditation ───────────────────────────────────
+  private handleDazuo(player: Player, args: string[]): string {
+    if (player.state === 'fighting') return '\n  战斗中无法打坐。\n';
+    if (player.isMeditating) return '\n  你已经在打坐了。\n';
+    const forceLv = this.skills.getForceLevel(player);
+    if (forceLv <= 0) return '\n  你需要先学会一门内功才能打坐。\n';
+
+    const seconds = parseInt(args[0] || '10', 10);
+    if (isNaN(seconds) || seconds <= 0 || seconds > 300) {
+      return '\n  用法：dazuo <秒数>（1-300）\n';
+    }
+
+    player.isMeditating = true;
+    const taskId = `meditate:${player.id}`;
+    player.meditationTaskId = taskId;
+    let elapsed = 0;
+
+    this.scheduler.schedule(taskId, 1000, () => {
+      elapsed++;
+      if (player.hp > 5) {
+        player.hp = Math.max(1, player.hp - 5);
+      }
+      if (player.mp < player.maxMp) {
+        player.mp = Math.min(player.maxMp, player.mp + 5);
+      } else if (forceLv >= 10 && Math.random() < 0.1) {
+        // Small chance to raise max MP when full.
+        player.maxMp += 1;
+      }
+      if (elapsed >= seconds || player.state === 'fighting') {
+        this.scheduler.cancel(taskId);
+        player.isMeditating = false;
+        player.meditationTaskId = undefined;
+      }
+    }, 1000);
+
+    return `\n  你盘膝坐下，开始打坐 ${seconds} 秒，将气血转化为内力。\n`;
+  }
+
+  // ── Practice / Self-train ────────────────────────────────
+  private handlePractice(player: Player, args: string[]): string {
+    if (player.state === 'fighting') return '\n  战斗中无法练习。\n';
+    const name = args.join(' ');
+    if (!name) return '\n  你想练习什么武功？用法：practice <武功名>\n';
+    const def = this.skills.findDefByName(name);
+    if (!def) return `\n  没有"${name}"这个武功。\n`;
+
+    const currentLevel = this.skills.getSkillLevel(player, def.id);
+    // Cap practice by player level * 10 to give leveling meaning.
+    const cap = (player.level || 1) * 10;
+    if (currentLevel >= cap) {
+      return `\n  你的${def.name}已经练到当前境界的极限（Lv.${cap}），需要先提升等级。\n`;
+    }
+
+    const cooldownId = `practice-cd:${player.id}:${def.id}`;
+    if (this.scheduler.has(cooldownId)) {
+      return `\n  你刚练过${def.name}，需要休息片刻。\n`;
+    }
+
+    const err = this.skills.learnSkill(player, def.id);
+    // learnSkill may spend potential; practice should not, so refund it.
+    if (!err) {
+      // Refund potential if learnSkill spent it.
+      // Actually learnSkill costs pot for school skills. For practice we want free.
+      // To keep simple, we only practice basic non-school skills that cost 1 pot.
+      player.pot = (player.pot || 0) + 1;
+    }
+    if (err) return `\n  ${err}\n`;
+
+    // Cooldown scales inversely with int: base 5s - int/5, min 1s.
+    const cooldownMs = Math.max(1000, 5000 - player.attributes.int * 200);
+    this.scheduler.schedule(cooldownId, cooldownMs, () => {}, undefined);
+    return `\n  你专心致志地练习${def.name}，有所进步！当前等级：Lv.${this.skills.getSkillLevel(player, def.id)}\n`;
+  }
+
+  // ── Tianfu / Attribute points ────────────────────────────
+  private handleTianfu(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  用法：tianfu <属性> [数量]  例如：tianfu str 2 / tianfu 臂力\n';
+    const attr = args[0];
+    const amount = args[1] ? parseInt(args[1], 10) : 1;
+    if (isNaN(amount) || amount <= 0) return '\n  数量必须是正整数。\n';
+    const err = this.levels.spendAttributePoint(player, attr, amount);
+    if (err) return `\n  ${err}\n`;
+    return `\n  你分配了 ${amount} 点属性点到 ${attr}。\n`;
   }
 
   // ── Shop ─────────────────────────────────────────────────

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "poison",
+    "name": "中毒",
+    "tickSeconds": 5,
+    "baseDamage": 5,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 10,
+    "messages": {
+      "apply": "你感到一阵眩晕，似乎中了毒！",
+      "tick": "毒气攻心，你感到五脏六腑都在翻腾。",
+      "cure": "你体内的毒素被清除了。",
+      "dispel": "你运功将毒素逼出体外。"
+    }
+  },
+  {
+    "id": "wound",
+    "name": "受伤",
+    "tickSeconds": 10,
+    "baseDamage": 2,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 5,
+    "messages": {
+      "apply": "你受了伤，行动有些不便。",
+      "tick": "伤口传来阵阵疼痛。",
+      "cure": "你的伤口愈合了。",
+      "dispel": "你运功止住了伤口流血。"
+    }
+  },
+  {
+    "id": "drunk",
+    "name": "醉酒",
+    "tickSeconds": 8,
+    "baseDamage": 0,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 8,
+    "messages": {
+      "apply": "你喝了个酩酊大醉。",
+      "tick": "你头晕目眩，站立不稳。",
+      "cure": "你酒醒了。",
+      "dispel": "你运功化解了酒意。"
+    }
+  }
+]

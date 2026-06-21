@@ -1,4 +1,5 @@
 import { Room, Exit } from '../models/Room.js';
+import { Scheduler } from '../time/Scheduler.js';
 import mapsData from '../data/maps.json' assert { type: 'json' };
 
 const DIRECTION_ALIASES: Record<string, string> = {
@@ -30,7 +31,7 @@ const DIRECTION_NAMES: Record<string, string> = {
 export class MapSystem {
   private rooms = new Map<string, Room>();
 
-  constructor() {
+  constructor(private scheduler?: Scheduler) {
     for (const room of mapsData.rooms as Room[]) {
       // Seed current items from initialItems if not already set.
       if (room.initialItems && (!room.items || room.items.length === 0)) {
@@ -104,17 +105,24 @@ export class MapSystem {
   }
 
   /** Schedule a single item to respawn in its room after the room's configured interval. */
-  scheduleItemRespawn(roomId: string, itemName: string, callback?: () => void): ReturnType<typeof setTimeout> | undefined {
+  scheduleItemRespawn(roomId: string, itemName: string, callback?: () => void): (() => void) | undefined {
     const room = this.rooms.get(roomId);
     if (!room) return undefined;
     const seconds = room.itemRespawnSeconds ?? 60;
     if (seconds <= 0) return undefined;
-    return setTimeout(() => {
+    const doRespawn = () => {
       if (!room.items) room.items = [];
       if (!room.items.includes(itemName)) {
         room.items.push(itemName);
       }
       if (callback) callback();
-    }, seconds * 1000);
+    };
+    if (this.scheduler) {
+      const id = `item-respawn:${roomId}:${itemName}`;
+      this.scheduler.schedule(id, seconds * 1000, doRespawn);
+      return () => this.scheduler!.cancel(id);
+    }
+    const handle = setTimeout(doRespawn, seconds * 1000);
+    return () => clearTimeout(handle);
   }
 }
