@@ -87,7 +87,7 @@ Turn-based auto-combat with MUD-style chain:
 Critical hits: 10% chance, 1.8x damage. Speed scales with dex + dodge level.
 
 ### Skills & Progression
-- **20 martial arts** across parry/dodge/force/weapons/strikes
+- **35 martial arts** across parry/dodge/force/weapons/strikes
 - Basic skills learn anywhere (1 pot); school skills require **membership + location** (2+ pot)
 - **Prerequisites**: e.g. 太极拳 requires 基本拳脚 ≥ Lv.10
 - Max level: 100 per skill
@@ -105,7 +105,7 @@ Level = `floor(sqrt(exp / 100)) + 1`. Displayed in `score`.
 ### Conditions
 Architecture ready for poison, bleeding, drunk, etc. (`player.conditions[]`).
 
-## Game World (26 rooms, 18 NPCs)
+## Game World (40 rooms, 18 NPCs)
 
 ```
                       shaolin/gate → shaolin/hall → shaolin/training
@@ -149,10 +149,10 @@ Full interactive map: `server/src/data/map.html`
 | Emei | 峨眉剑法(emei-jian) |
 | Gumu | 玉女心经(yunu-xinjing), 黯然销魂掌(anran-xiaohun) |
 
-## Testing (122 tests)
+## Testing (130 tests)
 
 ```bash
-npm test                    # All 122 tests (6 UI + 116 server)
+npm test                    # All 130 tests (6 UI + 124 server)
 cd server && npx vitest     # Server only
 npm run test:e2e            # Playwright UI E2E (6 tests)
 ```
