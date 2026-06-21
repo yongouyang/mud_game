@@ -108,7 +108,7 @@
           "roomId": "wilderness/cliff"
         },
         {
-          "direction": "south",
+          "direction": "west",
           "roomId": "gaibang/forest1"
         }
       ]
@@ -128,15 +128,11 @@
         },
         {
           "direction": "north",
-          "roomId": "shaolin/gate"
-        },
-        {
-          "direction": "north",
-          "roomId": "huashan/foot"
-        },
-        {
-          "direction": "north",
           "roomId": "gumu/entrance"
+        },
+        {
+          "direction": "east",
+          "roomId": "huashan/foot"
         }
       ]
     },
@@ -150,8 +146,12 @@
           "roomId": "wilderness/forest1"
         },
         {
-          "direction": "west",
+          "direction": "east",
           "roomId": "wudang/gate"
+        },
+        {
+          "direction": "south",
+          "roomId": "shaolin/gate"
         },
         {
           "direction": "north",
@@ -181,7 +181,7 @@
         },
         {
           "direction": "south",
-          "roomId": "wilderness/forest2"
+          "roomId": "wilderness/cliff"
         }
       ]
     },
@@ -275,10 +275,6 @@
         {
           "direction": "south",
           "roomId": "gaibang/forest2"
-        },
-        {
-          "direction": "north",
-          "roomId": "wilderness/forest1"
         }
       ]
     },

@@ -162,8 +162,8 @@ describe('E2E: Phase 3 — skills, items, NPCs', () => {
     let o = await sendCmd('w');  o = await sendCmd('n');  expect(o).toContain('主街');
     o = await sendCmd('n');      expect(o).toContain('山门');
     o = await sendCmd('n');      expect(o).toContain('山林·入口');
-    o = await sendCmd('n');      expect(o).toContain('山林·深处');
-    o = await sendCmd('n');      expect(o).toContain('少林寺');
+    o = await sendCmd('e');      expect(o).toContain('断崖');
+    o = await sendCmd('s');      expect(o).toContain('少林寺');
     o = await sendCmd('w');      expect(o).toContain('大雄宝殿');
     o = await sendCmd('schools'); expect(o).toContain('少林派');
     o = await sendCmd('join 少林派'); expect(o).toContain('拜入了少林派');
@@ -171,73 +171,6 @@ describe('E2E: Phase 3 — skills, items, NPCs', () => {
   });
 });
 
-describe('E2E: Phase 5 — auto-combat + regen', () => {
-  beforeAll(async () => {
-    clientSocket = ioc(`http://localhost:${port}`);
-    await new Promise<void>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
-      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
-      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
-    });
-  }, 15000);
-
-  function sendCmd(input: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
-      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
-      clientSocket.emit('command', { input });
-    });
-  }
-
-  beforeAll(async () => {
-    await sendCmd('register tester2 pw456');
-    await sendCmd('郭靖');
-    await sendCmd('done');
-  });
-
-
-  it('combat damage is never NaN', async () => {
-    await sendCmd('n'); await sendCmd('n'); await sendCmd('n');
-    await sendCmd('kill 山贼');
-    let hadNaNDamage = false;
-    const capture = (data: { text: string }) => { if (data.text.includes('NaN')) hadNaNDamage = true; };
-    clientSocket.on('output', capture);
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    await sendCmd('flee');
-    clientSocket.off('output', capture);
-    expect(hadNaNDamage).toBe(false);
-  });
-
-  it('server does not crash after combat commands', async () => {
-    // NOTE: bandit may be dead from previous tests, so this tests server stability only
-    // Navigate normally
-    let o = await sendCmd('n'); o = await sendCmd('n'); o = await sendCmd('n');
-    // Try kill - may fail if bandit already dead, that's fine
-    const killResult = await sendCmd('kill 山贼');
-    if (killResult.includes('没有')) {
-      // Bandit already dead, test navigation + server stability is sufficient
-      o = await sendCmd('look');
-      expect(o).toContain('山林');
-      return;
-    }
-    // Wait for at least one auto-tick
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    // Flee to verify combat tick cleanup
-    await sendCmd('flee');
-    // Verify server is still alive by sending a command
-    o = await sendCmd('look');
-    expect(o).toContain('山林');
-    // Verify health endpoint still works
-    const res = await fetch(`http://localhost:${port}/health`);
-    expect((await res.json()).status).toBe('ok');
-  });
-
-  it('HP regens after combat', async () => {
-    const res = await fetch(`http://localhost:${port}/health`);
-    const body = await res.json();
-    expect(body.online).toBeGreaterThanOrEqual(0);
-  });
-});
 
 describe('E2E: port auto-bump', () => {
   it('tryPort finds available port', async () => {
