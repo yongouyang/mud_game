@@ -149,6 +149,18 @@ npcs.register({
   });
   
 
+  // ── Populate the world with more NPCs ──────────────────
+  npcs.register({ id: "storyteller", name: "说书人", description: "一位白发苍苍的说书先生，正在为围观的百姓讲述江湖轶事。", roomId: "town/square", dialogue: ["欲知后事如何，且听下回分解。", "那少林玄慈方丈，可是一位得道高僧……", "年轻人，江湖险恶，多学些武功傍身吧。"], attributes: { str: 5, int: 15, con: 8, dex: 5 }, skills: [], aggressive: false });
+  npcs.register({ id: "herb-vendor", name: "药铺老板", description: "一个精明的药材商人，柜台上摆满了各式丹药。", roomId: "town/mainstreet", dialogue: ["客官要买金疮药吗？十两银子一瓶。", "行走江湖，金疮药可少不了！"], attributes: { str: 5, int: 12, con: 8, dex: 5 }, skills: [], aggressive: false });
+  npcs.register({ id: "trainer", name: "武师", description: "练武场的教头，身形魁梧，目光如炬。", roomId: "town/training", dialogue: ["想学功夫？先练好基本功！", "拳不离手，曲不离口。"], attributes: { str: 14, int: 8, con: 12, dex: 10 }, skills: [{ skillId: "cuff", level: 20 }], aggressive: false });
+  npcs.register({ id: "mysterious-merchant", name: "神秘商人", description: "一位戴着兜帽的神秘人物，出售稀有物品。", roomId: "town/inn_upstairs", dialogue: ["嘘……我这里有稀罕玩意儿。", "这把铁剑可是出自名家之手。"], attributes: { str: 8, int: 14, con: 8, dex: 12 }, skills: [], aggressive: false });
+  npcs.register({ id: "woodcutter", name: "樵夫", description: "一位老实巴交的樵夫，正扛着柴火下山。", roomId: "wilderness/gate", dialogue: ["山上有狼，客官小心！", "我天天走这条路，闭着眼都不会迷路。"], attributes: { str: 10, int: 6, con: 10, dex: 6 }, skills: [], aggressive: false });
+  npcs.register({ id: "wolf", name: "野狼", description: "一只灰毛野狼，眼露凶光，正盯着你。", roomId: "wilderness/forest2", dialogue: ["嗷呜——！"], attributes: { str: 10, int: 3, con: 8, dex: 12 }, skills: [{ skillId: "cuff", level: 5 }], aggressive: true });
+  npcs.register({ id: "herb-collector", name: "采药人", description: "一位背着竹篓的采药老人，正在崖边寻找草药。", roomId: "wilderness/cliff", dialogue: ["这崖边的草药可是好药材。", "武当山的道士常来找我买药。"], attributes: { str: 6, int: 12, con: 8, dex: 8 }, skills: [], aggressive: false });
+  npcs.register({ id: "bear", name: "黑熊", description: "一头巨大的黑熊，正趴在洞穴里睡觉。闻到人味后睁开了眼。", roomId: "wilderness/cave", dialogue: ["吼——！"], attributes: { str: 18, int: 2, con: 15, dex: 4 }, skills: [{ skillId: "cuff", level: 8 }], aggressive: true });
+  npcs.register({ id: "beggar", name: "乞丐", description: "一个衣衫褴褛的叫花子，正蹲在树下打盹。", roomId: "gaibang/forest1", dialogue: ["行行好吧，赏口饭吃……", "丐帮的兄弟遍布五湖四海。"], attributes: { str: 7, int: 8, con: 8, dex: 10 }, skills: [], aggressive: false });
+  npcs.register({ id: "vagrant", name: "流浪汉", description: "一个无家可归的流浪汉，靠在树桩上晒太阳。", roomId: "gaibang/forest2", dialogue: ["江湖漂泊，四海为家。", "往北走就是丐帮总舵了。"], attributes: { str: 6, int: 7, con: 8, dex: 6 }, skills: [], aggressive: false });
+  
 const router = new CommandRouter(players, map, combat, skills, items, npcs, schools);
 
 // Track auth state per socket
