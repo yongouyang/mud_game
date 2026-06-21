@@ -3,6 +3,23 @@ export type SkillType =
   | 'unarmed' | 'cuff' | 'finger' | 'hand' | 'claw'
   | 'literate';
 
+export interface SkillPerformDef {
+  name: string;
+  desc: string;
+  multiplier?: number;
+  mpCost?: number;
+  conditionId?: string;
+  conditionChance?: number;
+  conditionLevel?: number;
+  weaponType?: string;
+  targetType?: 'single' | 'self' | 'aoe';
+}
+
+export interface SkillRequirement {
+  skillId: string;
+  level: number;
+}
+
 export interface SkillDef {
   id: string;
   name: string;
@@ -12,8 +29,9 @@ export interface SkillDef {
   damageScale: number;
   requireSkill?: string;
   requireLevel?: number;
+  requirements?: SkillRequirement[];
   schoolId?: string | null;
-  performs?: { name: string; desc: string; multiplier: number }[];
+  performs?: SkillPerformDef[];
 }
 
 export interface PlayerSkill {

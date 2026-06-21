@@ -6,8 +6,21 @@ const CHAR_NAME_RE = /^[\u4e00-\u9fff]{2,6}$/;
 
 export class PlayerManager {
   private players = new Map<string, Player>();
+  private dirty = new Set<string>();
 
   constructor(private clock: SystemClock) {}
+
+  private markDirty(id: string): void {
+    this.dirty.add(id);
+  }
+
+  hasDirty(): boolean {
+    return this.dirty.size > 0;
+  }
+
+  clearDirty(): void {
+    this.dirty.clear();
+  }
 
   createPlayer(id: string): void {
     this.players.set(id, {
@@ -39,6 +52,7 @@ export class PlayerManager {
       shen: 0,
       kills: { players: 0, npcs: 0 },
     });
+    this.markDirty(id);
   }
 
   getPlayer(id: string): Player | undefined {
@@ -47,11 +61,13 @@ export class PlayerManager {
 
   removePlayer(id: string): void {
     this.players.delete(id);
+    this.markDirty(id);
   }
 
   /** Insert a fully-formed Player (e.g. loaded from save file) */
   setPlayer(p: Player): void {
     this.players.set(p.id, p);
+    this.markDirty(p.id);
   }
 
   getPlayersInRoom(roomId: string): Player[] {
@@ -83,6 +99,7 @@ export class PlayerManager {
       return '名字须为2-6个中文字。';
     }
     player.name = name;
+    this.markDirty(id);
     return null;
   }
 
@@ -93,6 +110,7 @@ export class PlayerManager {
 
     const p = createPlayer(id, player.name, player.attributes);
     this.players.set(id, p);
+    this.markDirty(id);
     return null;
   }
 

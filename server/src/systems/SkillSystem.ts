@@ -5,18 +5,21 @@ import { SchoolSystem } from './SchoolSystem.js';
 
 export class SkillSystem {
   private defs = new Map<string, SkillDef>();
+  private nameIndex = new Map<string, string>();
 
   constructor(private schools?: SchoolSystem) {
     for (const s of skillsData as SkillDef[]) {
       this.defs.set(s.id, s);
+      this.nameIndex.set(s.name, s.id);
+      this.nameIndex.set(s.id, s.id);
     }
   }
 
   getDef(skillId: string): SkillDef | undefined { return this.defs.get(skillId); }
 
   findDefByName(name: string): SkillDef | undefined {
-    for (const def of this.defs.values()) { if (def.name === name || def.id === name) return def; }
-    return undefined;
+    const id = this.nameIndex.get(name);
+    return id ? this.defs.get(id) : undefined;
   }
 
   /** Learn a skill. Returns error message or null for success. */
@@ -24,12 +27,16 @@ export class SkillSystem {
     const def = this.defs.get(skillId);
     if (!def) return `没有"${skillId}"这个武功。`;
 
-    // Check prerequisite
+    // Check prerequisites
+    const requirements = def.requirements || [];
     if (def.requireSkill && def.requireLevel) {
-      const prereqLevel = this.getSkillLevel(player, def.requireSkill);
-      if (prereqLevel < def.requireLevel) {
-        const prereqDef = this.defs.get(def.requireSkill);
-        return `学习${def.name}需要${prereqDef?.name || def.requireSkill}达到Lv.${def.requireLevel}（当前Lv.${prereqLevel}）。`;
+      requirements.push({ skillId: def.requireSkill, level: def.requireLevel });
+    }
+    for (const req of requirements) {
+      const actual = this.getSkillLevel(player, req.skillId);
+      if (actual < req.level) {
+        const prereqDef = this.defs.get(req.skillId);
+        return `学习${def.name}需要${prereqDef?.name || req.skillId}达到Lv.${req.level}（当前Lv.${actual}）。`;
       }
     }
 

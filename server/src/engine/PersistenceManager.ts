@@ -29,9 +29,11 @@ export class PersistenceManager {
     }
   }
 
-  /** Persist all currently known players immediately. */
+  /** Persist all currently known players immediately (only if any are dirty). */
   saveAll(): void {
+    if (!this.players.hasDirty()) return;
     this.persistence.saveAll(this.players.getAllPlayers());
+    this.players.clearDirty();
   }
 
   /** Start periodic autosave. */

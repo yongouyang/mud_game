@@ -15,6 +15,7 @@ export interface NpcInstance {
 export class NpcSystem {
   private npcs = new Map<string, NpcInstance>();
   private defs = new Map<string, NpcDef>();
+  private roomIndex = new Map<string, Set<NpcInstance>>();
 
   constructor(private skillSystem: SkillSystem, private scheduler?: Scheduler) {
     for (const def of npcsData as NpcDef[]) {
@@ -22,15 +23,25 @@ export class NpcSystem {
     }
   }
 
+  private addToRoomIndex(npc: NpcInstance): void {
+    const roomId = npc.def.roomId;
+    if (!this.roomIndex.has(roomId)) {
+      this.roomIndex.set(roomId, new Set());
+    }
+    this.roomIndex.get(roomId)!.add(npc);
+  }
+
   register(def: NpcDef): void {
     this.defs.set(def.id, def);
-    this.npcs.set(def.id, {
+    const npc: NpcInstance = {
       def,
       hp: 80 + def.attributes.con * 10,
       maxHp: 80 + def.attributes.con * 10,
       state: 'idle',
       targetPlayerId: null,
-    });
+    };
+    this.npcs.set(def.id, npc);
+    this.addToRoomIndex(npc);
   }
 
   /** Spawn a clone of an existing NPC definition in a specific room. */
@@ -48,13 +59,9 @@ export class NpcSystem {
   }
 
   getNpcsInRoom(roomId: string): NpcInstance[] {
-    const result: NpcInstance[] = [];
-    for (const npc of this.npcs.values()) {
-      if (npc.def.roomId === roomId && npc.state === 'idle' && npc.hp > 0) {
-        result.push(npc);
-      }
-    }
-    return result;
+    const set = this.roomIndex.get(roomId);
+    if (!set) return [];
+    return Array.from(set).filter((npc) => npc.state === 'idle' && npc.hp > 0);
   }
 
   getCombatNpc(targetPlayerId: string): NpcInstance | undefined {

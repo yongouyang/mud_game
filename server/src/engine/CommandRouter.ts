@@ -993,7 +993,7 @@ export class CommandRouter {
   private handlePerform(player: Player, args: string[]): string {
     if (args.length === 0) return '\n  用法：perform <技能.绝招>\n';
     const [skillPerform] = args;
-    const [skillName] = skillPerform?.split('.') || [''];
+    const [skillName, performName] = (skillPerform || '').split('.');
     const def = this.skills.findDefByName(skillName || '');
     if (!def) return `\n  你还没有学会${skillName || '该技能'}。\n`;
     const level = this.skills.getSkillLevel(player, def.id);
@@ -1001,13 +1001,54 @@ export class CommandRouter {
     if (player.state !== 'fighting' || !player.targetEnemy) {
       return '\n  你必须在战斗中才能施展绝招。\n';
     }
-    if ((player.mp || 0) < 20) return '\n  内力不足！施展绝招需要 20 点内力。\n';
-    player.mp -= 20;
-    const powerupMult = player.powerupExpiry && player.powerupExpiry > Date.now() ? 1.3 : 1;
-    const baseDmg = def.damageBase * 3 + def.damageScale * level * 2;
-    const dmg = Math.round(baseDmg * powerupMult);
 
-    const targetId = player.targetEnemy;
+    const perform = performName
+      ? def.performs?.find((p) => p.name === performName)
+      : def.performs?.[0];
+    if (!perform) {
+      return `\n  ${def.name} 没有「${performName || ''}」这一招。\n`;
+    }
+
+    if (perform.weaponType) {
+      const weapon = this.getEquippedWeapon(player);
+      if (!weapon || weapon.weaponType !== perform.weaponType) {
+        return `\n  施展 ${perform.name} 需要装备 ${perform.weaponType} 类武器。\n`;
+      }
+    }
+
+    const mpCost = perform.mpCost ?? 20;
+    if ((player.mp || 0) < mpCost) return `\n  内力不足！施展 ${perform.name} 需要 ${mpCost} 点内力。\n`;
+    player.mp -= mpCost;
+
+    if (perform.targetType === 'self') {
+      if (perform.conditionId && Math.random() < (perform.conditionChance ?? 1)) {
+        this.conditions.applyCondition(player, perform.conditionId, perform.conditionLevel ?? 1);
+      }
+      return `\n  你运起 ${def.name}，${perform.name}！\n`;
+    }
+
+    const powerupMult = player.powerupExpiry && player.powerupExpiry > this.clock.now() ? 1.3 : 1;
+    const base = def.damageBase + def.damageScale * level;
+    const multiplier = perform.multiplier ?? 2;
+    const dmg = Math.max(0, Math.round(base * multiplier * powerupMult));
+
+    const targets = perform.targetType === 'aoe'
+      ? [...player.combatTargets]
+      : [player.targetEnemy];
+
+    let msg = `\n  你大喝一声，使出了「${def.name}」之「${perform.name}」！\n`;
+    for (const targetId of targets) {
+      msg += this.applyPerformDamage(player, targetId, dmg, perform);
+    }
+    return msg;
+  }
+
+  private applyPerformDamage(
+    player: Player,
+    targetId: string,
+    dmg: number,
+    perform: import('../models/Skill.js').SkillPerformDef,
+  ): string {
     if (targetId.startsWith('npc:')) {
       const npc = this.npcs.getNpc(targetId.slice(4));
       if (!npc || npc.hp <= 0) {
@@ -1016,28 +1057,30 @@ export class CommandRouter {
         return msg;
       }
       npc.hp = Math.max(0, npc.hp - dmg);
-      const npcTargetId = 'npc:' + npc.def.id;
-      let msg = `\n  你大喝一声，使出了「${def.name}」绝招！对 ${npc.def.name} 造成 ${dmg} 点伤害。\n`;
+      let msg = `  对 ${npc.def.name} 造成 ${dmg} 点伤害。\n`;
       if (npc.hp <= 0) {
         msg += this.handleNpcDeath(player, npc);
-        this.removeFromCombat(player, npcTargetId);
-      }
-      return msg;
-    } else {
-      const target = this.players.getPlayer(targetId);
-      if (!target || target.hp <= 0) {
-        player.state = 'playing'; player.targetEnemy = null;
-        if (target) { target.state = 'playing'; target.targetEnemy = null; }
-        return '\n  敌人已倒下，战斗结束。\n';
-      }
-      target.hp = Math.max(0, target.hp - dmg);
-      let msg = `\n  你大喝一声，使出了「${def.name}」绝招！对 ${target.name} 造成 ${dmg} 点伤害。\n`;
-      if (target.hp <= 0) {
-        player.state = 'playing'; player.targetEnemy = null;
-        target.state = 'playing'; target.targetEnemy = null;
+        this.removeFromCombat(player, targetId);
       }
       return msg;
     }
+
+    const target = this.players.getPlayer(targetId);
+    if (!target || target.hp <= 0) {
+      player.state = 'playing'; player.targetEnemy = null;
+      if (target) { target.state = 'playing'; target.targetEnemy = null; }
+      return '  敌人已倒下，战斗结束。\n';
+    }
+    target.hp = Math.max(0, target.hp - dmg);
+    if (perform.conditionId && Math.random() < (perform.conditionChance ?? 1)) {
+      this.conditions.applyCondition(target, perform.conditionId, perform.conditionLevel ?? 1);
+    }
+    let msg = `  对 ${target.name} 造成 ${dmg} 点伤害。\n`;
+    if (target.hp <= 0) {
+      player.state = 'playing'; player.targetEnemy = null;
+      target.state = 'playing'; target.targetEnemy = null;
+    }
+    return msg;
   }
 
   // ── Exert (内功运用) ─────────────────────────────────────

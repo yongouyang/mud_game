@@ -211,10 +211,6 @@ io.on('connection', (socket) => {
 
     const response = router.handle(raw, socket.id);
     socket.emit('output', { text: response });
-    const p = players.getPlayer(socket.id);
-    if (p && p.state === 'playing') {
-      persistenceManager.saveAll();
-    }
 
     // Auto-combat tick: start/stop based on fighting state
     manageCombatTick(socket);

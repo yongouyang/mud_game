@@ -2,6 +2,8 @@ import { InventoryItem } from './Item.js';
 import { PlayerSkill } from './Skill.js';
 import { PlayerCondition } from './Condition.js';
 
+export const CURRENT_PLAYER_VERSION = 1;
+
 export interface PlayerAttributes {
   str: number; // 臂力 — affects attack damage
   int: number; // 悟性 — affects skill learning
@@ -14,6 +16,7 @@ export interface PlayerAttributes {
 export type PlayerState = 'creating' | 'playing' | 'fighting';
 
 export interface Player {
+  version?: number;
   id: string;
   name: string;
   attributes: PlayerAttributes;
@@ -77,6 +80,7 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
   const maxHp = 80 + attrs.con * 10;
   const maxMp = 50 + attrs.int * 8;
   return {
+    version: CURRENT_PLAYER_VERSION,
     id,
     name,
     attributes: attrs,

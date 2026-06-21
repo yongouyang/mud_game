@@ -5,10 +5,13 @@ import itemsData from '../data/items.json' assert { type: 'json' };
 
 export class ItemSystem {
   private defs = new Map<string, ItemDef>();
+  private nameIndex = new Map<string, string>();
 
   constructor(private conditions?: ConditionSystem) {
     for (const item of itemsData as ItemDef[]) {
       this.defs.set(item.id, item);
+      this.nameIndex.set(item.name, item.id);
+      this.nameIndex.set(item.id, item.id);
     }
   }
 
@@ -17,10 +20,8 @@ export class ItemSystem {
   }
 
   findDefByName(name: string): ItemDef | undefined {
-    for (const def of this.defs.values()) {
-      if (def.name === name || def.id === name) return def;
-    }
-    return undefined;
+    const id = this.nameIndex.get(name);
+    return id ? this.defs.get(id) : undefined;
   }
 
   addItem(player: Player, itemId: string, qty: number = 1): void {
