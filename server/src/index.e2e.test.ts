@@ -195,6 +195,19 @@ describe('E2E: Phase 5 — auto-combat + regen', () => {
     await sendCmd('done');
   });
 
+
+  it('combat damage is never NaN', async () => {
+    await sendCmd('n'); await sendCmd('n'); await sendCmd('n');
+    await sendCmd('kill 山贼');
+    let hadNaNDamage = false;
+    const capture = (data: { text: string }) => { if (data.text.includes('NaN')) hadNaNDamage = true; };
+    clientSocket.on('output', capture);
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    await sendCmd('flee');
+    clientSocket.off('output', capture);
+    expect(hadNaNDamage).toBe(false);
+  });
+
   it('server does not crash after combat commands', async () => {
     // Move to bandit room
     let o = await sendCmd('n');

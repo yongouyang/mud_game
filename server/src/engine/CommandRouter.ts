@@ -181,6 +181,8 @@ export class CommandRouter {
         bestStrike: this.npcs.getBestNpcStrike(targetNpc),
       };
       const enemyState = {
+        mp: 0,
+        maxMp: 0,
         name: targetNpc.def.name,
         get hp() { return targetNpc.hp; }, set hp(v: number) { targetNpc.hp = v; },
         maxHp: targetNpc.maxHp,
@@ -272,6 +274,8 @@ export class CommandRouter {
         bestStrike: this.npcs.getBestNpcStrike(npc),
       };
       const enemyState = {
+        mp: 0,
+        maxMp: 0,
         name: npc.def.name,
         get hp() { return npc.hp; }, set hp(v: number) { npc.hp = v; },
         maxHp: npc.maxHp,
