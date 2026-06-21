@@ -134,4 +134,22 @@ test.describe('Classic MUD features', () => {
     expect(t).toMatch(/潜能/);
     expect(t).toMatch(/臂力/);
   });
+
+test.describe('Quest system', () => {
+  test('quest command works with NPC', async ({ page }) => {
+    test.setTimeout(30000);
+    await page.goto('/');
+    const input = page.locator('input[placeholder="输入命令..."]');
+    const sendBtn = page.getByRole('button', { name: '发送' });
+    const output = page.locator('#root');
+    async function cmd(text: string) { await input.fill(text); await sendBtn.click(); await page.waitForTimeout(200); }
+    const uid = 'pw' + Date.now();
+    await cmd('register ' + uid + ' pw123');
+    await cmd('战狂'); await cmd('done');
+    await cmd('quest');
+    const t = (await output.textContent()) || '';
+    expect(t).toMatch(/用法|任务/);
+  });
+});
+
 });

@@ -28,6 +28,7 @@ export interface Player {
   skills: PlayerSkill[];
   conditions: string[];
   schoolId?: string;
+  quest: { type: string; target: string; exp: number; pot: number } | null;
 }
 
 export function createPlayer(id: string, name: string, attrs: PlayerAttributes): Player {
@@ -51,6 +52,7 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     skills: [],
     conditions: [],
     schoolId: undefined,
+    quest: null,
   };
 }
 

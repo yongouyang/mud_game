@@ -20,6 +20,7 @@ export class PlayerManager {
       targetEnemy: null,
       conditions: [],
       schoolId: undefined,
+      quest: null,
       inventory: [],
       equipped: [],
       skills: [],

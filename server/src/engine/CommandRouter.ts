@@ -83,6 +83,7 @@ export class CommandRouter {
       case 'learn': return this.handleLearn(player, rest);
       case 'schools': return this.handleSchools(player, rest);
       case 'join': return this.handleJoin(player, rest);
+      case 'quest': return this.handleQuest(player, rest);
       case 'buy': return this.handleBuy(player, rest);
       case 'perform': case 'pfm': return this.handlePerform(player, rest);
       case 'exert': case 'yun': return this.handleExert(player, rest);
@@ -456,6 +457,34 @@ export class CommandRouter {
       return `\n  你学会了${name}！当前等级：Lv.${level}\n`;
     }
     return `\n  没有"${name}"这个武功。\n`;
+  }
+
+  // ── Quest System ───────────────────────────────────────
+  private handleQuest(player: Player, args: string[]): string {
+    const name = args.join(' ');
+    if (!name) return '\n  用法：quest <NPC名> — 向NPC接取或完成任务\n';
+    const roomNpcs = this.npcs.getNpcsInRoom(player.currentRoom);
+    const npc = roomNpcs.find((n) => n.def.name === name || n.def.id === name);
+    if (!npc) return `\n  这里没有叫${name}的人。\n`;
+
+    // Completing a quest?
+    if (player.quest) {
+      if (player.quest.type === 'letter') {
+        const exp = player.quest.exp;
+        const pot = player.quest.pot;
+        player.exp = (player.exp || 0) + exp;
+        player.pot = (player.pot || 0) + pot;
+        player.quest = null;
+        return `\n  任务完成！你获得了 ${exp} 点经验和 ${pot} 点潜能。\n`;
+      }
+      return `\n  你还有一个任务未完成（${player.quest.type}）。\n`;
+    }
+
+    // Accept new quest
+    const exp = 10 + Math.floor(Math.random() * 10) + Math.floor((player.exp || 0) / 10000);
+    const pot = 5 + Math.floor(Math.random() * 5);
+    player.quest = { type: 'letter', target: npc.def.name, exp, pot };
+    return `\n  ${npc.def.name}对你说：「少侠，请帮我把这封信送到目的地！」（quest 再来找我就算完成）\n`;
   }
 
   // ── Perform (绝招) ──────────────────────────────────────

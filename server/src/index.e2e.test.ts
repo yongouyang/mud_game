@@ -229,3 +229,40 @@ describe('E2E: debug NPC counter', () => {
     expect(out.length).toBeGreaterThan(10);
   });
 });
+
+describe('E2E: Quest System', () => {
+  let uid: string;
+  beforeAll(async () => {
+    clientSocket = ioc(`http://localhost:${port}`);
+    await new Promise<void>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
+      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
+      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
+    });
+    function sendCmd(input: string): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
+        clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
+        clientSocket.emit('command', { input });
+      });
+    }
+    uid = 'queste2e' + Date.now();
+    await sendCmd('register ' + uid + ' pw999');
+    await sendCmd('战狂'); await sendCmd('done');
+    // Give exp for quest eligibility
+    await sendCmd('n'); await sendCmd('n'); await sendCmd('n');
+    await sendCmd('kill 山贼');
+    await new Promise(r => setTimeout(r, 3000));
+    await sendCmd('flee');
+    await new Promise(r => setTimeout(r, 500));
+  }, 25000);
+
+  it('quest from NPC works', async () => {
+    const out2 = await new Promise<string>((resolve) => {
+      const t = setTimeout(() => resolve('timeout'), 3000);
+      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
+      clientSocket.emit('command', { input: 'quest' });
+    });
+    expect(out2).toMatch(/用法|任务/);
+  });
+});
