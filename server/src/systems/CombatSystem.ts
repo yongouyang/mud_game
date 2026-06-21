@@ -44,12 +44,12 @@ export class CombatSystem {
     let msg = '';
 
     // ── Player attacks enemy ──
-    const strikeDmg = playerSkills.bestStrike
+    const strikeDmg = Math.round(playerSkills.bestStrike
       ? playerSkills.bestStrike.damage
-      : 5 + player.attributes.str * 1.5;
+      : 5 + player.attributes.str * 1.5);
 
     const atkResult = this.resolveAttack(
-      { name: player.name, hp: player.hp, maxHp: player.maxHp },
+      player.name,
       player.attributes,
       playerSkills,
       enemy,
@@ -64,12 +64,12 @@ export class CombatSystem {
 
     // ── Enemy counter-attacks ──
     if (!isPlayerExtraHit) {
-      const enemyDmg = enemy.skills.bestStrike
+      const enemyDmg = Math.round(enemy.skills.bestStrike
         ? enemy.skills.bestStrike.damage
-        : 5 + enemy.attributes.str * 1.5;
+        : 5 + enemy.attributes.str * 1.5);
 
       const defResult = this.resolveAttack(
-        { name: enemy.name, hp: enemy.hp, maxHp: enemy.maxHp },
+        enemy.name,
         enemy.attributes,
         enemy.skills,
         player,
@@ -93,7 +93,7 @@ export class CombatSystem {
    * Returns whether defender died.
    */
   private resolveAttack(
-    _attacker: CombatTarget,
+    attackerName: string,
     attackerAttr: { str: number; dex: number },
     attackerSkills: { parryLv: number; dodgeLv: number; forceLv: number; bestStrike: { name: string; damage: number } | null },
     defender: { name: string; hp: number; maxHp: number; mp: number; maxMp: number },
@@ -107,7 +107,7 @@ export class CombatSystem {
     const parryChance = defenderSkills.parryLv / (defenderSkills.parryLv + attackerAttr.dex * 2 + 1);
     if (Math.random() < parryChance) {
       return {
-        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}你${isExtraHit ? '' : '使出' + strikeName + '，'}被 ${defender.name} 招架开了。\n`,
+        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}被 ${defender.name} 招架开了。\n`,
         defenderDead: false,
       };
     }
@@ -116,18 +116,19 @@ export class CombatSystem {
     const dodgeChance = defenderSkills.dodgeLv / (defenderSkills.dodgeLv + attackerAttr.dex * 3 + 5);
     if (Math.random() < dodgeChance) {
       return {
-        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}你${isExtraHit ? '' : '使出' + strikeName + '，'}${defender.name} 身形一闪躲开了。\n`,
+        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}${defender.name} 身形一闪躲开了。\n`,
         defenderDead: false,
       };
     }
 
-    // 3. 内力护体 (force absorb): absorb = min(damage, forceLv * 2 + mp*0.1)
-    const forceAbsorb = Math.min(rawDmg, Math.floor(defenderSkills.forceLv * 2 + defender.mp * 0.1));
+    // 3. 内力护体: only active when defender has force skills
+    const forceBonus = defenderSkills.forceLv > 0 ? Math.floor(defender.mp * 0.05) : 0;
+    const forceAbsorb = Math.floor(Math.min(rawDmg, defenderSkills.forceLv * 2 + forceBonus));
     const mpCost = Math.floor(forceAbsorb * 0.3);
-    if (forceAbsorb > 0) {
+    if (forceAbsorb > 0 && defender.mp > 0) {
       defender.mp = Math.max(0, defender.mp - mpCost);
     }
-    const finalDmg = Math.max(1, rawDmg - forceAbsorb);
+    const finalDmg = Math.max(1, Math.round(rawDmg - forceAbsorb));
 
     // 4. Damage display
     const absorbMsg = forceAbsorb > 0 ? `（内力吸收了 ${forceAbsorb} 点）` : '';
@@ -136,13 +137,13 @@ export class CombatSystem {
 
     if (defender.hp <= 0) {
       return {
-        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}你${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
+        message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
         defenderDead: true,
       };
     }
 
     return {
-      message: `\n  ${isExtraHit ? '[抢攻] ' : ''}你${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
+      message: `\n  ${isExtraHit ? '[抢攻] ' : ''}${attackerName}${isExtraHit ? '' : '一式' + strikeName + '，'}对 ${defender.name} 造成了 ${finalDmg} 点伤害${crit}${absorbMsg}。\n`,
       defenderDead: false,
     };
   }
