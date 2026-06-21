@@ -213,6 +213,16 @@ export class CommandRouter {
     return this.doCombatRound(player, player.targetEnemy);
   }
 
+  /** Calculate combat round interval in ms based on player attributes and skills */
+  getCombatSpeed(playerId: string): number {
+    const player = this.players.getPlayer(playerId);
+    if (!player) return 1500;
+    const dex = player.attributes.dex;
+    const dodgeLevel = this.skills.getDodgeLevel(player);
+    // Base 2000ms, minus dex bonus, minus dodge bonus. Floor at 600ms.
+    return Math.max(600, 2000 - dex * 45 - dodgeLevel * 8);
+  }
+
   private doCombatRound(player: Player, targetId: string): string {
     let msg = '';
 

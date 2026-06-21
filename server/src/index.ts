@@ -238,7 +238,7 @@ function manageCombatTick(socket: any) {
             persistence.saveAll(players.getAllPlayers());
           }
         }
-      }, 1500); // 1.5 seconds per round
+      }, router.getCombatSpeed(socket.id))
       combatTicks.set(socket.id, tick);
     }
   } else {

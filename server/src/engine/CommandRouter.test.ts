@@ -226,6 +226,16 @@ describe('CommandRouter', () => {
       const output = cmd('hit');
       expect(output).toContain('伤害');
     });
+
+    it('combat speed scales with dex and dodge', () => {
+      const p = players.getPlayer(PLAYER_ID)!;
+      const spd1 = router.getCombatSpeed(PLAYER_ID);
+      expect(spd1).toBeGreaterThanOrEqual(600);
+      expect(spd1).toBeLessThanOrEqual(2000);
+      p.attributes.dex = 20;
+      const spd2 = router.getCombatSpeed(PLAYER_ID);
+      expect(spd2).toBeLessThan(spd1);
+    });
   });
 
   describe('skills and items', () => {
