@@ -109,6 +109,28 @@ export class SkillSystem {
     return max;
   }
 
+  /** Return attribute bonuses derived from highest relevant skill levels. */
+  getAttributeBonus(player: Player): { str: number; int: number; con: number; dex: number } {
+    let bestStrike = 0;
+    let bestLiterate = 0;
+    let bestForce = 0;
+    let bestDodge = 0;
+    for (const s of player.skills || []) {
+      const def = this.defs.get(s.skillId);
+      if (!def) continue;
+      if (def.type === 'strike' && s.level > bestStrike) bestStrike = s.level;
+      if (def.type === 'literate' && s.level > bestLiterate) bestLiterate = s.level;
+      if (def.type === 'force' && s.level > bestForce) bestForce = s.level;
+      if (def.type === 'dodge' && s.level > bestDodge) bestDodge = s.level;
+    }
+    return {
+      str: Math.floor(bestStrike / 10),
+      int: Math.floor(bestLiterate / 10),
+      con: Math.floor(bestForce / 10),
+      dex: Math.floor(bestDodge / 10),
+    };
+  }
+
   formatSkills(player: Player): string {
     if (!player.skills || player.skills.length === 0) return '\n  你尚未学习任何武功。\n';
     const lines: string[] = ['', '  ─── 武功 ───', ''];

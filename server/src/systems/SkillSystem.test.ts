@@ -118,4 +118,20 @@ describe('SkillSystem', () => {
     expect(sys.getForceLevel(p)).toBe(0);
     expect(sys.getDodgeLevel(p)).toBe(0);
   });
+
+  it('computes skill-based attribute bonus', () => {
+    const p = makePlayer('test');
+    expect(sys.getAttributeBonus(p)).toEqual({ str: 0, int: 0, con: 0, dex: 0 });
+
+    for (let i = 0; i < 25; i++) sys.learnSkill(p, 'cuff');
+    for (let i = 0; i < 15; i++) sys.learnSkill(p, 'force');
+    for (let i = 0; i < 10; i++) sys.learnSkill(p, 'dodge');
+    for (let i = 0; i < 30; i++) sys.learnSkill(p, 'literate');
+
+    const bonus = sys.getAttributeBonus(p);
+    expect(bonus.str).toBe(2); // cuff is strike type, level 25
+    expect(bonus.con).toBe(1); // force level 15
+    expect(bonus.dex).toBe(1); // dodge level 10
+    expect(bonus.int).toBe(3); // literate level 30
+  });
 });

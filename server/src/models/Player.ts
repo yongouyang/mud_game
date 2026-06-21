@@ -7,6 +7,8 @@ export interface PlayerAttributes {
   int: number; // 悟性 — affects skill learning
   con: number; // 根骨 — affects max HP
   dex: number; // 身法 — affects dodge/defense
+  per: number; // 容貌 — affects NPC dialogue and some skill requirements
+  kar: number; // 福缘 — affects luck on random events
 }
 
 export type PlayerState = 'creating' | 'playing' | 'fighting';
@@ -83,6 +85,8 @@ export const DEFAULT_ATTRIBUTES: PlayerAttributes = {
   int: 10,
   con: 10,
   dex: 10,
+  per: 10,
+  kar: 10,
 };
 
 export const ATTRIBUTE_NAMES: Record<keyof PlayerAttributes, string> = {
@@ -90,4 +94,6 @@ export const ATTRIBUTE_NAMES: Record<keyof PlayerAttributes, string> = {
   int: '悟性',
   con: '根骨',
   dex: '身法',
+  per: '容貌',
+  kar: '福缘',
 };

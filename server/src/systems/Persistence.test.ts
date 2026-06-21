@@ -50,7 +50,7 @@ describe('Auth and Persistence', () => {
 
   it('handles multiple players in same file', () => {
     const p1 = createPlayer('user1', '楚留香', DEFAULT_ATTRIBUTES);
-    const p2 = createPlayer('user2', '李寻欢', { str: 12, int: 10, con: 10, dex: 8 });
+    const p2 = createPlayer('user2', '李寻欢', { str: 12, int: 10, con: 10, dex: 8, per: 10, kar: 10 });
     fs.writeFileSync(PLAYERS_FILE, JSON.stringify([p1, p2]));
 
     const loaded: Player[] = JSON.parse(fs.readFileSync(PLAYERS_FILE, 'utf-8'));

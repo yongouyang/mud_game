@@ -15,7 +15,7 @@ describe('LevelSystem', () => {
   });
 
   it('checkLevelUp awards rewards when crossing thresholds', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     const baseMaxHp = player.maxHp;
     player.exp = 5000; // enough for several levels
     const result = system.checkLevelUp(player);
@@ -27,7 +27,7 @@ describe('LevelSystem', () => {
   });
 
   it('does not level up without enough exp', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.exp = 0;
     const result = system.checkLevelUp(player);
     expect(result.leveledUp).toBe(false);
@@ -35,7 +35,7 @@ describe('LevelSystem', () => {
   });
 
   it('spends attribute points', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 5;
     const err = system.spendAttributePoint(player, 'str', 2);
     expect(err).toBeNull();
@@ -44,7 +44,7 @@ describe('LevelSystem', () => {
   });
 
   it('spends attribute points by Chinese name', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 2;
     const err = system.spendAttributePoint(player, '臂力', 1);
     expect(err).toBeNull();
@@ -52,14 +52,14 @@ describe('LevelSystem', () => {
   });
 
   it('rejects spending without enough points', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 0;
     const err = system.spendAttributePoint(player, 'str', 1);
     expect(err).toContain('属性点不足');
   });
 
   it('rejects invalid attribute', () => {
-    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 5;
     const err = system.spendAttributePoint(player, 'foo', 1);
     expect(err).toContain('没有');

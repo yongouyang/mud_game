@@ -101,7 +101,7 @@ Turn-based auto-combat with MUD-style chain:
 Critical hits: 10% chance, 1.8x damage. Speed scales with dex + dodge level.
 
 ### Skills & Progression
-- **35 martial arts** across parry/dodge/force/weapons/strikes
+- **45 martial arts** across parry/dodge/force/weapons/strikes/literate
 - Basic skills learn anywhere (1 pot); school skills require **membership + location** (2+ pot)
 - **Prerequisites**: e.g. 太极拳 requires 基本拳脚 ≥ Lv.10
 - Max level: 100 per skill
@@ -115,6 +115,22 @@ Critical hits: 10% chance, 1.8x damage. Speed scales with dex + dodge level.
 
 ### Level System
 Level = `floor(sqrt(exp / 100)) + 1`. Displayed in `score`.
+
+### Attributes
+| Attribute | Key | Role |
+|---|---|---|
+| 臂力 | `str` | Attack damage |
+| 悟性 | `int` | MP ceiling, learning efficiency |
+| 根骨 | `con` | HP ceiling, defense, force absorption |
+| 身法 | `dex` | Dodge, parry, combat speed |
+| 容貌 | `per` | NPC dialogue, some skill requirements |
+| 福缘 | `kar` | Luck on random events |
+
+Attributes improve as you train:
+- `str` + highest `strike` skill level / 10
+- `int` + highest `literate` skill level / 10
+- `con` + highest `force` skill level / 10
+- `dex` + highest `dodge` skill level / 10
 
 ### Conditions
 Architecture ready for poison, bleeding, drunk, etc. (`player.conditions[]`).
@@ -156,7 +172,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | 全真教 | 重阳宫 | 王重阳 | +2 悟性 +1 根骨 | 无相神功 |
 | 星宿派 | 星宿海 | 丁春秋 | +2 悟性 +1 身法 | 化功大法 |
 
-### Skills (44 total)
+### Skills (45 total)
 
 | Type | Skills |
 |---|---|
@@ -173,7 +189,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (250 tests)
+## Testing (252 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
@@ -186,14 +202,14 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | Suite | Tests | Area |
 |---|---|---|
 | `Terminal.test.tsx` | 6 | UI rendering + input |
-| `CommandRouter.test.ts` | 51 | Commands, creation, movement, combat, skills |
+| `CommandRouter.test.ts` | 52 | Commands, creation, movement, combat, skills |
 | `CommandRouter.classic.test.ts` | 6 | Perform, exert, class bonuses |
 | `CommandRouter.conditions.test.ts` | 4 | Conditions, antidote, dispel |
 | `CommandRouter.progression.test.ts` | 8 | Leveling, attribute points, practice, dazuo |
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
-| `SkillSystem.test.ts` | 15 | Learning, prerequisites, school lock |
+| `SkillSystem.test.ts` | 16 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 8 | Condition apply/tick/dispel/cure |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |

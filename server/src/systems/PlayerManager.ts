@@ -85,11 +85,11 @@ export class PlayerManager {
     return null;
   }
 
-  formatStatus(player: Player): string {
+  formatStatus(player: Player, effectiveAttrs?: PlayerAttributes): string {
     if (player.state === 'creating') {
       return '\n  你尚未完成角色创建。\n';
     }
-    const a = player.attributes;
+    const a = effectiveAttrs || player.attributes;
     const hpBar = bar(player.hp, player.maxHp, 10);
     const mpBar = bar(player.mp, player.maxMp, 10);
     const now = this.clock.now();
@@ -109,8 +109,10 @@ export class PlayerManager {
       '',
       `  气血 ${hpBar} ${player.hp}/${player.maxHp}  内力 ${mpBar} ${player.mp}/${player.maxMp}`,
       '',
-      `  臂力(str): ${a.str}    悟性(int): ${a.int}    Lv.${player.level}`,
-      `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
+      `  等级: Lv.${player.level || 1}`,
+      '',
+      `  臂力(str): ${a.str}    悟性(int): ${a.int}    容貌(per): ${a.per}`,
+      `  根骨(con): ${a.con}    身法(dex): ${a.dex}    福缘(kar): ${a.kar}`,
       '',
       `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}    属性点: ${player.attrPoints || 0}`,
       schoolLine,
@@ -124,7 +126,7 @@ export class PlayerManager {
       return '\n  欢迎来到炎黄群侠传！\n\n  请输入你的名字（2-6个中文字）：\n';
     }
     const a = player.attributes;
-    const remaining = 50 - (a.str + a.int + a.con + a.dex);
+    const remaining = 70 - (a.str + a.int + a.con + a.dex + a.per + a.kar);
     return [
       '',
       `  你的名字：${player.name}`,
@@ -134,7 +136,7 @@ export class PlayerManager {
         ([key, label]) => `    ${label}(${key}): ${a[key as keyof PlayerAttributes]}`,
       ),
       '',
-      `  命令：set 臂力 15 | set str 15 | done 完成创建`,
+      `  命令：set 臂力 15 | set str 15 | set 容貌 12 | done 完成创建`,
       '',
     ].join('\n') + '\n';
   }

@@ -78,6 +78,14 @@ describe('CommandRouter', () => {
       expect(out).toContain('根骨(con): 11');
     });
 
+    it('accepts per and kar attributes', () => {
+      cmd('楚留香');
+      let out = cmd('set 容貌 15');
+      expect(out).toContain('容貌(per): 15');
+      out = cmd('set kar 12');
+      expect(out).toContain('福缘(kar): 12');
+    });
+
     it('shows remaining points correctly', () => {
       cmd('楚留香');
       // Default: 10 each = 40 total, remaining = 10

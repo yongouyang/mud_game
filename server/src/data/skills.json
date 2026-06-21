@@ -1,5 +1,15 @@
 [
   {
+    "id": "literate",
+    "name": "读书识字",
+    "type": "literate",
+    "description": "识文断字，是研读秘籍、提升悟性的基础。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": null,
+    "performs": []
+  },
+  {
     "id": "parry",
     "name": "招架",
     "type": "parry",

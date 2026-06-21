@@ -42,9 +42,18 @@ export class CommandRouter {
     private clock: SystemClock,
   ) {}
 
-  /** Return player attributes including equipment bonuses. */
-  private effectiveAttributes(player: Player): { str: number; int: number; con: number; dex: number } {
-    return this.items.getEffectiveAttributes(player);
+  /** Return player attributes including equipment and skill bonuses. */
+  private effectiveAttributes(player: Player): PlayerAttributes {
+    const attrs = this.items.getEffectiveAttributes(player); // base + equipment
+    const skill = this.skills.getAttributeBonus(player);
+    return {
+      str: attrs.str + skill.str,
+      int: attrs.int + skill.int,
+      con: attrs.con + skill.con,
+      dex: attrs.dex + skill.dex,
+      per: attrs.per,
+      kar: attrs.kar,
+    };
   }
 
   /** Return the player's best strike, boosted if powerup is active. */
@@ -108,7 +117,7 @@ export class CommandRouter {
     // Standard commands
     switch (cmdLower) {
       case 'look': case 'l': return this.handleLook(player);
-      case 'hp': case 'score': return this.players.formatStatus(player);
+      case 'hp': case 'score': return this.players.formatStatus(player, this.effectiveAttributes(player));
       case 'skills': return this.skills.formatSkills(player);
       case 'i': case 'inventory': return this.items.formatInventory(player);
       case 'who': return this.handleWho(player);
@@ -164,8 +173,8 @@ export class CommandRouter {
       if (isNaN(value) || value < 5 || value > 20) return '\n  属性值须为 5-20 的整数。\n';
       const current = player.attributes;
       const newAttr = { ...current, [attrKey]: value };
-      const newUsed = newAttr.str + newAttr.int + newAttr.con + newAttr.dex - 40;
-      if (newUsed > 10) return `\n  可用点数不足！已用 ${current.str + current.int + current.con + current.dex - 40}/10。\n`;
+      const newUsed = newAttr.str + newAttr.int + newAttr.con + newAttr.dex + newAttr.per + newAttr.kar - 60;
+      if (newUsed > 10) return `\n  可用点数不足！已用 ${current.str + current.int + current.con + current.dex + current.per + current.kar - 60}/10。\n`;
       player.attributes = newAttr;
       return this.players.formatCreatingPrompt(player);
     }

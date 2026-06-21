@@ -11,7 +11,7 @@ describe('ConditionSystem', () => {
   beforeEach(() => {
     clock = new TestSystemClock(0);
     system = new ConditionSystem(clock);
-    player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10 });
+    player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
   });
 
   it('applies poison and tracks level/remain', () => {
@@ -41,7 +41,7 @@ describe('ConditionSystem', () => {
   it('force level reduces poison damage', () => {
     system.applyCondition(player, 'poison', 2);
     const resultLow = system.tick(player, 0);
-    const player2 = createPlayer('p2', '测试2', { str: 10, int: 10, con: 10, dex: 10 });
+    const player2 = createPlayer('p2', '测试2', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     system.applyCondition(player2, 'poison', 2);
     const resultHigh = system.tick(player2, 100);
     expect(resultHigh.damageHp).toBeLessThan(resultLow.damageHp);

@@ -1,4 +1,4 @@
-import { Player, recalcPlayerStats } from '../models/Player.js';
+import { Player, PlayerAttributes, recalcPlayerStats } from '../models/Player.js';
 import { ItemDef, InventoryItem, ItemType } from '../models/Item.js';
 import { ConditionSystem } from './ConditionSystem.js';
 import itemsData from '../data/items.json' assert { type: 'json' };
@@ -70,13 +70,15 @@ export class ItemSystem {
    * Compute player attributes including equipment bonuses.
    * Important: permanent attribute pills should already be applied to player.attributes.
    */
-  getEffectiveAttributes(player: Player): { str: number; int: number; con: number; dex: number } {
+  getEffectiveAttributes(player: Player): PlayerAttributes {
     const bonus = this.getEquipBonus(player);
     return {
       str: player.attributes.str + (bonus.str || 0),
       int: player.attributes.int + (bonus.int || 0),
       con: player.attributes.con + (bonus.con || 0),
       dex: player.attributes.dex + (bonus.dex || 0),
+      per: player.attributes.per + (bonus.per || 0),
+      kar: player.attributes.kar + (bonus.kar || 0),
     };
   }
 

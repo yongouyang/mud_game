@@ -92,7 +92,7 @@ console.log(`[server] Loaded ${savedPlayers.length} saved player(s)`);
 if (savedPlayers.length === 0) {
   const demoHash = Buffer.from("demo:some-secret").toString("base64");
   persistence.saveUser("demo", demoHash);
-  const demo = createPlayer("demo", "无名侠客", { str: 15, int: 10, con: 15, dex: 10 });
+  const demo = createPlayer("demo", "无名侠客", { str: 15, int: 10, con: 15, dex: 10, per: 10, kar: 10 });
   demo.pot = 10000;
   players.setPlayer(demo);
   persistence.saveAll(players.getAllPlayers());

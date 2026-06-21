@@ -44,7 +44,7 @@ export class LevelSystem {
     }
     const key = this.resolveAttributeKey(attr);
     if (!key) {
-      return `没有"${attr}"这个属性。可用：str/臂力、int/悟性、con/根骨、dex/身法。`;
+      return `没有"${attr}"这个属性。可用：str/臂力、int/悟性、con/根骨、dex/身法、per/容貌、kar/福缘。`;
     }
     player.attributes[key] += amount;
     player.attrPoints -= amount;
@@ -58,6 +58,8 @@ export class LevelSystem {
       int: 'int', 悟性: 'int',
       con: 'con', 根骨: 'con',
       dex: 'dex', 身法: 'dex',
+      per: 'per', 容貌: 'per',
+      kar: 'kar', 福缘: 'kar',
     };
     return map[input] || null;
   }
@@ -65,15 +67,15 @@ export class LevelSystem {
   formatLevelInfo(player: Player): string {
     const nextLevel = (player.level || 1) + 1;
     const nextExp = Math.ceil(Math.pow(nextLevel - 1, 3) / 10);
-    const label = ATTRIBUTE_NAMES;
+    const a = player.attributes;
     return [
       '',
       `  等级: Lv.${player.level || 1}`,
       `  经验: ${player.exp || 0} / ${nextExp}（下一级）`,
       `  属性点: ${player.attrPoints || 0}`,
       '',
-      `  臂力(str): ${player.attributes.str}    悟性(int): ${player.attributes.int}`,
-      `  根骨(con): ${player.attributes.con}    身法(dex): ${player.attributes.dex}`,
+      `  臂力(str): ${a.str}    悟性(int): ${a.int}    容貌(per): ${a.per}`,
+      `  根骨(con): ${a.con}    身法(dex): ${a.dex}    福缘(kar): ${a.kar}`,
       '',
       `  用法：tianfu <属性> [数量]  分配属性点`,
       '',
