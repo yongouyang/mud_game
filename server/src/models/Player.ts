@@ -41,6 +41,13 @@ export interface Player {
   meditationTaskId?: string;
   bankSilver: number;
   bankInventory: InventoryItem[];
+  shen: number; // 善恶值 — positive = good, negative = evil
+  kills: {
+    players: number;
+    npcs: number;
+    lastKillerName?: string;
+    lastKillerTime?: number;
+  };
 }
 
 export function recalcPlayerStats(player: Player): void {
@@ -79,6 +86,8 @@ export function createPlayer(id: string, name: string, attrs: PlayerAttributes):
     isMeditating: false,
     bankSilver: 0,
     bankInventory: [],
+    shen: 0,
+    kills: { players: 0, npcs: 0 },
   };
 }
 

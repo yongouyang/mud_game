@@ -317,7 +317,16 @@ export class CommandRouter {
       player.state = 'playing'; player.targetEnemy = null;
       target.state = 'playing'; target.targetEnemy = null;
     }
-    if (result.attackerDead) player.hp = 1;
+    if (result.defenderDead) {
+      return result.message + this.recordPlayerKill(player, target);
+    }
+    if (result.attackerDead) {
+      const killMsg = this.recordPlayerKill(target, player);
+      const expLoss = Math.floor((player.exp || 0) * 0.1);
+      player.exp = Math.max(0, (player.exp || 0) - expLoss);
+      player.hp = 1;
+      return result.message + killMsg + `\n  你损失了 ${expLoss} 点经验。\n`;
+    }
     return result.message;
   }
 
@@ -424,6 +433,8 @@ export class CommandRouter {
     }
     if (result.attackerDead) {
       const msg = result.message + conditionMsg;
+      player.kills.lastKillerName = primaryNpc.def.name;
+      player.kills.lastKillerTime = this.clock.now();
       this.clearCombat(player);
       player.hp = 1;
       const expLoss = Math.floor((player.exp || 0) * 0.1);
@@ -488,11 +499,15 @@ export class CommandRouter {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
       }
+      if (result.defenderDead) {
+        return result.message + this.recordPlayerKill(player, target);
+      }
       if (result.attackerDead) {
-        player.hp = 1;
+        const killMsg = this.recordPlayerKill(target, player);
         const expLoss = Math.floor((player.exp || 0) * 0.1);
         player.exp = Math.max(0, (player.exp || 0) - expLoss);
-        return result.message + `\n  你损失了 ${expLoss} 点经验。\n`;
+        player.hp = 1;
+        return result.message + killMsg + `\n  你损失了 ${expLoss} 点经验。\n`;
       }
       return result.message;
     }
@@ -512,9 +527,36 @@ export class CommandRouter {
     const gold = 10 + Math.floor(Math.random() * 20);
     this.items.addItem(player, 'silver', gold);
     msg += `  从尸体上搜出 ${gold} 两银子。\n`;
+    msg += this.recordNpcKill(player, npc);
     // Schedule respawn if configured.
     this.npcs.scheduleRespawn(npc.def.id);
     return msg;
+  }
+
+  private recordNpcKill(player: Player, npc: any): string {
+    player.kills.npcs += 1;
+    let delta = 0;
+    if (npc.def.aggressive) {
+      delta = 10; // slaying a hostile/evil creature
+    } else if (npc.def.faction) {
+      delta = -50; // killing a faction member is evil
+    }
+    if (delta === 0) return '';
+    player.shen = (player.shen || 0) + delta;
+    const direction = delta > 0 ? '增加' : '减少';
+    return `\n  你的善恶值${direction}了 ${Math.abs(delta)} 点（当前 ${player.shen}）。\n`;
+  }
+
+  private recordPlayerKill(killer: Player, victim: Player): string {
+    killer.kills.players += 1;
+    victim.kills.lastKillerName = killer.name;
+    victim.kills.lastKillerTime = this.clock.now();
+    let delta = -50;
+    if ((victim.shen || 0) > 500) delta -= 100;
+    else if ((victim.shen || 0) < -500) delta += 100;
+    killer.shen = (killer.shen || 0) + delta;
+    const direction = delta > 0 ? '增加' : '减少';
+    return `\n  ${killer.name} 的善恶值${direction}了 ${Math.abs(delta)} 点（当前 ${killer.shen}）。\n`;
   }
 
   private handleCombat(player: Player, cmd: string, _args: string[]): string {

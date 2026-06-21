@@ -143,6 +143,14 @@ Attributes improve as you train:
 - Dispelled by force skill via `exert dispel <id|category>`.
 - NPCs apply specific conditions on hit (wolf → fire_poison, bear → burning, bandit → poison).
 
+### 善恶 (Shen) & Killer Tracking
+Every player has a **善恶值** (`shen`) and a kill record shown in `score`.
+- Killing aggressive/evil NPCs: **+10** shen.
+- Killing faction members (masters/disciples): **-50** shen.
+- Killing a player: base **-50** shen; killing a good player (>500) costs an extra **-100**; killing an evil player (<-500) grants **+50**.
+- Being killed records the killer's name as "上次死于" in `score`.
+- Alignment titles range from `一代大侠` to `武林公敌`.
+
 ## Game World (40 rooms, 90 NPCs)
 
 ```
@@ -219,6 +227,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
 | `CommandRouter.multi.test.ts` | 4 | Multi-enemy combat + guarder aggro |
+| `CommandRouter.shen.test.ts` | 5 | Shen alignment + killer tracking |
 | `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |

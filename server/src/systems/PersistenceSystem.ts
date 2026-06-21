@@ -14,7 +14,12 @@ export class PersistenceSystem {
 
   loadAll(): Player[] {
     if (!fs.existsSync(PLAYERS_FILE)) return [];
-    return JSON.parse(fs.readFileSync(PLAYERS_FILE, 'utf-8'));
+    const players: Player[] = JSON.parse(fs.readFileSync(PLAYERS_FILE, 'utf-8'));
+    for (const p of players) {
+      if (p.shen === undefined) p.shen = 0;
+      if (!p.kills) p.kills = { players: 0, npcs: 0 };
+    }
+    return players;
   }
 
   saveUser(username: string, passwordHash: string): void {

@@ -36,6 +36,8 @@ export class PlayerManager {
       isMeditating: false,
       bankSilver: 0,
       bankInventory: [],
+      shen: 0,
+      kills: { players: 0, npcs: 0 },
     });
   }
 
@@ -104,6 +106,12 @@ export class PlayerManager {
       extras.push(`状态：${player.conditions.map((c) => `${c.name}Lv.${c.level}(${c.remain}tick)`).join('、')}`);
     }
     const schoolLine = player.schoolName ? `  门派: ${player.schoolName}` : '';
+    const shenTitle = this.shenTitle(player.shen || 0);
+    const kills = player.kills || { players: 0, npcs: 0 };
+    const killLine = `  击杀: 玩家 ${kills.players}  NPC ${kills.npcs}`;
+    const lastKillerLine = (kills.lastKillerName)
+      ? `  上次死于: ${kills.lastKillerName}`
+      : '';
     return [
       '',
       `  ─── ${player.name} ───`,
@@ -116,10 +124,23 @@ export class PlayerManager {
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}    福缘(kar): ${a.kar}`,
       '',
       `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}    属性点: ${player.attrPoints || 0}`,
+      `  善恶值: ${player.shen || 0}（${shenTitle}）`,
+      killLine,
+      lastKillerLine,
       schoolLine,
       extras.length > 0 ? `  ${extras.join('    ')}` : '',
       '',
     ].join('\n') + '\n';
+  }
+
+  private shenTitle(shen: number): string {
+    if (shen >= 1000) return '一代大侠';
+    if (shen >= 500) return '侠义之士';
+    if (shen >= 100) return '正道人士';
+    if (shen > -100) return '亦正亦邪';
+    if (shen > -500) return '邪道人士';
+    if (shen > -1000) return '恶名昭彰';
+    return '武林公敌';
   }
 
   formatCreatingPrompt(player: Player): string {
