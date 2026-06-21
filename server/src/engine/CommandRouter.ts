@@ -142,14 +142,16 @@ export class CommandRouter {
   private handleHelp(): string {
     return [
       '', '  ─── 可用命令 ───', '',
-      '  n s e w u d    移动', '  look            查看四周',
-      '  hp              查看状态', '  skills          查看武功',
-      '  i               查看背包', '  get <物品>      捡起物品',
-      '  drop <物品>     丢弃物品', '  use <药品>      使用药品',
-      '  wear <装备>     穿戴装备', '  remove <装备>    脱下装备',
-      '  learn <武功>    学习武功', '  ask <NPC>       向NPC打听',
-      '  kill <目标>     发起战斗', '  who             在线玩家',
-      '  help            显示帮助', '  clear           清屏',
+      '  n s e w u d    移动',       '  look            查看四周',
+      '  hp / score     查看状态',   '  skills          查看武功',
+      '  i / inventory  查看背包',   '  get <物品>      捡起物品',
+      '  drop <物品>     丢弃物品',   '  use <药品>      使用药品',
+      '  wear <装备>     穿戴装备',   '  remove <装备>    脱下装备',
+      '  learn <武功>    学习武功',   '  kill <目标>     发起战斗',
+      '  hit             攻击',       '  flee / tao      逃跑',
+      '  schools         门派列表',   '  join <门派>     加入门派',
+      '  ask <NPC>       向NPC打听',  '  who             在线玩家',
+      '  help            显示帮助',   '  clear           清屏',
       '',
     ].join('\n') + '\n';
   }
