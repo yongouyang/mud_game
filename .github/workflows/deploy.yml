@@ -19,9 +19,9 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '24' }
       - run: npm ci
+      - run: cd server && npm ci
       - run: npm run build
       - run: npm test
-      - run: cd server && npm ci && npx vitest run
 
   build-and-deploy:
     # Temporarily disabled while AWS credentials / infra are not configured.
