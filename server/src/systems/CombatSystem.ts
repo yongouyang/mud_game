@@ -19,6 +19,7 @@ export interface CombatRoundResult {
   defenderDead: boolean;
   attackerDead: boolean;
   enemyHitPlayer: boolean;
+  playerHitEnemy: boolean;
 }
 
 /**
@@ -63,8 +64,9 @@ export class CombatSystem {
       isPlayerExtraHit,
     );
     msg += atkResult.message;
+    const playerHitEnemy = atkResult.hit;
     if (atkResult.defenderDead) {
-      return { message: msg + `\n  ${enemy.name} 倒下了！\n`, defenderDead: true, attackerDead: false, enemyHitPlayer: false };
+      return { message: msg + `\n  ${enemy.name} 倒下了！\n`, defenderDead: true, attackerDead: false, enemyHitPlayer: false, playerHitEnemy: true };
     }
 
     // ── Enemy counter-attacks ──
@@ -85,13 +87,13 @@ export class CombatSystem {
       enemyHitPlayer = defResult.hit;
       msg += defResult.message;
       if (defResult.defenderDead) {
-        return { message: msg + '\n  你被击败了……\n', attackerDead: true, defenderDead: false, enemyHitPlayer };
+        return { message: msg + '\n  你被击败了……\n', attackerDead: true, defenderDead: false, enemyHitPlayer, playerHitEnemy };
       }
     }
 
     // ── Format status ──
     msg += this.formatCombatStatus(player, player.mp, player.maxMp, enemy);
-    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer };
+    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer, playerHitEnemy };
   }
 
   /**
@@ -126,8 +128,9 @@ export class CombatSystem {
       player.name, player.attributes, playerSkills, primary, primary.skills, strikeDmg, false,
     );
     msg += primaryAtk.message;
+    const playerHitEnemy = primaryAtk.hit;
     if (primaryAtk.defenderDead) {
-      return { message: msg, defenderDead: true, attackerDead: false, enemyHitPlayer: false };
+      return { message: msg, defenderDead: true, attackerDead: false, enemyHitPlayer: false, playerHitEnemy: true };
     }
 
     // Primary enemy counter.
@@ -140,7 +143,7 @@ export class CombatSystem {
     if (primaryCounter.hit) enemyHitPlayer = true;
     msg += primaryCounter.message;
     if (primaryCounter.defenderDead) {
-      return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer };
+      return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer, playerHitEnemy };
     }
 
     // Each extra enemy gets a counter-attack.
@@ -155,13 +158,13 @@ export class CombatSystem {
       if (counter.hit) enemyHitPlayer = true;
       msg += counter.message;
       if (counter.defenderDead) {
-        return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer };
+        return { message: msg, defenderDead: false, attackerDead: true, enemyHitPlayer, playerHitEnemy };
       }
     }
 
     // Status shows player + primary only to keep output readable.
     msg += this.formatCombatStatus(player, player.mp, player.maxMp, primary);
-    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer };
+    return { message: msg, defenderDead: false, attackerDead: false, enemyHitPlayer, playerHitEnemy };
   }
 
   /**

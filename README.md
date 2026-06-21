@@ -170,6 +170,11 @@ Quests are defined in `server/data/quests.json` and support multiple types:
 
 Rewards include exp, pot, shen, and items. Use `quest` to check progress and `quest <npc>` / `quest <npc> <id>` to interact with quest givers.
 
+### Advanced Combat
+- **Base damage**: every strike now starts from `5 + str * 1.5` and adds skill/weapon technique on top.
+- **Weapon synergy**: wielding a weapon and knowing the matching weapon skill (e.g. `铁剑` + `基本剑法`) adds extra damage.
+- **Combos**: consecutive successful hits with the same skill build up to +50% damage; missing, being parried, or fleeing resets the combo.
+
 ### Bosses & Rare Loot
 Boss NPCs (marked with `boss: true`) are tougher, have longer respawn timers, and carry guaranteed or chance-based **drop tables**.
 - Example: **黑风寨主** in `wilderness/cave` drops the rare weapon **黑风刀** and **寨主令**.
@@ -256,6 +261,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `PersistenceManager.test.ts` | 4 | Autosave, disconnect cleanup, load |
 | `CommandRouter.quest.test.ts` | 3 | Quest accept/complete flow |
 | `CommandRouter.quests.test.ts` | 3 | Kill/collect quest progress and rewards |
+| `CommandRouter.combat.test.ts` | 2 | Weapon synergy + combo damage |
 | `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |

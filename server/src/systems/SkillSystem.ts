@@ -115,6 +115,16 @@ export class SkillSystem {
     return max;
   }
 
+  /** Return the player's level in a weapon-type skill (sword, blade, etc.). */
+  getWeaponSkillLevel(player: Player, weaponType: string): number {
+    let max = 0;
+    for (const s of player.skills || []) {
+      const def = this.defs.get(s.skillId);
+      if (def && (def.id === weaponType || def.type === weaponType) && s.level > max) max = s.level;
+    }
+    return max;
+  }
+
   /** Return attribute bonuses derived from highest relevant skill levels. */
   getAttributeBonus(player: Player): { str: number; int: number; con: number; dex: number } {
     let bestStrSkill = 0;

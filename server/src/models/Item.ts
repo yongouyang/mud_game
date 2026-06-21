@@ -17,6 +17,7 @@ export interface ItemDef {
   type: ItemType;
   description: string;
   attrBonus?: Partial<Record<string, number>>; // e.g. { str: 5 } for a weapon
+  weaponType?: string;   // sword, blade, staff, throwing, whip, etc.
   effect?: ItemEffect;   // for medicine / consumables
   /** @deprecated use effect.hp instead */
   hpRestore?: number;

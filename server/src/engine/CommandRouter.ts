@@ -58,14 +58,53 @@ export class CommandRouter {
     };
   }
 
-  /** Return the player's best strike, boosted if powerup is active. */
-  private poweredBestStrike(player: Player): { name: string; damage: number } | null {
-    const strike = this.skills.getBestStrike(player);
-    if (!strike) return null;
-    if (player.powerupExpiry && player.powerupExpiry > this.clock.now()) {
-      return { name: strike.name, damage: Math.round(strike.damage * 1.3) };
+  /** Return the player's effective strike, including str base, weapon skill, combo, and powerup. */
+  private poweredBestStrike(player: Player): { name: string; damage: number } {
+    const base = this.skills.getBestStrike(player);
+    const name = base?.name || '普通攻击';
+    // Base physical damage from attributes plus skill/weapon technique.
+    let damage = Math.round(5 + player.attributes.str * 1.5);
+    if (base) damage += base.damage;
+
+    // Weapon-type synergy: equipped weapon + matching weapon skill adds damage.
+    const weapon = this.getEquippedWeapon(player);
+    if (weapon?.weaponType) {
+      const weaponLv = this.skills.getWeaponSkillLevel(player, weapon.weaponType);
+      damage += Math.floor(weaponLv * 0.5);
     }
-    return strike;
+
+    // Combo bonus: consecutive hits with the same skill up to +50%.
+    if ((player.comboCount || 0) > 0 && player.comboSkill === name) {
+      const comboBonus = Math.min(player.comboCount || 0, 10) * 0.05;
+      damage = Math.round(damage * (1 + comboBonus));
+    }
+
+    if (player.powerupExpiry && player.powerupExpiry > this.clock.now()) {
+      damage = Math.round(damage * 1.3);
+    }
+    return { name, damage };
+  }
+
+  private getEquippedWeapon(player: Player): import('../models/Item.js').ItemDef | undefined {
+    for (const itemId of player.equipped || []) {
+      const def = this.items.getDef(itemId);
+      if (def && def.type === 'weapon') return def;
+    }
+    return undefined;
+  }
+
+  private updateCombo(player: Player, hit: boolean, skillName: string): void {
+    if (!hit) {
+      player.comboCount = 0;
+      player.comboSkill = undefined;
+      return;
+    }
+    if (player.comboSkill === skillName && (player.comboCount || 0) > 0) {
+      player.comboCount = Math.min(10, (player.comboCount || 0) + 1);
+    } else {
+      player.comboCount = 1;
+      player.comboSkill = skillName;
+    }
   }
 
   private stopMeditation(player: Player): void {
@@ -382,6 +421,8 @@ export class CommandRouter {
     player.combatTargets = [];
     player.targetEnemy = null;
     player.state = 'playing';
+    player.comboCount = 0;
+    player.comboSkill = undefined;
   }
 
   private resolveCombatRound(player: Player): string {
@@ -415,6 +456,7 @@ export class CommandRouter {
     }
 
     const result = this.combat.executeMultiRound(combatPlayer, pSkills, primaryState, extras);
+    this.updateCombo(player, result.playerHitEnemy, pSkills.bestStrike.name);
 
     let conditionMsg = '';
     if (result.enemyHitPlayer) {
@@ -432,6 +474,10 @@ export class CommandRouter {
     if (result.defenderDead) {
       const msg = result.message + conditionMsg + this.handleNpcDeath(player, primaryNpc);
       this.removeFromCombat(player, primaryId);
+      if (player.state !== 'fighting') {
+        player.comboCount = 0;
+        player.comboSkill = undefined;
+      }
       return msg;
     }
     if (result.attackerDead) {
@@ -498,9 +544,12 @@ export class CommandRouter {
         set hp(v: number) { target.hp = v; },
       };
       const result = this.combat.executeRound(combatPlayer, pSkills, combatTarget, false);
+      this.updateCombo(player, result.playerHitEnemy, pSkills.bestStrike.name);
       if (result.defenderDead || result.attackerDead) {
         player.state = 'playing'; player.targetEnemy = null;
         target.state = 'playing'; target.targetEnemy = null;
+        player.comboCount = 0;
+        player.comboSkill = undefined;
       }
       if (result.defenderDead) {
         return result.message + this.recordPlayerKill(player, target);

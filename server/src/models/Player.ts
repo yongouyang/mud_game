@@ -60,6 +60,9 @@ export interface Player {
     lastKillerName?: string;
     lastKillerTime?: number;
   };
+  /** Transient combat combo state (not critical to persist). */
+  comboCount?: number;
+  comboSkill?: string;
 }
 
 export function recalcPlayerStats(player: Player): void {
