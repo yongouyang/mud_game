@@ -4,8 +4,17 @@
     "name": "王掌柜",
     "description": "客栈掌柜，戴着圆框眼镜，正在拨弄算盘。",
     "roomId": "town/inn",
-    "dialogue": ["客官要住店吗？", "江湖险恶，多带些金疮药吧。", "最近镇外来了一伙山贼，不太平啊。"],
-    "attributes": { "str": 5, "int": 10, "con": 8, "dex": 5 },
+    "dialogue": [
+      "客官要住店吗？",
+      "江湖险恶，多带些金疮药吧。",
+      "最近镇外来了一伙山贼，不太平啊。"
+    ],
+    "attributes": {
+      "str": 5,
+      "int": 10,
+      "con": 8,
+      "dex": 5
+    },
     "skills": [],
     "aggressive": false
   },
@@ -14,9 +23,22 @@
     "name": "山贼",
     "description": "一个面目凶狠的山贼，手持短刀。",
     "roomId": "wilderness/forest1",
-    "dialogue": ["此路是我开！", "哈哈哈，留下买路钱！"],
-    "attributes": { "str": 12, "int": 5, "con": 10, "dex": 8 },
-    "skills": [{ "skillId": "luohan-quan", "level": 3 }],
+    "dialogue": [
+      "此路是我开！",
+      "哈哈哈，留下买路钱！"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 5,
+      "con": 10,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "luohan-quan",
+        "level": 3
+      }
+    ],
     "aggressive": true,
     "respawnSeconds": 30,
     "poisonChance": 0.15,
@@ -29,9 +51,22 @@
     "name": "玄慈方丈",
     "description": "少林寺方丈，慈眉善目，佛法精深。",
     "roomId": "shaolin/hall",
-    "dialogue": ["阿弥陀佛，施主可是来拜师的？", "习武先修心，持戒方能成器。"],
-    "attributes": { "str": 10, "int": 15, "con": 10, "dex": 10 },
-    "skills": [{ "skillId": "luohan-quan", "level": 50 }],
+    "dialogue": [
+      "阿弥陀佛，施主可是来拜师的？",
+      "习武先修心，持戒方能成器。"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 15,
+      "con": 10,
+      "dex": 10
+    },
+    "skills": [
+      {
+        "skillId": "luohan-quan",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -39,9 +74,22 @@
     "name": "冲虚道长",
     "description": "武当掌门，仙风道骨，深不可测。",
     "roomId": "wudang/hall",
-    "dialogue": ["无量天尊。", "太极之道，以柔克刚。"],
-    "attributes": { "str": 10, "int": 15, "con": 10, "dex": 15 },
-    "skills": [{ "skillId": "taiji-quan", "level": 50 }],
+    "dialogue": [
+      "无量天尊。",
+      "太极之道，以柔克刚。"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 15,
+      "con": 10,
+      "dex": 15
+    },
+    "skills": [
+      {
+        "skillId": "taiji-quan",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -49,9 +97,26 @@
     "name": "洪七公",
     "description": "丐帮帮主，北丐之首，武功盖世。",
     "roomId": "gaibang/hq",
-    "dialogue": ["小兄弟可想加入我丐帮？", "打狗棒法乃我丐帮镇帮之宝。"],
-    "attributes": { "str": 15, "int": 10, "con": 12, "dex": 12 },
-    "skills": [{ "skillId": "dagou-bang", "level": 50 }, { "skillId": "xianglong-zhang", "level": 50 }],
+    "dialogue": [
+      "小兄弟可想加入我丐帮？",
+      "打狗棒法乃我丐帮镇帮之宝。"
+    ],
+    "attributes": {
+      "str": 15,
+      "int": 10,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [
+      {
+        "skillId": "dagou-bang",
+        "level": 50
+      },
+      {
+        "skillId": "xianglong-zhang",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -59,9 +124,26 @@
     "name": "岳不群",
     "description": "华山派掌门，君子剑的名号响彻江湖。",
     "roomId": "huashan/peak",
-    "dialogue": ["华山派欢迎有志之士。", "剑法之道，贵在精纯。"],
-    "attributes": { "str": 12, "int": 12, "con": 10, "dex": 14 },
-    "skills": [{ "skillId": "huashan-jian", "level": 50 }, { "skillId": "dugu-jiujian", "level": 40 }],
+    "dialogue": [
+      "华山派欢迎有志之士。",
+      "剑法之道，贵在精纯。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 10,
+      "dex": 14
+    },
+    "skills": [
+      {
+        "skillId": "huashan-jian",
+        "level": 50
+      },
+      {
+        "skillId": "dugu-jiujian",
+        "level": 40
+      }
+    ],
     "aggressive": false
   },
   {
@@ -69,9 +151,22 @@
     "name": "灭绝师太",
     "description": "峨眉派掌门，性子刚烈，武功极高。",
     "roomId": "emei/golden",
-    "dialogue": ["哼！", "峨眉剑法虽柔，亦可杀敌。"],
-    "attributes": { "str": 12, "int": 12, "con": 10, "dex": 14 },
-    "skills": [{ "skillId": "emei-jian", "level": 50 }],
+    "dialogue": [
+      "哼！",
+      "峨眉剑法虽柔，亦可杀敌。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 10,
+      "dex": 14
+    },
+    "skills": [
+      {
+        "skillId": "emei-jian",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -79,9 +174,26 @@
     "name": "小龙女",
     "description": "古墓派传人，美貌绝伦，武功深不可测。",
     "roomId": "gumu/chamber",
-    "dialogue": ["古墓派不收外人……不过既然来了。", "玉女心经须两人合修。"],
-    "attributes": { "str": 10, "int": 12, "con": 10, "dex": 16 },
-    "skills": [{ "skillId": "yunu-xinjing", "level": 50 }, { "skillId": "anran-xiaohun", "level": 50 }],
+    "dialogue": [
+      "古墓派不收外人……不过既然来了。",
+      "玉女心经须两人合修。"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 12,
+      "con": 10,
+      "dex": 16
+    },
+    "skills": [
+      {
+        "skillId": "yunu-xinjing",
+        "level": 50
+      },
+      {
+        "skillId": "anran-xiaohun",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -89,8 +201,17 @@
     "name": "说书人",
     "description": "一位白发苍苍的说书先生，正在为围观的百姓讲述江湖轶事。",
     "roomId": "town/square",
-    "dialogue": ["欲知后事如何，且听下回分解。", "那少林玄慈方丈，可是一位得道高僧……", "年轻人，江湖险恶，多学些武功傍身吧。"],
-    "attributes": { "str": 5, "int": 15, "con": 8, "dex": 5 },
+    "dialogue": [
+      "欲知后事如何，且听下回分解。",
+      "那少林玄慈方丈，可是一位得道高僧……",
+      "年轻人，江湖险恶，多学些武功傍身吧。"
+    ],
+    "attributes": {
+      "str": 5,
+      "int": 15,
+      "con": 8,
+      "dex": 5
+    },
     "skills": [],
     "aggressive": false
   },
@@ -99,8 +220,16 @@
     "name": "药铺老板",
     "description": "一个精明的药材商人，柜台上摆满了各式丹药。",
     "roomId": "town/mainstreet",
-    "dialogue": ["客官要买金疮药吗？十两银子一瓶。", "行走江湖，金疮药可少不了！"],
-    "attributes": { "str": 5, "int": 12, "con": 8, "dex": 5 },
+    "dialogue": [
+      "客官要买金疮药吗？十两银子一瓶。",
+      "行走江湖，金疮药可少不了！"
+    ],
+    "attributes": {
+      "str": 5,
+      "int": 12,
+      "con": 8,
+      "dex": 5
+    },
     "skills": [],
     "aggressive": false
   },
@@ -109,9 +238,22 @@
     "name": "武师",
     "description": "练武场的教头，身形魁梧，目光如炬。",
     "roomId": "town/training",
-    "dialogue": ["想学功夫？先练好基本功！", "拳不离手，曲不离口。"],
-    "attributes": { "str": 14, "int": 8, "con": 12, "dex": 10 },
-    "skills": [{ "skillId": "cuff", "level": 20 }],
+    "dialogue": [
+      "想学功夫？先练好基本功！",
+      "拳不离手，曲不离口。"
+    ],
+    "attributes": {
+      "str": 14,
+      "int": 8,
+      "con": 12,
+      "dex": 10
+    },
+    "skills": [
+      {
+        "skillId": "cuff",
+        "level": 20
+      }
+    ],
     "aggressive": false
   },
   {
@@ -119,8 +261,16 @@
     "name": "神秘商人",
     "description": "一位戴着兜帽的神秘人物，出售稀有物品。",
     "roomId": "town/inn_upstairs",
-    "dialogue": ["嘘……我这里有稀罕玩意儿。", "这把铁剑可是出自名家之手。"],
-    "attributes": { "str": 8, "int": 14, "con": 8, "dex": 12 },
+    "dialogue": [
+      "嘘……我这里有稀罕玩意儿。",
+      "这把铁剑可是出自名家之手。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 14,
+      "con": 8,
+      "dex": 12
+    },
     "skills": [],
     "aggressive": false
   },
@@ -129,8 +279,16 @@
     "name": "樵夫",
     "description": "一位老实巴交的樵夫，正扛着柴火下山。",
     "roomId": "wilderness/gate",
-    "dialogue": ["山上有狼，客官小心！", "我天天走这条路，闭着眼都不会迷路。"],
-    "attributes": { "str": 10, "int": 6, "con": 10, "dex": 6 },
+    "dialogue": [
+      "山上有狼，客官小心！",
+      "我天天走这条路，闭着眼都不会迷路。"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 6,
+      "con": 10,
+      "dex": 6
+    },
     "skills": [],
     "aggressive": false
   },
@@ -139,9 +297,21 @@
     "name": "野狼",
     "description": "一只灰毛野狼，眼露凶光，正盯着你。",
     "roomId": "wilderness/forest2",
-    "dialogue": ["嗷呜——！"],
-    "attributes": { "str": 10, "int": 3, "con": 8, "dex": 12 },
-    "skills": [{ "skillId": "cuff", "level": 5 }],
+    "dialogue": [
+      "嗷呜——！"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 3,
+      "con": 8,
+      "dex": 12
+    },
+    "skills": [
+      {
+        "skillId": "cuff",
+        "level": 5
+      }
+    ],
     "aggressive": true,
     "respawnSeconds": 30,
     "poisonChance": 0.25,
@@ -154,8 +324,16 @@
     "name": "采药人",
     "description": "一位背着竹篓的采药老人，正在崖边寻找草药。",
     "roomId": "wilderness/cliff",
-    "dialogue": ["这崖边的草药可是好药材。", "武当山的道士常来找我买药。"],
-    "attributes": { "str": 6, "int": 12, "con": 8, "dex": 8 },
+    "dialogue": [
+      "这崖边的草药可是好药材。",
+      "武当山的道士常来找我买药。"
+    ],
+    "attributes": {
+      "str": 6,
+      "int": 12,
+      "con": 8,
+      "dex": 8
+    },
     "skills": [],
     "aggressive": false
   },
@@ -164,9 +342,21 @@
     "name": "黑熊",
     "description": "一头巨大的黑熊，正趴在洞穴里睡觉。闻到人味后睁开了眼。",
     "roomId": "wilderness/cave",
-    "dialogue": ["吼——！"],
-    "attributes": { "str": 18, "int": 2, "con": 15, "dex": 4 },
-    "skills": [{ "skillId": "cuff", "level": 8 }],
+    "dialogue": [
+      "吼——！"
+    ],
+    "attributes": {
+      "str": 18,
+      "int": 2,
+      "con": 15,
+      "dex": 4
+    },
+    "skills": [
+      {
+        "skillId": "cuff",
+        "level": 8
+      }
+    ],
     "aggressive": true,
     "respawnSeconds": 60,
     "poisonChance": 0.3,
@@ -179,8 +369,16 @@
     "name": "乞丐",
     "description": "一个衣衫褴褛的叫花子，正蹲在树下打盹。",
     "roomId": "gaibang/forest1",
-    "dialogue": ["行行好吧，赏口饭吃……", "丐帮的兄弟遍布五湖四海。"],
-    "attributes": { "str": 7, "int": 8, "con": 8, "dex": 10 },
+    "dialogue": [
+      "行行好吧，赏口饭吃……",
+      "丐帮的兄弟遍布五湖四海。"
+    ],
+    "attributes": {
+      "str": 7,
+      "int": 8,
+      "con": 8,
+      "dex": 10
+    },
     "skills": [],
     "aggressive": false
   },
@@ -189,8 +387,16 @@
     "name": "流浪汉",
     "description": "一个无家可归的流浪汉，靠在树桩上晒太阳。",
     "roomId": "gaibang/forest2",
-    "dialogue": ["江湖漂泊，四海为家。", "往北走就是丐帮总舵了。"],
-    "attributes": { "str": 6, "int": 7, "con": 8, "dex": 6 },
+    "dialogue": [
+      "江湖漂泊，四海为家。",
+      "往北走就是丐帮总舵了。"
+    ],
+    "attributes": {
+      "str": 6,
+      "int": 7,
+      "con": 8,
+      "dex": 6
+    },
     "skills": [],
     "aggressive": false
   },
@@ -199,9 +405,22 @@
     "name": "何太冲",
     "description": "昆仑派掌门，剑法飘逸，神态傲然。",
     "roomId": "kunlun/hall",
-    "dialogue": ["昆仑剑法清灵飘逸，你可愿意一学？", "剑道无涯，修行在个人。"],
-    "attributes": { "str": 12, "int": 12, "con": 10, "dex": 14 },
-    "skills": [{ "skillId": "songfeng-jian", "level": 50 }],
+    "dialogue": [
+      "昆仑剑法清灵飘逸，你可愿意一学？",
+      "剑道无涯，修行在个人。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 10,
+      "dex": 14
+    },
+    "skills": [
+      {
+        "skillId": "songfeng-jian",
+        "level": 50
+      }
+    ],
     "aggressive": false
   },
   {
@@ -209,9 +428,22 @@
     "name": "张无忌",
     "description": "明教教主，身负九阳神功与乾坤大挪移，武功深不可测。",
     "roomId": "mingjiao/hall",
-    "dialogue": ["明教光明顶欢迎天下豪杰。", "乾坤大挪移可颠倒阴阳。"],
-    "attributes": { "str": 14, "int": 12, "con": 14, "dex": 12 },
-    "skills": [{ "skillId": "qiankun-danuoyi", "level": 60 }],
+    "dialogue": [
+      "明教光明顶欢迎天下豪杰。",
+      "乾坤大挪移可颠倒阴阳。"
+    ],
+    "attributes": {
+      "str": 14,
+      "int": 12,
+      "con": 14,
+      "dex": 12
+    },
+    "skills": [
+      {
+        "skillId": "qiankun-danuoyi",
+        "level": 60
+      }
+    ],
     "aggressive": false
   },
   {
@@ -219,9 +451,22 @@
     "name": "王重阳",
     "description": "全真教创派祖师，道家玄门正宗，武功出神入化。",
     "roomId": "quanzhen/hall",
-    "dialogue": ["全真教乃玄门正宗。", "先学道，后习武。"],
-    "attributes": { "str": 12, "int": 15, "con": 12, "dex": 12 },
-    "skills": [{ "skillId": "wuzhi-shengong", "level": 55 }],
+    "dialogue": [
+      "全真教乃玄门正宗。",
+      "先学道，后习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 15,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [
+      {
+        "skillId": "wuzhi-shengong",
+        "level": 55
+      }
+    ],
     "aggressive": false
   },
   {
@@ -229,9 +474,1296 @@
     "name": "丁春秋",
     "description": "星宿派掌门，化功大法阴毒无比，喜好弟子吹捧。",
     "roomId": "xingxiu/hall",
-    "dialogue": ["星宿老仙，法力无边！", "化功大法可化去他人内力。"],
-    "attributes": { "str": 10, "int": 14, "con": 10, "dex": 14 },
-    "skills": [{ "skillId": "huagong-dafa", "level": 50 }],
+    "dialogue": [
+      "星宿老仙，法力无边！",
+      "化功大法可化去他人内力。"
+    ],
+    "attributes": {
+      "str": 10,
+      "int": 14,
+      "con": 10,
+      "dex": 14
+    },
+    "skills": [
+      {
+        "skillId": "huagong-dafa",
+        "level": 50
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-shaolin-1",
+    "name": "少林派弟子",
+    "description": "一名少林派弟子，正在勤练武功。",
+    "roomId": "shaolin/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "luohan-quan",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-wudang-1",
+    "name": "武当派弟子",
+    "description": "一名武当派弟子，正在勤练武功。",
+    "roomId": "wudang/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "taiji-quan",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-gaibang-1",
+    "name": "丐帮弟子",
+    "description": "一名丐帮弟子，正在勤练武功。",
+    "roomId": "gaibang/hq",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "dagou-bang",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-huashan-1",
+    "name": "华山派弟子",
+    "description": "一名华山派弟子，正在勤练武功。",
+    "roomId": "huashan/peak",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "huashan-jian",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-emei-1",
+    "name": "峨眉派弟子",
+    "description": "一名峨眉派弟子，正在勤练武功。",
+    "roomId": "emei/golden",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "emei-jian",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-gumu-1",
+    "name": "古墓派弟子",
+    "description": "一名古墓派弟子，正在勤练武功。",
+    "roomId": "gumu/chamber",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "yunu-xinjing",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-kunlun-1",
+    "name": "昆仑派弟子",
+    "description": "一名昆仑派弟子，正在勤练武功。",
+    "roomId": "kunlun/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "sword",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-mingjiao-1",
+    "name": "明教弟子",
+    "description": "一名明教弟子，正在勤练武功。",
+    "roomId": "mingjiao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "qiankun-danuoyi",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-quanzhen-1",
+    "name": "全真教弟子",
+    "description": "一名全真教弟子，正在勤练武功。",
+    "roomId": "quanzhen/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "wuzhi-shengong",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xingxiu-1",
+    "name": "星宿派弟子",
+    "description": "一名星宿派弟子，正在勤练武功。",
+    "roomId": "xingxiu/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [
+      {
+        "skillId": "huagong-dafa",
+        "level": 15
+      }
+    ],
+    "aggressive": false
+  },
+  {
+    "id": "master-xiaoyao",
+    "name": "逍遥派掌门",
+    "description": "逍遥派掌门人。",
+    "roomId": "xiaoyao/hall",
+    "dialogue": [
+      "欢迎来逍遥派。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xiaoyao-1",
+    "name": "逍遥派弟子",
+    "description": "一名逍遥派弟子，正在勤练武功。",
+    "roomId": "xiaoyao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-taohua",
+    "name": "桃花岛掌门",
+    "description": "桃花岛掌门人。",
+    "roomId": "taohua/hall",
+    "dialogue": [
+      "欢迎来桃花岛。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-taohua-1",
+    "name": "桃花岛弟子",
+    "description": "一名桃花岛弟子，正在勤练武功。",
+    "roomId": "taohua/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-lingjiu",
+    "name": "灵鹫宫掌门",
+    "description": "灵鹫宫掌门人。",
+    "roomId": "lingjiu/hall",
+    "dialogue": [
+      "欢迎来灵鹫宫。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-lingjiu-1",
+    "name": "灵鹫宫弟子",
+    "description": "一名灵鹫宫弟子，正在勤练武功。",
+    "roomId": "lingjiu/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-shenlong",
+    "name": "神龙教掌门",
+    "description": "神龙教掌门人。",
+    "roomId": "shenlong/hall",
+    "dialogue": [
+      "欢迎来神龙教。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-shenlong-1",
+    "name": "神龙教弟子",
+    "description": "一名神龙教弟子，正在勤练武功。",
+    "roomId": "shenlong/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-riyue",
+    "name": "日月神教掌门",
+    "description": "日月神教掌门人。",
+    "roomId": "riyue/hall",
+    "dialogue": [
+      "欢迎来日月神教。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-riyue-1",
+    "name": "日月神教弟子",
+    "description": "一名日月神教弟子，正在勤练武功。",
+    "roomId": "riyue/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-xueshan",
+    "name": "雪山派掌门",
+    "description": "雪山派掌门人。",
+    "roomId": "xueshan/hall",
+    "dialogue": [
+      "欢迎来雪山派。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xueshan-1",
+    "name": "雪山派弟子",
+    "description": "一名雪山派弟子，正在勤练武功。",
+    "roomId": "xueshan/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-tiezhang",
+    "name": "铁掌帮掌门",
+    "description": "铁掌帮掌门人。",
+    "roomId": "tiezhang/hall",
+    "dialogue": [
+      "欢迎来铁掌帮。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-tiezhang-1",
+    "name": "铁掌帮弟子",
+    "description": "一名铁掌帮弟子，正在勤练武功。",
+    "roomId": "tiezhang/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-tangmen",
+    "name": "唐门掌门",
+    "description": "唐门掌门人。",
+    "roomId": "tangmen/hall",
+    "dialogue": [
+      "欢迎来唐门。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-tangmen-1",
+    "name": "唐门弟子",
+    "description": "一名唐门弟子，正在勤练武功。",
+    "roomId": "tangmen/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-murong",
+    "name": "慕容世家掌门",
+    "description": "慕容世家掌门人。",
+    "roomId": "murong/hall",
+    "dialogue": [
+      "欢迎来慕容世家。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-murong-1",
+    "name": "慕容世家弟子",
+    "description": "一名慕容世家弟子，正在勤练武功。",
+    "roomId": "murong/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-duan",
+    "name": "段氏皇族掌门",
+    "description": "段氏皇族掌门人。",
+    "roomId": "duan/hall",
+    "dialogue": [
+      "欢迎来段氏皇族。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-duan-1",
+    "name": "段氏皇族弟子",
+    "description": "一名段氏皇族弟子，正在勤练武功。",
+    "roomId": "duan/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-henshan",
+    "name": "衡山派掌门",
+    "description": "衡山派掌门人。",
+    "roomId": "henshan/hall",
+    "dialogue": [
+      "欢迎来衡山派。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-henshan-1",
+    "name": "衡山派弟子",
+    "description": "一名衡山派弟子，正在勤练武功。",
+    "roomId": "henshan/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-honghua",
+    "name": "红花会掌门",
+    "description": "红花会掌门人。",
+    "roomId": "honghua/hall",
+    "dialogue": [
+      "欢迎来红花会。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-honghua-1",
+    "name": "红花会弟子",
+    "description": "一名红花会弟子，正在勤练武功。",
+    "roomId": "honghua/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-hu",
+    "name": "胡家掌门",
+    "description": "胡家掌门人。",
+    "roomId": "hu/hall",
+    "dialogue": [
+      "欢迎来胡家。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-hu-1",
+    "name": "胡家弟子",
+    "description": "一名胡家弟子，正在勤练武功。",
+    "roomId": "hu/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-jueqing",
+    "name": "绝情谷掌门",
+    "description": "绝情谷掌门人。",
+    "roomId": "jueqing/hall",
+    "dialogue": [
+      "欢迎来绝情谷。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-jueqing-1",
+    "name": "绝情谷弟子",
+    "description": "一名绝情谷弟子，正在勤练武功。",
+    "roomId": "jueqing/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-lingxiao",
+    "name": "凌霄城掌门",
+    "description": "凌霄城掌门人。",
+    "roomId": "lingxiao/hall",
+    "dialogue": [
+      "欢迎来凌霄城。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-lingxiao-1",
+    "name": "凌霄城弟子",
+    "description": "一名凌霄城弟子，正在勤练武功。",
+    "roomId": "lingxiao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-meizhuang",
+    "name": "梅庄掌门",
+    "description": "梅庄掌门人。",
+    "roomId": "meizhuang/hall",
+    "dialogue": [
+      "欢迎来梅庄。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-meizhuang-1",
+    "name": "梅庄弟子",
+    "description": "一名梅庄弟子，正在勤练武功。",
+    "roomId": "meizhuang/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-miao",
+    "name": "苗家掌门",
+    "description": "苗家掌门人。",
+    "roomId": "miao/hall",
+    "dialogue": [
+      "欢迎来苗家。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-miao-1",
+    "name": "苗家弟子",
+    "description": "一名苗家弟子，正在勤练武功。",
+    "roomId": "miao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-ouyang",
+    "name": "欧阳世家掌门",
+    "description": "欧阳世家掌门人。",
+    "roomId": "ouyang/hall",
+    "dialogue": [
+      "欢迎来欧阳世家。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-ouyang-1",
+    "name": "欧阳世家弟子",
+    "description": "一名欧阳世家弟子，正在勤练武功。",
+    "roomId": "ouyang/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-shang",
+    "name": "商家堡掌门",
+    "description": "商家堡掌门人。",
+    "roomId": "shang/hall",
+    "dialogue": [
+      "欢迎来商家堡。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-shang-1",
+    "name": "商家堡弟子",
+    "description": "一名商家堡弟子，正在勤练武功。",
+    "roomId": "shang/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-songshan",
+    "name": "嵩山派掌门",
+    "description": "嵩山派掌门人。",
+    "roomId": "songshan/hall",
+    "dialogue": [
+      "欢迎来嵩山派。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-songshan-1",
+    "name": "嵩山派弟子",
+    "description": "一名嵩山派弟子，正在勤练武功。",
+    "roomId": "songshan/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-tianlongsi",
+    "name": "天龙寺掌门",
+    "description": "天龙寺掌门人。",
+    "roomId": "tianlongsi/hall",
+    "dialogue": [
+      "欢迎来天龙寺。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-tianlongsi-1",
+    "name": "天龙寺弟子",
+    "description": "一名天龙寺弟子，正在勤练武功。",
+    "roomId": "tianlongsi/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-ultra",
+    "name": "绝世高手掌门",
+    "description": "绝世高手掌门人。",
+    "roomId": "ultra/hall",
+    "dialogue": [
+      "欢迎来绝世高手。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-ultra-1",
+    "name": "绝世高手弟子",
+    "description": "一名绝世高手弟子，正在勤练武功。",
+    "roomId": "ultra/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-wudu",
+    "name": "五毒教掌门",
+    "description": "五毒教掌门人。",
+    "roomId": "wudu/hall",
+    "dialogue": [
+      "欢迎来五毒教。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-wudu-1",
+    "name": "五毒教弟子",
+    "description": "一名五毒教弟子，正在勤练武功。",
+    "roomId": "wudu/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-xiakedao",
+    "name": "侠客岛掌门",
+    "description": "侠客岛掌门人。",
+    "roomId": "xiakedao/hall",
+    "dialogue": [
+      "欢迎来侠客岛。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xiakedao-1",
+    "name": "侠客岛弟子",
+    "description": "一名侠客岛弟子，正在勤练武功。",
+    "roomId": "xiakedao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-xuanming",
+    "name": "玄冥谷掌门",
+    "description": "玄冥谷掌门人。",
+    "roomId": "xuanming/hall",
+    "dialogue": [
+      "欢迎来玄冥谷。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xuanming-1",
+    "name": "玄冥谷弟子",
+    "description": "一名玄冥谷弟子，正在勤练武功。",
+    "roomId": "xuanming/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-xuedao",
+    "name": "血刀门掌门",
+    "description": "血刀门掌门人。",
+    "roomId": "xuedao/hall",
+    "dialogue": [
+      "欢迎来血刀门。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-xuedao-1",
+    "name": "血刀门弟子",
+    "description": "一名血刀门弟子，正在勤练武功。",
+    "roomId": "xuedao/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-yunlong",
+    "name": "云龙门掌门",
+    "description": "云龙门掌门人。",
+    "roomId": "yunlong/hall",
+    "dialogue": [
+      "欢迎来云龙门。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-yunlong-1",
+    "name": "云龙门弟子",
+    "description": "一名云龙门弟子，正在勤练武功。",
+    "roomId": "yunlong/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-zhenyuan",
+    "name": "震远镖局掌门",
+    "description": "震远镖局掌门人。",
+    "roomId": "zhenyuan/hall",
+    "dialogue": [
+      "欢迎来震远镖局。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-zhenyuan-1",
+    "name": "震远镖局弟子",
+    "description": "一名震远镖局弟子，正在勤练武功。",
+    "roomId": "zhenyuan/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "master-hell",
+    "name": "修罗地狱掌门",
+    "description": "修罗地狱掌门人。",
+    "roomId": "hell/hall",
+    "dialogue": [
+      "欢迎来修罗地狱。",
+      "好好习武。"
+    ],
+    "attributes": {
+      "str": 12,
+      "int": 12,
+      "con": 12,
+      "dex": 12
+    },
+    "skills": [],
+    "aggressive": false
+  },
+  {
+    "id": "disciple-hell-1",
+    "name": "修罗地狱弟子",
+    "description": "一名修罗地狱弟子，正在勤练武功。",
+    "roomId": "hell/hall",
+    "dialogue": [
+      "师兄好。",
+      "师父说习武先修心。"
+    ],
+    "attributes": {
+      "str": 8,
+      "int": 8,
+      "con": 8,
+      "dex": 8
+    },
+    "skills": [],
     "aggressive": false
   }
 ]

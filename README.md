@@ -139,7 +139,7 @@ Attributes improve as you train:
 - Dispelled by force skill via `exert dispel <id|category>`.
 - NPCs apply specific conditions on hit (wolf → fire_poison, bear → burning, bandit → poison).
 
-## Game World (40 rooms, 18 NPCs)
+## Game World (40 rooms, 90 NPCs)
 
 ```
                       shaolin/gate → shaolin/hall → shaolin/training
@@ -194,7 +194,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (257 tests)
+## Testing (260 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
@@ -218,6 +218,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
+| `NpcSystem.test.ts` | 3 | Master/disciple NPC coverage |
 | `time.test.ts` | 8 | SystemClock + Scheduler |
 | `index.e2e.test.ts` | 20 | Full user journeys (auth, map, schools, combat) |
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |
