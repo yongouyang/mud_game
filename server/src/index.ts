@@ -239,12 +239,52 @@ function clearCombatTick(socketId: string) {
   const tick = combatTicks.get(socketId);
   if (tick) { clearInterval(tick); combatTicks.delete(socketId); }
 }
-function manageCombatTick(socket: any) {  const p = players.getPlayer(socket.id);  if (p && p.state === 'fighting') {    if (!combatTicks.has(socket.id)) {      const tick = setInterval(() => {        const roundResult = router.executeCombatRound(socket.id);        if (roundResult) socket.emit('output', { text: roundResult });        const updated = players.getPlayer(socket.id);        if (!updated || updated.state !== 'fighting') {          clearCombatTick(socket.id);          if (updated && updated.state === 'playing') {            persistence.saveAll(players.getAllPlayers());          }        }      }, router.getCombatSpeed(socket.id));      combatTicks.set(socket.id, tick);    }  } else {    clearCombatTick(socket.id);  }}// HP/MP regen when not fightingconst regenTicks = new Map<string, ReturnType<typeof setInterval>>();function manageRegen(socket: any) {  const p = players.getPlayer(socket.id);  if (p && p.state !== "fighting") {    if (!regenTicks.has(socket.id)) {      const tick = setInterval(() => {        const p2 = players.getPlayer(socket.id);        if (p2 && p2.state !== "fighting" && p2.state !== "creating") {          p2.hp = Math.min(p2.maxHp, p2.hp + Math.ceil(p2.maxHp * 0.03));          p2.mp = Math.min(p2.maxMp, p2.mp + Math.ceil(p2.maxMp * 0.04));        }      }, 3000);      regenTicks.set(socket.id, tick);    }  } else {    const t = regenTicks.get(socket.id);    if (t) { clearInterval(t); regenTicks.delete(socket.id); }  }}
+
+function manageCombatTick(socket: any) {
+  const p = players.getPlayer(socket.id);
+  if (p && p.state === 'fighting') {
+    if (!combatTicks.has(socket.id)) {
+      const tick = setInterval(() => {
+        const roundResult = router.executeCombatRound(socket.id);
+        if (roundResult) socket.emit('output', { text: roundResult });
+        const updated = players.getPlayer(socket.id);
+        if (!updated || updated.state !== 'fighting') {
+          clearCombatTick(socket.id);
+          if (updated && updated.state === 'playing') {
+            persistence.saveAll(players.getAllPlayers());
+          }
+        }
+      }, router.getCombatSpeed(socket.id));
+      combatTicks.set(socket.id, tick);
+    }
+  } else {
+    clearCombatTick(socket.id);
+  }
+}
+
+// HP/MP regen when not fighting
+const regenTicks = new Map<string, ReturnType<typeof setInterval>>();
+function manageRegen(socket: any) {
+  const p = players.getPlayer(socket.id);
+  if (p && p.state !== 'fighting') {
+    if (!regenTicks.has(socket.id)) {
+      const tick = setInterval(() => {
+        const p2 = players.getPlayer(socket.id);
+        if (p2 && p2.state !== 'fighting' && p2.state !== 'creating') {
+          p2.hp = Math.min(p2.maxHp, p2.hp + Math.ceil(p2.maxHp * 0.03));
+          p2.mp = Math.min(p2.maxMp, p2.mp + Math.ceil(p2.maxMp * 0.04));
+        }
+      }, 3000);
+      regenTicks.set(socket.id, tick);
+    }
+  } else {
+    const t = regenTicks.get(socket.id);
+    if (t) { clearInterval(t); regenTicks.delete(socket.id); }
+  }
+}
 
 tryPort(BASE_PORT).then((PORT) => {
   httpServer.listen(PORT, () => {
     console.log(`[server] Wuxia MUD running on http://localhost:${PORT}`);
   });
-});
-  console.log(`[server] Wuxia MUD running on http://localhost:${PORT}`);
 });
