@@ -364,4 +364,58 @@ describe('CommandRouter', () => {
       expect(output).toContain('王掌柜说道');
     });
   });
+
+  describe('NPC behaviors', () => {
+    let npcs: NpcSystem;
+    let npcRouter: CommandRouter;
+
+    beforeEach(() => {
+      players = new PlayerManager();
+      npcs = new NpcSystem(new SkillSystem());
+      // Register a few test NPCs
+      npcs.register({ id: "test-merchant", name: "商人", description: "a merchant", roomId: "town/square", dialogue: ["欢迎光临"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
+      npcs.register({ id: "test-wolf", name: "野狼", description: "a wolf", roomId: "town/mainstreet", dialogue: ["嗷呜"], attributes: {str:8,int:3,con:6,dex:10}, skills: [], aggressive: true });
+      npcs.register({ id: "test-master", name: "师父", description: "master", roomId: "town/training", dialogue: ["刻苦练功"], attributes: {str:10,int:10,con:10,dex:10}, skills: [], aggressive: false });
+      const skills = new SkillSystem();
+      const items = new ItemSystem();
+      const schools = new SchoolSystem();
+      npcRouter = new CommandRouter(players, new MapSystem(), new CombatSystem(), skills, items, npcs, schools);
+      players.createPlayer(PLAYER_ID);
+      npcRouter.handle("楚留香", PLAYER_ID);
+      npcRouter.handle("done", PLAYER_ID);
+    });
+
+    function cmd(input: string): string { return npcRouter.handle(input, PLAYER_ID); }
+
+    it('ask neutral NPC returns dialogue', () => {
+      const out = cmd('ask 商人');
+      expect(out).toContain('欢迎光临');
+    });
+
+    it('ask NPC by ID returns dialogue', () => {
+      const out = cmd('ask test-merchant');
+      expect(out).toContain('欢迎光临');
+    });
+
+    it('ask non-existent NPC returns not found', () => {
+      expect(cmd('ask 不存在的NPC')).toContain('没有');
+    });
+
+    it('aggressive NPC triggers encounter on room entry', () => {
+      const out = cmd('n'); // square → mainstreet where wolf is
+      expect(out).toContain('野狼 向你扑了过来');
+    });
+
+    it('kill NPC by English ID works', () => {
+      cmd('n');
+      const out = cmd('kill test-wolf');
+      expect(out).toContain('战斗');
+    });
+
+    it('master NPC can be asked', () => {
+      cmd('s'); // square → training
+      const out = cmd('ask 师父');
+      expect(out).toContain('刻苦练功');
+    });
+  });
 });
