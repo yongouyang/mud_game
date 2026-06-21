@@ -48,6 +48,25 @@ describe('Condition flows via CommandRouter', () => {
     expect(p.conditions).toHaveLength(0);
   });
 
+  it('exert dispel poison removes any poison-category condition', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const p = players.getPlayer(PLAYER_ID)!;
+    p.conditions.push({ id: 'fire_poison', name: '火毒', level: 1, remain: 5, appliedAt: 0 });
+    p.mp = 100;
+    const out = cmd('exert dispel poison');
+    expect(out).toContain('驱散');
+    expect(p.conditions).toHaveLength(0);
+  });
+
+  it('jiedu-wan cures fire_poison via category', () => {
+    const p = players.getPlayer(PLAYER_ID)!;
+    p.conditions.push({ id: 'fire_poison', name: '火毒', level: 1, remain: 5, appliedAt: 0 });
+    (router as any).items.addItem(p, 'jiedu-wan', 1);
+    const out = cmd('use 解毒丸');
+    expect(out).toContain('解除');
+    expect(p.conditions).toHaveLength(0);
+  });
+
   it('score shows active conditions', () => {
     const p = players.getPlayer(PLAYER_ID)!;
     p.conditions.push({ id: 'poison', name: '中毒', level: 3, remain: 5, appliedAt: 0 });

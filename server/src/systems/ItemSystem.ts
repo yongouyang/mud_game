@@ -126,6 +126,26 @@ export class ItemSystem {
       }
     }
 
+    if (effect.cureCategory) {
+      if (this.conditions) {
+        const cured = this.conditions.cureByCategory(player, effect.cureCategory);
+        if (cured) {
+          parts.push(`解除了 ${effect.cureCategory} 类异常状态`);
+        } else {
+          parts.push(`你并没有 ${effect.cureCategory} 类异常状态`);
+        }
+      } else {
+        // Fallback if no ConditionSystem is injected.
+        const idx = player.conditions?.findIndex((c) => c.category === effect.cureCategory) ?? -1;
+        if (idx !== -1) {
+          player.conditions.splice(idx, 1);
+          parts.push(`解除了 ${effect.cureCategory} 类异常状态`);
+        } else {
+          parts.push(`你并没有 ${effect.cureCategory} 类异常状态`);
+        }
+      }
+    }
+
     const attrKeys: Array<keyof typeof effect & ('str' | 'int' | 'con' | 'dex')> = ['str', 'int', 'con', 'dex'];
     for (const key of attrKeys) {
       const val = effect[key];

@@ -70,6 +70,27 @@ describe('ConditionSystem', () => {
     expect(msg).toContain('内力不足');
   });
 
+  it('cures conditions by category', () => {
+    system.applyCondition(player, 'fire_poison', 2);
+    system.applyCondition(player, 'ice_poison', 1);
+    const msg = system.cureByCategory(player, 'poison');
+    expect(msg).toBeTruthy();
+    expect(player.conditions.length).toBe(1); // one poison cured, one remains
+  });
+
+  it('dispels all conditions in a category', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0); // force success
+    system.applyCondition(player, 'fire_poison', 1);
+    system.applyCondition(player, 'ice_poison', 1);
+    player.mp = 200;
+    const msg = system.dispelCategory(player, 'poison', 100);
+    expect(msg).toContain('驱散');
+    expect(player.conditions.filter((c) => {
+      const def = system.getDef(c.id);
+      return def?.category === 'poison';
+    })).toHaveLength(0);
+  });
+
   it('condition expires after enough ticks', () => {
     system.applyCondition(player, 'poison', 1);
     for (let i = 0; i < 20; i++) {

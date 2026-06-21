@@ -2,6 +2,7 @@
   {
     "id": "poison",
     "name": "中毒",
+    "category": "poison",
     "tickSeconds": 5,
     "baseDamage": 5,
     "damageType": "hp",
@@ -15,8 +16,57 @@
     }
   },
   {
+    "id": "fire_poison",
+    "name": "火毒",
+    "category": "poison",
+    "tickSeconds": 5,
+    "baseDamage": 7,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 12,
+    "messages": {
+      "apply": "一股灼热的毒火窜入经脉，你中了火毒！",
+      "tick": "火毒灼烧着你的经脉，肌肤如被烈焰炙烤。",
+      "cure": "火毒被压制熄灭。",
+      "dispel": "你运功将火毒逼出体外。"
+    }
+  },
+  {
+    "id": "ice_poison",
+    "name": "寒毒",
+    "category": "poison",
+    "tickSeconds": 6,
+    "baseDamage": 6,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 12,
+    "messages": {
+      "apply": "阴寒之气侵入体内，你中了寒毒！",
+      "tick": "寒毒游走，你感到四肢僵硬、血液凝滞。",
+      "cure": "寒毒被驱散，体温恢复。",
+      "dispel": "你运功将寒毒逼出体外。"
+    }
+  },
+  {
+    "id": "flower_poison",
+    "name": "花毒",
+    "category": "poison",
+    "tickSeconds": 5,
+    "baseDamage": 4,
+    "damageType": "mp",
+    "defaultLevel": 1,
+    "dispelCostBase": 10,
+    "messages": {
+      "apply": "一阵甜香入鼻，你不知不觉中了花毒！",
+      "tick": "花毒侵蚀神志，内力渐渐涣散。",
+      "cure": "花毒解除，神志清明。",
+      "dispel": "你运功将花毒逼出体外。"
+    }
+  },
+  {
     "id": "wound",
     "name": "受伤",
+    "category": "wound",
     "tickSeconds": 10,
     "baseDamage": 2,
     "damageType": "hp",
@@ -30,8 +80,41 @@
     }
   },
   {
+    "id": "burning",
+    "name": "灼烧",
+    "category": "elemental",
+    "tickSeconds": 4,
+    "baseDamage": 6,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 8,
+    "messages": {
+      "apply": "烈焰缠身，你被灼伤了！",
+      "tick": "烧伤处火辣辣地疼。",
+      "cure": "灼伤平复，焦黑的伤口开始愈合。",
+      "dispel": "你运功熄灭了身上的火苗。"
+    }
+  },
+  {
+    "id": "freezing",
+    "name": "冻僵",
+    "category": "elemental",
+    "tickSeconds": 6,
+    "baseDamage": 3,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 8,
+    "messages": {
+      "apply": "寒气侵入四肢，你被冻僵了！",
+      "tick": "你冻得牙关打颤，动作迟缓。",
+      "cure": "冻僵缓解，身体恢复了暖意。",
+      "dispel": "你运功驱散了寒气。"
+    }
+  },
+  {
     "id": "drunk",
     "name": "醉酒",
+    "category": "special",
     "tickSeconds": 8,
     "baseDamage": 0,
     "damageType": "hp",
@@ -42,6 +125,54 @@
       "tick": "你头晕目眩，站立不稳。",
       "cure": "你酒醒了。",
       "dispel": "你运功化解了酒意。"
+    }
+  },
+  {
+    "id": "ill_fashao",
+    "name": "发烧",
+    "category": "illness",
+    "tickSeconds": 10,
+    "baseDamage": 3,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 6,
+    "messages": {
+      "apply": "你额头滚烫，发起了高烧。",
+      "tick": "高烧让你头昏脑涨，浑身乏力。",
+      "cure": "烧退了，精神为之一振。",
+      "dispel": "你运功压下了高热。"
+    }
+  },
+  {
+    "id": "ill_kesou",
+    "name": "咳嗽",
+    "category": "illness",
+    "tickSeconds": 8,
+    "baseDamage": 2,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 5,
+    "messages": {
+      "apply": "你喉咙发痒，忍不住咳嗽起来。",
+      "tick": "你咳得胸口发闷。",
+      "cure": "咳嗽止住了。",
+      "dispel": "你运功理顺了气息。"
+    }
+  },
+  {
+    "id": "ill_shanghan",
+    "name": "伤寒",
+    "category": "illness",
+    "tickSeconds": 10,
+    "baseDamage": 4,
+    "damageType": "hp",
+    "defaultLevel": 1,
+    "dispelCostBase": 8,
+    "messages": {
+      "apply": "你感到恶寒发热，似乎染上了伤寒。",
+      "tick": "伤寒发作，你时而发冷时而发热。",
+      "cure": "伤寒痊愈，身体恢复了常态。",
+      "dispel": "你运功祛除了体内病气。"
     }
   }
 ]

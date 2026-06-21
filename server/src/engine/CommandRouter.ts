@@ -374,8 +374,10 @@ export class CommandRouter {
       };
       const result = this.combat.executeRound(combatPlayer, pSkills, enemyState, isExtraHit);
       let conditionMsg = '';
-      if (result.enemyHitPlayer && npc.def.poisonChance && npc.def.poisonLevel && Math.random() < npc.def.poisonChance) {
-        const applied = this.conditions.applyCondition(player, 'poison', npc.def.poisonLevel, npc.def.name);
+      if (result.enemyHitPlayer && npc.def.poisonChance && Math.random() < npc.def.poisonChance) {
+        const condId = npc.def.conditionId || 'poison';
+        const condLevel = npc.def.conditionLevel || npc.def.poisonLevel || 1;
+        const applied = this.conditions.applyCondition(player, condId, condLevel, npc.def.name);
         if (applied) conditionMsg = applied;
       }
       if (result.defenderDead) {
@@ -822,7 +824,7 @@ export class CommandRouter {
   // ── Exert (内功运用) ─────────────────────────────────────
   private handleExert(player: Player, args: string[]): string {
     const action = args[0]?.toLowerCase();
-    if (!action) return '\n  用法：exert heal | yun heal（疗伤）；exert powerup；exert dispel [状态]\n';
+    if (!action) return '\n  用法：exert heal | yun heal（疗伤）；exert powerup；exert dispel [状态/类别]\n';
     if (action === 'heal') {
       if ((player.mp || 0) < 30) return '\n  内力不足！疗伤需要 30 点内力。\n';
       player.mp -= 30;
@@ -837,10 +839,12 @@ export class CommandRouter {
       return '\n  你深吸一口气，内力充盈全身！30 秒内战斗力大幅提升。\n';
     }
     if (action === 'dispel') {
-      const condId = args[1]?.toLowerCase() || 'poison';
       const forceLv = this.skills.getForceLevel(player);
-      const result = this.conditions.dispelCondition(player, condId, forceLv);
-      if (!result) return `\n  你并没有 ${condId} 状态。\n`;
+      const condArg = args[1]?.toLowerCase() || 'poison';
+      // Treat bare 'poison' / 'illness' / 'elemental' as category dispels.
+      const result = this.conditions.dispelCategory(player, condArg, forceLv)
+        ?? this.conditions.dispelCondition(player, condArg, forceLv);
+      if (!result) return `\n  你并没有 ${condArg} 状态。\n`;
       return `\n  ${result}\n`;
     }
     return `\n  没有"${action}"这个内功运用。可用：heal, powerup, dispel\n`;

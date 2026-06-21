@@ -149,15 +149,25 @@ flee / tao
 </div>
 
 <h2>🦠 第五章：状态与解毒</h2>
-<p>某些怪物攻击会附带负面状态（如野狼、山贼的毒）。状态会在 <code>score</code> 中显示。</p>
+<p>江湖中处处凶险，怪物、毒物、恶劣天气都会让你染上负面状态。状态会在 <code>score</code> 中显示。</p>
 <table>
 <tr><th>状态</th><th>来源</th><th>处理</th></tr>
-<tr><td>中毒（poison）</td><td>野狼、山贼等攻击概率附带</td><td><code>use 解毒丸</code> 或 <code>exert dispel poison</code></td></tr>
+<tr><td>中毒（poison）</td><td>山贼等攻击概率附带</td><td><code>use 解毒丸</code> 或 <code>exert dispel poison</code></td></tr>
+<tr><td>火毒（fire_poison）</td><td>野狼等炽热毒物</td><td><code>use 解毒丸</code>（解毒丸可清所有毒类）</td></tr>
+<tr><td>寒毒（ice_poison）</td><td>寒冰类敌人或环境</td><td><code>exert dispel poison</code></td></tr>
+<tr><td>花毒（flower_poison）</td><td>毒花、迷香</td><td><code>use 解毒丸</code></td></tr>
+<tr><td>灼烧（burning）</td><td>黑熊等火焰攻击</td><td><code>exert dispel elemental</code></td></tr>
+<tr><td>冻僵（freezing）</td><td>极寒环境</td><td><code>exert dispel elemental</code></td></tr>
+<tr><td>发烧/咳嗽/伤寒</td><td>病气、恶劣天气</td><td><code>exert dispel illness</code></td></tr>
+<tr><td>醉酒（drunk）</td><td>饮酒过量</td><td>随时间消退，或 <code>exert dispel</code></td></tr>
 </table>
-<pre>score                    # 查看是否中毒
-exert dispel poison      # 用内功逼毒（需要基本内功）
-use 解毒丸                # 服用解毒丸直接清除</pre>
-<div class="tip"><strong>提示：</strong>解毒丸在主街药铺老板处购买（50 两银子）。</div>
+<pre>score                          # 查看状态
+exert dispel poison            # 驱散所有毒类状态
+exert dispel elemental         # 驱散元素类状态（灼烧、冻僵）
+exert dispel illness           # 驱散疾病类状态
+exert dispel fire_poison       # 指定驱散某一种状态
+use 解毒丸                      # 服用解毒丸清除毒类状态</pre>
+<div class="tip"><strong>提示：</strong>解毒丸在主街药铺老板处购买（50 两银子），可清除火毒、寒毒、花毒等一切毒类状态。</div>
 
 <h2>💰 第六章：获取金钱和物品</h2>
 <table>
@@ -284,7 +294,42 @@ exert dispel poison     # 运功逼毒（需要基本内功）</pre>
 </table>
 <p style="margin-top:12px">完整 59 房间地图请查看 <code>docs/map.html</code></p>
 
-<h2>📊 第十一章：属性说明</h2>
+<h2>📊 第九章：等级与升级</h2>
+<p>等级使用 <strong>立方根经验曲线</strong> 计算（与炎黄MUD一致），公式为：<code>Lv = ⌊(exp × 10)<sup>1/3</sup>⌋ + 1</code>。</p>
+<p>每升一级获得：<strong>气血上限 +con×2、内力上限 +int×1.5、2 点属性点</strong>。</p>
+
+<h3>🔹 升级所需经验表（Lv.1 ~ 50）</h3>
+<table>
+<tr><th>等级</th><th>累计所需经验</th><th>本级所需经验</th><th>等级</th><th>累计所需经验</th><th>本级所需经验</th></tr>
+<tr><td>1</td><td>0</td><td>—</td><td>26</td><td>1,563</td><td>180</td></tr>
+<tr><td>2</td><td>1</td><td>1</td><td>27</td><td>1,758</td><td>195</td></tr>
+<tr><td>3</td><td>1</td><td>0</td><td>28</td><td>1,969</td><td>211</td></tr>
+<tr><td>4</td><td>3</td><td>2</td><td>29</td><td>2,196</td><td>227</td></tr>
+<tr><td>5</td><td>7</td><td>4</td><td>30</td><td>2,439</td><td>243</td></tr>
+<tr><td>6</td><td>13</td><td>6</td><td>31</td><td>2,700</td><td>261</td></tr>
+<tr><td>7</td><td>22</td><td>9</td><td>32</td><td>2,980</td><td>280</td></tr>
+<tr><td>8</td><td>35</td><td>13</td><td>33</td><td>3,277</td><td>297</td></tr>
+<tr><td>9</td><td>52</td><td>17</td><td>34</td><td>3,594</td><td>317</td></tr>
+<tr><td>10</td><td>73</td><td>21</td><td>35</td><td>3,931</td><td>337</td></tr>
+<tr><td>11</td><td>100</td><td>27</td><td>36</td><td>4,288</td><td>357</td></tr>
+<tr><td>12</td><td>134</td><td>34</td><td>37</td><td>4,666</td><td>378</td></tr>
+<tr><td>13</td><td>173</td><td>39</td><td>38</td><td>5,066</td><td>400</td></tr>
+<tr><td>14</td><td>220</td><td>47</td><td>39</td><td>5,488</td><td>422</td></tr>
+<tr><td>15</td><td>275</td><td>55</td><td>40</td><td>5,932</td><td>444</td></tr>
+<tr><td>16</td><td>338</td><td>63</td><td>41</td><td>6,400</td><td>468</td></tr>
+<tr><td>17</td><td>410</td><td>72</td><td>42</td><td>6,893</td><td>493</td></tr>
+<tr><td>18</td><td>492</td><td>82</td><td>43</td><td>7,409</td><td>516</td></tr>
+<tr><td>19</td><td>584</td><td>92</td><td>44</td><td>7,951</td><td>542</td></tr>
+<tr><td>20</td><td>686</td><td>102</td><td>45</td><td>8,519</td><td>568</td></tr>
+<tr><td>21</td><td>800</td><td>114</td><td>46</td><td>9,113</td><td>594</td></tr>
+<tr><td>22</td><td>927</td><td>127</td><td>47</td><td>9,734</td><td>621</td></tr>
+<tr><td>23</td><td>1,065</td><td>138</td><td>48</td><td>10,383</td><td>649</td></tr>
+<tr><td>24</td><td>1,217</td><td>152</td><td>49</td><td>11,060</td><td>677</td></tr>
+<tr><td>25</td><td>1,383</td><td>166</td><td>50</td><td>11,765</td><td>705</td></tr>
+</table>
+<div class="tip"><strong>如何查看进度：</strong>输入 <code>level</code> 命令查看当前等级、经验进度和可用属性点。输入 <code>tianfu &lt;属性&gt; [数量]</code> 分配属性点（如 <code>tianfu str 2</code>）。</div>
+
+<h2>📋 第十章：属性说明</h2>
 <table>
 <tr><th>属性</th><th>英文</th><th>影响</th></tr>
 <tr><td>臂力</td><td>str</td><td>攻击力、装备武器要求</td></tr>

@@ -8,6 +8,7 @@ export interface NpcDef {
   skills: { skillId: string; level: number }[];
   aggressive: boolean;       // attacks on sight?
   respawnSeconds?: number;   // default respawn time; 0 or undefined means no respawn
-  poisonChance?: number;     // 0-1 chance to apply poison on successful hit
-  poisonLevel?: number;      // level of poison applied
-}
+  poisonChance?: number;     // 0-1 chance to apply a condition on successful hit
+  poisonLevel?: number;      // level of condition applied (legacy default: poison)
+  conditionId?: string;      // condition id to apply (defaults to 'poison')
+  conditionLevel?: number;   // overrides poisonLevel if set

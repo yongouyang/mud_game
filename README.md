@@ -133,7 +133,11 @@ Attributes improve as you train:
 - `dex` + highest `dodge` skill level / 10
 
 ### Conditions
-Architecture ready for poison, bleeding, drunk, etc. (`player.conditions[]`).
+10+ conditions across categories: `poison`, `elemental`, `illness`, `wound`, `special`.
+- Tick-based damage/heal with force-level resistance.
+- Cured by item category (e.g. `jiedu-wan` cures all `poison` conditions).
+- Dispelled by force skill via `exert dispel <id|category>`.
+- NPCs apply specific conditions on hit (wolf → fire_poison, bear → burning, bandit → poison).
 
 ## Game World (40 rooms, 18 NPCs)
 
@@ -189,7 +193,7 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Quanzhen | 无相神功(wuzhi-shengong) |
 | Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (252 tests)
+## Testing (256 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
@@ -204,14 +208,14 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `Terminal.test.tsx` | 6 | UI rendering + input |
 | `CommandRouter.test.ts` | 52 | Commands, creation, movement, combat, skills |
 | `CommandRouter.classic.test.ts` | 6 | Perform, exert, class bonuses |
-| `CommandRouter.conditions.test.ts` | 4 | Conditions, antidote, dispel |
+| `CommandRouter.conditions.test.ts` | 6 | Conditions, antidote, dispel |
 | `CommandRouter.progression.test.ts` | 8 | Leveling, attribute points, practice, dazuo |
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
 | `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
 | `SkillSystem.test.ts` | 16 | Learning, prerequisites, school lock, attribute bonus |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
-| `ConditionSystem.test.ts` | 8 | Condition apply/tick/dispel/cure |
+| `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
 | `time.test.ts` | 8 | SystemClock + Scheduler |
 | `index.e2e.test.ts` | 20 | Full user journeys (auth, map, schools, combat) |

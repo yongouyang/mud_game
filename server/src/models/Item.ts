@@ -4,6 +4,7 @@ export interface ItemEffect {
   hp?: number;           // restore HP
   mp?: number;           // restore MP
   cure?: string;         // condition id to remove, e.g. 'poison'
+  cureCategory?: string; // condition category to remove, e.g. 'poison'
   str?: number;          // permanent attribute boost
   int?: number;
   con?: number;

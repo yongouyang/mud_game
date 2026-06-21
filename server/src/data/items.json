@@ -81,9 +81,9 @@
     "id": "jiedu-wan",
     "name": "解毒丸",
     "type": "medicine",
-    "description": "可解百毒的灵丹。",
+    "description": "可解百毒的灵丹，能清除各类毒伤。",
     "effect": {
-      "cure": "poison"
+      "cureCategory": "poison"
     }
   },
   {

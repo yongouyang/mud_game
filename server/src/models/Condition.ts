@@ -10,6 +10,7 @@ export interface PlayerCondition {
 export interface ConditionDef {
   id: string;
   name: string;
+  category?: string;      // e.g. 'poison', 'illness', 'elemental' for grouped cures/dispels
   tickSeconds: number;
   baseDamage: number;
   damageType: 'hp' | 'mp';

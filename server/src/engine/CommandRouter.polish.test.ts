@@ -115,7 +115,7 @@ describe('Polish: minimum playable loop', () => {
       items.addItem(p, 'jiedu-wan', 1);
       p.conditions.push({ id: 'poison', name: '中毒', level: 1, remain: 5, appliedAt: clock.now() });
       const out = cmd('use 解毒丸');
-      expect(out).toContain('解除了 poison 状态');
+      expect(out).toContain('解除了 poison 类异常状态');
       expect(p.conditions).toHaveLength(0);
     });
 

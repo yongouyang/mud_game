@@ -80,6 +80,18 @@ export class ConditionSystem {
     return `\n  ${def.messages.cure}\n`;
   }
 
+  /** Cure the first condition matching a category. Returns a message or null. */
+  cureByCategory(player: Player, category: string): string | null {
+    const cond = player.conditions?.find((c) => {
+      const def = this.defs.get(c.id);
+      return def?.category === category;
+    });
+    if (!cond) return null;
+    const def = this.defs.get(cond.id);
+    this.removeCondition(player, cond.id);
+    return def ? `\n  ${def.messages.cure}\n` : '\n  异常状态解除了。\n';
+  }
+
   /**
    * Attempt to dispel a condition using force skill.
    * Returns a message describing the outcome, or null if no such condition.
@@ -88,10 +100,37 @@ export class ConditionSystem {
     const def = this.defs.get(id);
     const cond = this.getCondition(player, id);
     if (!def || !cond) return null;
+    return this.dispelSingleCondition(player, cond, def, forceLv);
+  }
 
+  /** Dispel all conditions in a category. Returns a summary message or null. */
+  dispelCategory(player: Player, category: string, forceLv: number): string | null {
+    const matches = (player.conditions || []).filter((c) => {
+      const def = this.defs.get(c.id);
+      return def?.category === category;
+    });
+    if (matches.length === 0) return null;
+
+    const messages: string[] = [];
+    for (const cond of matches) {
+      const def = this.defs.get(cond.id);
+      if (!def) continue;
+      const msg = this.dispelSingleCondition(player, cond, def, forceLv);
+      if (msg) messages.push(msg.trim());
+    }
+    if (messages.length === 0) return null;
+    return '\n  ' + messages.join('\n  ') + '\n';
+  }
+
+  private dispelSingleCondition(
+    player: Player,
+    cond: PlayerCondition,
+    def: ConditionDef,
+    forceLv: number,
+  ): string | null {
     const cost = def.dispelCostBase * cond.level;
     if (player.mp < cost) {
-      return `\n  内力不足！驱散${def.name}需要 ${cost} 点内力。\n`;
+      return `内力不足！驱散${def.name}需要 ${cost} 点内力。`;
     }
 
     player.mp -= cost;
@@ -99,17 +138,17 @@ export class ConditionSystem {
     // Success chance scales with force skill vs condition level.
     const chance = Math.min(0.95, 0.3 + (forceLv / Math.max(1, cond.level)) * 0.1);
     if (Math.random() < chance) {
-      this.removeCondition(player, id);
-      return `\n  ${def.messages.dispel}\n  你成功驱散了${def.name}。\n`;
+      this.removeCondition(player, cond.id);
+      return `${def.messages.dispel}\n  你成功驱散了${def.name}。`;
     }
 
     // Partial progress: reduce remain.
     cond.remain = Math.max(0, cond.remain - Math.max(1, Math.floor(forceLv / 5)));
     if (cond.remain <= 0) {
-      this.removeCondition(player, id);
-      return `\n  ${def.messages.dispel}\n  你勉强将${def.name}压制住了。\n`;
+      this.removeCondition(player, cond.id);
+      return `${def.messages.dispel}\n  你勉强将${def.name}压制住了。`;
     }
-    return `\n  你试图运功驱散${def.name}，但只压制了一部分（剩余 ${cond.remain} tick）。\n`;
+    return `你试图运功驱散${def.name}，但只压制了一部分（剩余 ${cond.remain} tick）。`;
   }
 
   /**
