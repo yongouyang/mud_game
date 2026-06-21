@@ -76,14 +76,13 @@ export class PlayerManager {
       return '\n  你尚未完成角色创建。\n';
     }
     const a = player.attributes;
-    const hpBar = bar(player.hp, player.maxHp, 20);
-    const mpBar = bar(player.mp, player.maxMp, 20);
+    const hpBar = bar(player.hp, player.maxHp, 10);
+    const mpBar = bar(player.mp, player.maxMp, 10);
     return [
       '',
       `  ─── ${player.name} ───`,
       '',
-      `  气血  ${hpBar}  ${player.hp}/${player.maxHp}`,
-      `  内力  ${mpBar}  ${player.mp}/${player.maxMp}`,
+      `  气血 ${hpBar} ${player.hp}/${player.maxHp}  内力 ${mpBar} ${player.mp}/${player.maxMp}`,
       '',
       `  臂力(str): ${a.str}    悟性(int): ${a.int}`,
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,

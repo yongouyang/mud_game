@@ -162,15 +162,14 @@ export class CombatSystem {
   }
 
   formatCombatStatus(player: CombatTarget & { mp?: number; maxMp?: number }, playerMp: number, playerMaxMp: number, enemy: CombatTarget): string {
-    const mpLine = playerMp > 0 ? `  内力: ${bar(playerMp, playerMaxMp, 12)}  ${playerMp}/${playerMaxMp}` : '';
+    const mpBar = playerMp > 0 ? `  MP: ${bar(playerMp, playerMaxMp, 8)} ${playerMp}/${playerMaxMp}` : '';
     return [
       '',
       '  ─── 战斗 ───',
       '',
-      `  你 (${player.name})    HP: ${bar(player.hp, player.maxHp, 12)}  ${player.hp}/${player.maxHp}`,
-      mpLine,
-      `  敌人 (${enemy.name})   HP: ${bar(enemy.hp, enemy.maxHp, 12)}  ${enemy.hp}/${enemy.maxHp}`,
+      `  你 (${player.name})    HP: ${bar(player.hp, player.maxHp, 8)} ${player.hp}/${player.maxHp}${mpBar}`,
+      `  敌人 (${enemy.name})   HP: ${bar(enemy.hp, enemy.maxHp, 8)} ${enemy.hp}/${enemy.maxHp}`,
       '',
-    ].filter(Boolean).join('\n') + '\n';
+    ].join('\n') + '\n';
   }
 }
