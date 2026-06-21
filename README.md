@@ -22,7 +22,7 @@ npm run dev:all        # Frontend (:5173) + Server (:3000)
 
 Open `http://localhost:5173` — `login demo some-secret` to jump straight in (preloaded with 10,000 pot).
 
-## Game Commands (30 total)
+## Game Commands (31 total)
 
 ### Movement & Info
 | Command | Description |
@@ -91,6 +91,16 @@ Open `http://localhost:5173` — `login demo some-secret` to jump straight in (p
 |---|---|
 | `register <user> <pass>` | Create account |
 | `login <user> <pass>` | Log in |
+
+### Admin / GM Commands (admin accounts only)
+| Command | Description |
+|---|---|
+| `gm list` | List online players |
+| `gm inspect <玩家>` | View a player's full status |
+| `gm kick <玩家>` | Disconnect a player |
+| `gm goto <roomId>` | Teleport to any room |
+| `gm spawn <npcId>` | Summon an NPC clone to your room |
+| `gm set <玩家> <field> <value>` | Edit hp/mp/exp/pot/shen/room/attributes |
 
 ## Core Mechanics
 
@@ -268,6 +278,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
 | `NpcSystem.test.ts` | 4 | Master/disciple NPC coverage + boss drops |
 | `CommandRouter.boss.test.ts` | 1 | Boss kill + guaranteed loot |
+| `CommandRouter.admin.test.ts` | 7 | GM list/inspect/kick/goto/spawn/set |
 | `time.test.ts` | 8 | SystemClock + Scheduler |
 | `index.e2e.test.ts` | 18 | Full user journeys (auth, map, schools, combat) |
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |

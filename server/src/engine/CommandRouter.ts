@@ -15,7 +15,7 @@ import { QuestSystem } from '../systems/QuestSystem.js';
 import { Scheduler } from '../time/Scheduler.js';
 import { SystemClock } from '../time/SystemClock.js';
 import { SchoolDef } from '../models/School.js';
-import { Player, PlayerAttributes, ATTRIBUTE_NAMES } from '../models/Player.js';
+import { Player, PlayerAttributes, ATTRIBUTE_NAMES, recalcPlayerStats } from '../models/Player.js';
 
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
 for (const [key, name] of Object.entries(ATTRIBUTE_NAMES)) {
@@ -189,6 +189,7 @@ export class CommandRouter {
       case 'practice': case 'lian': return this.handlePractice(player, rest);
       case 'tianfu': case 'setattr': return this.handleTianfu(player, rest);
       case 'level': return this.levels.formatLevelInfo(player);
+      case 'gm': return this.handleGm(player, rest);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
     }
@@ -266,7 +267,8 @@ export class CommandRouter {
       '  quest           查看当前任务', '  quest <NPC>     交/列任务',
       '  quest <NPC> <ID> 接取任务',      '  dazuo [秒]     打坐恢复内力',
       '  practice <武功> 练习武功',   '  tianfu <属性>   分配属性点',
-      '  level           查看等级',   '  help            显示帮助',
+      '  level           查看等级',   '  gm <命令>       管理员命令',
+      '  help            显示帮助',
       '',
     ].join('\n') + '\n';
   }
@@ -912,6 +914,79 @@ export class CommandRouter {
       case 'talk': return '对话';
       default: return q.type;
     }
+  }
+
+  // ── GM / Admin tooling ──────────────────────────────────
+  private handleGm(player: Player, args: string[]): string {
+    if (!player.isAdmin) {
+      return '\n  你没有权限使用管理命令。\n';
+    }
+    if (args.length === 0) {
+      return '\n  GM 命令：list | inspect <玩家> | kick <玩家> | goto <房间ID> | spawn <npcId> | set <玩家> <字段> <值>\n';
+    }
+    const sub = args[0].toLowerCase();
+
+    if (sub === 'list') {
+      const online = this.players.getAllPlayers();
+      if (online.length === 0) return '\n  当前没有在线玩家。\n';
+      const lines = online.map((p) => `  ${p.name} (${p.id}) — ${p.currentRoom}`).join('\n');
+      return `\n  在线玩家（${online.length}）：\n${lines}\n`;
+    }
+
+    if (sub === 'inspect' && args[1]) {
+      const target = this.findPlayerByName(args[1]);
+      if (!target) return `\n  找不到玩家 ${args[1]}。\n`;
+      return this.players.formatStatus(target, this.effectiveAttributes(target));
+    }
+
+    if (sub === 'kick' && args[1]) {
+      const target = this.findPlayerByName(args[1]);
+      if (!target) return `\n  找不到玩家 ${args[1]}。\n`;
+      this.players.removePlayer(target.id);
+      return `\n  已将 ${target.name} 移出游戏。\n`;
+    }
+
+    if (sub === 'goto' && args[1]) {
+      const roomId = args[1];
+      if (!this.map.getRoom(roomId)) return `\n  不存在房间 ${roomId}。\n`;
+      player.currentRoom = roomId;
+      return `\n  你传送到了 ${roomId}。\n`;
+    }
+
+    if (sub === 'spawn' && args[1]) {
+      const npcId = args[1];
+      const spawned = this.npcs.spawnClone(npcId, player.currentRoom);
+      if (!spawned) return `\n  无法生成 NPC ${npcId}。\n`;
+      return `\n  你召唤了 ${spawned.def.name}。\n`;
+    }
+
+    if (sub === 'set' && args.length >= 4) {
+      const target = this.findPlayerByName(args[1]);
+      if (!target) return `\n  找不到玩家 ${args[1]}。\n`;
+      const field = args[2];
+      const value = args[3];
+      if (['hp', 'mp', 'exp', 'pot', 'shen'].includes(field)) {
+        (target as any)[field] = parseInt(value, 10);
+        return `\n  已将 ${target.name} 的 ${field} 设为 ${value}。\n`;
+      }
+      if (field === 'room') {
+        if (!this.map.getRoom(value)) return `\n  不存在房间 ${value}。\n`;
+        target.currentRoom = value;
+        return `\n  已将 ${target.name} 的房间设为 ${value}。\n`;
+      }
+      if (field in target.attributes) {
+        (target.attributes as any)[field] = parseInt(value, 10);
+        recalcPlayerStats(target);
+        return `\n  已将 ${target.name} 的 ${field} 设为 ${value}。\n`;
+      }
+      return `\n  未知字段 ${field}。\n`;
+    }
+
+    return '\n  未知 GM 命令。\n';
+  }
+
+  private findPlayerByName(name: string): Player | undefined {
+    return this.players.getAllPlayers().find((p) => p.name === name);
   }
 
   // ── Perform (绝招) ──────────────────────────────────────

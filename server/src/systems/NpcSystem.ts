@@ -33,6 +33,16 @@ export class NpcSystem {
     });
   }
 
+  /** Spawn a clone of an existing NPC definition in a specific room. */
+  spawnClone(npcId: string, roomId: string): NpcInstance | undefined {
+    const original = this.defs.get(npcId);
+    if (!original) return undefined;
+    const cloneId = `${npcId}-gm-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const cloneDef: NpcDef = { ...original, id: cloneId, roomId };
+    this.register(cloneDef);
+    return this.npcs.get(cloneId);
+  }
+
   getNpc(npcId: string): NpcInstance | undefined {
     return this.npcs.get(npcId);
   }
