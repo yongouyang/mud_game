@@ -90,19 +90,25 @@ dazuo 30              # 打坐 30 秒恢复内力</pre>
 <div class="tip">打坐时无法移动或战斗，血量会缓慢下降，内力会持续回复。</div>
 
 <h3>🔹 独门武功 — 先拜师！</h3>
-<p>高级武功需要：① 已加入对应门派 ② 在师父房间 ③ 基础武功达标</p>
+<p>高级武功需要：① 已加入对应门派 ② 在师父房间 ③ 基础武功达标。拜师后会获得门派属性奖励。</p>
+<table>
+<tr><th>门派</th><th>路径</th><th>奖励</th><th>招牌武功</th></tr>
+<tr><td>少林派</td><td class="path">nnnesw</td><td>根骨 +3</td><td>罗汉拳</td></tr>
+<tr><td>武当派</td><td class="path">nnneew</td><td>身法 +3</td><td>太极拳</td></tr>
+<tr><td>丐帮</td><td class="path">nnnwe</td><td>臂力 +3</td><td>打狗棒法、降龙十八掌</td></tr>
+<tr><td>华山派</td><td class="path">nnnnenn</td><td>身法 +2，臂力 +1</td><td>华山剑法、独孤九剑</td></tr>
+<tr><td>峨眉派</td><td class="path">nnnenn</td><td>悟性 +3</td><td>峨眉剑法</td></tr>
+<tr><td>古墓派</td><td class="path">nnnnnn</td><td>身法 +3</td><td>玉女心经、黯然销魂掌</td></tr>
+<tr><td>昆仑派</td><td class="path">nnnenw</td><td>身法 +2，臂力 +1</td><td>松风剑法</td></tr>
+<tr><td>明教</td><td class="path">nnnnne</td><td>根骨 +2，臂力 +1</td><td>乾坤大挪移</td></tr>
+<tr><td>全真教</td><td class="path">nnnnsw</td><td>悟性 +2，根骨 +1</td><td>无相神功</td></tr>
+<tr><td>星宿派</td><td class="path">nnnnwsw</td><td>悟性 +2，身法 +1</td><td>化功大法</td></tr>
+</table>
 <div class="step">
-<pre># 第1步：在广场练基本功（消耗潜能，打山贼获得）
-learn 基本拳脚    × 10次 → Lv.10
-learn 基本轻功    × 5次  → 提高闪避
-learn 基本内功    × 5次  → 提高内力吸收
-
-# 第2步：去少林拜师（路径：n n n e s w）
-join 少林派
-
-# 第3步：在师父面前学独门武功
-learn 罗汉拳      → 消耗 2 潜能，需要拳脚 ≥ Lv.5
-learn 太极拳      → 消耗 2 潜能，需要拳脚 ≥ Lv.10</pre>
+<pre># 示例：去少林拜师学罗汉拳
+join 少林派               # 在少林大雄宝殿
+learn 基本拳脚 × 5次      # 提升到 Lv.5
+learn 罗汉拳              # 消耗 2 潜能，学会独门拳法</pre>
 </div>
 
 <h2>🎖 第三章：等级与属性点</h2>
@@ -230,6 +236,10 @@ exert dispel poison     # 运功逼毒（需要基本内功）</pre>
 <tr><td>华山·之巅</td><td class="path">nnnnenn</td><td>岳不群</td></tr>
 <tr><td>峨眉·金顶</td><td class="path">nnnenn</td><td>灭绝师太</td></tr>
 <tr><td>古墓·密室</td><td class="path">nnnnnn</td><td>小龙女</td></tr>
+<tr><td>昆仑·三清殿</td><td class="path">nnnenw</td><td>何太冲</td></tr>
+<tr><td>明教·光明顶</td><td class="path">nnnnne</td><td>张无忌</td></tr>
+<tr><td>全真教·重阳宫</td><td class="path">nnnnsw</td><td>王重阳</td></tr>
+<tr><td>星宿派·星宿海</td><td class="path">nnnnwsw</td><td>丁春秋</td></tr>
 </table>
 <p style="margin-top:12px">完整 59 房间地图请查看 <code>docs/map.html</code></p>
 
@@ -269,8 +279,8 @@ buy 皮甲
 # 6. 去少林拜师
 n n n e s w
 join 少林派
+learn 基本拳脚 × 5 次      # 达到 Lv.5
 learn 罗汉拳
-learn 太极拳
 
 # 7. 天下我有！</pre>
 </div>

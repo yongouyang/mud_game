@@ -850,6 +850,12 @@ export class CommandRouter {
     const p = player as any;
     if (p.schoolId) return '\n  你已经加入了门派。\n';
     p.schoolId = school.id;
-    return `\n  你拜入了${school.name}！\n  掌门${school.masterName}收你为弟子。\n`;
+    p.schoolName = school.name;
+    this.schools.applyBonus(player, school);
+    let msg = `\n  你拜入了${school.name}！\n  掌门${school.masterName}收你为弟子。\n`;
+    if (school.bonusDescription) {
+      msg += `  你感到体内气息变化：${school.bonusDescription}。\n`;
+    }
+    return msg;
   }
 }

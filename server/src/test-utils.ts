@@ -32,11 +32,11 @@ export function createTestContext(initialTime: number = 0, existingPlayers?: Pla
   const players = existingPlayers || new PlayerManager(clock);
   const map = new MapSystem(scheduler);
   const combat = new CombatSystem();
-  const skills = new SkillSystem();
+  const schools = new SchoolSystem();
+  const skills = new SkillSystem(schools);
   const conditions = new ConditionSystem(clock);
   const items = new ItemSystem(conditions);
   const npcs = new NpcSystem(skills, scheduler);
-  const schools = new SchoolSystem();
   const levels = new LevelSystem();
   const router = new CommandRouter(
     players, map, combat, skills, items, npcs, schools,

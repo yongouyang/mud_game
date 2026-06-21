@@ -31,6 +31,7 @@ export interface Player {
   skills: PlayerSkill[];
   conditions: PlayerCondition[];
   schoolId?: string;
+  schoolName?: string;
   quest: { type: string; target: string; exp: number; pot: number; itemId?: string } | null;
   powerupExpiry?: number;
   isMeditating?: boolean;

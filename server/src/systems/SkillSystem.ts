@@ -1,11 +1,12 @@
-import { Player } from '../models/Player.js';
-import { SkillDef, PlayerSkill, SkillType } from '../models/Skill.js';
+import { Player, recalcPlayerStats } from '../models/Player.js';
+import { SkillDef, PlayerSkill } from '../models/Skill.js';
 import skillsData from '../data/skills.json' assert { type: 'json' };
+import { SchoolSystem } from './SchoolSystem.js';
 
 export class SkillSystem {
   private defs = new Map<string, SkillDef>();
 
-  constructor() {
+  constructor(private schools?: SchoolSystem) {
     for (const s of skillsData as SkillDef[]) {
       this.defs.set(s.id, s);
     }
@@ -34,13 +35,16 @@ export class SkillSystem {
 
     // School-specific skills: must be member + at master's room
     if (def.schoolId) {
+      const school = this.schools?.getSchool(def.schoolId);
+      if (!school) {
+        return `「${def.name}」暂无门派传授。`;
+      }
       const pSchoolId = (player as any).schoolId;
       if (pSchoolId !== def.schoolId) {
-        return `「${def.name}」是${def.schoolId === 'shaolin' ? '少林派' : def.schoolId === 'wudang' ? '武当派' : def.schoolId === 'gaibang' ? '丐帮' : def.schoolId === 'huashan' ? '华山派' : def.schoolId === 'emei' ? '峨眉派' : '古墓派'}独门武功，需先加入该门派。`;
+        return `「${def.name}」是${school.name}独门武功，需先加入该门派。`;
       }
-      const joinRoom = def.schoolId === 'shaolin' ? 'shaolin/hall' : def.schoolId === 'wudang' ? 'wudang/hall' : def.schoolId === 'gaibang' ? 'gaibang/hq' : def.schoolId === 'huashan' ? 'huashan/peak' : def.schoolId === 'emei' ? 'emei/golden' : 'gumu/chamber';
-      if (opts?.currentRoom !== joinRoom) {
-        return `需到师父面前学习${def.name}。`;
+      if (opts?.currentRoom !== school.joinRoomId) {
+        return `需到${school.name}师父面前学习${def.name}。`;
       }
     }
 

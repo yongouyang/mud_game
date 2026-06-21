@@ -134,6 +134,14 @@
         {
           "direction": "east",
           "roomId": "huashan/foot"
+        },
+        {
+          "direction": "northeast",
+          "roomId": "mingjiao/hall"
+        },
+        {
+          "direction": "southwest",
+          "roomId": "quanzhen/hall"
         }
       ]
     },
@@ -157,6 +165,10 @@
         {
           "direction": "north",
           "roomId": "emei/foot"
+        },
+        {
+          "direction": "northwest",
+          "roomId": "kunlun/hall"
         }
       ]
     },
@@ -168,6 +180,10 @@
         {
           "direction": "east",
           "roomId": "wilderness/forest2"
+        },
+        {
+          "direction": "southwest",
+          "roomId": "xingxiu/hall"
         }
       ]
     },

@@ -58,11 +58,11 @@ const scheduler = new Scheduler(clock);
 const players = new PlayerManager(clock);
 const map = new MapSystem(scheduler);
 const combat = new CombatSystem();
-const skills = new SkillSystem();
+const schools = new SchoolSystem();
+const skills = new SkillSystem(schools);
 const conditions = new ConditionSystem(clock);
 const items = new ItemSystem(conditions);
 const npcs = new NpcSystem(skills, scheduler);
-const schools = new SchoolSystem();
 const levels = new LevelSystem();
 const persistence = new PersistenceSystem();
 

@@ -185,5 +185,45 @@
     "attributes": { "str": 6, "int": 7, "con": 8, "dex": 6 },
     "skills": [],
     "aggressive": false
+  },
+  {
+    "id": "master-kunlun",
+    "name": "何太冲",
+    "description": "昆仑派掌门，剑法飘逸，神态傲然。",
+    "roomId": "kunlun/hall",
+    "dialogue": ["昆仑剑法清灵飘逸，你可愿意一学？", "剑道无涯，修行在个人。"],
+    "attributes": { "str": 12, "int": 12, "con": 10, "dex": 14 },
+    "skills": [{ "skillId": "songfeng-jian", "level": 50 }],
+    "aggressive": false
+  },
+  {
+    "id": "master-mingjiao",
+    "name": "张无忌",
+    "description": "明教教主，身负九阳神功与乾坤大挪移，武功深不可测。",
+    "roomId": "mingjiao/hall",
+    "dialogue": ["明教光明顶欢迎天下豪杰。", "乾坤大挪移可颠倒阴阳。"],
+    "attributes": { "str": 14, "int": 12, "con": 14, "dex": 12 },
+    "skills": [{ "skillId": "qiankun-danuoyi", "level": 60 }],
+    "aggressive": false
+  },
+  {
+    "id": "master-quanzhen",
+    "name": "王重阳",
+    "description": "全真教创派祖师，道家玄门正宗，武功出神入化。",
+    "roomId": "quanzhen/hall",
+    "dialogue": ["全真教乃玄门正宗。", "先学道，后习武。"],
+    "attributes": { "str": 12, "int": 15, "con": 12, "dex": 12 },
+    "skills": [{ "skillId": "wuzhi-shengong", "level": 55 }],
+    "aggressive": false
+  },
+  {
+    "id": "master-xingxiu",
+    "name": "丁春秋",
+    "description": "星宿派掌门，化功大法阴毒无比，喜好弟子吹捧。",
+    "roomId": "xingxiu/hall",
+    "dialogue": ["星宿老仙，法力无边！", "化功大法可化去他人内力。"],
+    "attributes": { "str": 10, "int": 14, "con": 10, "dex": 14 },
+    "skills": [{ "skillId": "huagong-dafa", "level": 50 }],
+    "aggressive": false
   }
 ]

@@ -132,11 +132,15 @@ Original MUD reference: `docs/oiuv_reference.md`
 | School | Location | Master | Bonus | Signature Skills |
 |---|---|---|---|---|
 | 少林派 | 嵩山少林寺 | 玄慈方丈 | +3 根骨 | 罗汉拳 |
-| 武当派 | 武当山紫霄宫 | 冲虚道长 | +3 身法 | 太极拳 |
-| 丐帮 | 杏子林总舵 | 洪七公 | +3 臂力 | 打狗棒法, 降龙十八掌 |
-| 华山派 | 华山之巅 | 岳不群 | +2 身法 +1 臂力 | 华山剑法, 独孤九剑 |
+| 武当派 | 武当山紫霄宫 | 冲虚道长 | +3 身法 | 太极拳、草上飞、内功心法 |
+| 丐帮 | 杏子林总舵 | 洪七公 | +3 臂力 | 打狗棒法、降龙十八掌 |
+| 华山派 | 华山之巅 | 岳不群 | +2 身法 +1 臂力 | 华山剑法、独孤九剑、破玉拳 |
 | 峨眉派 | 峨眉金顶 | 灭绝师太 | +3 悟性 | 峨眉剑法 |
-| 古墓派 | 终南山古墓 | 小龙女 | +3 身法 +1 悟性 | 玉女心经, 黯然销魂掌 |
+| 古墓派 | 终南山古墓 | 小龙女 | +3 身法 | 玉女心经、黯然销魂掌 |
+| 昆仑派 | 昆仑三清殿 | 何太冲 | +2 身法 +1 臂力 | 松风剑法 |
+| 明教 | 光明顶 | 张无忌 | +2 根骨 +1 臂力 | 乾坤大挪移 |
+| 全真教 | 重阳宫 | 王重阳 | +2 悟性 +1 根骨 | 无相神功 |
+| 星宿派 | 星宿海 | 丁春秋 | +2 悟性 +1 身法 | 化功大法 |
 
 ### Skills (44 total)
 
@@ -147,16 +151,20 @@ Original MUD reference: `docs/oiuv_reference.md`
 | Shaolin | 罗汉拳(luohan-quan) |
 | Wudang | 太极拳(taiji-quan), 草上飞(qinggong), 内功心法(neigong-xinfa) |
 | Gaibang | 打狗棒法(dagou-bang), 降龙十八掌(xianglong-zhang) |
-| Huashan | 华山剑法(huashan-jian), 独孤九剑(dugu-jiujian) |
+| Huashan | 华山剑法(huashan-jian), 独孤九剑(dugu-jiujian), 破玉拳(poyu-quan) |
 | Emei | 峨眉剑法(emei-jian) |
 | Gumu | 玉女心经(yunu-xinjing), 黯然销魂掌(anran-xiaohun) |
+| Kunlun | 松风剑法(songfeng-jian) |
+| Mingjiao | 乾坤大挪移(qiankun-danuoyi) |
+| Quanzhen | 无相神功(wuzhi-shengong) |
+| Xingxiu | 化功大法(huagong-dafa) |
 
-## Testing (175 tests)
+## Testing (187 tests)
 
 ```bash
 npm test                    # All tests (Vitest unit + server + Playwright E2E)
 cd server && npx vitest     # Server only
-npm run test:e2e            # Playwright UI E2E (33 tests)
+npm run test:e2e            # Playwright UI E2E (36 tests)
 ```
 
 ### Test Coverage
@@ -169,6 +177,7 @@ npm run test:e2e            # Playwright UI E2E (33 tests)
 | `CommandRouter.conditions.test.ts` | 4 | Conditions, antidote, dispel |
 | `CommandRouter.progression.test.ts` | 8 | Leveling, attribute points, practice, dazuo |
 | `CommandRouter.gap2.test.ts` | 4 | NPC respawn, shop buy |
+| `CommandRouter.schools.test.ts` | 6 | School join, bonuses, skill restrictions |
 | `SkillSystem.test.ts` | 15 | Learning, prerequisites, school lock |
 | `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
 | `ConditionSystem.test.ts` | 8 | Condition apply/tick/dispel/cure |
@@ -178,6 +187,7 @@ npm run test:e2e            # Playwright UI E2E (33 tests)
 | `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |
 | `leveling.spec.ts` (Playwright) | 3 | Leveling + attribute points |
 | `conditions.spec.ts` (Playwright) | 3 | Wolf poison + antidote |
+| `schools.spec.ts` (Playwright) | 3 | Joining a school + signature skill |
 
 ## Production
 

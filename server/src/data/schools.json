@@ -15,7 +15,9 @@
       "dodge",
       "force",
       "luohan-quan"
-    ]
+    ],
+    "attrBonus": { "con": 3 },
+    "bonusDescription": "根骨 +3（刚猛体魄）"
   },
   {
     "id": "wudang",
@@ -32,8 +34,12 @@
       "cuff",
       "dodge",
       "force",
-      "taiji-quan"
-    ]
+      "taiji-quan",
+      "qinggong",
+      "neigong-xinfa"
+    ],
+    "attrBonus": { "dex": 3 },
+    "bonusDescription": "身法 +3（以柔克刚）"
   },
   {
     "id": "gaibang",
@@ -52,7 +58,9 @@
       "force",
       "dagou-bang",
       "xianglong-zhang"
-    ]
+    ],
+    "attrBonus": { "str": 3 },
+    "bonusDescription": "臂力 +3（降龙掌劲）"
   },
   {
     "id": "huashan",
@@ -70,8 +78,11 @@
       "dodge",
       "force",
       "huashan-jian",
-      "dugu-jiujian"
-    ]
+      "dugu-jiujian",
+      "poyu-quan"
+    ],
+    "attrBonus": { "dex": 2, "str": 1 },
+    "bonusDescription": "身法 +2，臂力 +1（剑气凌厉）"
   },
   {
     "id": "emei",
@@ -81,7 +92,7 @@
     "masterName": "灭绝师太",
     "masterDialogue": [
       "峨眉派不收男弟子……也罢。",
-      "剑法如心，心正则剑正。",
+      "剑法如心，心则剑正。",
       "峨眉剑法虽柔，亦可杀敌。"
     ],
     "skills": [
@@ -89,7 +100,9 @@
       "dodge",
       "force",
       "emei-jian"
-    ]
+    ],
+    "attrBonus": { "int": 3 },
+    "bonusDescription": "悟性 +3（剑心通明）"
   },
   {
     "id": "gumu",
@@ -108,31 +121,90 @@
       "force",
       "yunu-xinjing",
       "anran-xiaohun"
-    ]
+    ],
+    "attrBonus": { "dex": 3 },
+    "bonusDescription": "身法 +3（轻灵飘逸）"
   },
   {
     "id": "kunlun",
     "name": "昆仑派",
     "description": "昆仑山上的名门正派，剑法飘逸，内功深厚。",
-    "joinRoomId": "kunlun/hall"
+    "joinRoomId": "kunlun/hall",
+    "masterName": "何太冲",
+    "masterDialogue": [
+      "昆仑山剑气纵横，施主可愿入我门下？",
+      "松风剑法清灵飘逸，需用心体悟。",
+      "剑道无涯，修行在个人。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "sword",
+      "songfeng-jian"
+    ],
+    "attrBonus": { "dex": 2, "str": 1 },
+    "bonusDescription": "身法 +2，臂力 +1（剑走轻灵）"
   },
   {
     "id": "mingjiao",
     "name": "明教",
-    "description": "源自西域的神秘教派，武功诡异莫测。",
-    "joinRoomId": "mingjiao/hall"
+    "description": "源自西域的神秘教派，武功诡异莫测，乾坤大挪移更是独步武林。",
+    "joinRoomId": "mingjiao/hall",
+    "masterName": "张无忌",
+    "masterDialogue": [
+      "明教光明顶欢迎天下豪杰。",
+      "乾坤大挪移可颠倒阴阳。",
+      "七层乾坤，层层凶险。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "qiankun-danuoyi"
+    ],
+    "attrBonus": { "con": 2, "str": 1 },
+    "bonusDescription": "根骨 +2，臂力 +1（圣火护体）"
   },
   {
     "id": "quanzhen",
     "name": "全真教",
     "description": "道家正宗，王重阳所创，剑法道术冠绝天下。",
-    "joinRoomId": "quanzhen/hall"
+    "joinRoomId": "quanzhen/hall",
+    "masterName": "王重阳",
+    "masterDialogue": [
+      "全真教乃玄门正宗。",
+      "先学道，后习武。",
+      "无相神功可固本培元。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "wuzhi-shengong"
+    ],
+    "attrBonus": { "int": 2, "con": 1 },
+    "bonusDescription": "悟性 +2，根骨 +1（道家真气）"
   },
   {
     "id": "xingxiu",
     "name": "星宿派",
     "description": "星宿海上的邪派，擅长用毒和诡异手法。",
-    "joinRoomId": "xingxiu/hall"
+    "joinRoomId": "xingxiu/hall",
+    "masterName": "丁春秋",
+    "masterDialogue": [
+      "星宿老仙，法力无边！",
+      "化功大法可化去他人内力。",
+      "用毒之道，在于出其不意。"
+    ],
+    "skills": [
+      "cuff",
+      "dodge",
+      "force",
+      "huagong-dafa"
+    ],
+    "attrBonus": { "int": 2, "dex": 1 },
+    "bonusDescription": "悟性 +2，身法 +1（毒步轻移）"
   },
   {
     "id": "xiaoyao",

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SkillSystem } from './SkillSystem.js';
+import { SchoolSystem } from './SchoolSystem.js';
 import { Player, createPlayer, DEFAULT_ATTRIBUTES } from '../models/Player.js';
 
 function makePlayer(name: string): Player {
@@ -8,9 +9,11 @@ function makePlayer(name: string): Player {
 
 describe('SkillSystem', () => {
   let sys: SkillSystem;
+  let schools: SchoolSystem;
 
   beforeEach(() => {
-    sys = new SkillSystem();
+    schools = new SchoolSystem();
+    sys = new SkillSystem(schools);
   });
 
   it('finds skill definitions by id', () => {

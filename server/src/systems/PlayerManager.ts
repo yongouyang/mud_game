@@ -100,6 +100,7 @@ export class PlayerManager {
     if (player.conditions && player.conditions.length > 0) {
       extras.push(`状态：${player.conditions.map((c) => `${c.name}Lv.${c.level}(${c.remain}tick)`).join('、')}`);
     }
+    const schoolLine = player.schoolName ? `  门派: ${player.schoolName}` : '';
     return [
       '',
       `  ─── ${player.name} ───`,
@@ -110,6 +111,7 @@ export class PlayerManager {
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}`,
       '',
       `  经验: ${player.exp || 0}    潜能: ${player.pot || 0}    属性点: ${player.attrPoints || 0}`,
+      schoolLine,
       extras.length > 0 ? `  ${extras.join('    ')}` : '',
       '',
     ].join('\n') + '\n';
