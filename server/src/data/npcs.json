@@ -2953,10 +2953,6 @@
       {
         "skillId": "huashan-shenfa",
         "level": 43
-      },
-      {
-        "skillId": "huashan-neigong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -3124,10 +3120,6 @@
       {
         "skillId": "tiyunzong",
         "level": 23
-      },
-      {
-        "skillId": "tiaji-jian",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -24223,10 +24215,6 @@
         "level": 1
       },
       {
-        "skillId": "huaxian-sword",
-        "level": 1
-      },
-      {
         "skillId": "mingwang-jian",
         "level": 1
       }
@@ -33563,10 +33551,6 @@
       {
         "skillId": "huashan-shenfa",
         "level": 40
-      },
-      {
-        "skillId": "huashan-neigong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -37066,10 +37050,6 @@
       {
         "skillId": "feiyan-huixiang",
         "level": 40
-      },
-      {
-        "skillId": "huashan-neigong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -37218,10 +37198,6 @@
       {
         "skillId": "feiyan-huixiang",
         "level": 40
-      },
-      {
-        "skillId": "huashan-neigong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -54471,10 +54447,6 @@
         "level": 20
       },
       {
-        "skillId": "tiezhu-juedao",
-        "level": 20
-      },
-      {
         "skillId": "jiechen-dao",
         "level": 20
       }
@@ -54548,10 +54520,6 @@
       },
       {
         "skillId": "hongye-daofa",
-        "level": 20
-      },
-      {
-        "skillId": "tiezhu-juedao",
         "level": 20
       },
       {
@@ -58002,10 +57970,6 @@
       },
       {
         "skillId": "hongye-daofa",
-        "level": 45
-      },
-      {
-        "skillId": "tiezhu-juedao",
         "level": 45
       },
       {
@@ -61652,10 +61616,6 @@
       {
         "skillId": "martial-cognize",
         "level": 25
-      },
-      {
-        "skillId": "jinwu-goufan",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -62703,10 +62663,6 @@
       {
         "skillId": "martial-cognize",
         "level": 50
-      },
-      {
-        "skillId": "zhemei-jian",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -64703,10 +64659,6 @@
       {
         "skillId": "literate",
         "level": 50
-      },
-      {
-        "skillId": "shenhuo-shengong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -67291,10 +67243,6 @@
         "level": 50
       },
       {
-        "skillId": "zhoangnan-zhi",
-        "level": 1
-      },
-      {
         "skillId": "sun-finger",
         "level": 1
       }
@@ -68828,10 +68776,6 @@
       {
         "skillId": "tiyunzong",
         "level": 50
-      },
-      {
-        "skillId": "taiji-shenfong",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -79298,10 +79242,6 @@
       {
         "skillId": "force",
         "level": 13
-      },
-      {
-        "skillId": "luoying-zhang",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -80402,10 +80342,6 @@
     "skills": [
       {
         "skillId": "force",
-        "level": 13
-      },
-      {
-        "skillId": "shenhuo-shengong",
         "level": 13
       },
       {
@@ -87263,10 +87199,6 @@
       {
         "skillId": "parry",
         "level": 13
-      },
-      {
-        "skillId": "changquana",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -87403,10 +87335,6 @@
       {
         "skillId": "parry",
         "level": 13
-      },
-      {
-        "skillId": "changquana",
-        "level": 1
       }
     ],
     "aggressive": false,
@@ -89097,14 +89025,6 @@
       {
         "skillId": "martial-cognize",
         "level": 5
-      },
-      {
-        "skillId": "lingying-bu",
-        "level": 1
-      },
-      {
-        "skillId": "feihua-diwang",
-        "level": 1
       }
     ],
     "aggressive": false,

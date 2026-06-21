@@ -59,6 +59,27 @@ for (const s of skills) {
   }
 }
 
+// --- Cleanup items ---
+for (const i of items) {
+  // Correct mis-categorized armor pieces.
+  if (i.type === 'weapon' && /(甲|衣|袍|护甲|丝)$/.test(i.name)) {
+    i.type = 'armor';
+    if (!i.attrBonus) i.attrBonus = { con: 2 };
+  }
+  // Assign weaponType to bows/crossbows.
+  if (i.type === 'weapon' && /(弓|弩|射)/.test(i.name) && !i.weaponType) {
+    i.weaponType = 'bow';
+  }
+}
+
+// --- Cleanup NPC skills ---
+const skillIds = new Set(skills.map((s) => s.id));
+for (const n of npcs) {
+  if (n.skills) {
+    n.skills = n.skills.filter((sk) => skillIds.has(sk.skillId));
+  }
+}
+
 // --- Cleanup NPC drops ---
 for (const n of npcs) {
   if (!n.drops) continue;
@@ -69,5 +90,6 @@ for (const n of npcs) {
 
 save('skills.json', skills);
 save('npcs.json', npcs);
+save('items.json', items);
 
 console.log(`Cleaned ${skills.length} skills, ${npcs.length} NPCs, ${items.length} items.`);
