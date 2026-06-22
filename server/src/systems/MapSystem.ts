@@ -33,6 +33,10 @@ export class MapSystem {
 
   constructor(private scheduler?: Scheduler) {
     for (const room of mapsData.rooms as Room[]) {
+      // Some data sources encode newlines as the literal two-char sequence \n.
+      if (room.description) {
+        room.description = room.description.replace(/\\n/g, '\n');
+      }
       // Seed current items from initialItems if not already set.
       if (room.initialItems && (!room.items || room.items.length === 0)) {
         room.items = [...room.initialItems];

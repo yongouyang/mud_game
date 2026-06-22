@@ -287,7 +287,7 @@
     {
       "id": "gaibang/forest1",
       "name": "丐帮·杏子林入口",
-      "description": "一片茂密的杏子林，这里是丐帮弟子聚集的地方。\\n东边是总舵，南边可以进入密林深处。",
+      "description": "一片茂密的杏子林，这里是丐帮弟子聚集的地方。\\n东边是总舵，南边可以进入密林深处，西边通向荒野山林。",
       "exits": [
         {
           "direction": "east",
@@ -296,6 +296,10 @@
         {
           "direction": "south",
           "roomId": "gaibang/forest2"
+        },
+        {
+          "direction": "west",
+          "roomId": "wilderness/forest1"
         }
       ]
     },

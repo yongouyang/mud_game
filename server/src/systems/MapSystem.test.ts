@@ -54,6 +54,20 @@ describe('MapSystem', () => {
     expect(formatted).toContain('[出口] 无');
   });
 
+  it('renders literal \\n in descriptions as real line breaks', () => {
+    const room = map.getRoom('gaibang/forest1')!;
+    const formatted = map.formatRoom(room);
+    expect(formatted).toContain('东边是总舵');
+    expect(formatted).toContain('南边可以进入密林深处');
+    expect(formatted).not.toContain('\\n');
+  });
+
+  it('can travel back from gaibang to wilderness', () => {
+    const result = map.movePlayer('gaibang/forest1', 'west');
+    expect(result.success).toBe(true);
+    expect(result.newRoomId).toBe('wilderness/forest1');
+  });
+
   it('removes and respawns room items without scheduler', () => {
     const room = map.getRoom('town/square')!;
     room.items = ['test-item'];
