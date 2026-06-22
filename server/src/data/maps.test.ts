@@ -1,45 +1,33 @@
 import { describe, it, expect } from 'vitest';
-import mapsData from './maps.json' assert { type: 'json' };
-
-const rooms = (mapsData as any).rooms as any[];
-const roomIds = new Set(rooms.map((r) => r.id));
+import { validateMap, formatValidationReport } from './map-validator.js';
 
 describe('maps.json data integrity', () => {
-  it('has unique room ids', () => {
-    expect(roomIds.size).toBe(rooms.length);
-  });
+  const result = validateMap();
 
-  it('every exit points to an existing room', () => {
-    for (const r of rooms) {
-      for (const e of r.exits || []) {
-        expect(roomIds.has(e.roomId), `${r.id} exit ${e.direction} -> ${e.roomId}`).toBe(true);
-      }
-    }
+  it('has unique room ids', () => {
+    expect(result.roomIds.size).toBe(result.rooms.length);
   });
 
   it('starting room exists', () => {
-    expect(roomIds.has('town/square')).toBe(true);
+    expect(result.roomIds.has('town/square')).toBe(true);
   });
 
-  it('all school halls are reachable from town/square', () => {
-    const start = 'town/square';
-    const reachable = new Set<string>();
-    const queue = [start];
-    reachable.add(start);
-    while (queue.length) {
-      const id = queue.shift()!;
-      const room = rooms.find((r) => r.id === id);
-      if (!room) continue;
-      for (const e of room.exits || []) {
-        if (!reachable.has(e.roomId)) {
-          reachable.add(e.roomId);
-          queue.push(e.roomId);
-        }
-      }
-    }
+  it('every exit points to an existing room', () => {
+    expect(result.brokenExits, result.brokenExits.join('\n')).toEqual([]);
+  });
 
-    const halls = rooms.filter((r) => r.id.endsWith('/hall')).map((r) => r.id);
-    const unreachable = halls.filter((h) => !reachable.has(h));
-    expect(unreachable, `unreachable halls: ${unreachable.join(', ')}`).toEqual([]);
+  it('all rooms are reachable from town/square', () => {
+    expect(result.unreachableRooms, `Unreachable: ${result.unreachableRooms.join(', ')}`).toEqual([]);
+  });
+
+  it('has no isolated rooms (rooms with zero exits)', () => {
+    expect(result.isolatedRooms, result.isolatedRooms.join('\n')).toEqual([]);
+  });
+
+  it('lists valid dead ends for review', () => {
+    // Dead ends are allowed (e.g. destination rooms), but we print them so
+    // authors can verify they are intentional.
+    console.log('\n' + formatValidationReport(result));
+    expect(result.stats.deadEndCount).toBeGreaterThanOrEqual(0);
   });
 });
