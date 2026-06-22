@@ -70,6 +70,32 @@ describe('PlayerManager', () => {
     expect(status).toContain('中毒');
   });
 
+  it('formatStatus labels base attributes by default', () => {
+    manager.createPlayer('p1');
+    manager.setPlayerName('p1', '楚留香');
+    manager.finalizePlayer('p1');
+    const player = manager.getPlayer('p1')!;
+
+    const status = manager.formatStatus(player);
+    expect(status).toContain('属性：');
+    expect(status).toContain('臂力(str):');
+    expect(status).not.toContain('（含武功/装备加成）');
+    expect(status).not.toContain('基础属性');
+  });
+
+  it('formatStatus labels effective attributes when bonuses are passed', () => {
+    manager.createPlayer('p1');
+    manager.setPlayerName('p1', '楚留香');
+    manager.finalizePlayer('p1');
+    const player = manager.getPlayer('p1')!;
+    const effective = { ...player.attributes, str: player.attributes.str + 5 };
+
+    const status = manager.formatStatus(player, effective);
+    expect(status).toContain('属性（含武功/装备加成）：');
+    expect(status).toContain('臂力(str):');
+    expect(status).not.toContain('基础属性');
+  });
+
   it('shenTitle covers all alignment ranges', () => {
     // Access via casting to any for the private method.
     const title = (manager as any).shenTitle.bind(manager);

@@ -64,4 +64,12 @@ describe('LevelSystem', () => {
     const err = system.spendAttributePoint(player, 'foo', 1);
     expect(err).toContain('没有');
   });
+
+  it('formatLevelInfo labels base attributes without skill/equipment bonuses', () => {
+    const player = createPlayer('p1', '测试', { str: 12, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
+    const info = system.formatLevelInfo(player);
+    expect(info).toContain('基础属性（不含武功/装备加成）：');
+    expect(info).toContain('臂力(str): 12');
+    expect(info).not.toContain('（含武功/装备加成）');
+  });
 });
