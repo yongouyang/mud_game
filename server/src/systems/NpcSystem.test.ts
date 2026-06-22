@@ -84,4 +84,20 @@ describe('NpcSystem', () => {
     const formatted = system.formatNpcsInRoom('town/square');
     expect(formatted).toContain('……还有');
   });
+
+  it('normalizes literal \\n in NPC descriptions and renders single-line room listing', () => {
+    const npc = system.getNpc('master-shaolin');
+    expect(npc).toBeTruthy();
+    // The underlying description should not contain the literal two-char \n.
+    expect(npc!.def.description).not.toContain('\\n');
+
+    const formatted = system.formatNpcsInRoom('shaolin/hall');
+    expect(formatted).toContain('达摩老祖');
+    expect(formatted).not.toContain('\\n');
+    // Each NPC line should end with a single newline, not an embedded \n.
+    const lines = formatted.split('\n').filter((l) => l.trim().length > 0);
+    for (const line of lines) {
+      expect(line).not.toContain('\\n');
+    }
+  });
 });

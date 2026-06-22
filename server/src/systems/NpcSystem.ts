@@ -19,6 +19,11 @@ export class NpcSystem {
 
   constructor(private skillSystem: SkillSystem, private scheduler?: Scheduler) {
     for (const def of npcsData as NpcDef[]) {
+      // Data extraction sometimes leaves literal \n sequences; normalize them
+      // to real newlines and trim trailing whitespace.
+      if (def.description) {
+        def.description = def.description.replace(/\\n/g, '\n').trim();
+      }
       this.register(def);
     }
   }
@@ -78,7 +83,13 @@ export class NpcSystem {
     if (npcs.length === 0) return '';
     const maxShown = 10;
     const shown = npcs.slice(0, maxShown);
-    let msg = shown.map((n) => `  ${n.def.name} - ${n.def.description}`).join('\n') + '\n';
+    let msg = shown
+      .map((n) => {
+        // Keep the room listing single-line even if the description has newlines.
+        const desc = n.def.description.replace(/\n/g, ' ').trim();
+        return `  ${n.def.name} - ${desc}`;
+      })
+      .join('\n') + '\n';
     if (npcs.length > maxShown) {
       msg += `  ……还有 ${npcs.length - maxShown} 人在这里。\n`;
     }
