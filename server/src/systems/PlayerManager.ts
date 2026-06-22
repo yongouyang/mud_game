@@ -146,6 +146,7 @@ export class PlayerManager {
       '',
       `  等级: Lv.${player.level || 1}`,
       '',
+      effectiveAttrs ? '  属性（含武功/装备加成）：' : '  属性：',
       `  臂力(str): ${a.str}    悟性(int): ${a.int}    容貌(per): ${a.per}`,
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}    福缘(kar): ${a.kar}`,
       '',

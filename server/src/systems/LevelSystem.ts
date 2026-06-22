@@ -74,6 +74,7 @@ export class LevelSystem {
       `  经验: ${player.exp || 0} / ${nextExp}（下一级）`,
       `  属性点: ${player.attrPoints || 0}`,
       '',
+      '  基础属性（不含武功/装备加成）：',
       `  臂力(str): ${a.str}    悟性(int): ${a.int}    容貌(per): ${a.per}`,
       `  根骨(con): ${a.con}    身法(dex): ${a.dex}    福缘(kar): ${a.kar}`,
       '',
