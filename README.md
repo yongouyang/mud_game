@@ -20,7 +20,18 @@ npm install && cd server && npm install && cd ..
 npm run dev:all        # Frontend (:5173) + Server (:3000)
 ```
 
-Open `http://localhost:5173` — `login demo some-secret` to jump straight in (preloaded with 10,000 pot).
+Open `http://localhost:5173` and log in with one of the pre-seeded demo accounts:
+
+| Account | Password | Description |
+|---|---|---|
+| `demo` | `some-secret` | Blank slate, 10,000 pot, 5,000 silver |
+| `shaolin` | `test` | 少林派 — 罗汉拳 Lv.30 |
+| `wudang` | `test` | 武当派 — 太极拳、草上飞、内功心法 Lv.30 |
+| `huashan` | `test` | 华山派 — 华山剑法、独孤九剑 Lv.30/20 |
+| `gaibang` | `test` | 丐帮 — 打狗棒法、降龙十八掌 Lv.30 |
+| `rich` | `test` | No school, 50,000 silver for economy tests |
+
+Demo accounts are only created in non-production environments (set `ENABLE_DEMO_ACCOUNTS=true` to override).
 
 ## Game Commands (31 total)
 

@@ -25,7 +25,23 @@ a{color:#58a6ff}
 <p style="text-align:center;color:#888;margin-bottom:24px">管理服务器、维护秩序、调试内容的命令参考</p>
 
 <h2>🔑 第一章：获得管理员权限</h2>
-<p>GM 命令只对 <code>isAdmin = true</code> 的玩家生效。目前需要在服务器数据文件中手动设置：</p>
+<p>GM 命令只对 <code>isAdmin = true</code> 的玩家生效。</p>
+
+<h3>1.1 演示/测试账号（自动拥有 GM 权限）</h3>
+<p>非生产环境启动服务器时，会自动创建一组演示账号并赋予管理员权限，方便本地调试：</p>
+<table>
+<tr><th>账号</th><th>密码</th><th>用途</th></tr>
+<tr><td><code>demo</code></td><td><code>some-secret</code></td><td>空白角色，10,000 潜能，5,000 银两</td></tr>
+<tr><td><code>shaolin</code></td><td><code>test</code></td><td>少林派，罗汉拳 Lv.30</td></tr>
+<tr><td><code>wudang</code></td><td><code>test</code></td><td>武当派，太极拳、草上飞、内功心法 Lv.30</td></tr>
+<tr><td><code>huashan</code></td><td><code>test</code></td><td>华山派，华山剑法/独孤九剑 Lv.30/20</td></tr>
+<tr><td><code>gaibang</code></td><td><code>test</code></td><td>丐帮，打狗棒法、降龙十八掌 Lv.30</td></tr>
+<tr><td><code>rich</code></td><td><code>test</code></td><td>无门派，50,000 银两（经济测试）</td></tr>
+</table>
+<div class="tip"><strong>提示：</strong>演示账号仅在 <code>NODE_ENV !== 'production'</code> 时创建；生产环境需设置 <code>ENABLE_DEMO_ACCOUNTS=true</code> 才会启用。</div>
+
+<h3>1.2 手动设置管理员</h3>
+<p>如需让普通账号获得 GM 权限，可在服务器数据文件中手动设置：</p>
 <div class="step">
 <pre># 1. 让目标玩家先登录一次，使其数据写入 server/data/players.json
 # 2. 停止服务器（避免存档覆盖）
@@ -33,7 +49,7 @@ a{color:#58a6ff}
 "isAdmin": true
 # 4. 重新启动服务器</pre>
 </div>
-<div class="warn"><strong>安全提示：</strong>不要给普通玩家随意开启管理员权限。目前认证系统主要依赖账号密码，GM 账号请使用强密码。</div>
+<div class="warn"><strong>安全提示：</strong>不要给普通玩家随意开启管理员权限。目前认证系统主要依赖账号密码，GM 账号请使用强密码。演示账号密码较弱，切勿在生产环境暴露。</div>
 
 <h2>🎛 第二章：GM 命令一览</h2>
 <p>所有 GM 命令均以 <code>gm</code> 开头：</p>
@@ -85,7 +101,7 @@ gm set 张无忌 room town/square</pre>
 <li>GM 命令执行结果只返回给执行者，不会被其他玩家看到。</li>
 <li><code>gm spawn</code> 召唤的是 NPC 克隆体，ID 带有时间戳，不会覆盖原 NPC。</li>
 <li>修改玩家数据会触发自动存档；如需批量修改，建议直接编辑 <code>server/data/players.json</code> 并重启服务器。</li>
-<li>目前不支持运行时动态授予/撤销管理员权限，必须通过数据文件修改。</li>
+<li>演示账号在创建时即拥有管理员权限；普通玩家仍需通过数据文件修改 <code>isAdmin</code> 字段获得权限。</li>
 </ul>
 
 <h2>📚 相关文档</h2>

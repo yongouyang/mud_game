@@ -6,8 +6,8 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { CommandRouter } from './engine/CommandRouter.js';
 import { PlayerManager } from './systems/PlayerManager.js';
-import { createPlayer } from './models/Player.js';
 import { MapSystem } from './systems/MapSystem.js';
+import { seedDemoAccounts, shouldSeedDemoAccounts } from './demo-seed.js';
 import { CombatSystem } from './systems/CombatSystem.js';
 import { SkillSystem } from './systems/SkillSystem.js';
 import { ItemSystem } from './systems/ItemSystem.js';
@@ -96,15 +96,18 @@ persistenceManager.loadAll();
 const savedPlayers = players.getAllPlayers();
 console.log(`[server] Loaded ${savedPlayers.length} saved player(s)`);
 
-// Seed demo account on first start
-if (savedPlayers.length === 0) {
-  const demoHash = Buffer.from("demo:some-secret").toString("base64");
-  persistence.saveUser("demo", demoHash);
-  const demo = createPlayer("demo", "无名侠客", { str: 15, int: 10, con: 15, dex: 10, per: 10, kar: 10 });
-  demo.pot = 10000;
-  players.setPlayer(demo);
-  persistenceManager.saveAll();
-  console.log("[server] Seeded demo account (login: demo / pass: some-secret, pot: 10000)");
+// Seed demo/test accounts on first start (disabled in production unless overridden)
+if (shouldSeedDemoAccounts()) {
+  const { created, skipped } = seedDemoAccounts(persistence, players, schools);
+  if (created.length > 0) {
+    persistenceManager.saveAll();
+    console.log(`[server] Seeded demo accounts: ${created.join(', ')}`);
+  }
+  if (skipped.length > 0) {
+    console.log(`[server] Demo accounts already exist: ${skipped.join(', ')}`);
+  }
+} else {
+  console.log('[server] Demo accounts disabled in production. Set ENABLE_DEMO_ACCOUNTS=true to override.');
 }
 
 // Periodic autosave
