@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+
+const dataDir = path.join(__dirname, '..', 'server', 'src', 'data');
+const questsPath = path.join(dataDir, 'quests.json');
+const itemsPath = path.join(dataDir, 'items.json');
+const npcsPath = path.join(dataDir, 'npcs.json');
+
+const quests = JSON.parse(fs.readFileSync(questsPath, 'utf8'));
+const items = JSON.parse(fs.readFileSync(itemsPath, 'utf8'));
+const npcs = JSON.parse(fs.readFileSync(npcsPath, 'utf8'));
+
+const existingIds = new Set(quests.map((q) => q.id));
+const itemIds = new Set(items.map((i) => i.id));
+const npcIds = new Set(npcs.map((n) => n.id));
+
+function ensureItem(id, name, type = 'misc', description = '') {
+  if (itemIds.has(id)) return;
+  items.push({ id, name, type, description: description || `任务物品：${name}。` });
+  itemIds.add(id);
+}
+
+// Ensure reward/collect items exist.
+['bandit-token', 'bear-gall', 'school-token', 'mysterious-map', 'wine-jar'].forEach((id) => {
+  ensureItem(id, {
+    'bandit-token': '山贼令牌',
+    'bear-gall': '熊胆',
+    'school-token': '门派令牌',
+    'mysterious-map': '残破地图',
+    'wine-jar': '酒坛',
+  }[id]);
+});
+
+const newQuests = [
+  // School intro quests
+  { id: 'shaolin-kill-bandits', title: '清理山贼', giverNpcId: 'master-shaolin', completerNpcId: 'master-shaolin', type: 'kill', targetId: 'bandit', targetCount: 5, rewardExp: 80, rewardPot: 40, rewardShen: 10, rewardItemId: 'school-token' },
+  { id: 'wudang-collect-herbs', title: '采药炼丹', giverNpcId: 'master-wudang', completerNpcId: 'master-wudang', type: 'collect', targetId: 'herb', targetCount: 5, rewardExp: 60, rewardPot: 30 },
+  { id: 'emei-deliver-letter', title: '峨眉信笺', giverNpcId: 'master-shaolin', completerNpcId: 'master-emei', type: 'delivery', targetId: 'letter', targetCount: 1, rewardExp: 70, rewardPot: 35, rewardShen: 5 },
+  { id: 'huashan-talk-master', title: '拜访华山', giverNpcId: 'storyteller', completerNpcId: 'master-huashan', type: 'talk', targetId: 'master-huashan', targetCount: 1, rewardExp: 50, rewardPot: 20 },
+  { id: 'gaibang-kill-wolves', title: '野狼为患', giverNpcId: 'master-gaibang', completerNpcId: 'master-gaibang', type: 'kill', targetId: 'wolf', targetCount: 5, rewardExp: 70, rewardPot: 30, rewardItemId: 'wolf-pelt' },
+  { id: 'mingjiao-kill-bear', title: '熊罴之患', giverNpcId: 'master-mingjiao', completerNpcId: 'master-mingjiao', type: 'kill', targetId: 'bear', targetCount: 1, rewardExp: 100, rewardPot: 50, rewardItemId: 'bear-gall' },
+  { id: 'wudang-collect-ore', title: '收集铁矿', giverNpcId: 'trainer', completerNpcId: 'trainer', type: 'collect', targetId: 'iron-ore', targetCount: 3, rewardExp: 40, rewardPot: 20 },
+  { id: 'wang-collect-leather', title: '收购皮革', giverNpcId: 'wang', completerNpcId: 'wang', type: 'collect', targetId: 'leather', targetCount: 3, rewardExp: 50, rewardPot: 25 },
+  { id: 'herb-vendor-cure', title: '寻药', giverNpcId: 'herb-vendor', completerNpcId: 'herb-vendor', type: 'collect', targetId: 'herb', targetCount: 5, rewardExp: 60, rewardPot: 25, rewardItemId: 'jiedu-wan' },
+  { id: 'storyteller-explore', title: '侠客岛传闻', giverNpcId: 'storyteller', completerNpcId: 'master-xiakedao', type: 'talk', targetId: 'master-xiakedao', targetCount: 1, rewardExp: 80, rewardPot: 40 },
+  { id: 'merchant-find-map', title: '残图之谜', giverNpcId: 'mysterious-merchant', completerNpcId: 'mysterious-merchant', type: 'collect', targetId: 'mysterious-map', targetCount: 1, rewardExp: 120, rewardPot: 60, rewardItemId: 'school-token' },
+  { id: 'wang-wine-run', title: '沽酒', giverNpcId: 'wang', completerNpcId: 'wang', type: 'delivery', targetId: 'wine-jar', targetCount: 1, rewardExp: 30, rewardPot: 15 },
+  { id: 'master-quanzhen-kill-evil', title: '除魔卫道', giverNpcId: 'master-quanzhen', completerNpcId: 'master-quanzhen', type: 'kill', targetId: 'boss-heifeng', targetCount: 1, rewardExp: 200, rewardPot: 100, rewardShen: 20, rewardItemId: 'boss-token' },
+  { id: 'trainer-combat', title: '实战演练', giverNpcId: 'trainer', completerNpcId: 'trainer', type: 'kill', targetId: 'bandit', targetCount: 3, rewardExp: 60, rewardPot: 30 },
+  { id: 'storyteller-wolf-pelt', title: '狼皮斗篷', giverNpcId: 'storyteller', completerNpcId: 'storyteller', type: 'collect', targetId: 'wolf-pelt', targetCount: 3, rewardExp: 80, rewardPot: 40 },
+  { id: 'master-emei-collect-flowers', title: '采花制香', giverNpcId: 'master-emei', completerNpcId: 'master-emei', type: 'collect', targetId: 'herb', targetCount: 3, rewardExp: 50, rewardPot: 25 },
+  { id: 'master-hu-deliver-token', title: '胡家令牌', giverNpcId: 'master-hu', completerNpcId: 'master-huashan', type: 'delivery', targetId: 'school-token', targetCount: 1, rewardExp: 90, rewardPot: 45 },
+  { id: 'master-wudang-spar', title: '武当论剑', giverNpcId: 'master-wudang', completerNpcId: 'master-wudang', type: 'talk', targetId: 'master-wudang', targetCount: 1, rewardExp: 40, rewardPot: 20 },
+  { id: 'storyteller-bandit-tokens', title: '山贼祸乱', giverNpcId: 'storyteller', completerNpcId: 'storyteller', type: 'collect', targetId: 'bandit-token', targetCount: 3, rewardExp: 100, rewardPot: 50 },
+  { id: 'wang-boss-hunt', title: '黑风寨主', giverNpcId: 'wang', completerNpcId: 'wang', type: 'kill', targetId: 'boss-heifeng', targetCount: 1, rewardExp: 250, rewardPot: 120, rewardItemId: 'black-wind-blade' },
+  { id: 'herb-vendor-antidote', title: '解毒药材', giverNpcId: 'herb-vendor', completerNpcId: 'herb-vendor', type: 'collect', targetId: 'herb', targetCount: 8, rewardExp: 80, rewardPot: 40, rewardItemId: 'jiedu-wan' },
+  { id: 'master-shaolin-study', title: '入寺听讲', giverNpcId: 'master-shaolin', completerNpcId: 'master-shaolin', type: 'talk', targetId: 'master-shaolin', targetCount: 1, rewardExp: 30, rewardPot: 15 },
+  { id: 'trainer-bear-hunt', title: '猎熊', giverNpcId: 'trainer', completerNpcId: 'trainer', type: 'kill', targetId: 'bear', targetCount: 2, rewardExp: 120, rewardPot: 60 },
+];
+
+for (const q of newQuests) {
+  if (existingIds.has(q.id)) continue;
+  // Validate references.
+  if (!npcIds.has(q.giverNpcId)) {
+    console.warn(`Skipping ${q.id}: missing giver ${q.giverNpcId}`);
+    continue;
+  }
+  const completer = q.completerNpcId || q.giverNpcId;
+  if (!npcIds.has(completer)) {
+    console.warn(`Skipping ${q.id}: missing completer ${completer}`);
+    continue;
+  }
+  if (q.type === 'kill' || q.type === 'talk') {
+    if (!npcIds.has(q.targetId)) {
+      console.warn(`Skipping ${q.id}: missing target NPC ${q.targetId}`);
+      continue;
+    }
+  } else {
+    if (!itemIds.has(q.targetId)) {
+      console.warn(`Skipping ${q.id}: missing target item ${q.targetId}`);
+      continue;
+    }
+  }
+  if (q.rewardItemId && !itemIds.has(q.rewardItemId)) {
+    console.warn(`Skipping ${q.id}: missing reward item ${q.rewardItemId}`);
+    continue;
+  }
+  quests.push(q);
+  existingIds.add(q.id);
+}
+
+fs.writeFileSync(questsPath, JSON.stringify(quests, null, 2), 'utf8');
+fs.writeFileSync(itemsPath, JSON.stringify(items, null, 2), 'utf8');
+
+console.log(`Quests: ${quests.length} total`);
+console.log(`New items: ${items.length}`);

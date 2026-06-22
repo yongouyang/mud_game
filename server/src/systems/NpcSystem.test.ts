@@ -81,7 +81,7 @@ describe('NpcSystem', () => {
   });
 
   it('caps formatted NPC room listing', () => {
-    const formatted = system.formatNpcsInRoom('shaolin/hall');
+    const formatted = system.formatNpcsInRoom('town/square');
     expect(formatted).toContain('……还有');
   });
 });

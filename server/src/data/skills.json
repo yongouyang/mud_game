@@ -14,7 +14,8 @@
         "name": "黯然销魂掌·绝",
         "desc": "威力惊人的掌法。需基本拳脚≥15，玉女心经≥10。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -50,7 +51,8 @@
         "name": "array·绝",
         "desc": "一招array",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -67,7 +69,8 @@
         "name": "基本斧法·绝",
         "desc": "一招基本斧法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -84,7 +87,8 @@
         "name": "badao-daofa·绝",
         "desc": "一招badao-daofa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "blade",
@@ -103,13 +107,15 @@
         "name": "xian",
         "desc": "镖中现掌",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "zhi",
         "desc": "乾坤一掷",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -147,7 +153,8 @@
         "name": "八卦六十四刀",
         "desc": "刀走八卦，连绵不断。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -164,7 +171,8 @@
         "name": "gua",
         "desc": "劈卦八卦拳",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -198,13 +206,15 @@
         "name": "ding",
         "desc": "背心钉",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "jia",
         "desc": "掌中夹镖",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ]
   },
@@ -215,7 +225,7 @@
     "description": "一门bahuang-gong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "bahuang-gong·绝",
@@ -240,7 +250,8 @@
         "name": "dian",
         "desc": "「点字诀」只能对战斗中的对手使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -259,7 +270,8 @@
         "name": "百草诀·绝",
         "desc": "一招百草诀",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -272,25 +284,28 @@
     "description": "一门baihua-cuoquan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hong",
         "desc": "战神轰天诀",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "luan",
         "desc": "百花错乱",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "yi",
         "desc": "百花错易",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "unarmed",
@@ -303,13 +318,14 @@
     "description": "一门baihua-quan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "cuo",
         "desc": "百花错乱只能对战斗中的对手使用。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -328,7 +344,8 @@
         "name": "heng",
         "desc": "横扫千军",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -347,7 +364,8 @@
         "name": "kai",
         "desc": "混沌初开",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -360,13 +378,14 @@
     "description": "一门baituo-michuan功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "baituo-michuan·绝",
         "desc": "一招baituo-michuan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -402,7 +421,8 @@
         "name": "baji-quan·绝",
         "desc": "一招baji-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -419,7 +439,8 @@
         "name": "feng",
         "desc": "你的般若掌法不够娴熟，不会使用「封魔」。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -438,7 +459,8 @@
         "name": "dian",
         "desc": "魁星点元",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -457,7 +479,8 @@
         "name": "yin",
         "desc": "神卦天印",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ]
   },
@@ -468,13 +491,14 @@
     "description": "一门丐帮绝技功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "gaibang",
     "performs": [
       {
         "name": "丐帮绝技·绝",
         "desc": "一招丐帮绝技",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -527,7 +551,8 @@
         "name": "bencao-changshi·绝",
         "desc": "一招bencao-changshi",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -538,13 +563,14 @@
     "description": "一门bencao-shuli功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "bencao-shuli·绝",
         "desc": "一招bencao-shuli",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -563,7 +589,8 @@
         "name": "lei",
         "desc": "雷霆万钧",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -601,7 +628,8 @@
         "name": "bihai-chaosheng·绝",
         "desc": "一招bihai-chaosheng",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "chuixiao-jifa",
@@ -620,7 +648,8 @@
         "name": "lian",
         "desc": "峰连碧罗",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -639,7 +668,8 @@
         "name": "冰蚕毒掌·绝",
         "desc": "一招冰蚕毒掌",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "yijinjing",
@@ -658,7 +688,8 @@
         "name": "bing",
         "desc": "寒冰针",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -696,7 +727,8 @@
         "name": "luo",
         "desc": "瀑落九霄",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -734,7 +766,8 @@
         "name": "pengpai",
         "desc": "你还不会使用这一招！\\n",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -753,7 +786,8 @@
         "name": "基本刀法·绝",
         "desc": "基本刀术，可用刀类武器施展。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -789,13 +823,15 @@
         "name": "dian",
         "desc": "云雾暗点",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "meng",
         "desc": "回梦",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "biyun-xinfa",
@@ -814,7 +850,8 @@
         "name": "禅宗心法·绝",
         "desc": "一招禅宗心法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -850,7 +887,8 @@
         "name": "calligraphy·绝",
         "desc": "一招calligraphy",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -888,7 +926,8 @@
         "name": "tao",
         "desc": "碧浪滔天",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -907,25 +946,29 @@
         "name": "canhe",
         "desc": "参合剑气",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "jin",
         "desc": "金刚剑气",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "you",
         "desc": "幽冥剑气",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "zhi",
         "desc": "七星指穴",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "literate",
@@ -944,7 +987,8 @@
         "name": "certosina·绝",
         "desc": "一招certosina",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -961,7 +1005,8 @@
         "name": "cha-quan·绝",
         "desc": "一招cha-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -972,7 +1017,7 @@
     "description": "一门蟾蜍步法功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "蟾蜍步法·绝",
@@ -995,7 +1040,8 @@
         "name": "changquan·绝",
         "desc": "一招changquan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1025,7 +1071,7 @@
     "description": "一门chanhun-suo功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "duo",
@@ -1056,7 +1102,8 @@
         "name": "qin",
         "desc": "缠丝擒拿",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -1092,7 +1139,8 @@
         "name": "道听途说·绝",
         "desc": "一招道听途说",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1109,7 +1157,8 @@
         "name": "chess·绝",
         "desc": "一招chess",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1126,7 +1175,8 @@
         "name": "lian",
         "desc": "赤心连环决",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -1145,7 +1195,8 @@
         "name": "义勇军进行曲·绝",
         "desc": "一招义勇军进行曲",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1162,7 +1213,8 @@
         "name": "痴心情长剑·绝",
         "desc": "一招痴心情长剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1181,7 +1233,8 @@
         "name": "chongling-jian·绝",
         "desc": "一招chongling-jian",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "huashan-jian",
@@ -1200,7 +1253,8 @@
         "name": "zhan",
         "desc": "翅展九州",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -1219,7 +1273,8 @@
         "name": "lian",
         "desc": "重阳连环掌",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -1238,19 +1293,22 @@
         "name": "dan",
         "desc": "炼心弹",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "shi",
         "desc": "腐尸毒",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "tao",
         "desc": "碧焰滔天",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "poison",
@@ -1263,13 +1321,14 @@
     "description": "一门chuancai-jiyi功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "chuancai-jiyi·绝",
         "desc": "一招chuancai-jiyi",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1280,13 +1339,14 @@
     "description": "一门chuangwang-dao功夫。",
     "damageBase": 6.7,
     "damageScale": 0.9,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "xiong",
         "desc": "雄霸群山",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -1299,13 +1359,14 @@
     "description": "一门chuanxin-zhang功夫。",
     "damageBase": 13.1,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zhui",
         "desc": "穿心锥",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "strike",
@@ -1318,13 +1379,14 @@
     "description": "一门chuanyue-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hao",
         "desc": "皓月穿空",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1337,7 +1399,7 @@
     "description": "一门chuanyun-bu功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "chuanyun-bu·绝",
@@ -1354,13 +1416,14 @@
     "description": "一门chuixiao-jifa功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "chuixiao-jifa·绝",
         "desc": "一招chuixiao-jifa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1371,13 +1434,14 @@
     "description": "一门chuncan-zhang功夫。",
     "damageBase": 8.8,
     "damageScale": 0.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jian",
         "desc": "作茧自缚",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -1396,7 +1460,8 @@
         "name": "sheshen",
         "desc": "你的慈悲刀法不够娴熟，不会使用「舍身喂鹰」。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -1415,7 +1480,8 @@
         "name": "鹰爪功",
         "desc": "爪势凌厉，直取要害。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1432,7 +1498,8 @@
         "name": "club·绝",
         "desc": "一招club",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1449,7 +1516,8 @@
         "name": "cooking·绝",
         "desc": "一招cooking",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1466,7 +1534,8 @@
         "name": "count·绝",
         "desc": "一招count",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1483,7 +1552,8 @@
         "name": "craft-cognize·绝",
         "desc": "一招craft-cognize",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1500,7 +1570,8 @@
         "name": "黑虎掏心",
         "desc": "一记猛拳直击对方要害",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1517,7 +1588,8 @@
         "name": "cui",
         "desc": "夺命催心",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -1536,7 +1608,8 @@
         "name": "culture-cognize·绝",
         "desc": "一招culture-cognize",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1553,7 +1626,8 @@
         "name": "da-qinna·绝",
         "desc": "一招da-qinna",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1570,7 +1644,8 @@
         "name": "bei",
         "desc": "万里鲸涛大悲神诀",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -1608,7 +1683,8 @@
         "name": "yin",
         "desc": "你的佛法修为不足，无法施展该绝招！\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -1627,7 +1703,8 @@
         "name": "dafumo-quan·绝",
         "desc": "一招dafumo-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1646,7 +1723,8 @@
         "name": "dagger·绝",
         "desc": "一招dagger",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -1665,13 +1743,15 @@
         "name": "打狗棒法·绝",
         "desc": "丐帮镇帮棒法。需基本杖法≥15。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "天下无狗",
         "desc": "棒影如山，封死退路。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -1701,7 +1781,7 @@
     "description": "一门dali-chu功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hong",
@@ -1726,31 +1806,36 @@
         "name": "luan",
         "desc": "达摩乱气剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "qingxin",
         "desc": "你不会使用「清心剑」。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "sanjue",
         "desc": "「达摩三绝剑」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "shang",
         "desc": "达摩伤神剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "zhe",
         "desc": "达摩折元剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -1769,7 +1854,8 @@
         "name": "kou",
         "desc": "环环相扣",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -1788,13 +1874,15 @@
         "name": "daojian",
         "desc": "刀剑七重天",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "xue",
         "desc": "天下有",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "literate",
@@ -1813,7 +1901,8 @@
         "name": "yin",
         "desc": "金刚印",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -1832,7 +1921,8 @@
         "name": "大天龙指·绝",
         "desc": "一招大天龙指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1845,7 +1935,7 @@
     "description": "一门dengping-dushui功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "dengping-dushui·绝",
@@ -1868,7 +1958,8 @@
         "name": "浑天宝鉴 靛沧海·绝",
         "desc": "一招浑天宝鉴 靛沧海",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "unarmed",
@@ -1887,7 +1978,8 @@
         "name": "dispel-poison·绝",
         "desc": "一招dispel-poison",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1900,13 +1992,14 @@
     "description": "一门diyang-chufan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "diyang-chufan·绝",
         "desc": "一招diyang-chufan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -1942,13 +2035,15 @@
         "name": "luan",
         "desc": "「乱刀诀」只能对战斗中的对手使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "zhan",
         "desc": "「迎风一刀斩」只能对战斗中的对手使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -2023,7 +2118,8 @@
         "name": "drawing·绝",
         "desc": "一招drawing",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -2040,7 +2136,8 @@
         "name": "driving·绝",
         "desc": "一招driving",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -2051,19 +2148,21 @@
     "description": "一门duanjia-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "jing",
         "desc": "惊天一剑",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "lian",
         "desc": "五绝连环",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "sword",
@@ -2076,19 +2175,21 @@
     "description": "一门段家剑功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "jing",
         "desc": "「惊天一击」只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "jue",
         "desc": "你现在还不会使用五绝剑！\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "duanshi-xinfa",
@@ -2101,7 +2202,7 @@
     "description": "一门duanshi-xinfa功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "duanshi-xinfa·绝",
@@ -2118,7 +2219,7 @@
     "description": "一门duanyun-fu功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "tiaoyan",
@@ -2145,13 +2246,15 @@
         "name": "独孤九剑·绝",
         "desc": "剑魔绝学。需华山剑法≥20，基本剑法≥30。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "破剑式",
         "desc": "破尽天下剑法。",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ]
   },
@@ -2162,19 +2265,21 @@
     "description": "一门dulong-shenzhua功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "bao",
         "desc": "蛟龙抱",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "ju",
         "desc": "真龙聚",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -2193,7 +2298,8 @@
         "name": "jimie",
         "desc": "「菩提寂灭」只能在战斗中对对手使用。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -2214,7 +2320,8 @@
         "name": "夺命金镖·绝",
         "desc": "唐门夺命金镖，见血封喉。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -2225,13 +2332,14 @@
     "description": "一门duoming-jinhua功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hua",
         "desc": "天外飞花",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -2250,7 +2358,8 @@
         "name": "毒砂掌 药王谷·绝",
         "desc": "一招毒砂掌 药王谷",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -2271,13 +2380,15 @@
         "name": "峨眉剑法·绝",
         "desc": "峨眉独门剑法。需基本剑法≥10。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "佛光普照",
         "desc": "剑光如佛光普照，笼罩四方。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -2330,13 +2441,15 @@
         "name": "makearray",
         "desc": "反两仪刀共需两人，少一个多一个都不行。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "san",
         "desc": "华岳三神峰",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "fanliangyi-dao",
@@ -2355,7 +2468,8 @@
         "name": "feed-power·绝",
         "desc": "一招feed-power",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "feed-power",
@@ -2374,7 +2488,8 @@
         "name": "xi",
         "desc": "凤栖于梧",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -2393,7 +2508,8 @@
         "name": "wu",
         "desc": "「飞凤翔舞」只能对战斗中的对手使用。\\n",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -2406,13 +2522,14 @@
     "description": "一门feihua-zhang功夫。",
     "damageBase": 11,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fei",
         "desc": "掌打飞花",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -2450,7 +2567,8 @@
         "name": "feilong-zaitian·绝",
         "desc": "一招feilong-zaitian",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -2469,7 +2587,8 @@
         "name": "fei",
         "desc": "龙飞势",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -2482,7 +2601,7 @@
     "description": "一门飞星术功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hua",
@@ -2501,7 +2620,7 @@
     "description": "一门飞燕回翔功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "飞燕回翔·绝",
@@ -2560,7 +2679,8 @@
         "name": "she",
         "desc": "射日诀",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -2579,7 +2699,8 @@
         "name": "luan",
         "desc": "群魔乱舞",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -2598,7 +2719,8 @@
         "name": "qinna",
         "desc": "风云手「擒拿」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -2636,7 +2758,8 @@
         "name": "一指禅",
         "desc": "一指点出，劲透穴道。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -2719,13 +2842,14 @@
     "description": "一门fuhu-quan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fuhu-quan·绝",
         "desc": "一招fuhu-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -2744,7 +2868,8 @@
         "name": "foxin",
         "desc": "「佛心剑」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -2763,7 +2888,8 @@
         "name": "lun",
         "desc": "风火轮",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -2782,7 +2908,8 @@
         "name": "luan",
         "desc": "乱剑覆花",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -2801,7 +2928,8 @@
         "name": "xian",
         "desc": "金针现影",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -2814,7 +2942,7 @@
     "description": "一门fushang-neigong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "fushang-neigong·绝",
@@ -2839,7 +2967,8 @@
         "name": "六脉神剑 - 关冲剑·绝",
         "desc": "一招六脉神剑 - 关冲剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -2856,7 +2985,8 @@
         "name": "广陵散·绝",
         "desc": "一招广陵散",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -2875,13 +3005,15 @@
         "name": "fen",
         "desc": "焚阳剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "guan",
         "desc": "天洪地炉观",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -2900,7 +3032,8 @@
         "name": "qian",
         "desc": "千山孤鸿影",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -2936,7 +3069,8 @@
         "name": "she",
         "desc": "拔枪狼牙射击",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ]
   },
@@ -2972,7 +3106,8 @@
         "name": "lian",
         "desc": "九星连珠",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -3010,7 +3145,8 @@
         "name": "guzheng-jifa·绝",
         "desc": "一招guzheng-jifa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3021,25 +3157,28 @@
     "description": "一门guzhuo-zhang功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "yu",
         "desc": "大智若愚",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "zhen",
         "desc": "反璞归真",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "zhuo",
         "desc": "大巧若拙",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -3077,7 +3216,8 @@
         "name": "基本锤法·绝",
         "desc": "一招基本锤法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3094,7 +3234,8 @@
         "name": "jue",
         "desc": "连绵不绝",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -3113,13 +3254,15 @@
         "name": "han",
         "desc": "极天寒掌",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "hen",
         "desc": "踏雪无痕",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -3157,7 +3300,8 @@
         "name": "劈空掌",
         "desc": "掌风隔空击出。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3174,7 +3318,8 @@
         "name": "leng",
         "desc": "冷剑决",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "sword",
@@ -3193,7 +3338,8 @@
         "name": "zhen",
         "desc": "无影针",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -3212,7 +3358,8 @@
         "name": "ying",
         "desc": "刀影重重",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3231,7 +3378,8 @@
         "name": "lastrisk",
         "desc": "孤注一掷只能对战斗中的对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ]
   },
@@ -3248,7 +3396,8 @@
         "name": "ju",
         "desc": "三花聚顶",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -3267,7 +3416,8 @@
         "name": "cui",
         "desc": "催魂掌",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -3286,7 +3436,8 @@
         "name": "luo",
         "desc": "星罗棋布",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -3305,7 +3456,8 @@
         "name": "恒山剑法·绝",
         "desc": "一招恒山剑法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3324,7 +3476,8 @@
         "name": "hengshan-sword·绝",
         "desc": "一招hengshan-sword",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3343,7 +3496,8 @@
         "name": "huan",
         "desc": "幻剑式",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "sword",
@@ -3362,7 +3516,8 @@
         "name": "lan",
         "desc": "青天揽日月",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -3432,7 +3587,8 @@
         "name": "higgling·绝",
         "desc": "一招higgling",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3466,7 +3622,8 @@
         "name": "hongjian-yulu·绝",
         "desc": "一招hongjian-yulu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3485,7 +3642,8 @@
         "name": "huo",
         "desc": "流星火雨",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -3504,13 +3662,15 @@
         "name": "kuang",
         "desc": "狂风落叶",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "leiting",
         "desc": "雷霆霹雳",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -3529,7 +3689,8 @@
         "name": "zhen",
         "desc": "神功震敌只能对战斗中的对手使用。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -3542,13 +3703,14 @@
     "description": "一门hua-quan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "juan",
         "desc": "风卷霹雳上九天",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "cuff",
@@ -3580,13 +3742,14 @@
     "description": "一门huagu-mianzhang功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hua",
         "desc": "辣手化骨只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -3599,13 +3762,14 @@
     "description": "一门huanyin-zhi功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "huanyin",
         "desc": "这里不能攻击别人! \\n",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -3626,13 +3790,15 @@
         "name": "华山剑法·绝",
         "desc": "华山独门剑法。需基本剑法≥10。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "夺命连环三仙剑",
         "desc": "连环三剑，迅疾无伦。",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ]
   },
@@ -3649,7 +3815,8 @@
         "name": "song",
         "desc": "苍松式",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -3668,7 +3835,8 @@
         "name": "huashan-quanfa·绝",
         "desc": "一招huashan-quanfa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3704,7 +3872,8 @@
         "name": "huashan-sword·绝",
         "desc": "一招huashan-sword",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3738,7 +3907,8 @@
         "name": "piao",
         "desc": "飞絮飘渺",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -3757,7 +3927,8 @@
         "name": "huashan-zhangfa·绝",
         "desc": "一招huashan-zhangfa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -3770,19 +3941,21 @@
     "description": "一门huifeng-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jue",
         "desc": "绝剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "mie",
         "desc": "灭剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -3795,13 +3968,14 @@
     "description": "一门huilong-bifa功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "cang",
         "desc": "掌藏龙",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -3814,13 +3988,14 @@
     "description": "一门回龙杖法功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "baiwei",
         "desc": "「神龙摆尾」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -3841,7 +4016,8 @@
         "name": "八方藏刀",
         "desc": "刀光八方环绕，防不胜防。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -3852,25 +4028,28 @@
     "description": "一门hujia-daofa功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "cang",
         "desc": "八方藏刀势",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "xian",
         "desc": "推天献印势",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "zhui",
         "desc": "卸甲锥心势",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -3883,13 +4062,14 @@
     "description": "一门hujia-quan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "kuai",
         "desc": "奔拳快打",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "cuff",
@@ -3902,7 +4082,7 @@
     "description": "一门huntian-baojian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "huntian-baojian·绝",
@@ -3919,7 +4099,7 @@
     "description": "一门huntian-qigong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "huntian-qigong·绝",
@@ -3938,13 +4118,14 @@
     "description": "一门hunting功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hunting·绝",
         "desc": "一招hunting",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -3955,7 +4136,7 @@
     "description": "一门少林 混元一气功功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "少林 混元一气功·绝",
@@ -3972,13 +4153,14 @@
     "description": "一门混元掌功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "wuji",
         "desc": "混元无极",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -3991,19 +4173,21 @@
     "description": "一门火焰刀功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fen",
         "desc": "你还不会运用「焚身」这一绝技。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "yan",
         "desc": "天寰神炎",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -4016,13 +4200,14 @@
     "description": "一门huoyue-zaiyuan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "huoyue-zaiyuan·绝",
         "desc": "一招huoyue-zaiyuan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4035,13 +4220,14 @@
     "description": "一门huzhao-shou功夫。",
     "damageBase": 11.8,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "huzhao-shou·绝",
         "desc": "一招huzhao-shou",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -4052,13 +4238,14 @@
     "description": "一门huzhua-shou功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "juehu",
         "desc": "绝户神抓",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -4094,7 +4281,8 @@
         "name": "japanese·绝",
         "desc": "一招japanese",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -4113,7 +4301,8 @@
         "name": "蒹葭·绝",
         "desc": "一招蒹葭",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -4126,19 +4315,21 @@
     "description": "一门jiandun-zhusuo功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fu",
         "desc": "缚字诀",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "qian",
         "desc": "千头万绪",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -4157,7 +4348,8 @@
         "name": "jianlong-zaitian·绝",
         "desc": "一招jianlong-zaitian",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4170,7 +4362,7 @@
     "description": "一门jiaohua-bangfa功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jiaohua-bangfa·绝",
@@ -4187,7 +4379,7 @@
     "description": "一门jiaohua-neigong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jiaohua-neigong·绝",
@@ -4210,7 +4402,8 @@
         "name": "zhe",
         "desc": "避云遮日",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -4229,7 +4422,8 @@
         "name": "dian",
         "desc": "电光四射",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "dodge",
@@ -4248,7 +4442,8 @@
         "name": "xiuluo",
         "desc": "「修罗焰」攻击只能对战斗中的对手使用。\\n",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -4267,7 +4462,8 @@
         "name": "jie",
         "desc": "截筋断脉",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -4299,13 +4495,14 @@
     "description": "一门寂灭爪功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "wuwo",
         "desc": "「众生无我」只能在战斗中对对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ]
   },
@@ -4322,7 +4519,8 @@
         "name": "浑天宝鉴 金晨曦·绝",
         "desc": "一招浑天宝鉴 金晨曦",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "unarmed",
@@ -4341,7 +4539,8 @@
         "name": "huan",
         "desc": "金莲幻生",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -4360,7 +4559,8 @@
         "name": "bashi",
         "desc": "八式合一",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -4373,7 +4573,7 @@
     "description": "一门jingang-buhuaiti功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jingang",
@@ -4398,7 +4598,8 @@
         "name": "jingang",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -4417,13 +4618,15 @@
         "name": "fumo",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "san",
         "desc": "一指点三脉",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4442,7 +4645,8 @@
         "name": "jingluo-xue·绝",
         "desc": "一招jingluo-xue",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -4514,19 +4718,22 @@
         "name": "kun",
         "desc": "蛇困愁城",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "shi",
         "desc": "金蛇噬天",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "wan",
         "desc": "蛇影万道",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -4562,7 +4769,8 @@
         "name": "fugu",
         "desc": "附骨缠身只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -4575,19 +4783,21 @@
     "description": "一门jinshe-zhui功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "feng",
         "desc": "截脉封穴",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "tuwu",
         "desc": "你才用的金蛇吐雾，没法接着就出招。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -4606,7 +4816,8 @@
         "name": "chi",
         "desc": "赤焰暴长",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -4663,7 +4874,8 @@
         "name": "man",
         "desc": "金玉满堂",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4720,7 +4932,8 @@
         "name": "wan",
         "desc": "九曲十八弯",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -4739,7 +4952,8 @@
         "name": "九曲折骨法·绝",
         "desc": "一招九曲折骨法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4777,13 +4991,15 @@
         "name": "duo",
         "desc": "夺命连环爪",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       },
       {
         "name": "zhua",
         "desc": "九阴神爪",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -4838,7 +5054,8 @@
         "name": "绝门棍·绝",
         "desc": "一招绝门棍",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -4855,7 +5072,8 @@
         "name": "jue",
         "desc": "绝命一踢",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -4874,7 +5092,8 @@
         "name": "liu",
         "desc": "流水无情",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "sword",
@@ -4927,7 +5146,8 @@
         "name": "jueqing-yaoli·绝",
         "desc": "一招jueqing-yaoli",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -4946,13 +5166,15 @@
         "name": "hun",
         "desc": "魂飞魄散",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "wan",
         "desc": "万念俱灰",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -4965,13 +5187,14 @@
     "description": "一门kanglong-youhui功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "kanglong-youhui·绝",
         "desc": "一招kanglong-youhui",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -4990,13 +5213,15 @@
         "name": "kong",
         "desc": "空空如也",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "ruo",
         "desc": "空明若玄",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -5015,7 +5240,8 @@
         "name": "kuang",
         "desc": "你只能对战斗中的对手使用「狂风二十一式」。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5034,13 +5260,15 @@
         "name": "sao",
         "desc": "风扫落叶",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "yong",
         "desc": "风起云涌",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "dodge",
@@ -5053,13 +5281,14 @@
     "description": "一门葵花魔功功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "葵花魔功·绝",
         "desc": "一招葵花魔功",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "martial-cognize",
@@ -5072,7 +5301,7 @@
     "description": "一门葵花心法功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "葵花心法·绝",
@@ -5095,7 +5324,8 @@
         "name": "pan",
         "desc": "蝰蟒盘身",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -5114,7 +5344,8 @@
         "name": "fanyin",
         "desc": "域外梵音",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5133,7 +5364,8 @@
         "name": "liu",
         "desc": "流星电闪",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -5169,7 +5401,8 @@
         "name": "kong",
         "desc": "日入空山",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5205,7 +5438,8 @@
         "name": "密宗心法·绝",
         "desc": "一招密宗心法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -5216,19 +5450,21 @@
     "description": "一门lanhua-shou功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fei",
         "desc": "影落飞花",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "fu",
         "desc": "兰花拂穴",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5247,7 +5483,8 @@
         "name": "po",
         "desc": "破靛神砂",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5266,7 +5503,8 @@
         "name": "cibei",
         "desc": "你使用的外功中没有这个功能。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5315,13 +5553,14 @@
     "description": "一门liandan-shu功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "liandan-shu·绝",
         "desc": "一招liandan-shu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -5340,7 +5579,8 @@
         "name": "ren",
         "desc": "天地同仁",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5372,13 +5612,14 @@
     "description": "一门莲花指功夫。",
     "damageBase": 15,
     "damageScale": 0.7,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "莲花指·绝",
         "desc": "一招莲花指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5391,13 +5632,14 @@
     "description": "一门连环迷踪腿功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "lian",
         "desc": "夺命连环",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5452,7 +5694,8 @@
         "name": "rou",
         "desc": "「柔字诀」只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -5471,25 +5714,29 @@
         "name": "chan",
         "desc": "「灵蛇缠身」只能对战斗中的对手使用。\\n",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       },
       {
         "name": "qianshe",
         "desc": "你还不会使用「千蛇出洞」。\\n",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       },
       {
         "name": "wanshi",
         "desc": "你还不会使用「千蛇万噬」这一绝技。\\n",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       },
       {
         "name": "wuji",
         "desc": "你还不会使用「横行无忌」。\\n",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       }
     ],
     "requireSkill": "force",
@@ -5508,13 +5755,15 @@
         "name": "jue",
         "desc": "凌宵总诀",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "san",
         "desc": "神倒鬼跌三连环",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -5567,7 +5816,8 @@
         "name": "xiao",
         "desc": "剑气冲霄",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5580,7 +5830,7 @@
     "description": "一门临济十二庄功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "临济十二庄·绝",
@@ -5603,7 +5853,8 @@
         "name": "liquor·绝",
         "desc": "一招liquor",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -5614,13 +5865,14 @@
     "description": "一门lishe-dachuan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "lishe-dachuan·绝",
         "desc": "一招lishe-dachuan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5656,7 +5908,8 @@
         "name": "lianhuan",
         "desc": "你所用的外功中没有这个功能!\\n",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -5675,7 +5928,8 @@
         "name": "shan",
         "desc": "闪刀诀",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -5694,7 +5948,8 @@
         "name": "liuhe-quan·绝",
         "desc": "一招liuhe-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5713,7 +5968,8 @@
         "name": "tan",
         "desc": "乌龙探海",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -5734,7 +5990,8 @@
         "name": "六脉神剑·绝",
         "desc": "以指代剑的绝世神技，六脉齐出无人可挡。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -5745,7 +6002,7 @@
     "description": "一门liuxing-chui功夫。",
     "damageBase": 15,
     "damageScale": 1.2,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "liuxing-chui·绝",
@@ -5770,19 +6027,22 @@
         "name": "huan",
         "desc": "寰阳式",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "po",
         "desc": "破神诀",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "zhong",
         "desc": "生死符",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -5818,13 +6078,15 @@
         "name": "liu",
         "desc": "流月剑诀",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "sheng",
         "desc": "天升剑诀",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -5843,13 +6105,15 @@
         "name": "die",
         "desc": "流云叠影",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "pai",
         "desc": "排山倒海",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -5868,19 +6132,22 @@
         "name": "jue",
         "desc": "这里太嘈杂，你不能静下心来演练。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "po",
         "desc": "独孤九剑只能对战斗中的对手使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "yi",
         "desc": "你只能对战斗中的对手使用绝招。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -5897,13 +6164,15 @@
         "name": "feng",
         "desc": "风雨交加",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "fengyu",
         "desc": "你不会使用「风雨交加」。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -5960,13 +6229,15 @@
         "name": "kong",
         "desc": "金龙疾空",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       },
       {
         "name": "xian",
         "desc": "神龙再现只能在战斗中使用。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -5985,7 +6256,8 @@
         "name": "longzhan-yuye·绝",
         "desc": "一招longzhan-yuye",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -5998,13 +6270,14 @@
     "description": "一门龙爪功功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zhua",
         "desc": "「神龙抓」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -6017,13 +6290,14 @@
     "description": "一门lunhui-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hui",
         "desc": "真·六道轮回",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -6086,7 +6360,8 @@
         "name": "wuxing",
         "desc": "「来去若无形」只能在战斗中使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "fumo-jian",
@@ -6107,13 +6382,15 @@
         "name": "罗汉降魔",
         "desc": "双拳齐出，如罗汉降魔之势",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "韦陀献杵",
         "desc": "罗汉降魔，势大力沉。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -6130,7 +6407,8 @@
         "name": "luo",
         "desc": "一剑落九雁",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -6149,7 +6427,8 @@
         "name": "sui",
         "desc": "随波逐流",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -6168,7 +6447,8 @@
         "name": "zhuan",
         "desc": "奇门五转",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -6204,7 +6484,8 @@
         "name": "tian",
         "desc": "天刀落云式",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -6223,7 +6504,8 @@
         "name": "tong",
         "desc": "通天彻地",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -6236,13 +6518,14 @@
     "description": "一门lvshuang-bingzhi功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "lvshuang-bingzhi·绝",
         "desc": "一招lvshuang-bingzhi",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -6261,7 +6544,8 @@
         "name": "基本法术·绝",
         "desc": "一招基本法术",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6278,7 +6562,8 @@
         "name": "大乘涅磐功·绝",
         "desc": "一招大乘涅磐功",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6295,13 +6580,15 @@
         "name": "shan",
         "desc": "星光闪烁",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "xing",
         "desc": "穹外飞星",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -6314,13 +6601,14 @@
     "description": "一门mantianhuayu-zhen功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zheng",
         "desc": "你只能在战斗中对对手掷金针。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -6339,7 +6627,8 @@
         "name": "martial-cognize·绝",
         "desc": "一招martial-cognize",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6356,7 +6645,8 @@
         "name": "mathematics·绝",
         "desc": "一招mathematics",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -6375,7 +6665,8 @@
         "name": "medical·绝",
         "desc": "一招medical",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6386,7 +6677,7 @@
     "description": "一门meihua-zhuang功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "meihua-zhuang·绝",
@@ -6409,7 +6700,8 @@
         "name": "you",
         "desc": "古墓幽居",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -6422,31 +6714,35 @@
     "description": "一门miaojia-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "miao",
     "performs": [
       {
         "name": "gan",
         "desc": "流星赶月",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "qian",
         "desc": "剑舞千秋",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "zhai",
         "desc": "云边摘月",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "zhu",
         "desc": "黄龙吐珠",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -6459,7 +6755,7 @@
     "description": "一门miaojia-neigong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "miao",
     "performs": [
       {
         "name": "miaojia-neigong·绝",
@@ -6476,13 +6772,14 @@
     "description": "一门miaojia-zhang功夫。",
     "damageBase": 13.1,
     "damageScale": 0.4,
-    "schoolId": null,
+    "schoolId": "miao",
     "performs": [
       {
         "name": "dan",
         "desc": "丹阳劲",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -6495,13 +6792,14 @@
     "description": "一门mihun-dafa功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "mihun-dafa·绝",
         "desc": "一招mihun-dafa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6535,13 +6833,15 @@
         "name": "ruo",
         "desc": "若悲",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "xiang",
         "desc": "降魔",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -6560,7 +6860,8 @@
         "name": "miyun-buyu·绝",
         "desc": "一招miyun-buyu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -6579,7 +6880,8 @@
         "name": "zhou",
         "desc": "笑问七剑一指仙！",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -6615,7 +6917,8 @@
         "name": "xing",
         "desc": "剑转七星",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ]
   },
@@ -6632,7 +6935,8 @@
         "name": "qixing",
         "desc": "「北斗七星剑」只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ]
   },
@@ -6666,7 +6970,8 @@
         "name": "muslim·绝",
         "desc": "一招muslim",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -6685,7 +6990,8 @@
         "name": "降伏法·绝",
         "desc": "一招降伏法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6740,7 +7046,8 @@
         "name": "不败神功·绝",
         "desc": "一招不败神功",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "martial-cognize",
@@ -6753,13 +7060,14 @@
     "description": "一门nianhua-zhi功夫。",
     "damageBase": 15,
     "damageScale": 1.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "fuxue",
         "desc": "拈花拂穴只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -6778,7 +7086,8 @@
         "name": "ji",
         "desc": "你还不会使用这一招！\\n",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -6797,7 +7106,8 @@
         "name": "xue",
         "desc": "缤纷雪舞",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -6816,7 +7126,8 @@
         "name": "排云手·绝",
         "desc": "一招排云手",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -6898,7 +7209,8 @@
         "name": "tan",
         "desc": "云中探爪",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -6917,7 +7229,8 @@
         "name": "pan",
         "desc": "攀阳邀月",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -6953,7 +7266,8 @@
         "name": "persuading·绝",
         "desc": "一招persuading",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -6970,7 +7284,8 @@
         "name": "juan",
         "desc": "卷字决",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -6983,13 +7298,14 @@
     "description": "一门piaomiao-zhang功夫。",
     "damageBase": 9.9,
     "damageScale": 1,
-    "schoolId": null,
+    "schoolId": "miao",
     "performs": [
       {
         "name": "piaomiao-zhang·绝",
         "desc": "一招piaomiao-zhang",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -7008,7 +7324,8 @@
         "name": "piao",
         "desc": "飞絮飘零",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -7027,13 +7344,15 @@
         "name": "yun",
         "desc": "云海明灯",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "zhao",
         "desc": "佛光普照",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -7069,7 +7388,8 @@
         "name": "ao",
         "desc": "傲尘剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -7088,7 +7408,8 @@
         "name": "huan",
         "desc": "幻遁寒星",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -7107,7 +7428,8 @@
         "name": "dai",
         "desc": "披星戴月",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -7126,7 +7448,8 @@
         "name": "jin",
         "desc": "紫雷劲",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -7145,7 +7468,8 @@
         "name": "hun",
         "desc": "天地混元",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -7201,7 +7525,8 @@
         "name": "pixie-sword·绝",
         "desc": "一招pixie-sword",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -7218,7 +7543,8 @@
         "name": "kai",
         "desc": "五岳为开",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -7237,13 +7563,15 @@
         "name": "bing",
         "desc": "寒冰环",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "yang",
         "desc": "破阳刀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -7262,7 +7590,8 @@
         "name": "基本毒技·绝",
         "desc": "一招基本毒技",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -7279,7 +7608,8 @@
         "name": "kong",
         "desc": "破碎虚空",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -7298,7 +7628,8 @@
         "name": "du",
         "desc": "金针渡劫",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -7317,7 +7648,8 @@
         "name": "zui",
         "desc": "醉里乾坤",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -7336,7 +7668,8 @@
         "name": "pona-gong·绝",
         "desc": "一招pona-gong",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -7349,13 +7682,14 @@
     "description": "一门poshui-zhang功夫。",
     "damageBase": 14.3,
     "damageScale": 1.4,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "tai",
         "desc": "泰山压顶",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -7374,7 +7708,8 @@
         "name": "tong",
         "desc": "破元通虚",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -7393,13 +7728,15 @@
         "name": "long",
         "desc": "天外玉龙",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "xian",
         "desc": "神光再现",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -7420,7 +7757,8 @@
         "name": "破玉拳·绝",
         "desc": "华山拳法，力道刚猛如破玉。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -7437,7 +7775,8 @@
         "name": "duan",
         "desc": "断脉破岳",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -7456,7 +7795,8 @@
         "name": "易容术·绝",
         "desc": "一招易容术",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -7473,7 +7813,8 @@
         "name": "zhao",
         "desc": "「佛光普照」只能在战斗中对对手使用。\\n",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -7511,19 +7852,22 @@
         "name": "ni",
         "desc": "逆转乾坤",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "qian",
         "desc": "乾坤劲",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "riyue",
         "desc": "日月乾坤",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -7542,7 +7886,8 @@
         "name": "qianlong-wuyong·绝",
         "desc": "一招qianlong-wuyong",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -7561,7 +7906,8 @@
         "name": "zhi",
         "desc": "乾阳神指",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -7580,7 +7926,8 @@
         "name": "qianye",
         "desc": "「千叶佛手」只能在战斗中对对手使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -7593,25 +7940,28 @@
     "description": "一门qianzhu-wandushou功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "suck",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "wan",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "zhugu",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -7630,7 +7980,8 @@
         "name": "祁连五绝指·绝",
         "desc": "一招祁连五绝指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -7649,7 +8000,8 @@
         "name": "qimen-wuxing·绝",
         "desc": "一招qimen-wuxing",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "mathematics",
@@ -7742,7 +8094,8 @@
         "name": "ming",
         "desc": "禅心自明",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "shaolin-xinfa",
@@ -7761,7 +8114,8 @@
         "name": "qingmang-zhang·绝",
         "desc": "一招qingmang-zhang",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -7780,7 +8134,8 @@
         "name": "清心普善咒·绝",
         "desc": "一招清心普善咒",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -7799,7 +8154,8 @@
         "name": "duan",
         "desc": "[断云决]只能对战斗中的对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "shaolin-xinfa",
@@ -7818,7 +8174,8 @@
         "name": "zhuo",
         "desc": "捕风捉影",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -7837,7 +8194,8 @@
         "name": "qinna-shibada·绝",
         "desc": "一招qinna-shibada",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -7850,19 +8208,21 @@
     "description": "一门-七伤拳功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "fei",
         "desc": "魂魄飞扬",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       },
       {
         "name": "shang",
         "desc": "伤字诀",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -7942,7 +8302,8 @@
         "name": "秋月籁·绝",
         "desc": "一招秋月籁",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -7961,19 +8322,22 @@
         "name": "shan",
         "desc": "七弦黄龙闪",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "yin",
         "desc": "七弦无形音",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "zhu",
         "desc": "七弦连环诛",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -8028,7 +8392,8 @@
         "name": "xing",
         "desc": "群星璀璨",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "sword",
@@ -8047,7 +8412,8 @@
         "name": "zhai",
         "desc": "摘星式",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8066,7 +8432,8 @@
         "name": "po",
         "desc": "破穹",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -8085,7 +8452,8 @@
         "name": "七星指·绝",
         "desc": "一招七星指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -8104,7 +8472,8 @@
         "name": "黑虎掏心",
         "desc": "一记猛拳直击对方要害",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8121,25 +8490,29 @@
         "name": "chan",
         "desc": "缠字诀",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "ding",
         "desc": "定阳针",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "hua",
         "desc": "一气化三清",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "lian",
         "desc": "三连环",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8175,7 +8548,8 @@
         "name": "can",
         "desc": "天残剑诀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "sword",
@@ -8194,7 +8568,8 @@
         "name": "lingkong",
         "desc": "凌空指穴",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "finger",
@@ -8213,7 +8588,8 @@
         "name": "驱蜂之术·绝",
         "desc": "一招驱蜂之术",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "yunv-xinfa",
@@ -8232,7 +8608,8 @@
         "name": "zhen",
         "desc": "震雷乾坤",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       }
     ],
     "requireSkill": "force",
@@ -8251,13 +8628,15 @@
         "name": "huo",
         "desc": "「火麒蚀月」只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "zhenyan",
         "desc": "燃木真焰",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -8276,7 +8655,8 @@
         "name": "chuan",
         "desc": "柔月穿空",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -8289,7 +8669,7 @@
     "description": "一门renshu功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "renshu·绝",
@@ -8312,19 +8692,22 @@
         "name": "chan",
         "desc": "牵制攻击只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "he",
         "desc": "你还没有受过高人指点，无法施展「合」字诀。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "shang",
         "desc": "你还没有受过高人指点，无法施展「伤字诀」。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -8391,7 +8774,8 @@
         "name": "tao",
         "desc": "三环套月",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8421,7 +8805,7 @@
     "description": "一门软红蛛索功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "bohu",
@@ -8464,7 +8848,8 @@
         "name": "zong",
         "desc": "万佛朝宗",
         "multiplier": 2.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 29
       }
     ],
     "requireSkill": "buddhism",
@@ -8483,7 +8868,8 @@
         "name": "russian·绝",
         "desc": "一招russian",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -8502,7 +8888,8 @@
         "name": "ruyi",
         "desc": "如意六刀",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -8521,7 +8908,8 @@
         "name": "ruying",
         "desc": "你所使用的外功中没有这样的功能。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -8540,13 +8928,15 @@
         "name": "tuo",
         "desc": "拖泥带水",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "xiao",
         "desc": "黯然销魂",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "force",
@@ -8559,13 +8949,14 @@
     "description": "一门sanfen-jianshu功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "haishi",
         "desc": "你不会使用「海市蜃楼」这一绝技！\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8578,13 +8969,14 @@
     "description": "一门散花掌功夫。",
     "damageBase": 15,
     "damageScale": 1.4,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "san",
         "desc": "天女散花只能对战斗中的对手使用。\\n",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -8622,7 +9014,8 @@
         "name": "sanscrit·绝",
         "desc": "一招sanscrit",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -8672,7 +9065,8 @@
         "name": "sun",
         "desc": "损筋诀",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8691,7 +9085,8 @@
         "name": "zhua",
         "desc": "三阴毒爪",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ]
   },
@@ -8702,13 +9097,14 @@
     "description": "一门shangjia-dao功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "juan",
         "desc": "寒芒暴卷",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -8721,7 +9117,7 @@
     "description": "一门shangjia-neigong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "shangjia-neigong·绝",
@@ -8738,19 +9134,21 @@
     "description": "一门shangqing-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "qing",
         "desc": "清流剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "zhuo",
         "desc": "浊流剑",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -8763,13 +9161,14 @@
     "description": "一门六脉神剑 - 商阳剑功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "六脉神剑 - 商阳剑·绝",
         "desc": "一招六脉神剑 - 商阳剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8786,7 +9185,8 @@
         "name": "六脉神剑 - 少冲剑·绝",
         "desc": "一招六脉神剑 - 少冲剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8822,7 +9222,8 @@
         "name": "shaolin-quan·绝",
         "desc": "一招shaolin-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8856,7 +9257,8 @@
         "name": "shaolin-tantui·绝",
         "desc": "一招shaolin-tantui",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -8892,7 +9294,8 @@
         "name": "shaolin-yishu·绝",
         "desc": "一招shaolin-yishu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -8905,13 +9308,14 @@
     "description": "一门六脉神剑 - 少商剑功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "shang",
     "performs": [
       {
         "name": "六脉神剑 - 少商剑·绝",
         "desc": "一招六脉神剑 - 少商剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8928,7 +9332,8 @@
         "name": "六脉神剑 - 少泽剑·绝",
         "desc": "一招六脉神剑 - 少泽剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -8962,37 +9367,43 @@
         "name": "chang1",
         "desc": "唱仙法只能在战斗中使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "chang2",
         "desc": "唱仙法只能在战斗中使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "chang3",
         "desc": "唱仙法吼字决只能在战斗中对对手使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "cui",
         "desc": "你现在还不会使用摧心断肠！\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "fei",
         "desc": "你现在还不会使用飞仙术！\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "xian",
         "desc": "你现在还不会使用神龙再现！\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -9011,13 +9422,15 @@
         "name": "da",
         "desc": "你要打哪条蛇？\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "liandu",
         "desc": "你要取哪条蛇的毒液练药？\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9036,7 +9449,8 @@
         "name": "shenfeng-bian·绝",
         "desc": "一招shenfeng-bian",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "hunyuan-yiqi",
@@ -9049,7 +9463,7 @@
     "description": "一门shenghuo-bu功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "shenghuo-bu·绝",
@@ -9066,7 +9480,7 @@
     "description": "一门shenghuo-ling功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "can",
@@ -9103,7 +9517,7 @@
     "description": "一门shenghuo-shengong功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "shenghuo-shengong·绝",
@@ -9122,7 +9536,7 @@
     "description": "一门shenghuo-xinfa功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "shenghuo-xinfa·绝",
@@ -9149,7 +9563,8 @@
         "name": "生死符·绝",
         "desc": "灵鹫宫天山童姥的独门暗器。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9183,7 +9598,8 @@
         "name": "shenlong-baiwei·绝",
         "desc": "一招shenlong-baiwei",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9202,7 +9618,8 @@
         "name": "xian",
         "desc": "神龙初现只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -9221,7 +9638,8 @@
         "name": "shenlong-mixin·绝",
         "desc": "一招shenlong-mixin",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -9257,7 +9675,8 @@
         "name": "ci",
         "desc": "神门刺",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -9295,7 +9714,8 @@
         "name": "神农杖法·绝",
         "desc": "一招神农杖法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9331,7 +9751,8 @@
         "name": "bafang",
         "desc": "「威镇八方」只能在战斗中对对手使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -9388,7 +9809,8 @@
         "name": "shicheng-liulong·绝",
         "desc": "一招shicheng-liulong",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9432,7 +9854,8 @@
         "name": "luo",
         "desc": "落英纷飞",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -9445,7 +9868,7 @@
     "description": "一门shiying-lianhuan功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "sha",
@@ -9470,7 +9893,8 @@
         "name": "jie",
         "desc": "「天劫」只能在战斗中对对手使用。\\n",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "martial-cognize",
@@ -9483,13 +9907,14 @@
     "description": "一门shuanglong-qushui功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "shuanglong-qushui·绝",
         "desc": "一招shuanglong-qushui",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9502,13 +9927,14 @@
     "description": "一门shunv-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "ning",
         "desc": "宁氏一剑",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "dodge",
@@ -9527,7 +9953,8 @@
         "name": "siji-jianfa·绝",
         "desc": "一招siji-jianfa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "sword",
@@ -9546,25 +9973,29 @@
         "name": "qi",
         "desc": "无形剑气",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "six",
         "desc": "六脉剑气",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "zong",
         "desc": "万剑纵横",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "zongheng",
         "desc": "「纵横」只能对战斗中的对手使用。\\n",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "literate",
@@ -9600,7 +10031,8 @@
         "name": "xing",
         "desc": "星罗棋布",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -9621,26 +10053,8 @@
         "name": "松风剑法·绝",
         "desc": "昆仑派松风剑法，清灵飘逸。",
         "multiplier": 2,
-        "targetType": "single"
-      }
-    ]
-  },
-  {
-    "id": "songfeng-jianfa",
-    "name": "松风剑法",
-    "type": "sword",
-    "description": "衡山派绝学，剑法轻灵多变。",
-    "damageBase": 7,
-    "damageScale": 0.6,
-    "requireSkill": "sword",
-    "requireLevel": 5,
-    "schoolId": "henshan",
-    "performs": [
-      {
-        "name": "松风剑法·绝",
-        "desc": "一招松风剑法",
-        "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9657,7 +10071,8 @@
         "name": "meng",
         "desc": "如梦如幻",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "sword",
@@ -9676,7 +10091,8 @@
         "name": "chui",
         "desc": "千斤锤",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -9695,7 +10111,8 @@
         "name": "songshan-sword·绝",
         "desc": "一招songshan-sword",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9729,7 +10146,8 @@
         "name": "po",
         "desc": "破山斧",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -9748,7 +10166,8 @@
         "name": "ying",
         "desc": "无影掌",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -9767,7 +10186,8 @@
         "name": "muyeyingyang",
         "desc": "牧野鹰扬只能对战斗中的对手使用。\\n",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -9780,19 +10200,21 @@
     "description": "一门sougu-yingzhua功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "xue",
         "desc": "赤血爪",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "ying",
         "desc": "牧野鹰扬只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -9811,7 +10233,8 @@
         "name": "基本杖法·绝",
         "desc": "基本棍杖之术。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9828,7 +10251,8 @@
         "name": "stealing·绝",
         "desc": "一招stealing",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9845,7 +10269,8 @@
         "name": "strike·绝",
         "desc": "一招strike",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -9862,19 +10287,22 @@
         "name": "dian",
         "desc": "「神指点穴」只能对战斗中的对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "heal",
         "desc": "你要用真气为谁疗伤？\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "qiankun",
         "desc": "「一指乾坤」只能在战斗中使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -9893,7 +10321,8 @@
         "name": "sunze-youfu·绝",
         "desc": "一招sunze-youfu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9912,7 +10341,8 @@
         "name": "suo",
         "desc": "铁爪锁喉",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -9931,7 +10361,8 @@
         "name": "suoming-zhang·绝",
         "desc": "一招suoming-zhang",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -9950,7 +10381,8 @@
         "name": "can",
         "desc": "残阳劲",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "sword",
@@ -9988,13 +10420,15 @@
         "name": "he",
         "desc": "双剑合璧只能对战斗中的对手使用。\\n",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "lian",
         "desc": "连环剑术",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -10018,23 +10452,6 @@
     ]
   },
   {
-    "id": "swimming",
-    "name": "(Simba 16 OCT 97)",
-    "type": "strike",
-    "description": "一门(Simba 16 OCT 97)功夫。",
-    "damageBase": 3,
-    "damageScale": 0.3,
-    "schoolId": null,
-    "performs": [
-      {
-        "name": "(Simba 16 OCT 97)·绝",
-        "desc": "一招(Simba 16 OCT 97)",
-        "multiplier": 2,
-        "targetType": "single"
-      }
-    ]
-  },
-  {
     "id": "sword",
     "name": "基本剑法",
     "type": "sword",
@@ -10047,7 +10464,8 @@
         "name": "基本剑法·绝",
         "desc": "基本剑术，可用剑类武器施展。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10064,7 +10482,8 @@
         "name": "tadpole·绝",
         "desc": "一招tadpole",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "literate",
@@ -10083,7 +10502,8 @@
         "name": "太极刀·绝",
         "desc": "一招太极刀",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -10102,31 +10522,36 @@
         "name": "chan",
         "desc": "缠字诀",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       },
       {
         "name": "jia",
         "desc": "驾字诀",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       },
       {
         "name": "sui",
         "desc": "随字诀",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       },
       {
         "name": "zhenwu",
         "desc": "真武除邪",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       },
       {
         "name": "zhuan",
         "desc": "剑轮岚转",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -10147,13 +10572,15 @@
         "name": "如封似闭",
         "desc": "太极拳意如封似闭，化开对方攻势",
         "multiplier": 2.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 28
       },
       {
         "name": "揽雀尾",
         "desc": "以柔克刚，借力打力。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -10189,7 +10616,8 @@
         "name": "taishan-sword·绝",
         "desc": "一招taishan-sword",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -10263,7 +10691,8 @@
         "name": "wang",
         "desc": "犀牛望月转回还",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -10282,7 +10711,8 @@
         "name": "tangmen-medical·绝",
         "desc": "一招tangmen-medical",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -10301,7 +10731,8 @@
         "name": "tangmen-poison·绝",
         "desc": "一招tangmen-poison",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "poison",
@@ -10320,25 +10751,29 @@
         "name": "biao",
         "desc": "七子刚镖",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "hua",
         "desc": "唐花",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "qian",
         "desc": "心有千千结",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       },
       {
         "name": "san",
         "desc": "散花天女",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -10357,7 +10792,8 @@
         "name": "tanqin-jifa·绝",
         "desc": "一招tanqin-jifa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10376,7 +10812,8 @@
         "name": "弹指神通·绝",
         "desc": "桃花岛绝学，弹指间取人性命。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10393,7 +10830,8 @@
         "name": "taohua-yaoli·绝",
         "desc": "一招taohua-yaoli",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -10412,7 +10850,8 @@
         "name": "桃花怨·绝",
         "desc": "一招桃花怨",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "chuixiao-jifa",
@@ -10431,7 +10870,8 @@
         "name": "桃花掌法·绝",
         "desc": "一招桃花掌法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10448,7 +10888,8 @@
         "name": "道学心法·绝",
         "desc": "一招道学心法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10482,7 +10923,8 @@
         "name": "technic-cognize·绝",
         "desc": "一招technic-cognize",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10499,7 +10941,8 @@
         "name": "基本暗器·绝",
         "desc": "基本暗器手法。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10516,14 +10959,15 @@
         "name": "chan",
         "desc": "毒蟾掌",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
     "requireLevel": 80
   },
   {
-    "id": "tianchang-zhang",
+    "id": "yitian-zhang",
     "name": "天长掌法",
     "type": "staff",
     "description": "一门天长掌法功夫。",
@@ -10532,10 +10976,11 @@
     "schoolId": null,
     "performs": [
       {
-        "name": "huang",
-        "desc": "「地老天荒」只能对战斗中的对手使用。\\n",
+        "name": "zheng",
+        "desc": "谁与争锋",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -10592,7 +11037,8 @@
         "name": "ling",
         "desc": "凌空指穴",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -10605,7 +11051,7 @@
     "description": "一门tianhuan-shenjue功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "tianhuan-shenjue·绝",
@@ -10630,7 +11076,8 @@
         "name": "suo",
         "desc": "天绝锁",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "blade",
@@ -10649,13 +11096,15 @@
         "name": "shan",
         "desc": "五雷连闪",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "zha",
         "desc": "春雷炸空",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -10693,7 +11142,8 @@
         "name": "zhui",
         "desc": "毒龙双锥",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -10712,7 +11162,8 @@
         "name": "tianlong-zhi·绝",
         "desc": "一招tianlong-zhi",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -10750,7 +11201,8 @@
         "name": "tianmo-jue·绝",
         "desc": "一招tianmo-jue",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10818,13 +11270,15 @@
         "name": "fugu",
         "desc": "如蛆附骨",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "xue",
         "desc": "冰雪纷飞",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -10843,19 +11297,22 @@
         "name": "huan",
         "desc": "幻剑诀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "ju",
         "desc": "聚剑诀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "shan",
         "desc": "闪剑诀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -10868,13 +11325,14 @@
     "description": "一门天竺拂指功夫。",
     "damageBase": 15,
     "damageScale": 0.6,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "天竺拂指·绝",
         "desc": "一招天竺拂指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -10887,13 +11345,14 @@
     "description": "一门tianzhu-jian功夫。",
     "damageBase": 13.1,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "suo",
         "desc": "烟云锁身",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -10912,31 +11371,36 @@
         "name": "dao",
         "desc": "五指刀",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "juesha",
         "desc": "你所使用的外功中没有这种功能。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "lei",
         "desc": "掌心雷",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "long",
         "desc": "龙影掌",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       },
       {
         "name": "yin",
         "desc": "阴阳磨",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -10955,7 +11419,8 @@
         "name": "铁琴音·绝",
         "desc": "一招铁琴音",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -10976,7 +11441,8 @@
         "name": "铁掌·绝",
         "desc": "铁掌帮看家本领，刚猛霸道。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -10993,7 +11459,8 @@
         "name": "tui",
         "desc": "破甲推山",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "cuff",
@@ -11012,7 +11479,8 @@
         "name": "xue",
         "desc": "血浪滔天",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -11067,7 +11535,8 @@
         "name": "chu",
         "desc": "孤雁出群",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -11080,13 +11549,14 @@
     "description": "一门tongchui-zhang功夫。",
     "damageBase": 5.5,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "kai",
         "desc": "五丁开山",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -11105,7 +11575,8 @@
         "name": "fen",
         "desc": "玉石俱焚",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -11124,7 +11595,8 @@
         "name": "feng",
         "desc": "封杀",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -11143,7 +11615,8 @@
         "name": "training·绝",
         "desc": "一招training",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -11160,7 +11633,8 @@
         "name": "turu-qilai·绝",
         "desc": "一招turu-qilai",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11179,7 +11653,8 @@
         "name": "unarmed·绝",
         "desc": "一招unarmed",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -11209,7 +11684,7 @@
     "description": "一门weituo-chu功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "jishi",
@@ -11232,7 +11707,8 @@
         "name": "fumo",
         "desc": "你还没有受过高人指点，无法施展「韦陀伏魔」。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -11251,7 +11727,8 @@
         "name": "基本鞭法·绝",
         "desc": "基本鞭法之术。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -11268,7 +11745,8 @@
         "name": "po",
         "desc": "「碎石破玉」只能在战斗中对对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "sanhua-zhang",
@@ -11287,7 +11765,8 @@
         "name": "wuchang",
         "desc": "「无常五化」只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -11306,7 +11785,8 @@
         "name": "sheng",
         "desc": "太极初升",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -11361,7 +11841,8 @@
         "name": "wudang-yaoli·绝",
         "desc": "一招wudang-yaoli",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -11380,7 +11861,8 @@
         "name": "wudang-zhang·绝",
         "desc": "一招wudang-zhang",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11418,7 +11900,8 @@
         "name": "wudu-qishu·绝",
         "desc": "一招wudu-qishu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "poison",
@@ -11456,13 +11939,15 @@
         "name": "huan",
         "desc": "千幻神诀",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "shi",
         "desc": "万毒噬体",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -11509,13 +11994,14 @@
     "description": "一门五虎断门刀功夫。",
     "damageBase": 12.3,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "duan",
         "desc": "断字诀",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -11534,7 +12020,8 @@
         "name": "qian",
         "desc": "乾坤无量",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -11570,7 +12057,8 @@
         "name": "bian",
         "desc": "风云变幻",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -11589,7 +12077,8 @@
         "name": "舞蛇曲·绝",
         "desc": "一招舞蛇曲",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "guzheng-jifa",
@@ -11608,19 +12097,22 @@
         "name": "hui",
         "desc": "回峰蜿蜒势",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "qian",
         "desc": "千剑纵横势",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       },
       {
         "name": "shen",
         "desc": "五神朝元势",
         "multiplier": 3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 30
       }
     ],
     "requireSkill": "martial-cognize",
@@ -11639,7 +12131,8 @@
         "name": "lian",
         "desc": "夺命连环",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ]
   },
@@ -11675,7 +12168,8 @@
         "name": "wuse",
         "desc": "你还没有受过高人指点，无法施展「无色无相」。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11694,7 +12188,8 @@
         "name": "无形绝命·绝",
         "desc": "一招无形绝命",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "throwing",
@@ -11713,7 +12208,8 @@
         "name": "wuxing-quan·绝",
         "desc": "一招wuxing-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11721,18 +12217,19 @@
   },
   {
     "id": "wuyue-blade",
-    "name": "巫月刀法 (jacki于1997/7/24)",
+    "name": "巫月刀法",
     "type": "blade",
-    "description": "一门巫月刀法 (jacki于1997/7/24)功夫。",
+    "description": "一门巫月刀法功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
     "schoolId": null,
     "performs": [
       {
-        "name": "巫月刀法 (jacki于1997/7/24)·绝",
-        "desc": "一招巫月刀法 (jacki于1997/7/24)",
+        "name": "巫月刀法·绝",
+        "desc": "一招巫月刀法",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11751,7 +12248,8 @@
         "name": "wuyun-jianfa·绝",
         "desc": "一招wuyun-jianfa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -11819,7 +12317,7 @@
     "description": "一门侠客岛内功功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "xiakedao",
     "performs": [
       {
         "name": "侠客岛内功·绝",
@@ -11844,13 +12342,15 @@
         "name": "降龙十八掌·绝",
         "desc": "丐帮绝学。需基本拳脚≥20。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "亢龙有悔",
         "desc": "降龙十八掌最强一式。",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ]
   },
@@ -11861,7 +12361,7 @@
     "description": "一门xiangmo-chu功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zhen",
@@ -11905,7 +12405,8 @@
         "name": "xiao-qinna·绝",
         "desc": "一招xiao-qinna",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -11916,13 +12417,14 @@
     "description": "一门xiaoao-jianghu功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "xiaoao-jianghu·绝",
         "desc": "一招xiaoao-jianghu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -11941,7 +12443,8 @@
         "name": "fei",
         "desc": "小李飞刀只能在战斗中对对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -11979,7 +12482,8 @@
         "name": "xiaoxiang-yeyu·绝",
         "desc": "一招xiaoxiang-yeyu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "tanqin-jifa",
@@ -11998,19 +12502,22 @@
         "name": "fei",
         "desc": "飞剑诀",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "kuai",
         "desc": "快剑诀",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "qi",
         "desc": "奇剑诀",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -12029,7 +12536,8 @@
         "name": "xiaoyao-qixue·绝",
         "desc": "一招xiaoyao-qixue",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -12059,7 +12567,7 @@
     "description": "一门xiaoyaoyou功夫。",
     "damageBase": 8.9,
     "damageScale": 0.9,
-    "schoolId": null,
+    "schoolId": "xiaoyao",
     "performs": [
       {
         "name": "xian",
@@ -12084,7 +12592,8 @@
         "name": "teng",
         "desc": "腾蛇诀",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -12103,7 +12612,8 @@
         "name": "xingxiu-qishu·绝",
         "desc": "一招xingxiu-qishu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "poison",
@@ -12122,7 +12632,8 @@
         "name": "suoming",
         "desc": "「修罗索命」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -12160,7 +12671,8 @@
         "name": "jueming",
         "desc": "「修罗绝命指」只能在战斗中对对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -12234,13 +12746,15 @@
         "name": "ci",
         "desc": "「刺剑」只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "lian",
         "desc": "「连环剑」只能对战斗中的对手使用。\\n",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -12278,7 +12792,8 @@
         "name": "xiyu-tiezheng·绝",
         "desc": "一招xiyu-tiezheng",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "guzheng-jifa",
@@ -12297,7 +12812,8 @@
         "name": "kuangfeng",
         "desc": "「狂风绝技」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -12316,7 +12832,8 @@
         "name": "kuang",
         "desc": "狂风绝技",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -12335,7 +12852,8 @@
         "name": "xuan",
         "desc": "玄功无极劲",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -12394,7 +12912,8 @@
         "name": "玄冥神掌·绝",
         "desc": "一招玄冥神掌",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -12449,7 +12968,8 @@
         "name": "bing",
         "desc": "冰坚地狱",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -12468,19 +12988,22 @@
         "name": "dong",
         "desc": "大江东去",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       },
       {
         "name": "juan",
         "desc": "卷字诀",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       },
       {
         "name": "xunlei",
         "desc": "你未得高人指点，不知该如何施展「迅雷击」。\\n",
         "multiplier": 2.6,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 26
       }
     ],
     "requireSkill": "force",
@@ -12499,7 +13022,8 @@
         "name": "huan",
         "desc": "乱环诀",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -12518,7 +13042,8 @@
         "name": "baibu",
         "desc": "百步穿杨只能在战斗中对对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "throwing",
@@ -12537,19 +13062,22 @@
         "name": "huan",
         "desc": "血刀刀法「幻影」只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "shendao",
         "desc": "你还不会使用「祭血神刀」！\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       },
       {
         "name": "xueyu",
         "desc": "「血雨」只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -12568,7 +13096,8 @@
         "name": "浑天宝鉴 血穹苍·绝",
         "desc": "一招浑天宝鉴 血穹苍",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "unarmed",
@@ -12642,7 +13171,8 @@
         "name": "kai",
         "desc": "冰河开封",
         "multiplier": 1.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 17
       }
     ],
     "requireSkill": "force",
@@ -12663,7 +13193,8 @@
         "name": "雪山剑法·绝",
         "desc": "雪山派剑法，剑气如冰。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -12697,7 +13228,8 @@
         "name": "ying",
         "desc": "「群山叠影」只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -12716,7 +13248,8 @@
         "name": "xun",
         "desc": "迅雷一击",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -12735,7 +13268,8 @@
         "name": "虚蚊七星钉·绝",
         "desc": "一招虚蚊七星钉",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "throwing",
@@ -12765,13 +13299,14 @@
     "description": "一门yangyan-shu功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "yangyan-shu·绝",
         "desc": "一招yangyan-shu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -12788,7 +13323,8 @@
         "name": "yanqing-quan·绝",
         "desc": "一招yanqing-quan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -12805,7 +13341,8 @@
         "name": "huan",
         "desc": "无形幻影",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -12818,7 +13355,7 @@
     "description": "一门yanzi-chuanyun功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "yanzi-chuanyun·绝",
@@ -12852,13 +13389,14 @@
     "description": "一门yaowang-miaoshu功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "yaowang-miaoshu·绝",
         "desc": "一招yaowang-miaoshu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -12877,7 +13415,8 @@
         "name": "药王神辛·绝",
         "desc": "一招药王神辛",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "poison",
@@ -12909,7 +13448,7 @@
     "description": "一门yijin-duangu功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "duan",
     "performs": [
       {
         "name": "yijin-duangu·绝",
@@ -12953,7 +13492,8 @@
         "name": "jue",
         "desc": "绝杀",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -12972,7 +13512,8 @@
         "name": "yingzhao-shou·绝",
         "desc": "一招yingzhao-shou",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -12983,13 +13524,14 @@
     "description": "一门-鹰爪功功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "chumo",
         "desc": "「荡妖除魔」只能在战斗中对对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -13002,13 +13544,14 @@
     "description": "一门yinhu-zhang功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "lao",
         "desc": "大海捞针",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -13027,7 +13570,8 @@
         "name": "zhu",
         "desc": "天诛龙蛟诀",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -13071,13 +13615,14 @@
     "description": "一门yintuoluo-zhua功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "chixue",
         "desc": "赤血连环爪",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "buddhism",
@@ -13127,7 +13672,8 @@
         "name": "qian",
         "desc": "千掌环",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "strike",
@@ -13146,7 +13692,8 @@
         "name": "yipai-liangsan·绝",
         "desc": "一招yipai-liangsan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13165,30 +13712,12 @@
         "name": "fumo",
         "desc": "伏魔剑诀",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
     "requireLevel": 50
-  },
-  {
-    "id": "yitian-zhang",
-    "name": "天长掌法",
-    "type": "staff",
-    "description": "一门天长掌法功夫。",
-    "damageBase": 15,
-    "damageScale": 1.5,
-    "schoolId": null,
-    "performs": [
-      {
-        "name": "zheng",
-        "desc": "谁与争锋",
-        "multiplier": 2.2,
-        "targetType": "single"
-      }
-    ],
-    "requireSkill": "force",
-    "requireLevel": 24
   },
   {
     "id": "yiwei-dujiang",
@@ -13239,13 +13768,15 @@
         "name": "一阳指·绝",
         "desc": "大理段氏的独门指法，点穴无匹。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "阳关三叠",
         "desc": "一指三劲，连绵不绝。",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -13262,7 +13793,8 @@
         "name": "jingmo",
         "desc": "「惊魔一指」只能对战斗中的对手使用。\\n",
         "multiplier": 2.7,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 27
       }
     ],
     "requireSkill": "force",
@@ -13281,7 +13813,8 @@
         "name": "幽冥指·绝",
         "desc": "一招幽冥指",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13300,7 +13833,8 @@
         "name": "fan",
         "desc": "翻卦连环掌",
         "multiplier": 2.5,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 25
       }
     ],
     "requireSkill": "force",
@@ -13319,13 +13853,15 @@
         "name": "gui",
         "desc": "天地归元",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "xuan",
         "desc": "天旋地转",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -13344,7 +13880,8 @@
         "name": "xin",
         "desc": "西子捧心",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "dodge",
@@ -13380,7 +13917,8 @@
         "name": "shi",
         "desc": "弑元诀",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -13399,7 +13937,8 @@
         "name": "ying",
         "desc": "无影针",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -13418,7 +13957,8 @@
         "name": "jiang",
         "desc": "修罗降世",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -13431,13 +13971,14 @@
     "description": "一门yujian-shu功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "yujian",
         "desc": "御剑飞升只能对战斗中的对手使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ]
   },
@@ -13448,7 +13989,7 @@
     "description": "一门瑜珈术功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "瑜珈术·绝",
@@ -13473,7 +14014,8 @@
         "name": "chong",
         "desc": "鹤冲九霄",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13492,7 +14034,8 @@
         "name": "chan",
         "desc": "缠字诀",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -13511,7 +14054,8 @@
         "name": "xian",
         "desc": "云龙三现只能对战斗中的对手使用。\\n",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13585,7 +14129,8 @@
         "name": "-云龙手·绝",
         "desc": "一招-云龙手",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13621,7 +14166,8 @@
         "name": "-云龙爪·绝",
         "desc": "一招-云龙爪",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13640,7 +14186,8 @@
         "name": "wushuang",
         "desc": "无双无对只能对战斗中的对手使用。\\n",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -13678,7 +14225,8 @@
         "name": "mei",
         "desc": "千姿百媚",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "sword",
@@ -13771,19 +14319,22 @@
         "name": "bihai",
         "desc": "碧海潮生按玉箫",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "qing",
         "desc": "天地情长",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "tian",
         "desc": "天外清音",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -13802,41 +14353,25 @@
         "name": "yuyue-yuyuan·绝",
         "desc": "一招yuyue-yuyuan",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
     "requireLevel": 60
   },
   {
-    "id": "zhaixing-gong",
-    "name": "摘星功  based on xiaoyaoyou.c",
-    "type": "dodge",
-    "description": "一门摘星功  based on xiaoyaoyou.c功夫。",
-    "damageBase": 0,
-    "damageScale": 0,
-    "schoolId": null,
-    "performs": [
-      {
-        "name": "摘星功  based on xiaoyaoyou.c·绝",
-        "desc": "一招摘星功  based on xiaoyaoyou.c",
-        "multiplier": 2,
-        "targetType": "single"
-      }
-    ]
-  },
-  {
     "id": "zhaixinggong",
-    "name": "摘星功  based on xiaoyaoyou.c",
+    "name": "摘星功",
     "type": "dodge",
-    "description": "一门摘星功  based on xiaoyaoyou.c功夫。",
+    "description": "一门摘星功",
     "damageBase": 0,
     "damageScale": 0,
     "schoolId": null,
     "performs": [
       {
-        "name": "摘星功  based on xiaoyaoyou.c·绝",
-        "desc": "一招摘星功  based on xiaoyaoyou.c",
+        "name": "摘星功",
+        "desc": "一招摘星功",
         "multiplier": 2,
         "targetType": "single"
       }
@@ -13868,7 +14403,7 @@
     "description": "一门zhemei-shou功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "emei",
     "performs": [
       {
         "name": "hai",
@@ -13905,13 +14440,15 @@
         "name": "sui",
         "desc": "玉碎昆冈",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       },
       {
         "name": "wu",
         "desc": "无声无色",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ],
     "requireSkill": "force",
@@ -13930,7 +14467,8 @@
         "name": "zhengqi-jue·绝",
         "desc": "一招zhengqi-jue",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -13947,7 +14485,8 @@
         "name": "zhenjing-baili·绝",
         "desc": "一招zhenjing-baili",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -13960,13 +14499,14 @@
     "description": "一门zhenjiu-shu功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zhenjiu-shu·绝",
         "desc": "一招zhenjiu-shu",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -13979,13 +14519,14 @@
     "description": "一门zhenshan-zhang功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "henshan",
     "performs": [
       {
         "name": "da",
         "desc": "隔山打牛",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -14004,7 +14545,8 @@
         "name": "shi",
         "desc": "石破天惊",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -14023,7 +14565,8 @@
         "name": "zhenxin-fa·绝",
         "desc": "一招zhenxin-fa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -14042,7 +14585,8 @@
         "name": "zhenxin-yimaifa·绝",
         "desc": "一招zhenxin-yimaifa",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "medical",
@@ -14061,7 +14605,8 @@
         "name": "tong",
         "desc": "百鬼恸哭",
         "multiplier": 1.8,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 18
       }
     ],
     "requireSkill": "force",
@@ -14099,7 +14644,8 @@
         "name": "六脉神剑 - 中冲剑·绝",
         "desc": "一招六脉神剑 - 中冲剑",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ]
   },
@@ -14110,13 +14656,14 @@
     "description": "一门zhonghua-aojue功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "honghua",
     "performs": [
       {
         "name": "zhonghua-aojue·绝",
         "desc": "一招zhonghua-aojue",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "martial-cognize",
@@ -14135,7 +14682,8 @@
         "name": "zhi",
         "desc": "剑指南山",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -14173,7 +14721,8 @@
         "name": "mang",
         "desc": "剑芒",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -14186,7 +14735,7 @@
     "description": "一门庄子舞功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "hua",
@@ -14205,7 +14754,7 @@
     "description": "一门追风步功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "追风步·绝",
@@ -14222,19 +14771,21 @@
     "description": "一门追魂夺命剑功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zhu",
         "desc": "诛天刹神",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       },
       {
         "name": "zhui",
         "desc": "追魂夺命",
         "multiplier": 2.3,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 23
       }
     ],
     "requireSkill": "force",
@@ -14247,13 +14798,14 @@
     "description": "一门zhurong-jian功夫。",
     "damageBase": 15,
     "damageScale": 1.5,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "wan",
         "desc": "万剑焚云",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "sword",
@@ -14266,7 +14818,7 @@
     "description": "一门诸天化身步功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "诸天化身步·绝",
@@ -14289,7 +14841,8 @@
         "name": "hui",
         "desc": "紫盖回翔",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -14302,7 +14855,7 @@
     "description": "一门zihui-xinfa功夫。",
     "damageBase": 0,
     "damageScale": 0,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "zihui-xinfa·绝",
@@ -14327,7 +14880,8 @@
         "name": "bagua",
         "desc": "「八卦阵芒」只能对战斗中的对手使用。\\n",
         "multiplier": 2.4,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 24
       }
     ],
     "requireSkill": "force",
@@ -14346,13 +14900,15 @@
         "name": "feng",
         "desc": "狂风式",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       },
       {
         "name": "luo",
         "desc": "落雷式",
         "multiplier": 1.9,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 19
       }
     ],
     "requireSkill": "force",
@@ -14409,7 +14965,8 @@
         "name": "zuida",
         "desc": "「八仙醉打」只能在战斗中使用。\\n",
         "multiplier": 2.2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 22
       }
     ],
     "requireSkill": "force",
@@ -14430,13 +14987,15 @@
         "name": "醉拳·绝",
         "desc": "形醉意不醉，步醉心不醉的奇门拳法。",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       },
       {
         "name": "醉卧云端",
         "desc": "形醉意不醉，借势反击。",
         "multiplier": 2.1,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 21
       }
     ]
   },
@@ -14453,7 +15012,8 @@
         "name": "zuiquan-sanda·绝",
         "desc": "一招zuiquan-sanda",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
       }
     ],
     "requireSkill": "force",
@@ -14483,13 +15043,1305 @@
     "description": "一门左右互博功夫。",
     "damageBase": 3,
     "damageScale": 0.3,
-    "schoolId": null,
+    "schoolId": "hu",
     "performs": [
       {
         "name": "左右互博·绝",
         "desc": "一招左右互博",
         "multiplier": 2,
-        "targetType": "single"
+        "targetType": "single",
+        "mpCost": 20
+      }
+    ]
+  },
+  {
+    "id": "shaolin-generic-parry-1",
+    "name": "少林派招架",
+    "type": "parry",
+    "description": "少林派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "shaolin",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "少林派招架·式",
+        "desc": "少林派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "wudang-generic-parry-2",
+    "name": "武当派招架",
+    "type": "parry",
+    "description": "武当派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "wudang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "武当派招架·式",
+        "desc": "武当派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "gaibang-generic-force-3",
+    "name": "丐帮心法",
+    "type": "force",
+    "description": "丐帮入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "gaibang"
+  },
+  {
+    "id": "gaibang-generic-dodge-4",
+    "name": "丐帮身法",
+    "type": "dodge",
+    "description": "丐帮入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "gaibang",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "gaibang-generic-parry-5",
+    "name": "丐帮招架",
+    "type": "parry",
+    "description": "丐帮入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "gaibang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "丐帮招架·式",
+        "desc": "丐帮入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "huashan-generic-parry-6",
+    "name": "华山派招架",
+    "type": "parry",
+    "description": "华山派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "huashan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "华山派招架·式",
+        "desc": "华山派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "emei-generic-dodge-7",
+    "name": "峨眉派身法",
+    "type": "dodge",
+    "description": "峨眉派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "emei",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "gumu-generic-dodge-8",
+    "name": "古墓派身法",
+    "type": "dodge",
+    "description": "古墓派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "gumu",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "gumu-generic-parry-9",
+    "name": "古墓派招架",
+    "type": "parry",
+    "description": "古墓派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "gumu",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "古墓派招架·式",
+        "desc": "古墓派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "kunlun-generic-dodge-10",
+    "name": "昆仑派身法",
+    "type": "dodge",
+    "description": "昆仑派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "kunlun",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "kunlun-generic-parry-11",
+    "name": "昆仑派招架",
+    "type": "parry",
+    "description": "昆仑派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "kunlun",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "昆仑派招架·式",
+        "desc": "昆仑派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "mingjiao-generic-dodge-12",
+    "name": "明教身法",
+    "type": "dodge",
+    "description": "明教入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "mingjiao",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "mingjiao-generic-strike-13",
+    "name": "明教拳法",
+    "type": "strike",
+    "description": "明教入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "mingjiao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "明教拳法·式",
+        "desc": "明教入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "mingjiao-generic-parry-14",
+    "name": "明教招架",
+    "type": "parry",
+    "description": "明教入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "mingjiao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "明教招架·式",
+        "desc": "明教入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "quanzhen-generic-dodge-15",
+    "name": "全真教身法",
+    "type": "dodge",
+    "description": "全真教入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "quanzhen",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "quanzhen-generic-parry-16",
+    "name": "全真教招架",
+    "type": "parry",
+    "description": "全真教入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "quanzhen",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "全真教招架·式",
+        "desc": "全真教入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xingxiu-generic-dodge-17",
+    "name": "星宿派身法",
+    "type": "dodge",
+    "description": "星宿派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "xingxiu",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xingxiu-generic-parry-18",
+    "name": "星宿派招架",
+    "type": "parry",
+    "description": "星宿派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xingxiu",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "星宿派招架·式",
+        "desc": "星宿派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xiaoyao-generic-parry-19",
+    "name": "逍遥派招架",
+    "type": "parry",
+    "description": "逍遥派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xiaoyao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "逍遥派招架·式",
+        "desc": "逍遥派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "taohua-generic-force-20",
+    "name": "桃花岛心法",
+    "type": "force",
+    "description": "桃花岛入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "taohua"
+  },
+  {
+    "id": "taohua-generic-dodge-21",
+    "name": "桃花岛身法",
+    "type": "dodge",
+    "description": "桃花岛入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "taohua",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "taohua-generic-parry-22",
+    "name": "桃花岛招架",
+    "type": "parry",
+    "description": "桃花岛入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "taohua",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "桃花岛招架·式",
+        "desc": "桃花岛入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "lingjiu-generic-dodge-23",
+    "name": "灵鹫宫身法",
+    "type": "dodge",
+    "description": "灵鹫宫入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "lingjiu",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "lingjiu-generic-parry-24",
+    "name": "灵鹫宫招架",
+    "type": "parry",
+    "description": "灵鹫宫入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "lingjiu",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "灵鹫宫招架·式",
+        "desc": "灵鹫宫入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "shenlong-generic-dodge-25",
+    "name": "神龙教身法",
+    "type": "dodge",
+    "description": "神龙教入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "shenlong",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "shenlong-generic-parry-26",
+    "name": "神龙教招架",
+    "type": "parry",
+    "description": "神龙教入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "shenlong",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "神龙教招架·式",
+        "desc": "神龙教入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "riyue-generic-dodge-27",
+    "name": "日月神教身法",
+    "type": "dodge",
+    "description": "日月神教入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "riyue",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xueshan-generic-dodge-28",
+    "name": "雪山派身法",
+    "type": "dodge",
+    "description": "雪山派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "xueshan",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xueshan-generic-parry-29",
+    "name": "雪山派招架",
+    "type": "parry",
+    "description": "雪山派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xueshan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "雪山派招架·式",
+        "desc": "雪山派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "tiezhang-generic-dodge-30",
+    "name": "铁掌帮身法",
+    "type": "dodge",
+    "description": "铁掌帮入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "tiezhang",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "tiezhang-generic-parry-31",
+    "name": "铁掌帮招架",
+    "type": "parry",
+    "description": "铁掌帮入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "tiezhang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "铁掌帮招架·式",
+        "desc": "铁掌帮入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "tangmen-generic-force-32",
+    "name": "唐门心法",
+    "type": "force",
+    "description": "唐门入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "tangmen"
+  },
+  {
+    "id": "tangmen-generic-dodge-33",
+    "name": "唐门身法",
+    "type": "dodge",
+    "description": "唐门入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "tangmen",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "tangmen-generic-parry-34",
+    "name": "唐门招架",
+    "type": "parry",
+    "description": "唐门入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "tangmen",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "唐门招架·式",
+        "desc": "唐门入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "murong-generic-dodge-35",
+    "name": "慕容世家身法",
+    "type": "dodge",
+    "description": "慕容世家入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "murong",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "murong-generic-parry-36",
+    "name": "慕容世家招架",
+    "type": "parry",
+    "description": "慕容世家入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "murong",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "慕容世家招架·式",
+        "desc": "慕容世家入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "duan-generic-dodge-37",
+    "name": "段氏皇族身法",
+    "type": "dodge",
+    "description": "段氏皇族入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "duan",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "henshan-generic-parry-38",
+    "name": "衡山派招架",
+    "type": "parry",
+    "description": "衡山派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "henshan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "衡山派招架·式",
+        "desc": "衡山派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "honghua-generic-dodge-39",
+    "name": "红花会身法",
+    "type": "dodge",
+    "description": "红花会入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "honghua",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "honghua-generic-parry-40",
+    "name": "红花会招架",
+    "type": "parry",
+    "description": "红花会入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "honghua",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "红花会招架·式",
+        "desc": "红花会入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "jueqing-generic-parry-41",
+    "name": "绝情谷招架",
+    "type": "parry",
+    "description": "绝情谷入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "jueqing",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "绝情谷招架·式",
+        "desc": "绝情谷入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "lingxiao-generic-force-42",
+    "name": "凌霄城心法",
+    "type": "force",
+    "description": "凌霄城入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "lingxiao"
+  },
+  {
+    "id": "lingxiao-generic-dodge-43",
+    "name": "凌霄城身法",
+    "type": "dodge",
+    "description": "凌霄城入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "lingxiao",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "lingxiao-generic-parry-44",
+    "name": "凌霄城招架",
+    "type": "parry",
+    "description": "凌霄城入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "lingxiao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "凌霄城招架·式",
+        "desc": "凌霄城入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "meizhuang-generic-force-45",
+    "name": "梅庄心法",
+    "type": "force",
+    "description": "梅庄入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "meizhuang"
+  },
+  {
+    "id": "meizhuang-generic-dodge-46",
+    "name": "梅庄身法",
+    "type": "dodge",
+    "description": "梅庄入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "meizhuang",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "meizhuang-generic-strike-47",
+    "name": "梅庄拳法",
+    "type": "strike",
+    "description": "梅庄入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "meizhuang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "梅庄拳法·式",
+        "desc": "梅庄入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "meizhuang-generic-parry-48",
+    "name": "梅庄招架",
+    "type": "parry",
+    "description": "梅庄入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "meizhuang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "梅庄招架·式",
+        "desc": "梅庄入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "miao-generic-dodge-49",
+    "name": "苗家身法",
+    "type": "dodge",
+    "description": "苗家入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "miao",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "miao-generic-parry-50",
+    "name": "苗家招架",
+    "type": "parry",
+    "description": "苗家入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "miao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "苗家招架·式",
+        "desc": "苗家入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "ouyang-generic-dodge-51",
+    "name": "欧阳世家身法",
+    "type": "dodge",
+    "description": "欧阳世家入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "ouyang",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "ouyang-generic-strike-52",
+    "name": "欧阳世家拳法",
+    "type": "strike",
+    "description": "欧阳世家入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "ouyang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "欧阳世家拳法·式",
+        "desc": "欧阳世家入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "ouyang-generic-parry-53",
+    "name": "欧阳世家招架",
+    "type": "parry",
+    "description": "欧阳世家入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "ouyang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "欧阳世家招架·式",
+        "desc": "欧阳世家入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "shang-generic-dodge-54",
+    "name": "商家堡身法",
+    "type": "dodge",
+    "description": "商家堡入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "shang",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "shang-generic-parry-55",
+    "name": "商家堡招架",
+    "type": "parry",
+    "description": "商家堡入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "shang",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "商家堡招架·式",
+        "desc": "商家堡入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "songshan-generic-dodge-56",
+    "name": "嵩山派身法",
+    "type": "dodge",
+    "description": "嵩山派入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "songshan",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "songshan-generic-parry-57",
+    "name": "嵩山派招架",
+    "type": "parry",
+    "description": "嵩山派入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "songshan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "嵩山派招架·式",
+        "desc": "嵩山派入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "tianlongsi-generic-force-58",
+    "name": "天龙寺心法",
+    "type": "force",
+    "description": "天龙寺入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "tianlongsi"
+  },
+  {
+    "id": "tianlongsi-generic-dodge-59",
+    "name": "天龙寺身法",
+    "type": "dodge",
+    "description": "天龙寺入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "tianlongsi",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "tianlongsi-generic-strike-60",
+    "name": "天龙寺拳法",
+    "type": "strike",
+    "description": "天龙寺入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "tianlongsi",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "天龙寺拳法·式",
+        "desc": "天龙寺入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "tianlongsi-generic-parry-61",
+    "name": "天龙寺招架",
+    "type": "parry",
+    "description": "天龙寺入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "tianlongsi",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "天龙寺招架·式",
+        "desc": "天龙寺入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "ultra-generic-force-62",
+    "name": "绝世高手心法",
+    "type": "force",
+    "description": "绝世高手入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "ultra"
+  },
+  {
+    "id": "ultra-generic-dodge-63",
+    "name": "绝世高手身法",
+    "type": "dodge",
+    "description": "绝世高手入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "ultra",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "ultra-generic-strike-64",
+    "name": "绝世高手拳法",
+    "type": "strike",
+    "description": "绝世高手入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "ultra",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "绝世高手拳法·式",
+        "desc": "绝世高手入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "ultra-generic-parry-65",
+    "name": "绝世高手招架",
+    "type": "parry",
+    "description": "绝世高手入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "ultra",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "绝世高手招架·式",
+        "desc": "绝世高手入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "wudu-generic-parry-66",
+    "name": "五毒教招架",
+    "type": "parry",
+    "description": "五毒教入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "wudu",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "五毒教招架·式",
+        "desc": "五毒教入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xiakedao-generic-dodge-67",
+    "name": "侠客岛身法",
+    "type": "dodge",
+    "description": "侠客岛入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "xiakedao",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xiakedao-generic-strike-68",
+    "name": "侠客岛拳法",
+    "type": "strike",
+    "description": "侠客岛入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xiakedao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "侠客岛拳法·式",
+        "desc": "侠客岛入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xiakedao-generic-parry-69",
+    "name": "侠客岛招架",
+    "type": "parry",
+    "description": "侠客岛入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xiakedao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "侠客岛招架·式",
+        "desc": "侠客岛入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xuanming-generic-dodge-70",
+    "name": "玄冥谷身法",
+    "type": "dodge",
+    "description": "玄冥谷入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "xuanming",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xuanming-generic-parry-71",
+    "name": "玄冥谷招架",
+    "type": "parry",
+    "description": "玄冥谷入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xuanming",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "玄冥谷招架·式",
+        "desc": "玄冥谷入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xuedao-generic-dodge-72",
+    "name": "血刀门身法",
+    "type": "dodge",
+    "description": "血刀门入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "xuedao",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "xuedao-generic-strike-73",
+    "name": "血刀门拳法",
+    "type": "strike",
+    "description": "血刀门入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xuedao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "血刀门拳法·式",
+        "desc": "血刀门入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "xuedao-generic-parry-74",
+    "name": "血刀门招架",
+    "type": "parry",
+    "description": "血刀门入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "xuedao",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "血刀门招架·式",
+        "desc": "血刀门入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "yunlong-generic-parry-75",
+    "name": "云龙门招架",
+    "type": "parry",
+    "description": "云龙门入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "yunlong",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "云龙门招架·式",
+        "desc": "云龙门入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "zhenyuan-generic-force-76",
+    "name": "震远镖局心法",
+    "type": "force",
+    "description": "震远镖局入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "zhenyuan"
+  },
+  {
+    "id": "zhenyuan-generic-dodge-77",
+    "name": "震远镖局身法",
+    "type": "dodge",
+    "description": "震远镖局入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "zhenyuan",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "zhenyuan-generic-strike-78",
+    "name": "震远镖局拳法",
+    "type": "strike",
+    "description": "震远镖局入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "zhenyuan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "震远镖局拳法·式",
+        "desc": "震远镖局入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "zhenyuan-generic-parry-79",
+    "name": "震远镖局招架",
+    "type": "parry",
+    "description": "震远镖局入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "zhenyuan",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "震远镖局招架·式",
+        "desc": "震远镖局入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "hell-generic-force-80",
+    "name": "修罗地狱心法",
+    "type": "force",
+    "description": "修罗地狱入门心法，修习内力。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "hell"
+  },
+  {
+    "id": "hell-generic-dodge-81",
+    "name": "修罗地狱身法",
+    "type": "dodge",
+    "description": "修罗地狱入门身法，闪转腾挪。",
+    "damageBase": 0,
+    "damageScale": 0,
+    "schoolId": "hell",
+    "requireSkill": "force",
+    "requireLevel": 1
+  },
+  {
+    "id": "hell-generic-strike-82",
+    "name": "修罗地狱拳法",
+    "type": "strike",
+    "description": "修罗地狱入门拳法。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "hell",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "修罗地狱拳法·式",
+        "desc": "修罗地狱入门拳法。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
+      }
+    ]
+  },
+  {
+    "id": "hell-generic-parry-83",
+    "name": "修罗地狱招架",
+    "type": "parry",
+    "description": "修罗地狱入门招架。",
+    "damageBase": 5,
+    "damageScale": 0.8,
+    "schoolId": "hell",
+    "requireSkill": "force",
+    "requireLevel": 1,
+    "performs": [
+      {
+        "name": "修罗地狱招架·式",
+        "desc": "修罗地狱入门招架。",
+        "multiplier": 1.5,
+        "targetType": "single",
+        "mpCost": 15
       }
     ]
   }

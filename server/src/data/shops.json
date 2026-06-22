@@ -28,7 +28,12 @@
       "renshen-wan": 50,
       "neili-dan": 30,
       "jiedu-wan": 50,
-      "herb": 2
+      "herb": 2,
+      "qingshen-dan": 40,
+      "liangjie-san": 40,
+      "huoxue-dan": 40,
+      "zhenqi-dan": 40,
+      "xingshen-cao": 40
     },
     "buybackRate": 0.5
   }
