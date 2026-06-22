@@ -65,14 +65,13 @@ export class TradeSystem {
     target.mailbox.push(msg);
 
     const broadcasts: BroadcastTarget[] = [];
-    // If target is online, notify them
-    if (this.players.getPlayer(target.id)) {
-      broadcasts.push({
-        type: 'player',
-        targetId: target.id,
-        text: `\n  你收到了一封来自 ${sender.name} 的新邮件。输入 checkmail 查看。\n`,
-      });
-    }
+    // Always attempt broadcast — dispatchBroadcasts handles socket lookup
+    // (player may be stored with username as id, not socket id)
+    broadcasts.push({
+      type: 'player',
+      targetId: target.id,
+      text: `\n  你收到了一封来自 ${sender.name} 的新邮件。输入 checkmail 查看。\n`,
+    });
 
     return {
       self: `\n  你给 ${target.name} 发了一封邮件。\n`,

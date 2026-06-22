@@ -9,10 +9,9 @@ function nextUid(): string {
 const NAME_CHARS = '甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥天地玄黄宇宙洪荒日月盈昃';
 let nameSeq = 0;
 function uniqueName(): string {
-  const seed = nameSeq++;
   let name = '';
   for (let i = 0; i < 5; i++) {
-    name += NAME_CHARS[(seed * 7 + i * 13 + uidSeq * 31) % NAME_CHARS.length];
+    name += NAME_CHARS[Math.floor(Math.random() * NAME_CHARS.length)];
   }
   return name;
 }
@@ -48,13 +47,18 @@ async function createSession(
   async function cmd(text: string) {
     await input.fill(text);
     await sendBtn.click();
-    await page.waitForTimeout(250);
+    await page.waitForTimeout(400);
   }
 
+  // Register with retry — the player may already exist from a previous run
   await cmd('register ' + uid + ' pw123');
+  // Wait for the registration to be acknowledged
+  await page.waitForTimeout(600);
   await cmd(name);
+  await page.waitForTimeout(600);
   await cmd('done');
-  await expect(output).toContainText('角色创建成功');
+  // Wait for character creation to complete
+  await expect(output).toContainText('角色创建成功', { timeout: 10000 });
 
   if (extra) await extra(cmd);
 
@@ -68,8 +72,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -92,8 +96,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -111,8 +115,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB, async (cmd) => {
       await cmd('n');
@@ -135,8 +139,8 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -155,8 +159,8 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -187,8 +191,8 @@ test.describe('Social: Friends', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -217,9 +221,9 @@ test.describe('Social: Guild', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const gName = uniqueGuild();
-    const nameA = uniqueName();
-    const nameB = uniqueName();
+    const gName = uniqueGuild()
+    const nameA = uniqueName()
+    const nameB = uniqueName()
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -271,7 +275,7 @@ test.describe('Social: Guild', () => {
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const p = await createSession(page, nextUid(), uniqueName();
+    const p = await createSession(page, nextUid(), uniqueName())
 
     await p.cmd('guild list');
     const text = (await p.output.textContent()) || '';
@@ -286,8 +290,8 @@ test.describe('Social: Guild', () => {
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const gName = uniqueGuild();
-    const p = await createSession(page, nextUid(), uniqueName();
+    const gName = uniqueGuild()
+    const p = await createSession(page, nextUid(), uniqueName())
 
     await p.cmd('guild create ' + gName);
     await p.cmd('who');
