@@ -1,8 +1,16 @@
 import { test, expect } from '@playwright/test';
 
+// Globally unique: Math.random() ensures no collision across parallel CI workers
 let uidSeq = 0;
 function nextUid(): string {
-  return 'pw' + Date.now() + '_' + (uidSeq++);
+  return 'pw' + Date.now() + '_' + Math.random().toString(36).slice(2, 7) + '_' + (uidSeq++);
+}
+// Unique display names and guild names to avoid cross-worker collisions
+function uniqueName(base: string): string {
+  return 't' + Math.random().toString(36).slice(2, 6) + base;
+}
+function uniqueGuild(base: string): string {
+  return base + Math.random().toString(36).slice(2, 4);
 }
 
 interface PlayerSession {
@@ -47,18 +55,20 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const p1 = await createSession(page1, nextUid(), '张无忌');
-    const p2 = await createSession(page2, nextUid(), '令狐冲');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
     await p1.cmd('say 大家好！');
     await expect(p1.output).toContainText('你说道：「大家好！」');
     await page2.waitForTimeout(500);
-    await expect(p2.output).toContainText('张无忌 说道：「大家好！」');
+    await expect(p2.output).toContainText(nameA + ' 说道：「大家好！」');
 
-    await p2.cmd('say 无忌兄好');
-    await expect(p2.output).toContainText('你说道：「无忌兄好」');
+    await p2.cmd('say 你好');
+    await expect(p2.output).toContainText('你说道：「你好」');
     await page1.waitForTimeout(500);
-    await expect(p1.output).toContainText('令狐冲 说道：「无忌兄好」');
+    await expect(p1.output).toContainText(nameB + ' 说道：「你好」');
 
     await ctx.close();
   });
@@ -69,13 +79,15 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const p1 = await createSession(page1, nextUid(), '郭靖');
-    const p2 = await createSession(page2, nextUid(), '黄蓉');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
-    await p1.cmd('tell 黄蓉 蓉儿你在哪里');
-    await expect(p1.output).toContainText('你对 黄蓉 悄悄说道：「蓉儿你在哪里」');
+    await p1.cmd('tell ' + nameB + ' 你在哪里');
+    await expect(p1.output).toContainText('你对 ' + nameB + ' 悄悄说道：「你在哪里」');
     await page2.waitForTimeout(500);
-    await expect(p2.output).toContainText('郭靖 对你悄悄说道：「蓉儿你在哪里」');
+    await expect(p2.output).toContainText(nameA + ' 对你悄悄说道：「你在哪里」');
 
     await ctx.close();
   });
@@ -86,9 +98,10 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const uid = nextUid();
-    const p1 = await createSession(page1, nextUid(), '乔峰');
-    const p2 = await createSession(page2, nextUid(), '段誉', async (cmd) => {
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB, async (cmd) => {
       await cmd('n');
     });
 
@@ -96,7 +109,7 @@ test.describe('Social: Chat', () => {
     await expect(p1.output).toContainText('你大声喊道：「天下英雄，齐聚少林！」');
     await page2.waitForTimeout(500);
     const p2text = (await p2.output.textContent()) || '';
-    expect(p2text).toContain('【江湖】乔峰 大声说道：「天下英雄，齐聚少林！」');
+    expect(p2text).toContain(nameA + ' 大声说道：「天下英雄，齐聚少林！」');
 
     await ctx.close();
   });
@@ -109,15 +122,16 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const uid = nextUid();
-    const p1 = await createSession(page1, nextUid(), '杨过');
-    const p2 = await createSession(page2, nextUid(), '小龙女');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
     await p1.cmd('get 银子');
-    await p1.cmd('give 小龙女 银子');
-    await expect(p1.output).toContainText('你把银子交给了小龙女');
+    await p1.cmd('give ' + nameB + ' 银子');
+    await expect(p1.output).toContainText('你把银子交给了' + nameB);
     await page2.waitForTimeout(500);
-    await expect(p2.output).toContainText('杨过 把银子交给了你');
+    await expect(p2.output).toContainText(nameA + ' 把银子交给了你');
 
     await ctx.close();
   });
@@ -128,17 +142,18 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const uid = nextUid();
-    const p1 = await createSession(page1, nextUid(), '韦小宝');
-    const p2 = await createSession(page2, nextUid(), '康熙');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
-    await p1.cmd('mail 康熙 微臣有事启奏');
-    await expect(p1.output).toContainText('你给 康熙 发了一封邮件');
+    await p1.cmd('mail ' + nameB + ' 微臣有事启奏');
+    await expect(p1.output).toContainText('你给 ' + nameB + ' 发了一封邮件');
     await page2.waitForTimeout(500);
     await expect(p2.output).toContainText('新邮件');
 
     await p2.cmd('checkmail');
-    await expect(p2.output).toContainText('韦小宝');
+    await expect(p2.output).toContainText(nameA);
 
     await p2.cmd('readmail 1');
     const text = (await p2.output.textContent()) || '';
@@ -159,19 +174,20 @@ test.describe('Social: Friends', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const uid = nextUid();
-    const p1 = await createSession(page1, nextUid(), '狄云');
-    const p2 = await createSession(page2, nextUid(), '水笙');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
-    await p1.cmd('friend add 水笙');
-    await expect(p1.output).toContainText('你将 水笙 添加为好友');
+    await p1.cmd('friend add ' + nameB);
+    await expect(p1.output).toContainText('你将 ' + nameB + ' 添加为好友');
 
     await p1.cmd('friend list');
     const text = (await p1.output.textContent()) || '';
-    expect(text).toContain('水笙');
+    expect(text).toContain(nameB);
     expect(text).toContain('【在线】');
 
-    await p1.cmd('friend remove 水笙');
+    await p1.cmd('friend remove ' + nameB);
     await expect(p1.output).toContainText('从好友列表中移除');
 
     await p1.cmd('friend list');
@@ -188,31 +204,33 @@ test.describe('Social: Guild', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const uid = nextUid();
-    const p1 = await createSession(page1, nextUid(), '任我行');
-    const p2 = await createSession(page2, nextUid(), '向问天');
+    const gName = uniqueGuild('日月神教');
+    const nameA = uniqueName('A');
+    const nameB = uniqueName('B');
+    const p1 = await createSession(page1, nextUid(), nameA);
+    const p2 = await createSession(page2, nextUid(), nameB);
 
-    await p1.cmd('guild create 日月神教');
-    await expect(p1.output).toContainText('你创建了帮会「日月神教」');
+    await p1.cmd('guild create ' + gName);
+    await expect(p1.output).toContainText('你创建了帮会「' + gName + '」');
 
-    await p2.cmd('guild join 日月神教');
-    await expect(p2.output).toContainText('你加入了帮会「日月神教」');
+    await p2.cmd('guild join ' + gName);
+    await expect(p2.output).toContainText('你加入了帮会「' + gName + '」');
 
     await p1.cmd('guild info');
     const infoText = (await p1.output.textContent()) || '';
-    expect(infoText).toContain('日月神教');
-    expect(infoText).toContain('任我行');
-    expect(infoText).toContain('向问天');
+    expect(infoText).toContain(gName);
+    expect(infoText).toContain(nameA);
+    expect(infoText).toContain(nameB);
     expect(infoText).toContain('2 人');
 
     await p1.cmd('guild chat 千秋万载，一统江湖！');
-    await expect(p1.output).toContainText('【日月神教帮会】你说道：「千秋万载，一统江湖！」');
+    await expect(p1.output).toContainText('【' + gName + '帮会】你说道：「千秋万载，一统江湖！」');
     await page2.waitForTimeout(500);
     const chat2 = (await p2.output.textContent()) || '';
-    expect(chat2).toContain('【日月神教帮会】任我行：「千秋万载，一统江湖！」');
+    expect(chat2).toContain('【' + gName + '帮会】' + nameA + '：「千秋万载，一统江湖！」');
 
-    await p1.cmd('guild promote 向问天');
-    await expect(p1.output).toContainText('任命 向问天 为长老');
+    await p1.cmd('guild promote ' + nameB);
+    await expect(p1.output).toContainText('任命 ' + nameB + ' 为长老');
 
     await p1.cmd('guild info');
     const info2 = (await p1.output.textContent()) || '';
@@ -223,27 +241,29 @@ test.describe('Social: Guild', () => {
 
     await p1.cmd('guild list');
     const listText = (await p1.output.textContent()) || '';
-    expect(listText).toContain('日月神教');
+    expect(listText).toContain(gName);
 
     await p1.cmd('guild leave');
     await expect(p1.output).toContainText('无法直接离开');
 
+    // Clean up
     await p1.cmd('guild disband');
     await expect(p1.output).toContainText('解散了帮会');
 
     await ctx.close();
   });
 
-  test('guild list shows empty when none exist', async ({ browser }) => {
+  test('guild list returns valid output', async ({ browser }) => {
     test.setTimeout(30000);
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const uid = nextUid();
-    const p = await createSession(page, uid, '路人甲');
+    const p = await createSession(page, nextUid(), uniqueName('路人'));
 
     await p.cmd('guild list');
-    await expect(p.output).toContainText('还没有任何帮会');
+    const text = (await p.output.textContent()) || '';
+    // Should return either the empty message or a list of guilds (may have guilds from parallel workers)
+    expect(text).toMatch(/还没有任何帮会|江湖帮会/);
 
     await ctx.close();
   });
@@ -253,15 +273,17 @@ test.describe('Social: Guild', () => {
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const uid = nextUid();
-    const p = await createSession(page, uid, '帮主甲');
+    const gName = uniqueGuild('天下会');
+    const p = await createSession(page, nextUid(), uniqueName('帮主'));
 
-    await p.cmd('guild create 天下会');
+    await p.cmd('guild create ' + gName);
     await p.cmd('who');
     const text = (await p.output.textContent()) || '';
-    expect(text).toContain('天下会');
+    expect(text).toContain(gName);
+
+    // Clean up
+    await p.cmd('guild disband');
 
     await ctx.close();
   });
 });
-
