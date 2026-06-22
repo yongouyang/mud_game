@@ -12,6 +12,9 @@ import { AuctionSystem } from './systems/AuctionSystem.js';
 import { ShopSystem } from './systems/ShopSystem.js';
 import { CraftingSystem } from './systems/CraftingSystem.js';
 import { QuestSystem } from './systems/QuestSystem.js';
+import { ChatSystem } from './systems/ChatSystem.js';
+import { TradeSystem } from './systems/TradeSystem.js';
+import { GuildSystem } from './systems/GuildSystem.js';
 import { CommandRouter } from './engine/CommandRouter.js';
 import { TestSystemClock } from './time/SystemClock.js';
 import { Scheduler } from './time/Scheduler.js';
@@ -53,9 +56,12 @@ export function createTestContext(initialTime: number = 0, existingPlayers?: Pla
   const shop = new ShopSystem(items);
   const craft = new CraftingSystem(items, skills);
   const quests = new QuestSystem(items, levels);
+  const chat = new ChatSystem(players);
+  const trade = new TradeSystem(players, items);
+  const guilds = new GuildSystem(players);
   const router = new CommandRouter(
     players, map, combat, skills, items, npcs, schools,
-    levels, conditions, bank, auction, shop, craft, quests, scheduler, clock,
+    levels, conditions, bank, auction, shop, craft, quests, chat, trade, guilds, scheduler, clock,
   );
   return { clock, scheduler, players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, quests, router };
 }

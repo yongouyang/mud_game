@@ -12,9 +12,13 @@ import { AuctionSystem } from '../systems/AuctionSystem.js';
 import { ShopSystem } from '../systems/ShopSystem.js';
 import { CraftingSystem } from '../systems/CraftingSystem.js';
 import { QuestSystem } from '../systems/QuestSystem.js';
+import { ChatSystem } from '../systems/ChatSystem.js';
+import { TradeSystem } from '../systems/TradeSystem.js';
+import { GuildSystem } from '../systems/GuildSystem.js';
 import { Scheduler } from '../time/Scheduler.js';
 import { SystemClock } from '../time/SystemClock.js';
 import { SchoolDef } from '../models/School.js';
+import { BroadcastTarget } from '../models/ChatTypes.js';
 import { Player, PlayerAttributes, ATTRIBUTE_NAMES, recalcPlayerStats } from '../models/Player.js';
 
 const ATTR_KEY_BY_NAME: Record<string, keyof PlayerAttributes> = {};
@@ -40,9 +44,15 @@ export class CommandRouter {
     private shop: ShopSystem,
     private craft: CraftingSystem,
     private quests: QuestSystem,
+    private chat: ChatSystem,
+    private trade: TradeSystem,
+    private guilds: GuildSystem,
     private scheduler: Scheduler,
     private clock: SystemClock,
   ) {}
+
+  /** Broadcast targets accumulated during the last handle() call. Consumed by the server layer. */
+  lastBroadcasts: BroadcastTarget[] | null = null;
 
   /** Return player attributes including equipment and skill bonuses. */
   private effectiveAttributes(player: Player): PlayerAttributes {
@@ -116,6 +126,7 @@ export class CommandRouter {
   }
 
   handle(input: string, playerId: string): string {
+    this.lastBroadcasts = null;
     const trimmed = input.trim();
 
     const player = this.players.getPlayer(playerId);
@@ -190,6 +201,17 @@ export class CommandRouter {
       case 'tianfu': case 'setattr': return this.handleTianfu(player, rest);
       case 'level': return this.levels.formatLevelInfo(player);
       case 'gm': return this.handleGm(player, rest);
+      case 'say': return this.handleSay(player, rest);
+      case 'tell': return this.handleTell(player, rest);
+      case 'shout': return this.handleShout(player, rest);
+      case 'chat': return this.handleChat(player, rest);
+      case 'give': return this.handleGive(player, rest);
+      case 'mail': return this.handleMail(player, rest);
+      case 'checkmail': return this.trade.checkMail(player);
+      case 'readmail': return this.trade.readMail(player, rest[0] || '');
+      case 'friend': return this.handleFriend(player, rest);
+      case 'guild': return this.handleGuild(player, rest);
+      case 'whisper': return this.handleTell(player, rest);
       default:
         return `\n  什么？"${trimmed}"——你自言自语道。\n  （输入 help 查看可用命令）\n`;
     }
@@ -242,33 +264,56 @@ export class CommandRouter {
   private handleWho(_player: Player): string {
     const online = this.players.getAllPlayers();
     if (online.length === 0) return '\n  当前没有在线玩家。\n';
-    const names = online.map((p) => `  ${p.name}`).join('\n');
-    return `\n  当前在线玩家（${online.length}人）：\n  ───────────────\n${names}\n`;
+    const lines = online.map((p) => {
+      const school = p.schoolName ? `[${p.schoolName}]` : '';
+      const guild = p.guildId ? ` <${this.guilds.getGuildForPlayer(p)?.name || ''}>` : '';
+      const lv = `Lv.${p.level || 1}`;
+      return `  ${school}${guild} ${p.name} (${lv})`;
+    });
+    return `\n  当前在线玩家（${online.length}人）：\n  ───────────────\n${lines.join('\n')}\n`;
   }
 
   private handleHelp(): string {
     return [
       '', '  ─── 可用命令 ───', '',
+      '  ── 移动 ──',
       '  n s e w u d    移动',       '  look            查看四周',
+      '  ── 状态 ──',
       '  hp / score     查看状态',   '  skills          查看武功',
-      '  i / inventory  查看背包',   '  get <物品>      捡起物品',
-      '  drop <物品>     丢弃物品',   '  use <药品>      使用药品',
-      '  wear <装备>     穿戴装备',   '  remove <装备>    脱下装备',
-      '  learn <武功>    学习武功',   '  kill <目标>     发起战斗',
-      '  hit             攻击',       '  flee / tao      逃跑',
+      '  i / inventory  查看背包',   '  level           查看等级',
+      '  who             在线玩家',
+      '  ── 社交 ──',
+      '  say <消息>     说话',        '  tell <玩家> <消息>  私聊',
+      '  shout <消息>   江湖喊话',    '  chat <消息>      门派/帮会频道',
+      '  give <玩家> <物品> 赠送物品', '  mail <玩家> <消息> 发送邮件',
+      '  checkmail      查看邮件',   '  readmail <序号> 阅读邮件',
+      '  friend add/remove/list <玩家> 好友管理',
+      '  guild create/join/leave/list/info 帮会管理',
+      '  guild chat <消息> 帮会聊天', '  guild promote/demote <成员>',
+      '  ── 战斗 ──',
+      '  kill <目标>     发起战斗',   '  hit             攻击',
+      '  flee / tao      逃跑',       '  perform / pfm   施展绝招',
+      '  exert / yun    内功运用',
+      '  ── 武功 ──',
+      '  learn <武功>    学习武功',   '  practice <武功> 练习武功',
+      '  dazuo [秒]      打坐恢复内力',
+      '  ── 门派 ──',
       '  schools         门派列表',   '  join <门派>     加入门派',
-      '  ask <NPC>       向NPC打听',  '  who             在线玩家',
-      '  perform / pfm   施展绝招',   '  exert / yun    内功运用',
+      '  ask <NPC>       向NPC打听',
+      '  ── 物品 ──',
+      '  get <物品>      捡起物品',   '  drop <物品>     丢弃物品',
+      '  use <药品>      使用药品',   '  wear <装备>     穿戴装备',
+      '  remove <装备>    脱下装备',   '  tianfu <属性>   分配属性点',
+      '  ── 经济 ──',
       '  buy <物品>      购买物品',   '  shop / list     商店货物',
       '  sell <物品> [数量] 出售物品', '  bank            钱庄存取',
-      '  deposit <物品> [数量]      存入物品', '  deposit silver <数量>      存银子',
-      '  withdraw <物品> [数量]     取出物品', '  withdraw silver <数量>     取银子',
+      '  deposit <物品> [数量]       存入物品/银子', '  withdraw <物品> [数量]       取出物品/银子',
       '  auction         拍卖行',       '  craft           制作物品',
+      '  ── 任务 ──',
       '  quest           查看当前任务', '  quest <NPC>     交/列任务',
-      '  quest <NPC> <ID> 接取任务',      '  dazuo [秒]     打坐恢复内力',
-      '  practice <武功> 练习武功',   '  tianfu <属性>   分配属性点',
-      '  level           查看等级',   '  gm <命令>       管理员命令',
-      '  help            显示帮助',
+      '  quest <NPC> <ID> 接取任务',
+      '  ── 其他 ──',
+      '  gm <命令>       管理员命令',  '  help            显示帮助',
       '',
     ].join('\n') + '\n';
   }
@@ -1236,5 +1281,121 @@ export class CommandRouter {
       msg += `  你感到体内气息变化：${school.bonusDescription}。\n`;
     }
     return msg;
+  }
+
+  // ── Social: Chat ──────────────────────────────────────────
+  private handleSay(player: Player, args: string[]): string {
+    const result = this.chat.say(player, args.join(' '));
+    this.lastBroadcasts = result.broadcasts;
+    return result.self;
+  }
+
+  private handleTell(player: Player, args: string[]): string {
+    if (args.length < 2) return '\n  用法：tell <玩家名> <消息>\n';
+    const targetName = args[0];
+    const message = args.slice(1).join(' ');
+    const result = this.chat.tell(player, targetName, message);
+    this.lastBroadcasts = result.broadcasts;
+    return result.self;
+  }
+
+  private handleShout(player: Player, args: string[]): string {
+    const result = this.chat.shout(player, args.join(' '));
+    this.lastBroadcasts = result.broadcasts;
+    return result.self;
+  }
+
+  private handleChat(player: Player, args: string[]): string {
+    if (args.length === 0) return '\n  用法：chat <消息>（门派频道）\n';
+    // school channel
+    if (player.schoolId) {
+      const result = this.chat.schoolChat(player, args.join(' '));
+      this.lastBroadcasts = result.broadcasts;
+      return result.self;
+    }
+    // guild channel
+    if (player.guildId) {
+      const result = this.guilds.guildChat(player, args.join(' '));
+      this.lastBroadcasts = result.broadcasts;
+      return result.self;
+    }
+    return '\n  你没有加入门派或帮会，无法使用频道聊天。\n';
+  }
+
+  // ── Social: Trade ─────────────────────────────────────────
+  private handleGive(player: Player, args: string[]): string {
+    if (args.length < 2) return '\n  用法：give <玩家名> <物品名>\n';
+    const targetName = args[0];
+    const itemName = args.slice(1).join(' ');
+    const result = this.trade.give(player, targetName, itemName);
+    this.lastBroadcasts = result.broadcasts;
+    return result.self;
+  }
+
+  private handleMail(player: Player, args: string[]): string {
+    if (args.length < 2) return '\n  用法：mail <玩家名> <消息>\n';
+    const targetName = args[0];
+    const body = args.slice(1).join(' ');
+    const result = this.trade.sendMail(player, targetName, body);
+    this.lastBroadcasts = result.broadcasts;
+    return result.self;
+  }
+
+  // ── Social: Friends ───────────────────────────────────────
+  private handleFriend(player: Player, args: string[]): string {
+    if (args.length === 0) return this.trade.listFriends(player);
+    const sub = args[0].toLowerCase();
+    const rest = args.slice(1);
+    if (sub === 'add' && rest.length > 0) {
+      return this.trade.addFriend(player, rest.join(' '));
+    }
+    if (sub === 'remove' && rest.length > 0) {
+      return this.trade.removeFriend(player, rest.join(' '));
+    }
+    if (sub === 'list') return this.trade.listFriends(player);
+    return '\n  用法：friend add <玩家名> | friend remove <玩家名> | friend list\n';
+  }
+
+  // ── Social: Guild ─────────────────────────────────────────
+  private handleGuild(player: Player, args: string[]): string {
+    if (args.length === 0) {
+      if (player.guildId) {
+        return this.guilds.infoGuild(player);
+      }
+      return this.guilds.listGuilds();
+    }
+    const sub = args[0].toLowerCase();
+    const rest = args.slice(1);
+
+    if (sub === 'create' && rest.length > 0) {
+      return this.guilds.createGuild(player, rest.join(' '));
+    }
+    if (sub === 'join' && rest.length > 0) {
+      return this.guilds.joinGuild(player, rest.join(' '));
+    }
+    if (sub === 'leave') {
+      return this.guilds.leaveGuild(player);
+    }
+    if (sub === 'disband') {
+      return this.guilds.disbandGuild(player);
+    }
+    if (sub === 'list') {
+      return this.guilds.listGuilds();
+    }
+    if (sub === 'info') {
+      return this.guilds.infoGuild(player, rest.join(' ') || undefined);
+    }
+    if (sub === 'promote' && rest.length > 0) {
+      return this.guilds.promoteMember(player, rest.join(' '));
+    }
+    if (sub === 'demote' && rest.length > 0) {
+      return this.guilds.demoteMember(player, rest.join(' '));
+    }
+    if (sub === 'chat' && rest.length > 0) {
+      const result = this.guilds.guildChat(player, rest.join(' '));
+      this.lastBroadcasts = result.broadcasts;
+      return result.self;
+    }
+    return '\n  用法：guild create <帮会名> | guild join <帮会名> | guild leave | guild list | guild info [帮会名] | guild chat <消息> | guild promote/demote <成员> | guild disband\n';
   }
 }

@@ -2,6 +2,21 @@ import { InventoryItem } from './Item.js';
 import { PlayerSkill } from './Skill.js';
 import { PlayerCondition } from './Condition.js';
 
+export interface MailMessage {
+  id: string;
+  from: string;
+  body: string;
+  timestamp: number;
+  read: boolean;
+  itemId?: string; // optional gift attachment
+}
+
+let mailIdCounter = 0;
+export function nextMailId(): string {
+  mailIdCounter++;
+  return 'mail-' + Date.now() + '-' + mailIdCounter;
+}
+
 export const CURRENT_PLAYER_VERSION = 1;
 
 export interface PlayerAttributes {
@@ -67,6 +82,9 @@ export interface Player {
   comboCount?: number;
   comboSkill?: string;
   isAdmin?: boolean;
+  mailbox?: MailMessage[];
+  friends?: string[];
+  guildId?: string;
 }
 
 export function recalcPlayerStats(player: Player): void {

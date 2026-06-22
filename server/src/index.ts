@@ -20,6 +20,9 @@ import { AuctionSystem } from './systems/AuctionSystem.js';
 import { ShopSystem } from './systems/ShopSystem.js';
 import { CraftingSystem } from './systems/CraftingSystem.js';
 import { QuestSystem } from './systems/QuestSystem.js';
+import { ChatSystem } from './systems/ChatSystem.js';
+import { TradeSystem } from './systems/TradeSystem.js';
+import { GuildSystem } from './systems/GuildSystem.js';
 import { PersistenceSystem } from './systems/PersistenceSystem.js';
 import { PersistenceManager } from './engine/PersistenceManager.js';
 import { RealSystemClock } from './time/SystemClock.js';
@@ -75,10 +78,13 @@ const auction = new AuctionSystem(items, scheduler);
 const shop = new ShopSystem(items);
 const craft = new CraftingSystem(items, skills);
 const quests = new QuestSystem(items, levels);
+const chat = new ChatSystem(players);
+const tradeSystem = new TradeSystem(players, items);
+const guilds = new GuildSystem(players);
 const persistence = new PersistenceSystem();
 const persistenceManager = new PersistenceManager(players, persistence, scheduler, clock);
 
-const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, quests, scheduler, clock);
+const router = new CommandRouter(players, map, combat, skills, items, npcs, schools, levels, conditions, bank, auction, shop, craft, quests, chat, tradeSystem, guilds, scheduler, clock);
 
 app.get('/health', (_req, res) => {
   const online = players.getAllPlayers();
@@ -212,6 +218,9 @@ io.on('connection', (socket) => {
     const response = router.handle(raw, socket.id);
     socket.emit('output', { text: response });
 
+    // Dispatch any broadcast targets (chat, trade, etc.)
+    dispatchBroadcasts(router.lastBroadcasts, socket.id);
+
     // Auto-combat tick: start/stop based on fighting state
     manageCombatTick(socket);
   });
@@ -253,6 +262,51 @@ function manageCombatTick(socket: any) {
     }
   } else {
     clearCombatTick(socket.id);
+  }
+}
+
+function dispatchBroadcasts(targets: typeof router.lastBroadcasts, senderSocketId: string): void {
+  if (!targets || targets.length === 0) return;
+  for (const b of targets) {
+    switch (b.type) {
+      case 'player':
+        if (b.targetId) {
+          for (const [sid, sock] of io.sockets.sockets) {
+            // PlayerManager key is socket.id (set during createPlayer / login)
+            const p = players.getPlayer(sid);
+            if (p && (p.id === b.targetId || p.name === b.targetId) && p.state !== 'creating') {
+              sock.emit('output', { text: b.text });
+              break;
+            }
+          }
+        }
+        break;
+      case 'world':
+        for (const [sid, sock] of io.sockets.sockets) {
+          if (sid !== (b.excludePlayerId || senderSocketId)) {
+            sock.emit('output', { text: b.text });
+          }
+        }
+        break;
+      case 'room':
+        for (const [sid, sock] of io.sockets.sockets) {
+          if (sid === (b.excludePlayerId || senderSocketId)) continue;
+          const p = players.getPlayer(sid);
+          if (p && p.currentRoom === b.targetId && p.state !== 'creating') {
+            sock.emit('output', { text: b.text });
+          }
+        }
+        break;
+      case 'school':
+        for (const [sid, sock] of io.sockets.sockets) {
+          if (sid === (b.excludePlayerId || senderSocketId)) continue;
+          const p = players.getPlayer(sid);
+          if (p && p.schoolId === b.targetId && p.state !== 'creating') {
+            sock.emit('output', { text: b.text });
+          }
+        }
+        break;
+    }
   }
 }
 
