@@ -5,12 +5,25 @@ let uidSeq = 0;
 function nextUid(): string {
   return 'pw' + Date.now() + '_' + Math.random().toString(36).slice(2, 7) + '_' + (uidSeq++);
 }
-// Unique display names and guild names to avoid cross-worker collisions
-function uniqueName(base: string): string {
-  return 't' + Math.random().toString(36).slice(2, 6) + base;
+// Pool of Chinese characters for generating unique names (valid: 2-6 chars, pure Chinese)
+const NAME_CHARS = '甲乙丙丁戊己庚辛壬癸子丑寅卯辰巳午未申酉戌亥天地玄黄宇宙洪荒日月盈昃';
+let nameSeq = 0;
+function uniqueName(): string {
+  const seed = nameSeq++;
+  let name = '';
+  for (let i = 0; i < 5; i++) {
+    name += NAME_CHARS[(seed * 7 + i * 13 + uidSeq * 31) % NAME_CHARS.length];
+  }
+  return name;
 }
-function uniqueGuild(base: string): string {
-  return base + Math.random().toString(36).slice(2, 4);
+// Guild names: 2-8 Chinese characters, unique per call
+function uniqueGuild(): string {
+  const prefix = ['日月神教','天下会','丐帮总舵','桃花岛派'][nameSeq++ % 4];
+  let suffix = '';
+  for (let i = 0; i < 2; i++) {
+    suffix += NAME_CHARS[Math.floor(Math.random() * NAME_CHARS.length)];
+  }
+  return prefix + suffix;
 }
 
 interface PlayerSession {
@@ -55,8 +68,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -79,8 +92,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -98,8 +111,8 @@ test.describe('Social: Chat', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB, async (cmd) => {
       await cmd('n');
@@ -122,8 +135,8 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -142,8 +155,8 @@ test.describe('Social: Trade & Mail', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -174,8 +187,8 @@ test.describe('Social: Friends', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -204,9 +217,9 @@ test.describe('Social: Guild', () => {
     const page1 = await ctx.newPage();
     const page2 = await ctx.newPage();
 
-    const gName = uniqueGuild('日月神教');
-    const nameA = uniqueName('A');
-    const nameB = uniqueName('B');
+    const gName = uniqueGuild();
+    const nameA = uniqueName();
+    const nameB = uniqueName();
     const p1 = await createSession(page1, nextUid(), nameA);
     const p2 = await createSession(page2, nextUid(), nameB);
 
@@ -258,7 +271,7 @@ test.describe('Social: Guild', () => {
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const p = await createSession(page, nextUid(), uniqueName('路人'));
+    const p = await createSession(page, nextUid(), uniqueName();
 
     await p.cmd('guild list');
     const text = (await p.output.textContent()) || '';
@@ -273,8 +286,8 @@ test.describe('Social: Guild', () => {
     const ctx = await browser.newContext();
     const page = await ctx.newPage();
 
-    const gName = uniqueGuild('天下会');
-    const p = await createSession(page, nextUid(), uniqueName('帮主'));
+    const gName = uniqueGuild();
+    const p = await createSession(page, nextUid(), uniqueName();
 
     await p.cmd('guild create ' + gName);
     await p.cmd('who');
