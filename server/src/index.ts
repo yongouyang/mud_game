@@ -221,6 +221,9 @@ io.on('connection', (socket) => {
     const response = router.handle(raw, socket.id);
     socket.emit('output', { text: response });
 
+    // Persist after every command so manual testers never lose progress.
+    persistenceManager.saveAll();
+
     // Dispatch any broadcast targets (chat, trade, etc.)
     dispatchBroadcasts(router.lastBroadcasts, socket.id);
 
