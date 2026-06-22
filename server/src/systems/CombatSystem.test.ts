@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CombatSystem } from './CombatSystem.js';
 import { Player, createPlayer, DEFAULT_ATTRIBUTES } from '../models/Player.js';
 
@@ -50,6 +50,94 @@ describe('CombatSystem', () => {
       expect(defender.hp).toBeGreaterThanOrEqual(0);
       expect(defender.hp).toBeLessThan(defender.maxHp);
     }
+  });
+
+  it('executeRound reports when enemy kills player', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(1); // no parry/dodge, no crit
+    const p = player({ name: 'hero', hp: 1, maxHp: 100, mp: 0, maxMp: 100 });
+    const enemy = {
+      name: 'boss', hp: 100, maxHp: 100, mp: 0, maxMp: 100,
+      attributes: { str: 50, dex: 10 },
+      skills: { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: null },
+    };
+    const result = combat.executeRound(
+      p,
+      { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: null },
+      enemy,
+    );
+    expect(result.attackerDead).toBe(true);
+    expect(result.message).toContain('被击败了');
+  });
+
+  it('executeRound handles parry path', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const p = player({ name: 'hero', hp: 100, maxHp: 100, mp: 0, maxMp: 100 });
+    const enemy = {
+      name: 'bandit', hp: 100, maxHp: 100, mp: 0, maxMp: 100,
+      attributes: { str: 10, dex: 10 },
+      skills: { parryLv: 100, dodgeLv: 0, forceLv: 0, bestStrike: null },
+    };
+    const result = combat.executeRound(
+      p,
+      { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: { name: '拳', damage: 10 } },
+      enemy,
+    );
+    expect(result.message).toContain('招架');
+  });
+
+  it('executeRound handles dodge path', () => {
+    // First random decides parry (fail), second decides dodge (success).
+    vi.spyOn(Math, 'random').mockReturnValueOnce(1).mockReturnValueOnce(0);
+    const p = player({ name: 'hero', hp: 100, maxHp: 100, mp: 0, maxMp: 100 });
+    const enemy = {
+      name: 'bandit', hp: 100, maxHp: 100, mp: 0, maxMp: 100,
+      attributes: { str: 10, dex: 10 },
+      skills: { parryLv: 0, dodgeLv: 100, forceLv: 0, bestStrike: null },
+    };
+    const result = combat.executeRound(
+      p,
+      { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: { name: '拳', damage: 10 } },
+      enemy,
+    );
+    expect(result.message).toContain('躲开了');
+  });
+
+  it('executeRound applies force absorption', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(1);
+    const p = player({ name: 'hero', hp: 100, maxHp: 100, mp: 100, maxMp: 100 });
+    const enemy = {
+      name: 'bandit', hp: 100, maxHp: 100, mp: 100, maxMp: 100,
+      attributes: { str: 10, dex: 10 },
+      skills: { parryLv: 0, dodgeLv: 0, forceLv: 10, bestStrike: null },
+    };
+    const result = combat.executeRound(
+      p,
+      { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: { name: '拳', damage: 30 } },
+      enemy,
+    );
+    expect(result.message).toContain('内力吸收');
+  });
+
+  it('executeMultiRound reports player death from extra enemies', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(1);
+    const p = player({ name: 'hero', hp: 30, maxHp: 100, mp: 0, maxMp: 100 });
+    const primary = {
+      name: 'leader', hp: 100, maxHp: 100, mp: 0, maxMp: 100,
+      attributes: { str: 5, dex: 10 },
+      skills: { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: null },
+    };
+    const extra = {
+      name: 'minion', hp: 100, maxHp: 100, mp: 0, maxMp: 100,
+      attributes: { str: 50, dex: 10 },
+      skills: { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: null },
+    };
+    const result = combat.executeMultiRound(
+      p,
+      { parryLv: 0, dodgeLv: 0, forceLv: 0, bestStrike: null },
+      primary,
+      [extra],
+    );
+    expect(result.attackerDead).toBe(true);
   });
 });
 

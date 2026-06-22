@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ItemSystem } from './ItemSystem.js';
+import { ConditionSystem } from './ConditionSystem.js';
 import { Player, createPlayer, DEFAULT_ATTRIBUTES } from '../models/Player.js';
+import { TestSystemClock } from '../time/SystemClock.js';
 
 function makePlayer(name: string): Player {
   return createPlayer('test', name, DEFAULT_ATTRIBUTES);
@@ -8,9 +10,13 @@ function makePlayer(name: string): Player {
 
 describe('ItemSystem', () => {
   let sys: ItemSystem;
+  let sysWithConditions: ItemSystem;
+  let conditions: ConditionSystem;
 
   beforeEach(() => {
     sys = new ItemSystem();
+    conditions = new ConditionSystem(new TestSystemClock(0));
+    sysWithConditions = new ItemSystem(conditions);
   });
 
   it('finds item definitions by id', () => {
@@ -133,5 +139,48 @@ describe('ItemSystem', () => {
     const msg = sys.applyConsumable(p, jiedu);
     expect(msg).toContain('解除');
     expect(p.conditions).toHaveLength(0);
+  });
+
+  it('cures condition by id when ConditionSystem is injected', () => {
+    const p = makePlayer('test');
+    conditions.applyCondition(p, 'poison', 1);
+    const antidote = sys.getDef('jiedu-wan')!;
+    const msg = sysWithConditions.applyConsumable(p, antidote);
+    expect(msg).toContain('解除');
+    expect(p.conditions).toHaveLength(0);
+  });
+
+  it('reports missing condition when ConditionSystem is injected', () => {
+    const p = makePlayer('test');
+    const antidote = sys.getDef('jiedu-wan')!;
+    const msg = sysWithConditions.applyConsumable(p, antidote);
+    expect(msg).toContain('并没有');
+  });
+
+  it('returns null for items with no usable effect', () => {
+    const p = makePlayer('test');
+    const misc = sys.getDef('silver')!;
+    expect(sys.applyConsumable(p, misc)).toBeNull();
+  });
+
+  it('reports missing cure id when ConditionSystem is injected', () => {
+    const p = makePlayer('test');
+    const curePill = { name: '解毒丹', effect: { cure: 'poison' } } as any;
+    const msg = sysWithConditions.applyConsumable(p, curePill);
+    expect(msg).toContain('并没有 poison 状态');
+  });
+
+  it('reports missing cure id via fallback', () => {
+    const p = makePlayer('test');
+    const curePill = { name: '解毒丹', effect: { cure: 'poison' } } as any;
+    const msg = sys.applyConsumable(p, curePill);
+    expect(msg).toContain('并没有 poison 状态');
+  });
+
+  it('reports missing cure category via fallback', () => {
+    const p = makePlayer('test');
+    const catPill = { name: '万灵丹', effect: { cureCategory: 'poison' } } as any;
+    const msg = sys.applyConsumable(p, catPill);
+    expect(msg).toContain('并没有 poison 类异常状态');
   });
 });
