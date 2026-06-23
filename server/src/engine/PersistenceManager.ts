@@ -14,12 +14,24 @@ export const AUTOSAVE_INTERVAL_MS = 60_000;
  * - Shutdown: final save.
  */
 export class PersistenceManager {
+  private socketToUsername = new Map<string, string>();
+
   constructor(
     private players: PlayerManager,
     private persistence: PersistenceSystem,
     private scheduler: Scheduler,
     private clock: SystemClock,
   ) {}
+
+  /** Register a socket -> username mapping so saves use the stable username key. */
+  mapSocketToUsername(socketId: string, username: string): void {
+    this.socketToUsername.set(socketId, username);
+  }
+
+  /** Remove a socket -> username mapping (e.g. after disconnect). */
+  unmapSocket(socketId: string): void {
+    this.socketToUsername.delete(socketId);
+  }
 
   /** Load all saved players into the PlayerManager. */
   loadAll(): void {
@@ -32,7 +44,12 @@ export class PersistenceManager {
   /** Persist all currently known players immediately (only if any are dirty). */
   saveAll(): void {
     if (!this.players.hasDirty()) return;
-    this.persistence.saveAll(this.players.getAllPlayers());
+    const toSave = this.players.getAllPlayers().map((p) => {
+      const username = this.socketToUsername.get(p.id);
+      if (!username || username === p.id) return p;
+      return { ...p, id: username };
+    });
+    this.persistence.saveAll(toSave);
     this.players.clearDirty();
   }
 
@@ -52,6 +69,7 @@ export class PersistenceManager {
       this.saveAll();
       this.players.removePlayer(socketId);
     }
+    this.socketToUsername.delete(socketId);
   }
 
   /** Final save for graceful shutdown. */

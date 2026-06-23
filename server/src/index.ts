@@ -194,6 +194,7 @@ io.on('connection', (socket) => {
           socketAuth.set(socket.id, { authState: 'playing', username });
           saved.id = socket.id;
           players.setPlayer(saved);
+          persistenceManager.mapSocketToUsername(socket.id, username);
           const room = map.getRoom(saved.currentRoom);
           socket.emit('output', { text: `\n  欢迎回来，${saved.name}！\n${room ? map.formatRoom(room) : ''}` });
         } else {

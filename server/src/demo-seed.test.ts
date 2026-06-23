@@ -73,6 +73,45 @@ describe('demo-seed', () => {
     expect(shaolin.attributes.con).toBe(18);
   });
 
+  it('recreates a demo player when the user exists but the player record is missing', () => {
+    const result1 = seedDemoAccounts(persistence, players, schools);
+    expect(result1.created).toContain('gaibang');
+    persistence.saveAll(players.getAllPlayers());
+
+    // Simulate corrupted data: keep the user hash but remove the player record.
+    const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+    const playersData = JSON.parse(fs.readFileSync(PLAYERS_FILE, 'utf-8'));
+    const corrupted = playersData.filter((p: any) => p.id !== 'gaibang');
+    fs.writeFileSync(PLAYERS_FILE, JSON.stringify(corrupted));
+
+    // Re-seed in a fresh PlayerManager so the missing player is detected.
+    const players2 = new PlayerManager(clock);
+    const result2 = seedDemoAccounts(persistence, players2, schools);
+    expect(result2.created).toContain('gaibang');
+    expect(result2.skipped).not.toContain('gaibang');
+    expect(players2.getPlayer('gaibang')?.name).toBe('丐帮弟子');
+  });
+
+  it('repairs a demo player whose id was corrupted to a socket id', () => {
+    const result1 = seedDemoAccounts(persistence, players, schools);
+    expect(result1.created).toContain('gaibang');
+    persistence.saveAll(players.getAllPlayers());
+
+    // Simulate previous login corruption: player id became a socket id.
+    const playersData = JSON.parse(fs.readFileSync(PLAYERS_FILE, 'utf-8'));
+    const gaibang = playersData.find((p: any) => p.id === 'gaibang');
+    gaibang.id = 'socket-abc';
+    fs.writeFileSync(PLAYERS_FILE, JSON.stringify(playersData));
+
+    // Re-seed in a fresh PlayerManager.
+    const players2 = new PlayerManager(clock);
+    players2.setPlayer(gaibang);
+    const result2 = seedDemoAccounts(persistence, players2, schools);
+    expect(result2.skipped).toContain('gaibang');
+    expect(players2.getPlayer('gaibang')).toBeDefined();
+    expect(players2.getPlayer('socket-abc')).toBeUndefined();
+  });
+
   it('respects production guard', () => {
     const originalNodeEnv = process.env['NODE_ENV'];
     process.env['NODE_ENV'] = 'production';

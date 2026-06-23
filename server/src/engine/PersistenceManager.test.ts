@@ -89,4 +89,21 @@ describe('PersistenceManager', () => {
     expect(saved).toHaveLength(1);
     expect(saved[0].id).toBe('u1');
   });
+
+  it('saveAll persists socket-id players under their username mapping', () => {
+    const p = createPlayer('socket-42', '楚留香', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
+    p.hp = 88;
+    players.setPlayer(p);
+    manager.mapSocketToUsername('socket-42', 'u1');
+
+    manager.saveAll();
+
+    // In-memory id stays socket-id for the active session.
+    expect(players.getPlayer('socket-42')?.id).toBe('socket-42');
+    // Persisted copy is keyed by username.
+    const saved = persistence.loadAll();
+    expect(saved).toHaveLength(1);
+    expect(saved[0].id).toBe('u1');
+    expect(saved[0].hp).toBe(88);
+  });
 });

@@ -153,13 +153,32 @@ export function seedDemoAccounts(
     return result;
   }
 
+  // Repair any demo players whose id was previously corrupted to a socket id.
   for (const demo of DEMO_ACCOUNTS) {
-    if (persistence.getUserHash(demo.username)) {
+    if (persistence.getUserHash(demo.username) && !players.getPlayer(demo.username)) {
+      for (const p of players.getAllPlayers()) {
+        if (p.name === demo.name && p.id !== demo.username) {
+          const oldId = p.id;
+          p.id = demo.username;
+          players.setPlayer(p);
+          players.removePlayer(oldId);
+          break;
+        }
+      }
+    }
+  }
+
+  for (const demo of DEMO_ACCOUNTS) {
+    const userExists = !!persistence.getUserHash(demo.username);
+    const playerExists = !!players.getPlayer(demo.username);
+    if (userExists && playerExists) {
       result.skipped.push(demo.username);
       continue;
     }
 
-    persistence.saveUser(demo.username, hashPassword(demo.username, demo.password));
+    if (!userExists) {
+      persistence.saveUser(demo.username, hashPassword(demo.username, demo.password));
+    }
 
     const player = createPlayer(demo.username, demo.name, { ...demo.attributes });
     player.currentRoom = demo.roomId;
