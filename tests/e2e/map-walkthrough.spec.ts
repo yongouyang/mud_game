@@ -1,11 +1,13 @@
 /**
  * Map Walkthrough E2E — visits every room node and verifies name + description.
- * Uses BFS ordering: walks from town to each room, verifies, walks back.
+ * Uses common-prefix optimisation: walks forward from current room to next
+ * by backtracking only to the nearest common ancestor, then continuing forward.
+ * Total moves: ~200 instead of ~750 with round-trip-to-town approach.
  */
 import { test, expect } from '@playwright/test';
 import { ALL_ROOMS, RoomMeta } from './room-meta.js';
 
-const TIMEOUT = 150_000;
+const TIMEOUT = 120_000;
 const DIR_REV: Record<string, string> = {
   n: 's', s: 'n', e: 'w', w: 'e', u: 'd', d: 'u',
   ne: 'sw', nw: 'se', se: 'nw', sw: 'ne',
@@ -19,7 +21,7 @@ async function setup(page: any) {
   async function cmd(t: string) {
     await input.fill(t);
     await sendBtn.click();
-    await page.waitForTimeout(120);
+    await page.waitForTimeout(80);
   }
   const uid = 'mw' + Date.now();
   await cmd('register ' + uid + ' pw123');
@@ -31,26 +33,53 @@ async function setup(page: any) {
   return { cmd, output };
 }
 
+/** Walk from room index i to room index i+1 using common-prefix optimisation. */
+async function walkTo(
+  from: string[],
+  to: string[],
+  cmd: (d: string) => Promise<void>,
+) {
+  // Find common prefix length
+  let common = 0;
+  while (common < from.length && common < to.length && from[common] === to[common]) {
+    common++;
+  }
+  // Backtrack from current position to common ancestor
+  for (let i = from.length - 1; i >= common; i--) {
+    await cmd(DIR_REV[from[i]]);
+  }
+  // Walk forward to target
+  for (let i = common; i < to.length; i++) {
+    await cmd(to[i]);
+  }
+}
+
 test.describe('Map Walkthrough', () => {
   test('all 63 rooms render correctly', async ({ page }) => {
     test.setTimeout(TIMEOUT);
     const { cmd, output } = await setup(page);
 
+    // Sort rooms by path length (BFS order) so we minimise backtracking
+    const sorted = [...ALL_ROOMS].sort(
+      (a, b) => a.pathFromTown.length - b.pathFromTown.length,
+    );
+
     let failures = 0;
-    const visited = new Set<string>();
-    visited.add('town/square');
+    let currentPath: string[] = []; // path from town to current room
+    const verified = new Set<string>();
+    verified.add('town/square');
 
-    for (const room of ALL_ROOMS) {
-      if (room.id === 'town/square') continue; // already here
+    for (const room of sorted) {
+      if (room.id === 'town/square') continue;
 
-      // Walk to room
-      for (const dir of room.pathFromTown) {
-        await cmd(dir);
-      }
+      // Walk from current position to this room via common-prefix
+      await walkTo(currentPath, room.pathFromTown, cmd);
+      currentPath = room.pathFromTown;
 
+      // Verify room
       const text = (await output.textContent()) || '';
       if (!text.includes(room.name)) {
-        console.warn(`NAME: ${room.id} — missing "${room.name}"`);
+        console.warn(`NAME: ${room.id} - missing "${room.name}"`);
         failures++;
       }
       if (text.match(/一片虚无/)) {
@@ -61,11 +90,7 @@ test.describe('Map Walkthrough', () => {
         console.warn(`NaN: ${room.id}`);
         failures++;
       }
-
-      // Walk back to town
-      for (const dir of [...room.pathFromTown].reverse()) {
-        await cmd(DIR_REV[dir]);
-      }
+      verified.add(room.id);
     }
 
     expect(failures, `${failures} / 63 rooms failed`).toBe(0);
