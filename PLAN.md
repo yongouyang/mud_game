@@ -1,218 +1,107 @@
-# 武侠MUD Web版 — 可行性方案 (v2)
+# 武侠MUD Web版 — 项目计划 (v3)
 
-> **实现状态：** Phase 1 ✅ — Express + Socket.io 后端起，Vite + React 复古终端前端上线，35 tests 全绿。琥珀主题（古卷）已应用。Phase 2（角色/地图/战斗系统）待开始。
+> **实现状态：** Phase 1–5 ✅ 全部完成 — 436 个测试全绿，AWS ECS Fargate 生产部署成功。
+> 已实现：角色创建、6维属性、地图探索、门派武功、回合战斗、NPC交互、商店拍卖、任务系统、聊天社交、帮派、银行、合成。
 
 ---
 
 ## 一、方案概览
 
-**技术路线：Node.js + WebSocket + 复古终端前端 → AWS ECS 云端部署**
+**技术路线：Node.js + WebSocket + React 复古终端前端 → AWS ECS 云端部署**
 
-放弃传统 FluffOS/telnet 架构，用现代 Web 技术栈重建。游戏内容参考炎黄MUD的设计体系（门派、武功、地图、战斗公式），用 TypeScript 重新实现。通信层从 telnet 协议切换为 WebSocket + HTTPS，客户端改为浏览器内的复古终端风格界面。
-
----
-
-## 二、系统架构
-
-```
-┌──────────────────────────────────────────────────────────┐
-│                     AWS Cloud                            │
-│  ┌──────────┐     ┌──────────────────────────────────┐   │
-│  │   ALB    │────►│        ECS Fargate Task            │  │
-│  │ (HTTPS)  │     │  ┌────────────┐ ┌─────────────┐   │  │
-│  │ :443     │     │  │  Express   │ │ Socket.io   │   │  │
-│  │          │     │  │  (静态资源) │ │ (WebSocket) │   │  │
-│  └──────────┘     │  └────────────┘ └──────┬──────┘   │  │
-│                   │                        │          │  │
-│                   │  ┌─────────────────────▼────────┐  │  │
-│                   │  │       Game Engine             │  │  │
-│                   │  │  · Tick Loop (1s heartbeat)   │  │  │
-│                   │  │  · Command Router             │  │  │
-│                   │  │  · Event Bus                  │  │  │
-│                   │  └────────┬─────────────────────┘  │  │
-│                   │           │                        │  │
-│                   │  ┌────────▼────────────────────┐   │  │
-│                   │  │     Game Data (JSON/YAML)    │   │  │
-│                   │  │  maps/ skills/ items/ npcs/  │   │  │
-│                   │  └──────────────────────────────┘   │  │
-│                   └──────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────┘
-         │                                        │
-         │ HTTPS (静态页面)                         │ WSS (实时游戏)
-         ▼                                        ▼
-    ┌─────────────────────────────────────────────────┐
-    │              浏览器 (复古终端 UI)                  │
-    │  ┌──────────────────────────────────────────┐    │
-    │  │  ████ 输出区 (绿色等宽字体, 黑底)  ████    │    │
-    │  │  ...游戏文字流式输出...                     │    │
-    │  │  ...滚动缓冲区...                          │    │
-    │  │                                           │    │
-    │  │  > 输入命令...                    [发送]   │    │
-    │  └──────────────────────────────────────────┘    │
-    └─────────────────────────────────────────────────┘
-```
+参考炎黄MUD设计体系，用 TypeScript 从零重建。WebSocket + HTTPS 替代 telnet，浏览器复古终端风格 UI。
 
 ---
 
-## 三、技术栈选型
+## 二、当前实现状态
 
-| 层 | 技术 | 理由 |
+### 2.1 已完成系统
+
+| 系统 | 状态 | 说明 |
 |---|---|---|
-| **后端语言** | Node.js + TypeScript | 用户已有技能栈 (v24.14.0)，类型安全 |
-| **HTTP 服务** | Express | 静态资源 + REST API（注册/登录/角色列表） |
-| **实时通信** | Socket.io | WebSocket 封装，自动降级，断线重连 |
-| **前端** | Vanilla HTML/CSS/JS | 复古终端风格，无框架依赖，轻量 |
-| **游戏数据** | JSON 文件 | 可读性好，方便编辑，无需数据库 |
-| **容器化** | Docker (Node 24-alpine) | 轻量镜像，ECS 原生支持 |
-| **部署** | AWS ECS Fargate + ALB | 无服务器管理，HTTPS 终结在 ALB |
+| **角色系统** | ✅ | 6维属性（臂力/悟性/根骨/身法/容貌/福缘）、等级、经验、潜能、气血/内力 |
+| **地图系统** | ✅ | 120+ 房间、29 个门派、30+ 区域、交互式 HTML 地图 |
+| **战斗系统** | ✅ | 回合制、招式技（perform）、功力提升（powerup）、毒伤、多目标战斗 |
+| **武功系统** | ✅ | 30+ 武功、学习/升级、门派锁定、前置需求、招式技能 |
+| **物品系统** | ✅ | 武器/防具/药品/材料、装备加成、使用效果、属性永久提升 |
+| **NPC系统** | ✅ | 对话、战斗AI、守卫、Boss掉落、毒伤、复活点 |
+| **门派系统** | ✅ | 29 个门派、独门武功、属性加成、师父要求 |
+| **商店系统** | ✅ | 房间关联商店、买卖、回购率 |
+| **拍卖行** | ✅ | 上架、竞拍、一口价、过期退 |
+| **钱庄系统** | ✅ | 存银、存物、取银、取物 |
+| **合成系统** | ✅ | 配方合成武器/防具 |
+| **任务系统** | ✅ | 杀怪/收集/送达/对话任务、经验/潜能/物品奖励 |
+| **聊天系统** | ✅ | 本地说话、私聊、频道聊天、邮件 |
+| **交易系统** | ✅ | 玩家间物品/银两交易 |
+| **帮派系统** | ✅ | 创建、加入、晋升、踢出、称号 |
+| **社交系统** | ✅ | 好友、邮件、善恶值 |
+| **GM管理** | ✅ | 查看在线、检查玩家、踢人、传送、生成 |
+
+### 2.2 部署架构
+
+- **生产环境**：AWS ECS Fargate + ALB + EFS 持久化
+- **CI/CD**：GitHub Actions → Docker → ECR → ECS
+- **基础即代码**：Terraform (ECS, ALB, EFS, ECR, ACM)
+- **健康检查**：HTTP /health + WebSocket 连通
 
 ---
 
-## 四、游戏系统（参考炎黄MUD设计）
+## 三、技术栈
 
-炎黄MUD原始源码约 45MB LPC 代码。v1 阶段实现核心系统 + 示例内容：
-
-### 4.1 核心引擎
-
-| 系统 | 说明 |
+| 层 | 技术 |
 |---|---|
-| **Tick Loop** | 1秒心跳：恢复气血、战斗回合结算、NPC 行动 |
-| **Command Router** | 解析玩家输入 → 路由到对应 handler |
-| **Event Bus** | 房间内事件广播（玩家进入/离开/说话/战斗） |
-| **Session管理** | Socket.io 连接 → 玩家对象映射，断线保留状态 |
-
-### 4.2 游戏系统（v1）
-
-| 系统 | 参考炎黄MUD原始模块 | v1实现范围 |
-|---|---|---|
-| **角色系统** | `feature/attribute.c`, `feature/condition.c` | 创建角色、属性（臂力/悟性/根骨/身法）、气血/内力 |
-| **地图系统** | `d/` 目录（71个区域） | 房间节点图、方向移动（n/s/e/w/u/d）、场景描述 |
-| **战斗系统** | `feature/attack.c`, `feature/damage.c` | 回合制战斗、普攻 + 招式、伤害公式、死亡处理 |
-| **武功系统** | `kungfu/` 目录（4类） | 基本拳脚、轻功、内功、招式、学习/修炼 |
-| **物品系统** | `clone/` 目录（29类） | 武器、防具、药品、金钱、拾取/丢弃/使用 |
-| **NPC系统** | `clone/npc/`, `feature/guarder.c` | 固定NPC、对话、战斗AI |
-| **聊天系统** | `cmds/chat/` | 本地说话、频道聊天 |
-| **任务系统** | — | 简单杀怪/送信任务 |
-
-### 4.3 玩家命令（v1，约30+条）
-
-移动类：`n`, `s`, `e`, `w`, `ne`, `nw`, `se`, `sw`, `u`, `d`, `enter`, `out`
-战斗类：`kill`, `hit`, `yong` (使用招式), `yun` (运功), `bei` (备武功)
-信息类：`look`, `hp`, `score`, `skills`, `map`, `i` (背包), `who` (在线玩家)
-交互类：`ask`, `say`, `tell`, `give`, `get`, `drop`, `use`, `wear`, `remove`
+| **后端** | Node.js 24 + TypeScript + Express + Socket.io |
+| **前端** | React 18 + Vite 8 + 琥珀复古终端 UI |
+| **测试** | Vitest (unit + E2E server) + React Testing Library + Playwright (UI E2E) |
+| **数据** | JSON 文件 + EFS (AWS 持久化) |
+| **部署** | Docker → ECR → ECS Fargate + ALB + Terraform |
 
 ---
 
-## 五、项目结构
+## 四、项目结构
 
 ```
 mud_game/
-├── server/                    # Node.js 后端
+├── src/                     # Frontend (React + Vite)
+│   ├── App.tsx
+│   ├── components/Terminal.tsx    # Terminal UI
+│   └── themes.ts
+├── tests/
+│   ├── unit/                # Vitest unit tests
+│   └── e2e/                 # Playwright E2E
+├── server/
 │   ├── src/
-│   │   ├── index.ts           # 入口：Express + Socket.io 启动
+│   │   ├── index.ts         # Express + Socket.io + game loop
 │   │   ├── engine/
-│   │   │   ├── GameLoop.ts    # 1秒 tick 循环
-│   │   │   ├── CommandRouter.ts # 命令解析与路由
-│   │   │   └── EventBus.ts    # 事件发布/订阅
-│   │   ├── systems/
-│   │   │   ├── PlayerManager.ts   # 玩家会话管理
-│   │   │   ├── CombatSystem.ts    # 战斗系统
-│   │   │   ├── SkillSystem.ts     # 武功系统
-│   │   │   ├── MapSystem.ts       # 地图/移动
-│   │   │   ├── ItemSystem.ts      # 物品系统
-│   │   │   ├── NpcSystem.ts       # NPC AI
-│   │   │   └── QuestSystem.ts     # 任务系统
-│   │   ├── models/
-│   │   │   ├── Player.ts      # 玩家数据模型
-│   │   │   ├── Room.ts        # 房间模型
-│   │   │   ├── Npc.ts         # NPC模型
-│   │   │   └── Item.ts        # 物品模型
-│   │   └── data/              # 游戏静态数据
-│   │       ├── maps/          # 地图 JSON (参考炎黄MUD d/ 目录)
-│   │       ├── skills/        # 武功定义
-│   │       ├── npcs/          # NPC 模板
-│   │       └── items/         # 物品模板
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── Dockerfile
-├── client/                    # Web 前端
-│   └── index.html             # 单文件复古终端 UI
-├── docker-compose.yml         # 本地开发
-└── .github/
-    └── workflows/
-        └── deploy.yml         # CI/CD 到 AWS ECS
+│   │   │   ├── CommandRouter.ts     # All game commands (~1240 lines)
+│   │   │   └── PersistenceManager.ts # Autosave + socket-id mapping
+│   │   ├── systems/         # 19 game systems
+│   │   ├── models/          # Data models
+│   │   ├── data/            # JSON data files
+│   │   └── time/            # SystemClock + Scheduler
+│   └── vitest.config.ts
+├── docs/                    # Map, guides, analysis
+├── terraform/main.tf        # AWS infrastructure
+├── .github/workflows/       # CI/CD
+├── Dockerfile
+└── README.md
 ```
 
 ---
 
-## 六、部署架构（AWS）
+## 五、测试覆盖
 
-```
-Route53 DNS
-    │
-    ▼
-ALB (HTTPS :443 → HTTP :3000 转发)
-    │  · ACM 证书自动续签
-    │  · WebSocket 协议升级支持
-    │
-    ▼
-ECS Fargate Service
-    │  · 1-2 vCPU / 2-4 GB
-    │  · Docker 镜像：Node 24-alpine
-    │  · 健康检查：HTTP /health
-    │
-    ▼
-ECR (Docker 镜像仓库)
-```
-
-关键配置：
-- ALB 监听 HTTPS :443，目标组端口 :3000
-- ALB 开启 sticky session（基于 cookie，确保 WebSocket 粘性）
-- 空闲超时设为 3600s（WebSocket 长连接）
+- **52 测试文件**，**436 测试**，全部通过
+- 覆盖：45 个服务端文件（Vitest）+ 2 个前端文件（Vitest）+ 5 个 Playwright E2E
+- 包含：命令路由、系统单元、数据验证、E2E 完整流程
 
 ---
 
-## 七、风险评估
+## 六、下一步方向
 
-| 风险 | 概率 | 影响 | 对策 |
-|---|---|---|---|
-| Socket.io + ALB 兼容问题 | 低 | 阻塞 | ALB 原生支持 WebSocket 协议升级，已有大量案例；设置 sticky session 即可 |
-| 炎黄MUD内容量太大 | 高 | 范围 | v1 只实现核心系统 + 5-8个区域的示例地图和3-4个门派，后续迭代填充 |
-| AWS 费用 | 中 | 成本 | Fargate 单Task + 最小规格 ≈ $30-50/月；开发阶段可本地跑 |
-| 复古终端前端体验差 | 低 | 迭代 | 纯终端是MUD核心体验，社区验证多年；后期可选项升级为混合UI |
-
----
-
-## 八、开发阶段预估
-
-| 阶段 | 内容 | 周期 |
-|---|---|---|
-| **Phase 1：骨架** | 项目初始化、Express+Socket.io 通信、终端前端、命令路由 | 2-3天 |
-| **Phase 2：核心系统** | 角色系统、地图/移动、战斗系统 | 4-5天 |
-| **Phase 3：武功物品** | 武功系统、物品系统、NPC系统 | 3-4天 |
-| **Phase 4：内容填充** | 5-8个区域的武侠世界、3-4个门派、示例任务 | 3-5天 |
-| **Phase 5：AWS部署** | Docker化、ECS Fargate配置、ALB+HTTPS、CI/CD | 2-3天 |
-
-总计：**14-20天**（单人全职估算）
-
----
-
-## 九、关键假设
-
-- **游戏数据格式**：JSON 文件存储（非数据库），轻量且易编辑
-- **玩家持久化**：JSON 文件（v1），后续可迁移到 SQLite/PostgreSQL
-- **前端范围**：单文件 HTML 实现复古终端，使用 xterm.css 风格（绿字黑底等宽字体）
-- **AWS 认证**：用户已有 AWS 账号及基本 IAM 权限（或使用 aws-cli 配置）
-- **炎黄MUD内容引用**：设计参考而非直接移植（LPC → TypeScript 需要重写所有逻辑）
-
----
-
-## 十、结论
-
-**完全可行，且架构更现代化。** 放弃 FluffOS 的代价是需要重新实现游戏引擎和内容，但换来的是：
-- 你已掌握的 Node.js 技术栈
-- 浏览器即客户端，零安装
-- 云端原生部署、HTTPS加密通信
-- 完全可控的代码库，后续迭代无 legacy 包袱
-
-核心风险可控：WebSocket + ALB 已有成熟实践，游戏内容 v1 做减法即可。
+- [ ] 更多剧情任务和 NPC 对话树
+- [ ] PvP 竞技场
+- [ ] 门派任务链
+- [ ] 排行榜系统
+- [ ] 数据持久化迁移（JSON → DynamoDB/SQLite）
+- [ ] 移动端适配

@@ -268,7 +268,7 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 
 | Suite | Tests | Area |
 |---|---|---|
-| `Terminal.test.tsx` | 6 | UI rendering + input |
+| **Core Command Router** | | |
 | `CommandRouter.test.ts` | 52 | Commands, creation, movement, combat, skills |
 | `CommandRouter.classic.test.ts` | 6 | Perform, exert, class bonuses |
 | `CommandRouter.conditions.test.ts` | 6 | Conditions, antidote, dispel |
@@ -278,25 +278,57 @@ npm run test:e2e            # Playwright UI E2E (48 tests)
 | `CommandRouter.economy.test.ts` | 15 | Bank, shop, auction, crafting |
 | `CommandRouter.multi.test.ts` | 4 | Multi-enemy combat + guarder aggro |
 | `CommandRouter.shen.test.ts` | 5 | Shen alignment + killer tracking |
-| `Persistence.test.ts` | 4 | Save/load player JSON |
-| `PersistenceManager.test.ts` | 4 | Autosave, disconnect cleanup, load |
 | `CommandRouter.quest.test.ts` | 3 | Quest accept/complete flow |
 | `CommandRouter.quests.test.ts` | 3 | Kill/collect quest progress and rewards |
 | `CommandRouter.combat.test.ts` | 2 | Weapon synergy + combo damage |
-| `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
-| `CombatSystem.test.ts` | 4 | Combat rounds, status formatting |
-| `ConditionSystem.test.ts` | 10 | Condition apply/tick/dispel/cure/category |
-| `LevelSystem.test.ts` | 7 | Level formula and attribute point spending |
-| `NpcSystem.test.ts` | 4 | Master/disciple NPC coverage + boss drops |
 | `CommandRouter.boss.test.ts` | 1 | Boss kill + guaranteed loot |
 | `CommandRouter.admin.test.ts` | 7 | GM list/inspect/kick/goto/spawn/set |
-| `time.test.ts` | 8 | SystemClock + Scheduler |
+| `CommandRouter.edge.test.ts` | 8 | Meditation, dazuo/maxMP, respawn edge cases |
+| `CommandRouter.full.test.ts` | 4 | Attributes, poison tick, perform moves |
+| `CommandRouter.phase4.test.ts` | 4 | School skills, weapon equip, combat rounds |
+| `CommandRouter.polish.test.ts` | 12 | Equipment, perform, powerup, medicine, delivery |
+| `CommandRouter.batch2.test.ts` | 4 | Shop alias, poison conditions |
+| **Game Systems** | | |
+| `SkillSystem.test.ts` | 17 | Learning, prerequisites, school lock, attribute bonus |
+| `CombatSystem.test.ts` | 9 | Combat rounds, damage formula, status formatting |
+| `ConditionSystem.test.ts` | 14 | Condition apply/tick/dispel/cure/category |
+| `LevelSystem.test.ts` | 8 | Level formula and attribute point spending |
+| `NpcSystem.test.ts` | 9 | NPC coverage, boss drops, respawn, dialogue |
+| `ItemSystem.test.ts` | 22 | Weapons, armor, consumables, medicine effects |
+| `MapSystem.test.ts` | 10 | Rooms, exits, item pickups, topology |
+| `AuctionSystem.test.ts` | 8 | Create listing, bid, buyout, expiry |
+| `BankSystem.test.ts` | 5 | Deposit, withdraw, silver, formatting |
+| `ChatSystem.test.ts` | 9 | Say, tell, channels, social commands |
+| `CraftingSystem.test.ts` | 6 | Recipe lookup, material check, crafting |
+| `GuildSystem.test.ts` | 19 | Create, join, promote, rank, dismiss |
+| `ShopSystem.test.ts` | 6 | Buy, sell, room-based shops, pricing |
+| `TradeSystem.test.ts` | 16 | Offer, accept, reject, item exchange |
+| `PlayerManager.test.ts` | 9 | Create, name validation, name conflicts |
+| **Persistence** | | |
+| `Persistence.test.ts` | 4 | Save/load player JSON |
+| `PersistenceSystem.test.ts` | 5 | File I/O, read/write integrity |
+| `PersistenceManager.test.ts` | 5 | Autosave, disconnect cleanup, socket-id mapping |
+| **Data Validation** | | |
+| `skills.test.ts` | 6 | JSON skill data integrity |
+| `items.test.ts` | 6 | JSON item data integrity |
+| `npcs.test.ts` | 7 | JSON NPC data + guarder chains |
+| `quests.test.ts` | 6 | JSON quest data integrity |
+| `maps.test.ts` | 6 | Map topology, routes, dead ends |
+| **E2E Server** | | |
 | `index.e2e.test.ts` | 18 | Full user journeys (auth, map, schools, combat) |
-| `game.spec.ts` (Playwright) | 6 | Browser E2E (page load, auth, battle, school skills) |
-| `leveling.spec.ts` (Playwright) | 3 | Leveling + attribute points |
-| `conditions.spec.ts` (Playwright) | 3 | Wolf poison + antidote |
-| `schools.spec.ts` (Playwright) | 3 | Joining a school + signature skill |
-| `economy.spec.ts` (Playwright) | 12 | Bank, shop, auction, crafting flows |
+| **Utilities** | | |
+| `time.test.ts` | 8 | SystemClock + Scheduler |
+| `demo-seed.test.ts` | 6 | Demo account seeding + corruption repair |
+| **Frontend (Vitest)** | | |
+| `Terminal.test.tsx` | 9 | UI rendering, input, history |
+| `App.test.tsx` | 2 | App mount + online counter |
+| **Browser E2E (Playwright)** | | |
+| `game.spec.ts` | 6 | Page load, auth, battle, school skills |
+| `leveling.spec.ts` | 3 | Leveling + attribute points |
+| `conditions.spec.ts` | 3 | Wolf poison + antidote |
+| `schools.spec.ts` | 3 | Joining a school + signature skill |
+| `economy.spec.ts` | 12 | Bank, shop, auction, crafting flows |
+| **Total** | **436** | **52 test files (45 server + 2 frontend + 5 Playwright)** |
 
 ## Production
 
