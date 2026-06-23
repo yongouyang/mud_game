@@ -7,15 +7,31 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:monospace;background:#1a1a2e;color:#e0c060;padding:24px}
 h1{color:#ffd700;margin-bottom:4px;font-size:20px}
-.stats{color:#888;font-size:11px;margin-bottom:16px}
+.stats{color:#888;font-size:11px;margin-bottom:8px}
+/* ── Search ── */
+.search-bar{display:flex;gap:8px;margin-bottom:16px;position:sticky;top:0;z-index:10;background:#1a1a2e;padding:8px 0}
+.search-bar input{flex:1;background:#16213e;border:1px solid #444;color:#e0c060;padding:6px 10px;font-size:13px;border-radius:4px;outline:none}
+.search-bar input:focus{border-color:#ffd700}
+.search-bar .btn{background:#333;color:#e0c060;border:1px solid #555;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px}
+.search-bar .btn:hover{background:#444}
+.search-bar .clear{background:#3a1a1a;border-color:#633}
+.search-result{color:#888;font-size:11px;margin-bottom:4px}
+/* ── Areas & Rooms ── */
 h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bottom:1px solid #333}
+h2.collapsed + .grid{display:none}
 .grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.room{border:1px solid #333;padding:8px 10px;border-radius:4px;background:#16213e;min-width:260px;font-size:13px;max-width:340px}
+.room{border:1px solid #333;padding:8px 10px;border-radius:4px;background:#16213e;min-width:260px;font-size:13px;max-width:340px;scroll-margin-top:60px;transition:border-color .3s,box-shadow .3s}
+.room:target{border-color:#ffd700;box-shadow:0 0 12px rgba(255,215,0,.3)}
+.room.highlight{border-color:#ff4444;box-shadow:0 0 16px rgba(255,68,68,.4)}
+.room.hidden{display:none}
 .room-name{color:#ffd700;font-weight:bold;margin-bottom:4px}
+.room-id{color:#555;font-size:10px;margin-left:6px}
 .path{color:#6699cc;margin-bottom:4px}
 .path span{background:#223;padding:2px 4px;border-radius:2px;margin:0 1px;display:inline-block}
 .path .unreachable{color:#888;background:#2a1a1a}
 .exits{color:#88cc88;font-size:11px;margin-bottom:4px}
+.exit-link{color:#88cc88;text-decoration:none;border-bottom:1px dotted #446644}
+.exit-link:hover{color:#aaffaa;border-bottom-color:#88cc88}
 .npcs{font-size:11px}
 .npc{display:inline-block;margin-right:6px}
 .npc-npc{color:#ffaa44}
@@ -29,7 +45,14 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
 </head>
 <body>
 <h1>炎黄群侠传 世界地图</h1>
-<div class="stats">63 房间 · 1638 NPC · 39 门派 · 734 武功 · 起点: 小镇广场</div>
+<div class="stats">63 房间 · 191 NPC · 39 门派 · 813 武功 · 起点: 小镇广场</div>
+
+<div class="search-bar">
+  <input id="search" type="text" placeholder="搜索房间 / NPC / 区域...（输入后回车或自动过滤）" autofocus>
+  <button class="btn clear" id="clearBtn">清除</button>
+</div>
+<div class="search-result" id="result"></div>
+
 <div class="legend">
   <span style="color:#6699cc">🟦 到达路径</span>
   <span style="color:#ffd700;margin-left:10px">🟡 房间</span>
@@ -38,550 +61,627 @@ h2{color:#ffd700;font-size:14px;margin:24px 0 6px;padding-bottom:2px;border-bott
   <span style="color:#ffaa44;margin-left:10px">🟠 NPC</span>
   <span style="color:#ff4444;margin-left:10px">⛔ 主动攻击</span>
   <span style="color:#ff00ff;margin-left:10px">👹 Boss</span>
+  <span style="margin-left:16px;color:#888">提示：点击出口链接可跳转目标房间</span>
 </div>
 
-<h2>无名小镇</h2>
+<h2 id="area-town">无名小镇</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">无名小镇·广场</div>
+  <div class="room" id="town/square" data-search="无名小镇·广场 鳌拜 西厂官兵 男子 茶博士 陈老头 补精丹 还魂丹 大云丹 修罗 归元丹 罗刹 龟苓丹 说书人 无名小镇">
+    <div class="room-name">无名小镇·广场 <span class="room-id">town/square</span></div>
     <div class="path">🟦 <span>起点</span></div>
-    <div class="exits">出口: north→无名小镇·主街 │ south→无名小镇·练武场 │ east→无名小镇·客栈</div>
-    <div class="npcs"><span class="npc npc">说书人</span></div>
+    <div class="exits">出口: <a href="#town/mainstreet" class="exit-link" title="去 无名小镇·主街">n→无名小镇·主街</a> │ <a href="#town/training" class="exit-link" title="去 无名小镇·练武场">s→无名小镇·练武场</a> │ <a href="#town/inn" class="exit-link" title="去 无名小镇·客栈">e→无名小镇·客栈</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="鳌拜">鳌拜</span> <span class="npc npc" data-npc="西厂官兵">西厂官兵</span> <span class="npc npc" data-npc="男子">男子</span> <span class="npc npc" data-npc="茶博士">茶博士</span> <span class="npc npc" data-npc="陈老头">陈老头</span> <span class="npc npc" data-npc="补精丹">补精丹</span> <span class="npc npc" data-npc="还魂丹">还魂丹</span> <span class="npc npc" data-npc="大云丹">大云丹</span> <span class="npc npc" data-npc="修罗">修罗</span> <span class="npc npc" data-npc="归元丹">归元丹</span> <span class="npc npc" data-npc="罗刹">罗刹</span> <span class="npc npc" data-npc="龟苓丹">龟苓丹</span> <span class="npc npc" data-npc="说书人">说书人</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">无名小镇·主街</div>
+  <div class="room" id="town/mainstreet" data-search="无名小镇·主街 北京官兵 男孩 菜贩子 茶客 养精丹 引心丹 回阳无极丹 锁泉丹 小金丹 火麒丹 张德贵 龙王丹 药铺老板 无名小镇">
+    <div class="room-name">无名小镇·主街 <span class="room-id">town/mainstreet</span></div>
     <div class="path">🟦 <span>n</span></div>
-    <div class="exits">出口: south→无名小镇·广场 │ north→山门</div>
-    <div class="npcs"><span class="npc npc">药铺老板</span></div>
+    <div class="exits">出口: <a href="#town/square" class="exit-link" title="去 无名小镇·广场">s→无名小镇·广场</a> │ <a href="#wilderness/gate" class="exit-link" title="去 山门">n→山门</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="北京官兵">北京官兵</span> <span class="npc npc" data-npc="男孩">男孩</span> <span class="npc npc" data-npc="菜贩子">菜贩子</span> <span class="npc npc" data-npc="茶客">茶客</span> <span class="npc npc" data-npc="养精丹">养精丹</span> <span class="npc npc" data-npc="引心丹">引心丹</span> <span class="npc npc" data-npc="回阳无极丹">回阳无极丹</span> <span class="npc npc" data-npc="锁泉丹">锁泉丹</span> <span class="npc npc" data-npc="小金丹">小金丹</span> <span class="npc npc" data-npc="火麒丹">火麒丹</span> <span class="npc npc" data-npc="张德贵">张德贵</span> <span class="npc npc" data-npc="龙王丹">龙王丹</span> <span class="npc npc" data-npc="药铺老板">药铺老板</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">无名小镇·客栈</div>
+  <div class="room" id="town/inn" data-search="无名小镇·客栈 东厂官兵 小男孩 不知名草药 程老板 蓄精丹 九皇补心丹 小云丹 玉泉丹 雪参丹 血麒丹 龙涎丹 万寿丹 王掌柜 无名小镇">
+    <div class="room-name">无名小镇·客栈 <span class="room-id">town/inn</span></div>
     <div class="path">🟦 <span>e</span></div>
-    <div class="exits">出口: west→无名小镇·广场 │ up→无名小镇·客栈二楼</div>
-    <div class="npcs"><span class="npc npc">王掌柜</span></div>
+    <div class="exits">出口: <a href="#town/square" class="exit-link" title="去 无名小镇·广场">w→无名小镇·广场</a> │ <a href="#town/inn_upstairs" class="exit-link" title="去 无名小镇·客栈二楼">u→无名小镇·客栈二楼</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="东厂官兵">东厂官兵</span> <span class="npc npc" data-npc="小男孩">小男孩</span> <span class="npc npc" data-npc="不知名草药">不知名草药</span> <span class="npc npc" data-npc="程老板">程老板</span> <span class="npc npc" data-npc="蓄精丹">蓄精丹</span> <span class="npc npc" data-npc="九皇补心丹">九皇补心丹</span> <span class="npc npc" data-npc="小云丹">小云丹</span> <span class="npc npc" data-npc="玉泉丹">玉泉丹</span> <span class="npc npc" data-npc="雪参丹">雪参丹</span> <span class="npc npc" data-npc="血麒丹">血麒丹</span> <span class="npc npc" data-npc="龙涎丹">龙涎丹</span> <span class="npc npc" data-npc="万寿丹">万寿丹</span> <span class="npc npc" data-npc="王掌柜">王掌柜</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">无名小镇·客栈二楼</div>
+  <div class="room" id="town/inn_upstairs" data-search="无名小镇·客栈二楼 神秘商人 无名小镇">
+    <div class="room-name">无名小镇·客栈二楼 <span class="room-id">town/inn_upstairs</span></div>
     <div class="path">🟦 <span>e</span><span>u</span></div>
-    <div class="exits">出口: down→无名小镇·客栈</div>
-    <div class="npcs"><span class="npc npc">神秘商人</span></div>
+    <div class="exits">出口: <a href="#town/inn" class="exit-link" title="去 无名小镇·客栈">d→无名小镇·客栈</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="神秘商人">神秘商人</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">无名小镇·练武场</div>
+  <div class="room" id="town/training" data-search="无名小镇·练武场 武师 无名小镇">
+    <div class="room-name">无名小镇·练武场 <span class="room-id">town/training</span></div>
     <div class="path">🟦 <span>s</span></div>
-    <div class="exits">出口: north→无名小镇·广场</div>
-    <div class="npcs"><span class="npc npc">武师</span></div>
+    <div class="exits">出口: <a href="#town/square" class="exit-link" title="去 无名小镇·广场">n→无名小镇·广场</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="武师">武师</span></div>
   </div>
 </div>
 
-<h2>荒野山林</h2>
+<h2 id="area-wilderness">荒野山林</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">山门</div>
+  <div class="room" id="wilderness/gate" data-search="山门 小还丹 卖花少女 店小二 知客和尚 老船夫 秦广王 封万里 龙岛主 荒野山林">
+    <div class="room-name">山门 <span class="room-id">wilderness/gate</span></div>
     <div class="path">🟦 <span>n</span><span>n</span></div>
-    <div class="exits">出口: south→无名小镇·主街 │ north→山林·入口</div>
-    <div class="npcs"><span class="npc npc">小还丹</span> <span class="npc npc">卖花少女</span> <span class="npc npc">店小二</span> <span class="npc npc">知客和尚</span> <span class="npc npc">老船夫</span> <span class="npc npc">玉版扇</span> <span class="npc npc">祭司</span> <span class="npc boss">秦广王 👹</span> <span class="npc npc">capturenpc1</span> <span class="npc npc">落第秀才</span> <span class="npc npc">书生</span> <span class="npc npc">游客</span> <span class="npc npc">监寺僧人</span> <span class="npc boss">封万里 👹</span> <span class="npc npc">唐洋</span> <span class="npc npc">计老人</span> <span class="npc npc">天乙道人</span> <span class="npc npc">樵夫</span> <span class="npc boss">龙岛主 👹</span> <span class="npc npc">男孩</span> <span class="npc npc">素素</span></div>
+    <div class="exits">出口: <a href="#town/mainstreet" class="exit-link" title="去 无名小镇·主街">s→无名小镇·主街</a> │ <a href="#wilderness/forest1" class="exit-link" title="去 山林·入口">n→山林·入口</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="小还丹">小还丹</span> <span class="npc npc" data-npc="卖花少女">卖花少女</span> <span class="npc npc" data-npc="店小二">店小二</span> <span class="npc npc" data-npc="知客和尚">知客和尚</span> <span class="npc npc" data-npc="老船夫">老船夫</span> <span class="npc boss" data-npc="秦广王">秦广王 👹</span> <span class="npc boss" data-npc="封万里">封万里 👹</span> <span class="npc boss" data-npc="龙岛主">龙岛主 👹</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">山林·入口</div>
+  <div class="room" id="wilderness/forest1" data-search="山林·入口 山贼 荒野山林">
+    <div class="room-name">山林·入口 <span class="room-id">wilderness/forest1</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: south→山门 │ north→山林·深处 │ east→山林·断崖 │ west→丐帮·杏子林入口 │ up→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc aggressive">山贼 ⚔</span></div>
+    <div class="exits">出口: <a href="#wilderness/gate" class="exit-link" title="去 山门">s→山门</a> │ <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">n→山林·深处</a> │ <a href="#wilderness/cliff" class="exit-link" title="去 山林·断崖">e→山林·断崖</a> │ <a href="#gaibang/forest1" class="exit-link" title="去 丐帮·杏子林入口">w→丐帮·杏子林入口</a> │ <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">u→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc aggressive" data-npc="山贼">山贼 ⚔</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">山林·深处</div>
+  <div class="room" id="wilderness/forest2" data-search="山林·深处 大还丹 混混 店小二 慕容豪 老船夫 王方平 袁紫衣 野狼 木岛主 荒野山林">
+    <div class="room-name">山林·深处 <span class="room-id">wilderness/forest2</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: south→山林·入口 │ west→山林·洞穴 │ north→古墓·入口 │ east→华山·山脚 │ northeast→明教·光明顶 │ southwest→全真教·重阳宫</div>
-    <div class="npcs"><span class="npc npc">大还丹</span> <span class="npc npc">混混</span> <span class="npc npc">店小二</span> <span class="npc npc">慕容豪</span> <span class="npc npc">老船夫</span> <span class="npc npc">羽毛扇</span> <span class="npc npc">老祭司</span> <span class="npc boss">王方平 👹</span> <span class="npc npc">capturenpc2</span> <span class="npc npc">阎基</span> <span class="npc npc">铁匠</span> <span class="npc boss">袁紫衣 👹</span> <span class="npc npc">孔大官人</span> <span class="npc npc">梁自进</span> <span class="npc npc">闻苍松</span> <span class="npc npc">金湘玉</span> <span class="npc npc">挑夫</span> <span class="npc aggressive">野狼 ⚔</span> <span class="npc boss">木岛主 👹</span> <span class="npc npc">高丽商</span> <span class="npc npc">丫环</span></div>
+    <div class="exits">出口: <a href="#wilderness/forest1" class="exit-link" title="去 山林·入口">s→山林·入口</a> │ <a href="#wilderness/cave" class="exit-link" title="去 山林·洞穴">w→山林·洞穴</a> │ <a href="#gumu/entrance" class="exit-link" title="去 古墓·入口">n→古墓·入口</a> │ <a href="#huashan/foot" class="exit-link" title="去 华山·山脚">e→华山·山脚</a> │ <a href="#mingjiao/hall" class="exit-link" title="去 明教·光明顶">ne→明教·光明顶</a> │ <a href="#quanzhen/hall" class="exit-link" title="去 全真教·重阳宫">sw→全真教·重阳宫</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="大还丹">大还丹</span> <span class="npc npc" data-npc="混混">混混</span> <span class="npc npc" data-npc="店小二">店小二</span> <span class="npc npc" data-npc="慕容豪">慕容豪</span> <span class="npc npc" data-npc="老船夫">老船夫</span> <span class="npc boss" data-npc="王方平">王方平 👹</span> <span class="npc boss" data-npc="袁紫衣">袁紫衣 👹</span> <span class="npc aggressive" data-npc="野狼">野狼 ⚔</span> <span class="npc boss" data-npc="木岛主">木岛主 👹</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">山林·断崖</div>
+  <div class="room" id="wilderness/cliff" data-search="山林·断崖 大补丹 鳌府家丁 小贩 青衣 软金束带 折扇 砍竹人 张三 荒野山林">
+    <div class="room-name">山林·断崖 <span class="room-id">wilderness/cliff</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span></div>
-    <div class="exits">出口: west→山林·入口 │ east→武当山·山门 │ south→少林寺·山门 │ north→峨眉·山门 │ northwest→昆仑·三清殿</div>
-    <div class="npcs"><span class="npc npc">大补丹</span> <span class="npc npc">鳌府家丁</span> <span class="npc npc">小贩</span> <span class="npc npc">青衣</span> <span class="npc npc">软金束带</span> <span class="npc npc">折扇</span> <span class="npc npc">砍竹人</span> <span class="npc npc">白无常</span> <span class="npc npc">capturenpc3</span> <span class="npc npc">玉真子</span> <span class="npc npc">挑夫</span> <span class="npc npc">采药人</span> <span class="npc npc">宫女</span> <span class="npc npc">李四</span> <span class="npc npc">廖自砺</span> <span class="npc npc">辛然</span> <span class="npc npc">珠宝商</span> <span class="npc npc">白衣武士</span> <span class="npc boss">张三 👹</span> <span class="npc npc">女孩</span> <span class="npc npc">渔夫</span></div>
+    <div class="exits">出口: <a href="#wilderness/forest1" class="exit-link" title="去 山林·入口">w→山林·入口</a> │ <a href="#wudang/gate" class="exit-link" title="去 武当山·山门">e→武当山·山门</a> │ <a href="#shaolin/gate" class="exit-link" title="去 少林寺·山门">s→少林寺·山门</a> │ <a href="#emei/foot" class="exit-link" title="去 峨眉·山门">n→峨眉·山门</a> │ <a href="#kunlun/hall" class="exit-link" title="去 昆仑·三清殿">nw→昆仑·三清殿</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="大补丹">大补丹</span> <span class="npc npc" data-npc="鳌府家丁">鳌府家丁</span> <span class="npc npc" data-npc="小贩">小贩</span> <span class="npc npc" data-npc="青衣">青衣</span> <span class="npc npc" data-npc="软金束带">软金束带</span> <span class="npc npc" data-npc="折扇">折扇</span> <span class="npc npc" data-npc="砍竹人">砍竹人</span> <span class="npc boss" data-npc="张三">张三 👹</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">山林·洞穴</div>
+  <div class="room" id="wilderness/cave" data-search="山林·洞穴 黑熊 十全大还丹 康府家丁 黑风寨主 玄武 chinese 张三 郭靖 荒野山林">
+    <div class="room-name">山林·洞穴 <span class="room-id">wilderness/cave</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>w</span></div>
-    <div class="exits">出口: east→山林·深处 │ southwest→星宿派·星宿海</div>
-    <div class="npcs"><span class="npc aggressive">黑熊 ⚔</span> <span class="npc npc">十全大还丹</span> <span class="npc npc">康府家丁</span> <span class="npc npc">小桂子</span> <span class="npc boss">黑风寨主 👹</span> <span class="npc npc">如花</span> <span class="npc npc">羊皮靴</span> <span class="npc npc">史松</span> <span class="npc npc">盛皮罗客商</span> <span class="npc boss">玄武 👹</span> <span class="npc boss">chinese 👹</span> <span class="npc npc">大悲老人</span> <span class="npc npc">店小二</span> <span class="npc npc">侍卫</span> <span class="npc npc">刘财主</span> <span class="npc npc">齐自勉</span> <span class="npc npc">颜垣</span> <span class="npc npc">苏普</span> <span class="npc npc">红衣武士</span> <span class="npc boss">张三 👹</span> <span class="npc boss">郭靖 👹</span> <span class="npc npc">厨师</span></div>
+    <div class="exits">出口: <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">e→山林·深处</a> │ <a href="#xingxiu/hall" class="exit-link" title="去 星宿派·星宿海">sw→星宿派·星宿海</a></div>
+    <div class="npcs"><span class="npc aggressive" data-npc="黑熊">黑熊 ⚔</span> <span class="npc npc" data-npc="十全大还丹">十全大还丹</span> <span class="npc npc" data-npc="康府家丁">康府家丁</span> <span class="npc boss" data-npc="黑风寨主">黑风寨主 👹</span> <span class="npc boss" data-npc="玄武">玄武 👹</span> <span class="npc boss" data-npc="chinese">chinese 👹</span> <span class="npc boss" data-npc="张三">张三 👹</span> <span class="npc boss" data-npc="郭靖">郭靖 👹</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">荒野·门派岔路1</div>
+  <div class="room" id="wilderness/hub1" data-search="荒野·门派岔路1  荒野山林">
+    <div class="room-name">荒野·门派岔路1 <span class="room-id">wilderness/hub1</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span></div>
-    <div class="exits">出口: down→山林·入口 │ up→荒野·门派岔路2 │ north→逍遥派·琅嬛阁 │ south→桃花岛·试剑亭 │ east→灵鹫宫·缥缈峰 │ west→神龙教·神龙岛 │ northeast→日月神教·黑木崖 │ northwest→雪山派·凌霄阁 │ southeast→铁掌帮·铁掌峰 │ southwest→唐门·唐家堡</div>
+    <div class="exits">出口: <a href="#wilderness/forest1" class="exit-link" title="去 山林·入口">d→山林·入口</a> │ <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">u→荒野·门派岔路2</a> │ <a href="#xiaoyao/hall" class="exit-link" title="去 逍遥派·琅嬛阁">n→逍遥派·琅嬛阁</a> │ <a href="#taohua/hall" class="exit-link" title="去 桃花岛·试剑亭">s→桃花岛·试剑亭</a> │ <a href="#lingjiu/hall" class="exit-link" title="去 灵鹫宫·缥缈峰">e→灵鹫宫·缥缈峰</a> │ <a href="#shenlong/hall" class="exit-link" title="去 神龙教·神龙岛">w→神龙教·神龙岛</a> │ <a href="#riyue/hall" class="exit-link" title="去 日月神教·黑木崖">ne→日月神教·黑木崖</a> │ <a href="#xueshan/hall" class="exit-link" title="去 雪山派·凌霄阁">nw→雪山派·凌霄阁</a> │ <a href="#tiezhang/hall" class="exit-link" title="去 铁掌帮·铁掌峰">se→铁掌帮·铁掌峰</a> │ <a href="#tangmen/hall" class="exit-link" title="去 唐门·唐家堡">sw→唐门·唐家堡</a></div>
     <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">荒野·门派岔路2</div>
+  <div class="room" id="wilderness/hub2" data-search="荒野·门派岔路2  荒野山林">
+    <div class="room-name">荒野·门派岔路2 <span class="room-id">wilderness/hub2</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span></div>
-    <div class="exits">出口: down→荒野·门派岔路1 │ up→荒野·门派岔路3 │ north→慕容世家·燕子坞 │ south→段氏·天龙寺 │ east→衡山·回雁楼 │ west→红花会·聚义厅 │ northeast→胡家·演武场 │ northwest→绝情谷·情花谷 │ southeast→凌霄城·雪峰殿 │ southwest→梅庄·琴剑阁</div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">d→荒野·门派岔路1</a> │ <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">u→荒野·门派岔路3</a> │ <a href="#murong/hall" class="exit-link" title="去 慕容世家·燕子坞">n→慕容世家·燕子坞</a> │ <a href="#duan/hall" class="exit-link" title="去 段氏·天龙寺">s→段氏·天龙寺</a> │ <a href="#henshan/hall" class="exit-link" title="去 衡山·回雁楼">e→衡山·回雁楼</a> │ <a href="#honghua/hall" class="exit-link" title="去 红花会·聚义厅">w→红花会·聚义厅</a> │ <a href="#hu/hall" class="exit-link" title="去 胡家·演武场">ne→胡家·演武场</a> │ <a href="#jueqing/hall" class="exit-link" title="去 绝情谷·情花谷">nw→绝情谷·情花谷</a> │ <a href="#lingxiao/hall" class="exit-link" title="去 凌霄城·雪峰殿">se→凌霄城·雪峰殿</a> │ <a href="#meizhuang/hall" class="exit-link" title="去 梅庄·琴剑阁">sw→梅庄·琴剑阁</a></div>
     <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">荒野·门派岔路3</div>
+  <div class="room" id="wilderness/hub3" data-search="荒野·门派岔路3  荒野山林">
+    <div class="room-name">荒野·门派岔路3 <span class="room-id">wilderness/hub3</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span></div>
-    <div class="exits">出口: down→荒野·门派岔路2 │ up→荒野·门派岔路4 │ north→苗家·剑庐 │ south→欧阳世家·白驼山 │ east→商家堡·八卦堂 │ west→嵩山·封禅台 │ northeast→天龙寺·枯荣堂 │ northwest→绝世·武境 │ southeast→五毒教·万蛊殿 │ southwest→侠客岛·石室</div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">d→荒野·门派岔路2</a> │ <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">u→荒野·门派岔路4</a> │ <a href="#miao/hall" class="exit-link" title="去 苗家·剑庐">n→苗家·剑庐</a> │ <a href="#ouyang/hall" class="exit-link" title="去 欧阳世家·白驼山">s→欧阳世家·白驼山</a> │ <a href="#shang/hall" class="exit-link" title="去 商家堡·八卦堂">e→商家堡·八卦堂</a> │ <a href="#songshan/hall" class="exit-link" title="去 嵩山·封禅台">w→嵩山·封禅台</a> │ <a href="#tianlongsi/hall" class="exit-link" title="去 天龙寺·枯荣堂">ne→天龙寺·枯荣堂</a> │ <a href="#ultra/hall" class="exit-link" title="去 绝世·武境">nw→绝世·武境</a> │ <a href="#wudu/hall" class="exit-link" title="去 五毒教·万蛊殿">se→五毒教·万蛊殿</a> │ <a href="#xiakedao/hall" class="exit-link" title="去 侠客岛·石室">sw→侠客岛·石室</a></div>
     <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">荒野·门派岔路4</div>
+  <div class="room" id="wilderness/hub4" data-search="荒野·门派岔路4  荒野山林">
+    <div class="room-name">荒野·门派岔路4 <span class="room-id">wilderness/hub4</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span></div>
-    <div class="exits">出口: down→荒野·门派岔路3 │ north→玄冥谷·冰窟 │ south→血刀门·血池 │ east→云龙门·飞云阁 │ west→震远镖局·练武厅 │ northeast→修罗地狱·血池</div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">d→荒野·门派岔路3</a> │ <a href="#xuanming/hall" class="exit-link" title="去 玄冥谷·冰窟">n→玄冥谷·冰窟</a> │ <a href="#xuedao/hall" class="exit-link" title="去 血刀门·血池">s→血刀门·血池</a> │ <a href="#yunlong/hall" class="exit-link" title="去 云龙门·飞云阁">e→云龙门·飞云阁</a> │ <a href="#zhenyuan/hall" class="exit-link" title="去 震远镖局·练武厅">w→震远镖局·练武厅</a> │ <a href="#hell/hall" class="exit-link" title="去 修罗地狱·血池">ne→修罗地狱·血池</a></div>
     <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
 </div>
 
-<h2>少林寺</h2>
+<h2 id="area-shaolin">少林寺</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">少林寺·山门</div>
+  <div class="room" id="shaolin/gate" data-search="少林寺·山门  少林寺">
+    <div class="room-name">少林寺·山门 <span class="room-id">shaolin/gate</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>s</span></div>
-    <div class="exits">出口: west→少林寺·大雄宝殿 │ south→山林·断崖</div>
-    <div class="npcs"><span class="npc npc">还魂丹</span> <span class="npc npc">贾老六</span> <span class="npc npc">戏子</span> <span class="npc npc">shi wei</span> <span class="npc npc">布鞋</span> <span class="npc npc">谭友纪</span> <span class="npc npc">摆夷小孩</span> <span class="npc boss">十殿阎罗 👹</span> <span class="npc npc">心魔</span> <span class="npc npc">段天德</span> <span class="npc npc">店小二</span> <span class="npc npc">侍卫</span> <span class="npc npc">刘掌柜</span> <span class="npc npc">时万年</span> <span class="npc npc">殷无福</span> <span class="npc boss">方生 👹</span> <span class="npc npc">船夫</span> <span class="npc npc">船夫</span> <span class="npc npc">打手</span> <span class="npc npc">道一禅师</span> <span class="npc npc">打铁僧</span> <span class="npc boss">觉远 👹</span> <span class="npc boss">空见 👹</span> <span class="npc npc">乔三槐</span> <span class="npc boss">苗人凤 👹</span> <span class="npc npc">清观比丘</span> <span class="npc npc">清乐比丘</span> <span class="npc npc">清善比丘</span> <span class="npc npc">清闻比丘</span> <span class="npc npc">清晓比丘</span> <span class="npc npc">清缘比丘</span> <span class="npc npc">扫地僧</span> <span class="npc npc">护林僧兵</span> <span class="npc npc">执法僧兵</span> <span class="npc npc">守寺僧兵</span> <span class="npc npc">丫鬟</span> <span class="npc npc">家丁</span> <span class="npc npc">厨师</span> <span class="npc npc">烧饭僧</span> <span class="npc npc">挑夫</span> <span class="npc npc">托钵僧</span> <span class="npc npc">进香客</span> <span class="npc npc">小沙弥</span> <span class="npc npc">小沙弥</span> <span class="npc npc">店小二</span> <span class="npc npc">店小二</span> <span class="npc npc">小贩</span> <span class="npc npc">小孩</span> <span class="npc npc">小沙弥</span> <span class="npc npc">小沙弥</span> <span class="npc npc">小沙弥</span> <span class="npc npc">行者</span> <span class="npc npc">行者</span> <span class="npc npc">虚明</span> <span class="npc npc">虚通</span> <span class="npc npc">狱卒</span> <span class="npc boss">北丑 👹</span> <span class="npc npc">青衣武士</span> <span class="npc npc">郭芙</span> <span class="npc npc">阿紫</span> <span class="npc npc">都大锦</span></div>
+    <div class="exits">出口: <a href="#shaolin/hall" class="exit-link" title="去 少林寺·大雄宝殿">w→少林寺·大雄宝殿</a> │ <a href="#wilderness/cliff" class="exit-link" title="去 山林·断崖">s→山林·断崖</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">少林寺·大雄宝殿</div>
+  <div class="room" id="shaolin/hall" data-search="少林寺·大雄宝殿 少林派弟子 达摩老祖 少林派弟子 少林寺">
+    <div class="room-name">少林寺·大雄宝殿 <span class="room-id">shaolin/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>s</span><span>w</span></div>
-    <div class="exits">出口: east→少林寺·山门 │ north→少林寺·练功房</div>
-    <div class="npcs"><span class="npc npc">回阳无极丹</span> <span class="npc npc">摔跤手</span> <span class="npc npc">花旦</span> <span class="npc npc">陈继盛</span> <span class="npc npc">浅蓝色马褂</span> <span class="npc npc">书童</span> <span class="npc npc">乌夷老祭司</span> <span class="npc boss">阴长生 👹</span> <span class="npc npc">少林派弟子</span> <span class="npc boss">英国人 👹</span> <span class="npc npc">范一飞</span> <span class="npc npc">游客</span> <span class="npc npc">太监</span> <span class="npc npc">陆虞候</span> <span class="npc npc">苏万虹</span> <span class="npc master">玄慈方丈</span> <span class="npc npc">澄识</span> <span class="npc npc">澄思</span> <span class="npc npc">澄心</span> <span class="npc npc">澄信</span> <span class="npc npc">澄行</span> <span class="npc npc">澄意</span> <span class="npc npc">澄欲</span> <span class="npc npc">澄知</span> <span class="npc npc">澄志</span> <span class="npc npc">达摩老祖</span> <span class="npc npc">澄和</span> <span class="npc npc">道尘禅师</span> <span class="npc npc">道成禅师</span> <span class="npc npc">道果禅师</span> <span class="npc npc">道觉禅师</span> <span class="npc npc">道品禅师</span> <span class="npc npc">道相禅师</span> <span class="npc npc">道象禅师</span> <span class="npc npc">道正禅师</span> <span class="npc npc">渡厄</span> <span class="npc npc">渡劫</span> <span class="npc npc">澄寂</span> <span class="npc npc">渡难</span> <span class="npc npc">渡元禅师</span> <span class="npc npc">慧合尊者</span> <span class="npc npc">慧洁尊者</span> <span class="npc npc">慧空尊者</span> <span class="npc npc">慧名尊者</span> <span class="npc npc">慧如尊者</span> <span class="npc npc">慧色尊者</span> <span class="npc npc">慧修尊者</span> <span class="npc npc">慧虚尊者</span> <span class="npc npc">澄坚</span> <span class="npc npc">慧真尊者</span> <span class="npc npc">清法比丘</span> <span class="npc npc">清为比丘</span> <span class="npc npc">清无比丘</span> <span class="npc npc">无名老僧</span> <span class="npc npc">玄悲大师</span> <span class="npc npc">玄慈大师</span> <span class="npc npc">玄寂大师</span> <span class="npc npc">玄苦大师</span> <span class="npc npc">玄难大师</span> <span class="npc npc">澄净</span> <span class="npc npc">玄痛大师</span> <span class="npc npc">澄灵</span> <span class="npc npc">澄灭</span> <span class="npc npc">澄明</span> <span class="npc npc">澄尚</span> <span class="npc npc">殷无禄</span> <span class="npc boss">华英雄 👹</span> <span class="npc npc">小贩</span> <span class="npc npc">家丁</span> <span class="npc npc">出尘子</span> <span class="npc npc">富商</span></div>
+    <div class="exits">出口: <a href="#shaolin/gate" class="exit-link" title="去 少林寺·山门">e→少林寺·山门</a> │ <a href="#shaolin/training" class="exit-link" title="去 少林寺·练功房">n→少林寺·练功房</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="少林派弟子">少林派弟子</span> <span class="npc npc" data-npc="达摩老祖">达摩老祖</span> <span class="npc npc" data-npc="少林派弟子">少林派弟子</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">少林寺·练功房</div>
+  <div class="room" id="shaolin/training" data-search="少林寺·练功房  少林寺">
+    <div class="room-name">少林寺·练功房 <span class="room-id">shaolin/training</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>s</span><span>w</span><span>n</span></div>
-    <div class="exits">出口: south→少林寺·大雄宝殿</div>
-    <div class="npcs"><span class="npc npc">小云丹</span> <span class="npc npc">摔跤手头领</span> <span class="npc npc">老旦</span> <span class="npc npc">书痴</span> <span class="npc npc">五彩绣花裙</span> <span class="npc npc">铁匠</span> <span class="npc npc">猎人</span> <span class="npc boss">朱雀 👹</span> <span class="npc boss">西洋人 👹</span> <span class="npc npc">风良</span> <span class="npc npc">越女</span> <span class="npc npc">大汉</span> <span class="npc boss">鲁智深 👹</span> <span class="npc npc">孙万年</span> <span class="npc npc">殷无寿</span> <span class="npc boss">寇仲 👹</span> <span class="npc npc">店小二</span> <span class="npc npc">家丁</span> <span class="npc npc">星宿弟子</span> <span class="npc npc">管家</span></div>
+    <div class="exits">出口: <a href="#shaolin/hall" class="exit-link" title="去 少林寺·大雄宝殿">s→少林寺·大雄宝殿</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
 </div>
 
-<h2>武当山</h2>
+<h2 id="area-wudang">武当山</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">武当山·山门</div>
+  <div class="room" id="wudang/gate" data-search="武当山·山门  武当山">
+    <div class="room-name">武当山·山门 <span class="room-id">wudang/gate</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>e</span></div>
-    <div class="exits">出口: west→武当山·紫霄宫 │ east→山林·断崖</div>
-    <div class="npcs"><span class="npc npc">大云丹</span> <span class="npc npc">妓女</span> <span class="npc npc">徐天川</span> <span class="npc npc">趟子手</span> <span class="npc npc">张三</span> <span class="npc npc">梨花飘雪裳</span> <span class="npc npc">唐楠</span> <span class="npc npc">台夷猎人</span> <span class="npc boss">宋青书 👹</span> <span class="npc npc">老朝奉</span> <span class="npc npc">ya huan</span> <span class="npc npc">高三娘子</span> <span class="npc npc">李沅芷</span> <span class="npc npc">香火道人</span> <span class="npc npc">游方道人</span> <span class="npc npc">村姑</span> <span class="npc npc">采石人</span> <span class="npc npc">老僧人</span> <span class="npc npc">汪万翼</span> <span class="npc npc">殷野王</span> <span class="npc boss">冲虚 👹</span> <span class="npc boss">张召重 👹</span> <span class="npc boss">李寻欢 👹</span> <span class="npc npc">玉玑子</span> <span class="npc npc">八卦弟子</span> <span class="npc npc">张三</span> <span class="npc npc">道童</span> <span class="npc npc">伐木道长</span> <span class="npc npc">进香客</span> <span class="npc npc">蒙面大汉</span> <span class="npc npc">明月</span> <span class="npc npc">清风</span> <span class="npc npc">清虚道长</span> <span class="npc npc">守园道长</span> <span class="npc npc">土匪</span> <span class="npc npc">土匪</span> <span class="npc npc">土匪头</span> <span class="npc npc">兔肉</span> <span class="npc npc">五行弟子</span> <span class="npc npc">小喽罗</span> <span class="npc npc">小土匪</span> <span class="npc npc">小翠</span> <span class="npc boss">宋青书 👹</span> <span class="npc npc">知客道长</span> <span class="npc npc">制香道长</span> <span class="npc npc">小孩</span> <span class="npc npc">狮吼子</span> <span class="npc npc">雇工</span></div>
+    <div class="exits">出口: <a href="#wudang/hall" class="exit-link" title="去 武当山·紫霄宫">w→武当山·紫霄宫</a> │ <a href="#wilderness/cliff" class="exit-link" title="去 山林·断崖">e→山林·断崖</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">武当山·紫霄宫</div>
+  <div class="room" id="wudang/hall" data-search="武当山·紫霄宫 武当派弟子 张三丰 武当派弟子 武当山">
+    <div class="room-name">武当山·紫霄宫 <span class="room-id">wudang/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>e</span><span>w</span></div>
-    <div class="exits">出口: east→武当山·山门 │ north→武当山·练武场</div>
-    <div class="npcs"><span class="npc npc">锁泉丹</span> <span class="npc npc">居民</span> <span class="npc npc">鳌府丫鬟</span> <span class="npc npc">茶馆小二</span> <span class="npc npc">孔雀羽衣</span> <span class="npc npc">桃根仙</span> <span class="npc npc">木婉清</span> <span class="npc npc">武当派弟子</span> <span class="npc npc">凤七</span> <span class="npc npc">helper</span> <span class="npc npc">韩宝驹</span> <span class="npc npc">日月弟子</span> <span class="npc npc">侯通海</span> <span class="npc npc">烧香老太</span> <span class="npc npc">燕万鹏</span> <span class="npc master">冲虚道长</span> <span class="npc npc">张三丰</span> <span class="npc npc">谷虚道长</span> <span class="npc npc">莫声谷</span> <span class="npc npc">张翠山</span> <span class="npc npc">宋远桥</span> <span class="npc npc">张松溪</span> <span class="npc npc">俞岱岩</span> <span class="npc npc">殷梨亭</span> <span class="npc npc">俞莲舟</span> <span class="npc npc">张中</span> <span class="npc boss">李逍遥 👹</span> <span class="npc npc">玉磬子</span> <span class="npc npc">老先生</span> <span class="npc npc">天狼子</span> <span class="npc npc">家丁</span></div>
+    <div class="exits">出口: <a href="#wudang/gate" class="exit-link" title="去 武当山·山门">e→武当山·山门</a> │ <a href="#wudang/training" class="exit-link" title="去 武当山·练武场">n→武当山·练武场</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="武当派弟子">武当派弟子</span> <span class="npc npc" data-npc="张三丰">张三丰</span> <span class="npc npc" data-npc="武当派弟子">武当派弟子</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">武当山·练武场</div>
+  <div class="room" id="wudang/training" data-search="武当山·练武场  武当山">
+    <div class="room-name">武当山·练武场 <span class="room-id">wudang/training</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>e</span><span>w</span><span>n</span></div>
-    <div class="exits">出口: south→武当山·紫霄宫</div>
-    <div class="npcs"><span class="npc npc">玉泉丹</span> <span class="npc npc">康亲王</span> <span class="npc npc">王府丫鬟</span> <span class="npc npc">铁公鸡</span> <span class="npc npc">富贵团金褂</span> <span class="npc npc">桃干仙</span> <span class="npc npc">牧羊女</span> <span class="npc npc">凤一鸣</span> <span class="npc boss">天竺人 👹</span> <span class="npc npc">韩小莹</span> <span class="npc npc">日月弟子</span> <span class="npc npc">伙计</span> <span class="npc npc">皮货商</span> <span class="npc npc">褚万春</span> <span class="npc npc">周颠</span> <span class="npc boss">铁传甲 👹</span> <span class="npc npc">玉音子</span> <span class="npc npc">蒙古兵</span> <span class="npc npc">乌旺阿普</span> <span class="npc npc">老雇工</span></div>
+    <div class="exits">出口: <a href="#wudang/hall" class="exit-link" title="去 武当山·紫霄宫">s→武当山·紫霄宫</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
 </div>
 
-<h2>丐帮</h2>
+<h2 id="area-gaibang">丐帮</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">丐帮·总舵</div>
+  <div class="room" id="gaibang/hq" data-search="丐帮·总舵 丐帮弟子 洪七公 丐帮弟子 丐帮">
+    <div class="room-name">丐帮·总舵 <span class="room-id">gaibang/hq</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>w</span><span>e</span></div>
-    <div class="exits">出口: west→丐帮·杏子林入口</div>
-    <div class="npcs"><span class="npc npc">村姑</span> <span class="npc npc">修罗</span> <span class="npc npc">康熙大帝</span> <span class="npc npc">药铺伙计</span> <span class="npc npc">张衡</span> <span class="npc npc">桂花浮玉衫</span> <span class="npc npc">桃枝仙</span> <span class="npc npc">牧羊人</span> <span class="npc npc">丐帮弟子</span> <span class="npc npc">家丁</span> <span class="npc boss">日本鬼子 👹</span> <span class="npc npc">太湖豪杰</span> <span class="npc npc">日月弟子</span> <span class="npc npc">梁子翁</span> <span class="npc npc">泼皮</span> <span class="npc npc">小伙计</span> <span class="npc master">洪七公</span> <span class="npc npc">全冠清</span> <span class="npc npc">吴长风</span> <span class="npc npc">奚长老</span> <span class="npc npc">白世镜</span> <span class="npc master">洪七公</span> <span class="npc npc">简长老</span> <span class="npc npc">黎生</span> <span class="npc npc">梁长老</span> <span class="npc npc">鲁有脚</span> <span class="npc npc">马大元</span> <span class="npc npc">彭有敬</span> <span class="npc npc">庄铮</span> <span class="npc boss">徐子陵 👹</span> <span class="npc npc">程英</span> <span class="npc npc">木匠</span> <span class="npc npc">穷汉</span></div>
+    <div class="exits">出口: <a href="#gaibang/forest1" class="exit-link" title="去 丐帮·杏子林入口">w→丐帮·杏子林入口</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="丐帮弟子">丐帮弟子</span> <span class="npc master" data-npc="洪七公">洪七公</span> <span class="npc npc" data-npc="丐帮弟子">丐帮弟子</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">丐帮·杏子林入口</div>
+  <div class="room" id="gaibang/forest1" data-search="丐帮·杏子林入口  丐帮">
+    <div class="room-name">丐帮·杏子林入口 <span class="room-id">gaibang/forest1</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>w</span></div>
-    <div class="exits">出口: east→丐帮·总舵 │ south→丐帮·杏子林深处</div>
-    <div class="npcs"><span class="npc npc">厨师</span> <span class="npc npc">乞丐</span> <span class="npc npc">小金丹</span> <span class="npc npc">小孩</span> <span class="npc npc">游客</span> <span class="npc npc">萧群</span> <span class="npc npc">缨子帽</span> <span class="npc npc">桃叶仙</span> <span class="npc npc">农夫</span> <span class="npc npc">胖商人</span> <span class="npc npc">1dai</span> <span class="npc npc">2dai</span> <span class="npc npc">3dai</span> <span class="npc npc">4dai</span> <span class="npc npc">5dai</span> <span class="npc npc">6dai</span> <span class="npc npc">7dai</span> <span class="npc npc">killed</span> <span class="npc npc">家丁</span> <span class="npc npc">日月弟子</span> <span class="npc npc">马青雄</span> <span class="npc npc">乞丐</span> <span class="npc npc">皇宫卫士</span> <span class="npc boss">汪剑通 👹</span> <span class="npc npc">丁当</span> <span class="npc npc">卜沉</span> <span class="npc npc">守墓家奴</span> <span class="npc npc">裨将</span> <span class="npc npc">弃婴</span></div>
+    <div class="exits">出口: <a href="#gaibang/hq" class="exit-link" title="去 丐帮·总舵">e→丐帮·总舵</a> │ <a href="#gaibang/forest2" class="exit-link" title="去 丐帮·杏子林深处">s→丐帮·杏子林深处</a> │ <a href="#wilderness/forest1" class="exit-link" title="去 山林·入口">w→山林·入口</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">丐帮·杏子林深处</div>
+  <div class="room" id="gaibang/forest2" data-search="丐帮·杏子林深处  丐帮">
+    <div class="room-name">丐帮·杏子林深处 <span class="room-id">gaibang/forest2</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>w</span><span>s</span></div>
-    <div class="exits">出口: north→丐帮·杏子林入口</div>
-    <div class="npcs"><span class="npc npc">寡妇</span> <span class="npc npc">雪参丹</span> <span class="npc npc">孔已己</span> <span class="npc npc">游人</span> <span class="npc npc">萧万喜</span> <span class="npc npc">蓝宝石腰带</span> <span class="npc npc">桃花仙</span> <span class="npc npc">台夷农妇</span> <span class="npc npc">瘦商人</span> <span class="npc npc">killed_super</span> <span class="npc npc">大金兵</span> <span class="npc npc">日月弟子</span> <span class="npc npc">马贼</span> <span class="npc npc">青衣</span> <span class="npc npc">郝连铁树</span> <span class="npc npc">樵夫</span> <span class="npc npc">邓八年</span> <span class="npc npc">流浪汉</span> <span class="npc npc">男孩</span> <span class="npc npc">偏将</span> <span class="npc npc">铁匠</span></div>
+    <div class="exits">出口: <a href="#gaibang/forest1" class="exit-link" title="去 丐帮·杏子林入口">n→丐帮·杏子林入口</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
 </div>
 
-<h2>华山派</h2>
+<h2 id="area-huashan">华山派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">华山·山脚</div>
+  <div class="room" id="huashan/foot" data-search="华山·山脚  华山派">
+    <div class="room-name">华山·山脚 <span class="room-id">huashan/foot</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>e</span></div>
-    <div class="exits">出口: north→华山·山道 │ south→山林·深处</div>
-    <div class="npcs"><span class="npc npc">管家</span> <span class="npc npc">归元丹</span> <span class="npc npc">归钟</span> <span class="npc npc">喇嘛</span> <span class="npc npc">园丁</span> <span class="npc npc">刘工匠</span> <span class="npc npc">翠柳鹦鹉服</span> <span class="npc npc">桃实仙</span> <span class="npc npc">农夫</span> <span class="npc boss">幽冥道人 👹</span> <span class="npc npc">killer</span> <span class="npc npc">柯镇恶</span> <span class="npc npc">日月弟子</span> <span class="npc npc">蒙面人</span> <span class="npc npc">丛不弃</span> <span class="npc npc">陆大有</span> <span class="npc npc">妙手郎中</span> <span class="npc npc">风清扬</span> <span class="npc npc">高根明</span> <span class="npc npc">小师妹</span> <span class="npc npc">江湖豪客</span> <span class="npc npc">劳德诺</span> <span class="npc npc">梁发</span> <span class="npc npc">林平之</span> <span class="npc npc">任盈盈</span> <span class="npc npc">施戴子</span> <span class="npc npc">李铁嘴</span> <span class="npc npc">游客</span> <span class="npc npc">岳灵珊</span> <span class="npc npc">烧火僧人</span> <span class="npc npc">老道士</span> <span class="npc boss">穆人清 👹</span> <span class="npc npc">石中玉</span> <span class="npc npc">狄修</span> <span class="npc npc">翠花</span> <span class="npc npc">黄真</span> <span class="npc npc">穷汉</span> <span class="npc npc">巫攀冰</span></div>
+    <div class="exits">出口: <a href="#huashan/path" class="exit-link" title="去 华山·山道">n→华山·山道</a> │ <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">s→山林·深处</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">华山·山道</div>
+  <div class="room" id="huashan/path" data-search="华山·山道  华山派">
+    <div class="room-name">华山·山道 <span class="room-id">huashan/path</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>e</span><span>n</span></div>
-    <div class="exits">出口: south→华山·山脚 │ north→华山·之巅</div>
-    <div class="npcs"><span class="npc npc">金花</span> <span class="npc npc">火麒丹</span> <span class="npc npc">老鸨婆</span> <span class="npc boss">御前侍卫 👹</span> <span class="npc npc">王石匠</span> <span class="npc npc">结婚礼服</span> <span class="npc npc">使者</span> <span class="npc npc">摆夷老叟</span> <span class="npc npc">张朝唐</span> <span class="npc npc">questnpc</span> <span class="npc npc">吕正平</span> <span class="npc npc">青旗弟子</span> <span class="npc npc">彭连虎</span> <span class="npc npc">食客</span> <span class="npc npc">南海鳄神</span> <span class="npc boss">谢烟客 👹</span> <span class="npc npc">丁勉</span> <span class="npc npc">地保</span> <span class="npc npc">邱航</span> <span class="npc npc">丫鬟</span></div>
+    <div class="exits">出口: <a href="#huashan/foot" class="exit-link" title="去 华山·山脚">s→华山·山脚</a> │ <a href="#huashan/peak" class="exit-link" title="去 华山·之巅">n→华山·之巅</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">华山·之巅</div>
+  <div class="room" id="huashan/peak" data-search="华山·之巅 岳不群 华山派弟子 华山派">
+    <div class="room-name">华山·之巅 <span class="room-id">huashan/peak</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>e</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: south→华山·山道</div>
-    <div class="npcs"><span class="npc npc">小孩</span> <span class="npc npc">血麒丹</span> <span class="npc npc">毒郎中</span> <span class="npc npc">骁骑营侍卫</span> <span class="npc npc">武将</span> <span class="npc npc">彩缎紧身袄</span> <span class="npc npc">韦春芳</span> <span class="npc npc">陪从</span> <span class="npc npc">华山派弟子</span> <span class="npc npc">张康</span> <span class="npc npc">receiver</span> <span class="npc npc">南希仁</span> <span class="npc npc">黄伯流</span> <span class="npc npc">钱青健</span> <span class="npc npc">素斋师傅</span> <span class="npc npc">努儿海</span> <span class="npc master">岳不群</span> <span class="npc npc">归辛树</span> <span class="npc npc">成不忧</span> <span class="npc npc">封不平</span> <span class="npc npc">高老者</span> <span class="npc npc">劳德诺</span> <span class="npc npc">令狐冲</span> <span class="npc master">岳不群</span> <span class="npc npc">岳夫人</span> <span class="npc npc">归二娘</span> <span class="npc npc">乌老大</span> <span class="npc npc">费彬</span> <span class="npc npc">地痞</span> <span class="npc npc">烧饭师傅</span> <span class="npc npc">姚德忠</span></div>
+    <div class="exits">出口: <a href="#huashan/path" class="exit-link" title="去 华山·山道">s→华山·山道</a></div>
+    <div class="npcs"><span class="npc master" data-npc="岳不群">岳不群</span> <span class="npc npc" data-npc="华山派弟子">华山派弟子</span></div>
   </div>
 </div>
 
-<h2>峨眉派</h2>
+<h2 id="area-emei">峨眉派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">峨眉·山门</div>
+  <div class="room" id="emei/foot" data-search="峨眉·山门  峨眉派">
+    <div class="room-name">峨眉·山门 <span class="room-id">emei/foot</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>n</span></div>
-    <div class="exits">出口: north→峨眉·金顶 │ south→山林·断崖</div>
-    <div class="npcs"><span class="npc npc">李管家</span> <span class="npc npc">罗刹</span> <span class="npc npc">小童</span> <span class="npc npc">掌柜</span> <span class="npc npc">香客</span> <span class="npc npc">琼花皎月裳</span> <span class="npc npc">武将</span> <span class="npc npc">皮货商</span> <span class="npc npc">贝锦仪</span> <span class="npc npc">男弟子</span> <span class="npc npc">静道师太</span> <span class="npc npc">道明小师父</span> <span class="npc npc">丁敏君</span> <span class="npc npc">方碧琳</span> <span class="npc npc">静风师太</span> <span class="npc npc">风陵师太</span> <span class="npc npc">大青蛙</span> <span class="npc npc">女弟子</span> <span class="npc npc">进香客</span> <span class="npc npc">郭襄</span> <span class="npc npc">静和师太</span> <span class="npc npc">静慧师太</span> <span class="npc npc">纪晓芙</span> <span class="npc npc">静迦师太</span> <span class="npc npc">静空师太</span> <span class="npc npc">李明霞</span> <span class="npc npc">赵灵珠</span> <span class="npc master">灭绝师太</span> <span class="npc npc">仆人</span> <span class="npc npc">苏梦清</span> <span class="npc npc">文方小师太</span> <span class="npc npc">文晖小师太</span> <span class="npc npc">文清小师太</span> <span class="npc npc">文音小师太</span> <span class="npc npc">静闲师太</span> <span class="npc npc">小贩</span> <span class="npc npc">静心师太</span> <span class="npc npc">静虚师太</span> <span class="npc npc">静玄师太</span> <span class="npc npc">年轻少妇</span> <span class="npc npc">静照师太</span> <span class="npc npc">静真师太</span> <span class="npc npc">周芷若</span> <span class="npc npc">钟四嫂</span> <span class="npc npc">shennpc</span> <span class="npc npc">裘千丈</span> <span class="npc npc">小孩</span> <span class="npc npc">樵夫</span> <span class="npc npc">踏青妇人</span> <span class="npc npc">石人武士</span> <span class="npc npc">方人智</span> <span class="npc npc">高克新</span> <span class="npc npc">女孩</span> <span class="npc boss">书店老板 👹</span> <span class="npc npc">衙役</span></div>
+    <div class="exits">出口: <a href="#emei/golden" class="exit-link" title="去 峨眉·金顶">n→峨眉·金顶</a> │ <a href="#wilderness/cliff" class="exit-link" title="去 山林·断崖">s→山林·断崖</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">峨眉·金顶</div>
+  <div class="room" id="emei/golden" data-search="峨眉·金顶 峨眉派弟子 灭绝师太 峨眉派弟子 峨眉派">
+    <div class="room-name">峨眉·金顶 <span class="room-id">emei/golden</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: south→峨眉·山门</div>
-    <div class="npcs"><span class="npc npc">灵蛇</span> <span class="npc npc">龙涎丹</span> <span class="npc boss">姚春 👹</span> <span class="npc npc">张康年</span> <span class="npc npc">湘湘</span> <span class="npc npc">梨花飘雪裳</span> <span class="npc npc">冼老板</span> <span class="npc npc">破嗔</span> <span class="npc npc">峨眉派弟子</span> <span class="npc npc">钟小二</span> <span class="npc npc">spekilled</span> <span class="npc npc">全金发</span> <span class="npc npc">老者</span> <span class="npc npc">沙通天</span> <span class="npc npc">无赖</span> <span class="npc npc">店小二</span> <span class="npc master">灭绝师太</span> <span class="npc npc">余沧海</span> <span class="npc npc">陆柏</span> <span class="npc npc">小孩</span> <span class="npc npc">铁匠</span> <span class="npc npc">姨太太</span></div>
+    <div class="exits">出口: <a href="#emei/foot" class="exit-link" title="去 峨眉·山门">s→峨眉·山门</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="峨眉派弟子">峨眉派弟子</span> <span class="npc master" data-npc="灭绝师太">灭绝师太</span> <span class="npc npc" data-npc="峨眉派弟子">峨眉派弟子</span></div>
   </div>
 </div>
 
-<h2>古墓派</h2>
+<h2 id="area-gumu">古墓派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">古墓·入口</div>
+  <div class="room" id="gumu/entrance" data-search="古墓·入口  古墓派">
+    <div class="room-name">古墓·入口 <span class="room-id">gumu/entrance</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: north→古墓·密室 │ south→山林·深处</div>
-    <div class="npcs"><span class="npc npc">农民</span> <span class="npc npc">龟苓丹</span> <span class="npc npc">李力世</span> <span class="npc npc">赵齐贤</span> <span class="npc npc">店小二</span> <span class="npc npc">七彩霞云衣</span> <span class="npc npc">店小二</span> <span class="npc npc">破疑</span> <span class="npc npc">白二</span> <span class="npc boss">super 👹</span> <span class="npc npc">小贩</span> <span class="npc npc">孙婆婆</span> <span class="npc npc">小贩</span> <span class="npc npc">沈青刚</span> <span class="npc npc">老僧人</span> <span class="npc npc">店小二</span> <span class="npc boss">老婆婆 👹</span> <span class="npc npc">洪人雄</span> <span class="npc npc">沙天江</span> <span class="npc npc">老大娘</span> <span class="npc npc">拖雷</span> <span class="npc npc">赵德言</span></div>
+    <div class="exits">出口: <a href="#gumu/chamber" class="exit-link" title="去 古墓·密室">n→古墓·密室</a> │ <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">s→山林·深处</a></div>
+    <div class="npcs"><span class="npc-none">(无人)</span></div>
   </div>
-  <div class="room">
-    <div class="room-name">古墓·密室</div>
+  <div class="room" id="gumu/chamber" data-search="古墓·密室 古墓派弟子 杨过 古墓派弟子 古墓派">
+    <div class="room-name">古墓·密室 <span class="room-id">gumu/chamber</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>n</span><span>n</span></div>
-    <div class="exits">出口: south→古墓·入口</div>
-    <div class="npcs"><span class="npc npc">门卫</span> <span class="npc npc">龙王丹</span> <span class="npc npc">柳大洪</span> <span class="npc npc">郑克爽</span> <span class="npc npc">店小二</span> <span class="npc npc">霓红连衣裙</span> <span class="npc npc">店小二</span> <span class="npc npc">僧人</span> <span class="npc npc">古墓派弟子</span> <span class="npc npc">男孩</span> <span class="npc npc">tracenpc</span> <span class="npc npc">书童</span> <span class="npc npc">侍女</span> <span class="npc npc">吴青烈</span> <span class="npc npc">小生</span> <span class="npc npc">校尉</span> <span class="npc master">小龙女</span> <span class="npc npc">林朝英</span> <span class="npc master">小龙女</span> <span class="npc npc">杨过</span> <span class="npc npc">侯人英</span> <span class="npc npc">史登达</span> <span class="npc npc">穷汉</span> <span class="npc npc">王坚</span> <span class="npc npc">周松天</span></div>
+    <div class="exits">出口: <a href="#gumu/entrance" class="exit-link" title="去 古墓·入口">s→古墓·入口</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="古墓派弟子">古墓派弟子</span> <span class="npc npc" data-npc="杨过">杨过</span> <span class="npc npc" data-npc="古墓派弟子">古墓派弟子</span></div>
   </div>
 </div>
 
-<h2>昆仑派</h2>
+<h2 id="area-kunlun">昆仑派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">昆仑·三清殿</div>
+  <div class="room" id="kunlun/hall" data-search="昆仑·三清殿 昆仑派弟子 何足道 昆仑派弟子 昆仑派">
+    <div class="room-name">昆仑·三清殿 <span class="room-id">kunlun/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>e</span><span>northwest</span></div>
-    <div class="exits">出口: east→山林·断崖</div>
-    <div class="npcs"><span class="npc npc">花花公子</span> <span class="npc npc">万寿丹</span> <span class="npc npc">流氓</span> <span class="npc npc">庄家</span> <span class="npc npc">戏子</span> <span class="npc npc">一字逍遥巾</span> <span class="npc npc">小桂子</span> <span class="npc npc">少女</span> <span class="npc npc">昆仑派弟子</span> <span class="npc npc">陈阿婆</span> <span class="npc npc">完颜洪烈</span> <span class="npc npc">杨莲亭</span> <span class="npc boss">无洞上人 👹</span> <span class="npc npc">心砚</span> <span class="npc npc">仆人</span> <span class="npc npc">小贩</span> <span class="npc npc">西夏兵</span> <span class="npc master">何太冲</span> <span class="npc npc">高则成</span> <span class="npc master">何太冲</span> <span class="npc npc">何足道</span> <span class="npc npc">蒋涛</span> <span class="npc npc">卫四娘</span> <span class="npc npc">西华子</span> <span class="npc npc">詹春</span> <span class="npc boss">范遥 👹</span> <span class="npc npc">吉人通</span> <span class="npc npc">汤英鹄</span> <span class="npc npc">小流氓</span> <span class="npc npc">武敦儒</span></div>
+    <div class="exits">出口: <a href="#wilderness/cliff" class="exit-link" title="去 山林·断崖">e→山林·断崖</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="昆仑派弟子">昆仑派弟子</span> <span class="npc npc" data-npc="何足道">何足道</span> <span class="npc npc" data-npc="昆仑派弟子">昆仑派弟子</span></div>
   </div>
 </div>
 
-<h2>明教</h2>
+<h2 id="area-mingjiao">明教</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">明教·光明顶</div>
+  <div class="room" id="mingjiao/hall" data-search="明教·光明顶 明教弟子 张无忌 明教弟子 明教">
+    <div class="room-name">明教·光明顶 <span class="room-id">mingjiao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>northeast</span></div>
-    <div class="exits">出口: west→山林·深处</div>
-    <div class="npcs"><span class="npc npc">樵夫</span> <span class="npc npc">阴</span> <span class="npc npc">耍猴人</span> <span class="npc npc">庄允城</span> <span class="npc npc">李博渊</span> <span class="npc npc">梨芯淡烟纱</span> <span class="npc npc">杨永福</span> <span class="npc npc">神农帮弟子</span> <span class="npc npc">明教弟子</span> <span class="npc npc">陈七</span> <span class="npc npc">完颜康</span> <span class="npc npc">紫衫侍者</span> <span class="npc npc">老秀才</span> <span class="npc npc">张龙</span> <span class="npc npc">叶二娘</span> <span class="npc master">张无忌</span> <span class="npc npc">冷谦</span> <span class="npc npc">韦一笑</span> <span class="npc npc">谢逊</span> <span class="npc npc">杨逍</span> <span class="npc npc">殷天正</span> <span class="npc master">张无忌</span> <span class="npc npc">胡青牛</span> <span class="npc npc">白猿</span> <span class="npc npc">接引使</span> <span class="npc npc">大汉</span> <span class="npc npc">巫士</span> <span class="npc npc">猴子</span> <span class="npc npc">野羊</span> <span class="npc npc">拓跋</span> <span class="npc npc">小昭</span> <span class="npc boss">北海谪龙 👹</span> <span class="npc npc">贾人达</span> <span class="npc npc">万大平</span> <span class="npc npc">小贩</span> <span class="npc npc">武三通</span></div>
+    <div class="exits">出口: <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">w→山林·深处</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="明教弟子">明教弟子</span> <span class="npc master" data-npc="张无忌">张无忌</span> <span class="npc npc" data-npc="明教弟子">明教弟子</span></div>
   </div>
 </div>
 
-<h2>全真教</h2>
+<h2 id="area-quanzhen">全真教</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">全真教·重阳宫</div>
+  <div class="room" id="quanzhen/hall" data-search="全真教·重阳宫 全真教弟子 周伯通 全真教弟子 全真教">
+    <div class="room-name">全真教·重阳宫 <span class="room-id">quanzhen/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>southwest</span></div>
-    <div class="exits">出口: north→山林·深处</div>
-    <div class="npcs"><span class="npc npc">小山贼</span> <span class="npc npc">映月丹</span> <span class="npc npc">卖艺人</span> <span class="npc npc">白衣</span> <span class="npc npc">丫环</span> <span class="npc npc">绣花鞋</span> <span class="npc boss">颜如玉 👹</span> <span class="npc npc">侍从</span> <span class="npc npc">全真教弟子</span> <span class="npc npc">崔镖头</span> <span class="npc npc">小菊</span> <span class="npc npc">仪和</span> <span class="npc npc">西夏兵</span> <span class="npc npc">混混张三</span> <span class="npc npc">一品堂武士</span> <span class="npc master">王重阳</span> <span class="npc npc">皮清玄</span> <span class="npc npc">祁志诚</span> <span class="npc npc">丘处机</span> <span class="npc npc">申志凡</span> <span class="npc npc">孙不二</span> <span class="npc npc">谭处端</span> <span class="npc master">王重阳</span> <span class="npc npc">王处一</span> <span class="npc npc">王志坦</span> <span class="npc npc">尹志平</span> <span class="npc npc">程瑶迦</span> <span class="npc npc">张志光</span> <span class="npc npc">赵志敬</span> <span class="npc npc">周伯通</span> <span class="npc npc">崔志方</span> <span class="npc npc">房志起</span> <span class="npc npc">郝大通</span> <span class="npc npc">姬清虚</span> <span class="npc npc">李志常</span> <span class="npc npc">刘处玄</span> <span class="npc npc">马钰</span> <span class="npc boss">东海三太子 👹</span> <span class="npc npc">罗人杰</span> <span class="npc npc">官兵</span> <span class="npc npc">男孩</span> <span class="npc npc">村民</span> <span class="npc npc">地保</span> <span class="npc npc">地痞</span> <span class="npc npc">女孩</span> <span class="npc npc">管家</span> <span class="npc npc">火工道人</span> <span class="npc npc">家丁</span> <span class="npc npc">小孩</span> <span class="npc npc">流氓</span> <span class="npc npc">穷汉</span> <span class="npc npc">小流氓</span> <span class="npc npc">小贩</span> <span class="npc npc">武将</span> <span class="npc npc">香客</span> <span class="npc npc">店小二</span> <span class="npc npc">店小二</span> <span class="npc npc">游客</span> <span class="npc npc">侯员外</span> <span class="npc npc">掌柜</span> <span class="npc npc">乐厚</span> <span class="npc npc">冯铁匠</span> <span class="npc npc">武修文</span></div>
+    <div class="exits">出口: <a href="#wilderness/forest2" class="exit-link" title="去 山林·深处">n→山林·深处</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="全真教弟子">全真教弟子</span> <span class="npc npc" data-npc="周伯通">周伯通</span> <span class="npc npc" data-npc="全真教弟子">全真教弟子</span></div>
   </div>
 </div>
 
-<h2>星宿派</h2>
+<h2 id="area-xingxiu">星宿派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">星宿派·星宿海</div>
+  <div class="room" id="xingxiu/hall" data-search="星宿派·星宿海 星宿派弟子 摘星子 星宿派弟子 星宿派">
+    <div class="room-name">星宿派·星宿海 <span class="room-id">xingxiu/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>n</span><span>w</span><span>southwest</span></div>
-    <div class="exits">出口: east→山林·洞穴</div>
-    <div class="npcs"><span class="npc npc">山贼</span> <span class="npc npc">邀月丹</span> <span class="npc npc">马童</span> <span class="npc npc">群玉楼保镖</span> <span class="npc npc">杨老板</span> <span class="npc npc">玄色紧身袄</span> <span class="npc npc">衙役</span> <span class="npc npc">石匠</span> <span class="npc npc">星宿派弟子</span> <span class="npc npc">绣花小鞋</span> <span class="npc npc">小兰</span> <span class="npc npc">定静师太</span> <span class="npc npc">祖千秋</span> <span class="npc npc">掌澡僧人</span> <span class="npc npc">云中鹤</span> <span class="npc master">丁春秋</span> <span class="npc npc">摘星子</span> <span class="npc boss">段寿辉 👹</span> <span class="npc npc">申人俊</span> <span class="npc npc">钟镇</span> <span class="npc npc">王小二</span> <span class="npc npc">店小二</span></div>
+    <div class="exits">出口: <a href="#wilderness/cave" class="exit-link" title="去 山林·洞穴">e→山林·洞穴</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="星宿派弟子">星宿派弟子</span> <span class="npc npc" data-npc="摘星子">摘星子</span> <span class="npc npc" data-npc="星宿派弟子">星宿派弟子</span></div>
   </div>
 </div>
 
-<h2>逍遥派</h2>
+<h2 id="area-xiaoyao">逍遥派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">逍遥派·琅嬛阁</div>
+  <div class="room" id="xiaoyao/hall" data-search="逍遥派·琅嬛阁 逍遥派弟子 无崖子 逍遥派弟子 逍遥派">
+    <div class="room-name">逍遥派·琅嬛阁 <span class="room-id">xiaoyao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>n</span></div>
-    <div class="exits">出口: east→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">山贼头</span> <span class="npc npc">皓月丹</span> <span class="npc npc">面馆伙计</span> <span class="npc npc">镖师</span> <span class="npc npc">yayi</span> <span class="npc npc">淡烟秀才装</span> <span class="npc npc">程玉环</span> <span class="npc npc">侍者</span> <span class="npc npc">逍遥派弟子</span> <span class="npc npc">戈什哈</span> <span class="npc npc">陆冠英</span> <span class="npc npc">仪琳</span> <span class="npc boss">张天师 👹</span> <span class="npc npc">赵虎</span> <span class="npc npc">帐房先生</span> <span class="npc npc">逍遥派掌门</span> <span class="npc npc">冯阿三</span> <span class="npc npc">苟读</span> <span class="npc npc">康广陵</span> <span class="npc npc">石清露</span> <span class="npc npc">苏星河</span> <span class="npc npc">吴领军</span> <span class="npc npc">无崖子</span> <span class="npc npc">薛慕华</span> <span class="npc boss">老夫人 👹</span> <span class="npc npc">于人豪</span> <span class="npc boss">左冷禅 👹</span> <span class="npc npc">李四</span> <span class="npc npc">牙将</span> <span class="npc npc">王语嫣</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">e→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="逍遥派弟子">逍遥派弟子</span> <span class="npc npc" data-npc="无崖子">无崖子</span> <span class="npc npc" data-npc="逍遥派弟子">逍遥派弟子</span></div>
   </div>
 </div>
 
-<h2>桃花岛</h2>
+<h2 id="area-taohua">桃花岛</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">桃花岛·试剑亭</div>
+  <div class="room" id="taohua/hall" data-search="桃花岛·试剑亭 桃花岛弟子 黄药师 桃花岛弟子 桃花岛">
+    <div class="room-name">桃花岛·试剑亭 <span class="room-id">taohua/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>s</span></div>
-    <div class="exits">出口: south→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">仕卫</span> <span class="npc npc">嫦娥仙丹</span> <span class="npc npc">老妇</span> <span class="npc npc">镖头</span> <span class="npc npc">萧员外</span> <span class="npc npc">绣花小方巾</span> <span class="npc npc">曾柔</span> <span class="npc npc">傣族首领</span> <span class="npc npc">桃花岛弟子</span> <span class="npc npc">女孩</span> <span class="npc npc">张阿生</span> <span class="npc npc">秦绢</span> <span class="npc npc">阿芳</span> <span class="npc npc">智法长老</span> <span class="npc npc">韩云</span> <span class="npc npc">桃花岛掌门</span> <span class="npc npc">黄药师</span> <span class="npc npc">陆乘风</span> <span class="npc npc">曲灵风</span> <span class="npc npc">黄蓉</span> <span class="npc boss">郭襄 👹</span> <span class="npc npc">余人彦</span> <span class="npc npc">冯正东</span> <span class="npc npc">婢奴</span> <span class="npc npc">老船夫</span> <span class="npc npc">仆人</span> <span class="npc npc">侍童</span> <span class="npc npc">哑仆</span> <span class="npc npc">来福儿</span> <span class="npc npc">耶律齐</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">s→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="桃花岛弟子">桃花岛弟子</span> <span class="npc npc" data-npc="黄药师">黄药师</span> <span class="npc npc" data-npc="桃花岛弟子">桃花岛弟子</span></div>
   </div>
 </div>
 
-<h2>灵鹫宫</h2>
+<h2 id="area-lingjiu">灵鹫宫</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">灵鹫宫·缥缈峰</div>
+  <div class="room" id="lingjiu/hall" data-search="灵鹫宫·缥缈峰 灵鹫宫弟子 虚竹子 灵鹫宫弟子 灵鹫宫">
+    <div class="room-name">灵鹫宫·缥缈峰 <span class="room-id">lingjiu/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>e</span></div>
-    <div class="exits">出口: north→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">铁匠</span> <span class="npc npc">轩辕</span> <span class="npc npc">老汉</span> <span class="npc npc">捕头</span> <span class="npc npc">御林军</span> <span class="npc npc">艳露凝香衣</span> <span class="npc npc">朱熹</span> <span class="npc npc">太监</span> <span class="npc npc">灵鹫宫弟子</span> <span class="npc npc">林震南</span> <span class="npc npc">朱聪</span> <span class="npc npc">仪清</span> <span class="npc npc">官兵</span> <span class="npc npc">知客僧</span> <span class="npc npc">端木元</span> <span class="npc npc">九翼道人</span> <span class="npc npc">黎夫人</span> <span class="npc npc">桑土公</span> <span class="npc npc">卓不凡</span> <span class="npc npc">左子穆</span> <span class="npc npc">胡雪源</span> <span class="npc npc">灵鹫宫掌门</span> <span class="npc npc">符敏仪</span> <span class="npc npc">菊剑</span> <span class="npc npc">兰剑</span> <span class="npc npc">梅剑</span> <span class="npc npc">石嫂</span> <span class="npc npc">虚竹子</span> <span class="npc npc">余婆婆</span> <span class="npc npc">竹剑</span> <span class="npc boss">红日法王 👹</span> <span class="npc npc">道童</span> <span class="npc npc">公子哥</span> <span class="npc npc">甘宝宝</span> <span class="npc npc">朱子柳</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">n→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="灵鹫宫弟子">灵鹫宫弟子</span> <span class="npc npc" data-npc="虚竹子">虚竹子</span> <span class="npc npc" data-npc="灵鹫宫弟子">灵鹫宫弟子</span></div>
   </div>
 </div>
 
-<h2>神龙教</h2>
+<h2 id="area-shenlong">神龙教</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">神龙教·神龙岛</div>
+  <div class="room" id="shenlong/hall" data-search="神龙教·神龙岛 神龙教弟子 苏荃 神龙教弟子 神龙教">
+    <div class="room-name">神龙教·神龙岛 <span class="room-id">shenlong/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>w</span></div>
-    <div class="exits">出口: east→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">毒蛇</span> <span class="npc npc">朱雀</span> <span class="npc npc">嫖客</span> <span class="npc npc">陈老板</span> <span class="npc npc">梁兴禄</span> <span class="npc npc">紫绫纱湘裙</span> <span class="npc npc">「平通镖局」镖头</span> <span class="npc npc">台夷商贩</span> <span class="npc npc">神龙教弟子</span> <span class="npc npc">史镖头</span> <span class="npc npc">白振</span> <span class="npc npc">仪文</span> <span class="npc npc">男孩</span> <span class="npc npc">智清长老</span> <span class="npc npc">花农</span> <span class="npc npc">神龙教掌门</span> <span class="npc npc">陆高轩</span> <span class="npc npc">瘦头陀</span> <span class="npc npc">苏荃</span> <span class="npc npc">殷锦</span> <span class="npc npc">张淡月</span> <span class="npc boss">猴王 👹</span> <span class="npc npc">小道童</span> <span class="npc npc">年轻弟子</span> <span class="npc npc">年轻弟子</span> <span class="npc npc">年轻弟子</span> <span class="npc npc">年轻弟子</span> <span class="npc npc">老船夫</span> <span class="npc npc">弟子</span> <span class="npc npc">方怡</span> <span class="npc npc">年轻女弟子</span> <span class="npc npc">沐剑屏</span> <span class="npc npc">老者</span> <span class="npc npc">云素梅</span> <span class="npc npc">章老三</span> <span class="npc npc">药铺伙计</span> <span class="npc npc">江湖豪客</span> <span class="npc npc">佐将</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">e→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="神龙教弟子">神龙教弟子</span> <span class="npc npc" data-npc="苏荃">苏荃</span> <span class="npc npc" data-npc="神龙教弟子">神龙教弟子</span></div>
   </div>
 </div>
 
-<h2>日月神教</h2>
+<h2 id="area-riyue">日月神教</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">日月神教·黑木崖</div>
+  <div class="room" id="riyue/hall" data-search="日月神教·黑木崖 日月神教弟子 任我行 日月神教弟子 日月神教">
+    <div class="room-name">日月神教·黑木崖 <span class="room-id">riyue/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>northeast</span></div>
-    <div class="exits">出口: south→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">舞蛇人</span> <span class="npc npc">玄武</span> <span class="npc boss">戏子 👹</span> <span class="npc npc">打手</span> <span class="npc npc">庄家</span> <span class="npc npc">斗鸡</span> <span class="npc npc">士兵</span> <span class="npc npc">兔肉</span> <span class="npc npc">日月神教弟子</span> <span class="npc npc">王夫人</span> <span class="npc npc">男孩</span> <span class="npc npc">定闲师太</span> <span class="npc npc">丁典</span> <span class="npc npc">考官</span> <span class="npc npc">浪翻云</span> <span class="npc npc">日月神教掌门</span> <span class="npc npc">王诚</span> <span class="npc npc">向问天</span> <span class="npc npc">任盈盈</span> <span class="npc npc">张乘云</span> <span class="npc npc">赵鹤</span> <span class="npc npc">范松</span> <span class="npc npc">张乘风</span> <span class="npc npc">贾布</span> <span class="npc npc">秦伟邦</span> <span class="npc npc">任我行</span> <span class="npc npc">桑三娘</span> <span class="npc npc">上官云</span> <span class="npc npc">童百熊</span> <span class="npc boss">胡一刀 👹</span> <span class="npc npc">游方道人</span> <span class="npc npc">红色长袍</span> <span class="npc npc">黄伯流</span> <span class="npc npc">长针</span> <span class="npc npc">老夫子</span> <span class="npc npc">黄眉大师</span> <span class="npc npc">蒙面人</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">s→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="日月神教弟子">日月神教弟子</span> <span class="npc npc" data-npc="任我行">任我行</span> <span class="npc npc" data-npc="日月神教弟子">日月神教弟子</span></div>
   </div>
 </div>
 
-<h2>雪山派</h2>
+<h2 id="area-xueshan">雪山派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">雪山派·凌霄阁</div>
+  <div class="room" id="xueshan/hall" data-search="雪山派·凌霄阁 雪山派弟子 雪山派掌门 雪山派弟子 雪山派">
+    <div class="room-name">雪山派·凌霄阁 <span class="room-id">xueshan/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>northwest</span></div>
-    <div class="exits">出口: west→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">教练</span> <span class="npc npc">白虎</span> <span class="npc npc">钱老本</span> <span class="npc npc">时九公</span> <span class="npc npc">紫衣</span> <span class="npc npc">管家</span> <span class="npc npc">台夷商贩</span> <span class="npc npc">素衣卫士</span> <span class="npc npc">雪山派弟子</span> <span class="npc npc">店小二</span> <span class="npc npc">采茶女</span> <span class="npc npc">哑妇</span> <span class="npc npc">女孩</span> <span class="npc npc">昆仑派女弟子</span> <span class="npc npc">老鸨婆</span> <span class="npc npc">雪山派掌门</span> <span class="npc boss">老道 👹</span> <span class="npc npc">掌经道长</span> <span class="npc npc">小孩</span> <span class="npc npc">木婉清</span> <span class="npc npc">阿凡提</span> <span class="npc npc">达尔巴</span> <span class="npc npc">金轮法王</span> <span class="npc npc">葛伦布</span> <span class="npc npc">霍都</span> <span class="npc npc">嘉木活佛</span> <span class="npc npc">拉章活佛</span> <span class="npc npc">萨木活佛</span> <span class="npc npc">守寺僧兵</span> <span class="npc npc">兔肉</span> <span class="npc npc">小喇嘛</span> <span class="npc npc">小喇嘛</span> <span class="npc npc">进香客</span> <span class="npc npc">店小二</span> <span class="npc npc">知客僧</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">w→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="雪山派弟子">雪山派弟子</span> <span class="npc npc" data-npc="雪山派掌门">雪山派掌门</span> <span class="npc npc" data-npc="雪山派弟子">雪山派弟子</span></div>
   </div>
 </div>
 
-<h2>铁掌帮</h2>
+<h2 id="area-tiezhang">铁掌帮</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">铁掌帮·铁掌峰</div>
+  <div class="room" id="tiezhang/hall" data-search="铁掌帮·铁掌峰 铁掌帮弟子 裘千仞 铁掌帮弟子 铁掌帮">
+    <div class="room-name">铁掌帮·铁掌峰 <span class="room-id">tiezhang/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>southeast</span></div>
-    <div class="exits">出口: north→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">白衣少女</span> <span class="npc npc">青龙</span> <span class="npc npc">钱正伦</span> <span class="npc npc">粉衣</span> <span class="npc npc">万青山</span> <span class="npc npc">王五</span> <span class="npc npc">采桑女</span> <span class="npc npc">黄衣卫士</span> <span class="npc npc">铁掌帮弟子</span> <span class="npc npc">店小二</span> <span class="npc npc">褚圆</span> <span class="npc npc">定逸师太</span> <span class="npc npc">管家</span> <span class="npc npc">昆仑派弟子</span> <span class="npc npc">粮草官</span> <span class="npc npc">铁掌帮掌门</span> <span class="npc npc">裘千仞</span> <span class="npc npc">裘千丈</span> <span class="npc boss">老奴 👹</span> <span class="npc npc">掌理道长</span> <span class="npc npc">苏州女孩</span> <span class="npc npc">黑衣帮众</span> <span class="npc npc">厚土旗弟子</span> <span class="npc npc">巨木旗教众</span> <span class="npc npc">顾炎武</span> <span class="npc npc">黑衣帮众</span> <span class="npc npc">灰衣帮众</span> <span class="npc npc">麻衣长老</span> <span class="npc npc">店小二</span> <span class="npc npc">小童</span> <span class="npc npc">丫鬟</span> <span class="npc npc">进喜儿</span> <span class="npc npc">阿拉木罕</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">n→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="铁掌帮弟子">铁掌帮弟子</span> <span class="npc npc" data-npc="裘千仞">裘千仞</span> <span class="npc npc" data-npc="铁掌帮弟子">铁掌帮弟子</span></div>
   </div>
 </div>
 
-<h2>唐门</h2>
+<h2 id="area-tangmen">唐门</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">唐门·唐家堡</div>
+  <div class="room" id="tangmen/hall" data-search="唐门·唐家堡 唐门弟子 唐门掌门 唐门弟子 唐门">
+    <div class="room-name">唐门·唐家堡 <span class="room-id">tangmen/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>southwest</span></div>
-    <div class="exits">出口: west→荒野·门派岔路1</div>
-    <div class="npcs"><span class="npc npc">农家妇女</span> <span class="npc npc">张德贵</span> <span class="npc npc">祁彪清</span> <span class="npc npc">fu jiang</span> <span class="npc npc">陈浒</span> <span class="npc npc">龟公</span> <span class="npc npc">采笋人</span> <span class="npc npc">锦衣卫士</span> <span class="npc npc">唐门弟子</span> <span class="npc npc">店小二</span> <span class="npc boss">大悲尊者 👹</span> <span class="npc npc">郑萼</span> <span class="npc npc">华陀二世</span> <span class="npc npc">昆仑派女弟子</span> <span class="npc boss">李白 👹</span> <span class="npc npc">唐门掌门</span> <span class="npc boss">雪山老僧 👹</span> <span class="npc npc">掌药道长</span> <span class="npc npc">苏州少女</span> <span class="npc npc">唐柔</span> <span class="npc npc">钟万仇</span> <span class="npc npc">官兵</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub1" class="exit-link" title="去 荒野·门派岔路1">w→荒野·门派岔路1</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="唐门弟子">唐门弟子</span> <span class="npc npc" data-npc="唐门掌门">唐门掌门</span> <span class="npc npc" data-npc="唐门弟子">唐门弟子</span></div>
   </div>
 </div>
 
-<h2>慕容世家</h2>
+<h2 id="area-murong">慕容世家</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">慕容世家·燕子坞</div>
+  <div class="room" id="murong/hall" data-search="慕容世家·燕子坞 慕容世家弟子 慕容复 慕容世家弟子 慕容世家">
+    <div class="room-name">慕容世家·燕子坞 <span class="room-id">murong/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>n</span></div>
-    <div class="exits">出口: east→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">小青</span> <span class="npc npc">地痞</span> <span class="npc npc">齐元凯</span> <span class="npc npc">浮云</span> <span class="npc npc">厨娘</span> <span class="npc boss">老板 👹</span> <span class="npc npc">采笋人</span> <span class="npc npc">乌夷商贩</span> <span class="npc npc">慕容世家弟子</span> <span class="npc npc">小贩</span> <span class="npc npc">刀客</span> <span class="npc npc">仪质</span> <span class="npc npc">药铺伙计</span> <span class="npc npc">昆仑派弟子</span> <span class="npc npc">鲁开</span> <span class="npc npc">慕容世家掌门</span> <span class="npc npc">慕容复</span> <span class="npc boss">李秋水 👹</span> <span class="npc npc">掌园道长</span> <span class="npc npc">丫环</span> <span class="npc npc">钟灵</span> <span class="npc npc">星宿派钹手</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">e→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="慕容世家弟子">慕容世家弟子</span> <span class="npc npc" data-npc="慕容复">慕容复</span> <span class="npc npc" data-npc="慕容世家弟子">慕容世家弟子</span></div>
   </div>
 </div>
 
-<h2>大理段氏</h2>
+<h2 id="area-duan">大理段氏</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">段氏·天龙寺</div>
+  <div class="room" id="duan/hall" data-search="段氏·天龙寺 段氏皇族弟子 一灯大师 段氏皇族弟子 大理段氏">
+    <div class="room-name">段氏·天龙寺 <span class="room-id">duan/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>s</span></div>
-    <div class="exits">出口: south→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">丫环</span> <span class="npc npc">独臂神尼</span> <span class="npc npc">富家弟子</span> <span class="npc npc">卖花姑娘</span> <span class="npc npc">药店伙计</span> <span class="npc npc">小混混</span> <span class="npc npc">村妇</span> <span class="npc npc">无量剑弟子</span> <span class="npc npc">段氏皇族弟子</span> <span class="npc boss">段延庆 👹</span> <span class="npc boss">段誉 👹</span> <span class="npc npc">郑镖头</span> <span class="npc npc">女孩</span> <span class="npc npc">茶博士</span> <span class="npc npc">凌退思</span> <span class="npc npc">茶小二</span> <span class="npc npc">绿竹翁</span> <span class="npc npc">段氏皇族掌门</span> <span class="npc npc">华赫艮</span> <span class="npc npc">一灯大师</span> <span class="npc npc">朱丹臣</span> <span class="npc npc">褚万里</span> <span class="npc npc">刀白凤</span> <span class="npc npc">段正淳</span> <span class="npc npc">段正明</span> <span class="npc npc">范骅</span> <span class="npc npc">傅思归</span> <span class="npc npc">高升泰</span> <span class="npc npc">古笃诚</span> <span class="npc boss">南海恶蛟 👹</span> <span class="npc npc">知客道长</span> <span class="npc npc">婢女</span> <span class="npc npc">厨师</span> <span class="npc npc">采花子</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">s→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="段氏皇族弟子">段氏皇族弟子</span> <span class="npc npc" data-npc="一灯大师">一灯大师</span> <span class="npc npc" data-npc="段氏皇族弟子">段氏皇族弟子</span></div>
   </div>
 </div>
 
-<h2>衡山派</h2>
+<h2 id="area-henshan">衡山派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">衡山·回雁楼</div>
+  <div class="room" id="henshan/hall" data-search="衡山·回雁楼 衡山派弟子 莫大 衡山派弟子 衡山派">
+    <div class="room-name">衡山·回雁楼 <span class="room-id">henshan/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>e</span></div>
-    <div class="exits">出口: south→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">张妈</span> <span class="npc npc">城门督察</span> <span class="npc npc">神照上人</span> <span class="npc npc">官兵</span> <span class="npc npc">刘虹瑛</span> <span class="npc npc">药铺伙计</span> <span class="npc npc">大土司</span> <span class="npc npc">小道姑</span> <span class="npc npc">衡山派弟子</span> <span class="npc npc">孤魂野鬼</span> <span class="npc npc">管家</span> <span class="npc npc">厨师</span> <span class="npc npc">菊友</span> <span class="npc npc">元财</span> <span class="npc npc">祁老二</span> <span class="npc npc">衡山派掌门</span> <span class="npc npc">鲁连荣</span> <span class="npc npc">米为义</span> <span class="npc npc">莫大</span> <span class="npc npc">向大年</span> <span class="npc npc">刘菁</span> <span class="npc npc">刘芹</span> <span class="npc boss">牛头怪 👹</span> <span class="npc npc">男孩</span> <span class="npc npc">尼姑</span> <span class="npc npc">范先生</span> <span class="npc npc">采药人</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">s→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="衡山派弟子">衡山派弟子</span> <span class="npc npc" data-npc="莫大">莫大</span> <span class="npc npc" data-npc="衡山派弟子">衡山派弟子</span></div>
   </div>
 </div>
 
-<h2>红花会</h2>
+<h2 id="area-honghua">红花会</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">红花会·聚义厅</div>
+  <div class="room" id="honghua/hall" data-search="红花会·聚义厅 红花会弟子 陈家洛 红花会弟子 红花会">
+    <div class="room-name">红花会·聚义厅 <span class="room-id">honghua/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>w</span></div>
-    <div class="exits">出口: east→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">鳌拜</span> <span class="npc npc">赌客</span> <span class="npc npc">鳌府侍卫</span> <span class="npc npc">管家</span> <span class="npc npc">龙铨</span> <span class="npc npc">药铺伙计</span> <span class="npc npc">段无畏</span> <span class="npc npc">店小二</span> <span class="npc npc">红花会弟子</span> <span class="npc npc">李文秀</span> <span class="npc npc">进香客</span> <span class="npc npc">刀客</span> <span class="npc npc">小孩</span> <span class="npc npc">刘通</span> <span class="npc npc">秦掌柜</span> <span class="npc npc">红花会掌门</span> <span class="npc npc">余鱼同</span> <span class="npc npc">赵半山</span> <span class="npc npc">常伯志</span> <span class="npc npc">陈家洛</span> <span class="npc npc">蒋四根</span> <span class="npc npc">骆冰</span> <span class="npc npc">石双英</span> <span class="npc npc">文泰来</span> <span class="npc npc">无尘道长</span> <span class="npc npc">杨成协</span> <span class="npc npc">上官银票</span> <span class="npc npc">陈阿婆</span> <span class="npc npc">尼姑</span> <span class="npc npc">柴房管事</span> <span class="npc npc">星宿派鼓手</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">e→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="红花会弟子">红花会弟子</span> <span class="npc npc" data-npc="陈家洛">陈家洛</span> <span class="npc npc" data-npc="红花会弟子">红花会弟子</span></div>
   </div>
 </div>
 
-<h2>胡家</h2>
+<h2 id="area-hu">胡家</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">胡家·演武场</div>
+  <div class="room" id="hu/hall" data-search="胡家·演武场 胡家弟子 华山派弟子 胡家掌门 胡家">
+    <div class="room-name">胡家·演武场 <span class="room-id">hu/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>northeast</span></div>
-    <div class="exits">出口: north→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">北京官兵</span> <span class="npc npc">多隆</span> <span class="npc npc">康府侍卫</span> <span class="npc npc">红衣</span> <span class="npc npc">马五德</span> <span class="npc npc">家丁</span> <span class="npc npc">恶奴</span> <span class="npc npc">店小二</span> <span class="npc npc">胡家弟子</span> <span class="npc npc">瓦耳拉齐</span> <span class="npc npc">红花会众</span> <span class="npc npc">弟子</span> <span class="npc npc">程灵素</span> <span class="npc npc">胡斐</span> <span class="npc npc">胡逸之</span> <span class="npc npc">平四</span> <span class="npc npc">钱得发</span> <span class="npc npc">王府亲兵</span> <span class="npc boss">书店老板 👹</span> <span class="npc npc">胡家掌门</span> <span class="npc npc">单正</span> <span class="npc npc">船夫</span> <span class="npc npc">票友</span> <span class="npc npc">木房管事</span> <span class="npc npc">星宿派号手</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">n→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="胡家弟子">胡家弟子</span> <span class="npc npc" data-npc="华山派弟子">华山派弟子</span> <span class="npc npc" data-npc="胡家掌门">胡家掌门</span></div>
   </div>
 </div>
 
-<h2>绝情谷</h2>
+<h2 id="area-jueqing">绝情谷</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">绝情谷·情花谷</div>
+  <div class="room" id="jueqing/hall" data-search="绝情谷·情花谷 绝情谷弟子 公孙止 绝情谷弟子 绝情谷">
+    <div class="room-name">绝情谷·情花谷 <span class="room-id">jueqing/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>northwest</span></div>
-    <div class="exits">出口: west→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">东厂官兵</span> <span class="npc npc">樊纲</span> <span class="npc npc">诗人</span> <span class="npc npc">黄衣</span> <span class="npc npc">亲兵</span> <span class="npc npc">白髯鸡仙</span> <span class="npc npc">纺纱女</span> <span class="npc boss">薛老板 👹</span> <span class="npc npc">绝情谷弟子</span> <span class="npc npc">船夫</span> <span class="npc npc">绿营会众</span> <span class="npc npc">杜凤鄂</span> <span class="npc npc">凌霜华</span> <span class="npc npc">厨师</span> <span class="npc npc">公孙绿萼</span> <span class="npc boss">吴三桂 👹</span> <span class="npc npc">铁匠</span> <span class="npc npc">绝情谷掌门</span> <span class="npc npc">樊一翁</span> <span class="npc npc">公孙止</span> <span class="npc boss">桃谷老仙 👹</span> <span class="npc npc">女孩</span> <span class="npc npc">小贩</span> <span class="npc npc">马房管事</span> <span class="npc npc">牧羊人</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">w→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="绝情谷弟子">绝情谷弟子</span> <span class="npc npc" data-npc="公孙止">公孙止</span> <span class="npc npc" data-npc="绝情谷弟子">绝情谷弟子</span></div>
   </div>
 </div>
 
-<h2>凌霄城</h2>
+<h2 id="area-lingxiao">凌霄城</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">凌霄城·雪峰殿</div>
+  <div class="room" id="lingxiao/hall" data-search="凌霄城·雪峰殿 凌霄城弟子 史婆婆 凌霄城弟子 凌霄城">
+    <div class="room-name">凌霄城·雪峰殿 <span class="room-id">lingxiao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>southeast</span></div>
-    <div class="exits">出口: south→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">西厂官兵</span> <span class="npc npc">冯锡范</span> <span class="npc npc">侍者</span> <span class="npc npc">慧通禅师</span> <span class="npc npc">侍从</span> <span class="npc npc">李阿婆</span> <span class="npc npc">台夷妇女</span> <span class="npc npc">养蚕女</span> <span class="npc npc">凌霄城弟子</span> <span class="npc npc">忽伦大虎</span> <span class="npc npc">胡庆余</span> <span class="npc npc">绯胭</span> <span class="npc npc">铁匠</span> <span class="npc npc">店小二</span> <span class="npc npc">阎大夫</span> <span class="npc npc">凌霄弟子</span> <span class="npc npc">陈朝奉</span> <span class="npc boss">石清 👹</span> <span class="npc npc">窈娘</span> <span class="npc boss">大天龙 👹</span> <span class="npc npc">凌霄城掌门</span> <span class="npc npc">闻万夫</span> <span class="npc npc">张万风</span> <span class="npc npc">白自在</span> <span class="npc npc">耿万钟</span> <span class="npc npc">花万紫</span> <span class="npc npc">呼延万善</span> <span class="npc npc">柯万钧</span> <span class="npc npc">陆万通</span> <span class="npc npc">史婆婆</span> <span class="npc npc">王万仞</span> <span class="npc boss">天山童姥 👹</span> <span class="npc npc">红毛鬼</span> <span class="npc npc">甄有庆</span> <span class="npc npc">菜园管事</span> <span class="npc npc">小孩</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">s→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="凌霄城弟子">凌霄城弟子</span> <span class="npc npc" data-npc="史婆婆">史婆婆</span> <span class="npc npc" data-npc="凌霄城弟子">凌霄城弟子</span></div>
   </div>
 </div>
 
-<h2>梅庄</h2>
+<h2 id="area-meizhuang">梅庄</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">梅庄·琴剑阁</div>
+  <div class="room" id="meizhuang/hall" data-search="梅庄·琴剑阁 梅庄弟子 黄钟公 梅庄弟子 梅庄">
+    <div class="room-name">梅庄·琴剑阁 <span class="room-id">meizhuang/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>southwest</span></div>
-    <div class="exits">出口: east→荒野·门派岔路2</div>
-    <div class="npcs"><span class="npc npc">男孩</span> <span class="npc npc">风际中</span> <span class="npc npc">双儿</span> <span class="npc npc">小伙计</span> <span class="npc npc">唐钝</span> <span class="npc npc">流氓</span> <span class="npc npc">歌女</span> <span class="npc npc">游客</span> <span class="npc npc">梅庄弟子</span> <span class="npc npc">忽伦二虎</span> <span class="npc npc">家丁</span> <span class="npc npc">管家</span> <span class="npc npc">万震山</span> <span class="npc npc">男孩</span> <span class="npc npc">萧南忠</span> <span class="npc npc">梅庄掌门</span> <span class="npc npc">丁坚</span> <span class="npc npc">黑白子</span> <span class="npc npc">黄钟公</span> <span class="npc npc">秃笔翁</span> <span class="npc npc">施令威</span> <span class="npc npc">厨师</span> <span class="npc npc">护院</span> <span class="npc npc">家丁</span> <span class="npc npc">任我行</span> <span class="npc boss">星宿小仙 👹</span> <span class="npc npc">刘国轩</span> <span class="npc npc">孙剥皮</span> <span class="npc npc">菜园管事</span> <span class="npc npc">买卖提</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub2" class="exit-link" title="去 荒野·门派岔路2">e→荒野·门派岔路2</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="梅庄弟子">梅庄弟子</span> <span class="npc npc" data-npc="黄钟公">黄钟公</span> <span class="npc npc" data-npc="梅庄弟子">梅庄弟子</span></div>
   </div>
 </div>
 
-<h2>苗家</h2>
+<h2 id="area-miao">苗家</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">苗家·剑庐</div>
+  <div class="room" id="miao/hall" data-search="苗家·剑庐 苗家弟子 苗家掌门 苗家弟子 苗家">
+    <div class="room-name">苗家·剑庐 <span class="room-id">miao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>n</span></div>
-    <div class="exits">出口: north→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">小男孩</span> <span class="npc npc">卖花姑娘</span> <span class="npc npc">书生</span> <span class="npc npc">金复还</span> <span class="npc npc">唐掌柜</span> <span class="npc npc">流氓头</span> <span class="npc npc">摆夷女子</span> <span class="npc npc">渔夫</span> <span class="npc npc">苗家弟子</span> <span class="npc npc">冯锡范</span> <span class="npc npc">剑客</span> <span class="npc npc">江湖豪客</span> <span class="npc npc">萧湘子</span> <span class="npc npc">菜贩子</span> <span class="npc npc">小贩</span> <span class="npc npc">苗家掌门</span> <span class="npc npc">苗若兰</span> <span class="npc npc">苗人凤</span> <span class="npc npc">锺兆能</span> <span class="npc npc">锺兆文</span> <span class="npc npc">锺兆英</span> <span class="npc npc">徐霞客</span> <span class="npc npc">倭寇</span> <span class="npc npc">王合计</span> <span class="npc boss">郭靖 👹</span> <span class="npc npc">沙虫</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">n→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="苗家弟子">苗家弟子</span> <span class="npc npc" data-npc="苗家掌门">苗家掌门</span> <span class="npc npc" data-npc="苗家弟子">苗家弟子</span></div>
   </div>
 </div>
 
-<h2>欧阳世家</h2>
+<h2 id="area-ouyang">欧阳世家</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">欧阳世家·白驼山</div>
+  <div class="room" id="ouyang/hall" data-search="欧阳世家·白驼山 欧阳世家弟子 欧阳克 欧阳世家弟子 欧阳世家">
+    <div class="room-name">欧阳世家·白驼山 <span class="room-id">ouyang/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>s</span></div>
-    <div class="exits">出口: west→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">男子</span> <span class="npc npc">庄夫人</span> <span class="npc npc">酸秀才</span> <span class="npc npc">净明</span> <span class="npc npc">唐槐</span> <span class="npc npc">刘素素</span> <span class="npc npc">南国姑娘</span> <span class="npc npc">族头人</span> <span class="npc npc">欧阳世家弟子</span> <span class="npc npc">哈达尼</span> <span class="npc npc">监工</span> <span class="npc boss">猎人 👹</span> <span class="npc npc">衙役</span> <span class="npc npc">女孩</span> <span class="npc npc">澡堂伙计</span> <span class="npc npc">欧阳世家掌门</span> <span class="npc npc">欧阳克</span> <span class="npc boss">于万亭 👹</span> <span class="npc npc">店小二</span> <span class="npc npc">衙役</span> <span class="npc npc">仆人</span> <span class="npc npc">沙虫壳</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">w→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="欧阳世家弟子">欧阳世家弟子</span> <span class="npc npc" data-npc="欧阳克">欧阳克</span> <span class="npc npc" data-npc="欧阳世家弟子">欧阳世家弟子</span></div>
   </div>
 </div>
 
-<h2>商家堡</h2>
+<h2 id="area-shang">商家堡</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">商家堡·八卦堂</div>
+  <div class="room" id="shang/hall" data-search="商家堡·八卦堂 商家堡弟子 商老太 商家堡弟子 商家堡">
+    <div class="room-name">商家堡·八卦堂 <span class="room-id">shang/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>e</span></div>
-    <div class="exits">出口: south→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">菜贩子</span> <span class="npc npc">少女</span> <span class="npc npc">太监</span> <span class="npc npc">净玄</span> <span class="npc npc">吴天德</span> <span class="npc npc">茅十八</span> <span class="npc npc">宫女</span> <span class="npc npc">族长</span> <span class="npc npc">商家堡弟子</span> <span class="npc npc">赫尔苏</span> <span class="npc npc">李可秀</span> <span class="npc npc">家丁</span> <span class="npc npc">弟子</span> <span class="npc npc">小孩</span> <span class="npc npc">周逸风</span> <span class="npc npc">商家堡掌门</span> <span class="npc npc">商老太</span> <span class="npc boss">钟志灵 👹</span> <span class="npc npc">狄云</span> <span class="npc npc">迟百城</span> <span class="npc npc">武敦儒</span> <span class="npc npc">维吾尔少女</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">s→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="商家堡弟子">商家堡弟子</span> <span class="npc npc" data-npc="商老太">商老太</span> <span class="npc npc" data-npc="商家堡弟子">商家堡弟子</span></div>
   </div>
 </div>
 
-<h2>嵩山派</h2>
+<h2 id="area-songshan">嵩山派</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">嵩山·封禅台</div>
+  <div class="room" id="songshan/hall" data-search="嵩山·封禅台 嵩山派弟子 左冷禅 嵩山派弟子 嵩山派">
+    <div class="room-name">嵩山·封禅台 <span class="room-id">songshan/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>w</span></div>
-    <div class="exits">出口: east→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">茶博士</span> <span class="npc npc">少妇</span> <span class="npc npc">趟子手</span> <span class="npc npc">妓女</span> <span class="npc npc">店小二</span> <span class="npc npc">迎宾小姐</span> <span class="npc npc">管家</span> <span class="npc boss">白无常 👹</span> <span class="npc npc">嵩山派弟子</span> <span class="npc npc">监工</span> <span class="npc npc">流氓</span> <span class="npc npc">剑客</span> <span class="npc npc">绿衫少女</span> <span class="npc npc">流氓</span> <span class="npc npc">朱政</span> <span class="npc npc">嵩山派掌门</span> <span class="npc npc">费彬</span> <span class="npc npc">乐厚</span> <span class="npc npc">乐厚</span> <span class="npc npc">左冷禅</span> <span class="npc boss">慕容龙城 👹</span> <span class="npc npc">地藏王</span> <span class="npc npc">厨师</span> <span class="npc npc">小贩</span> <span class="npc npc">刀客</span> <span class="npc boss">武三通 👹</span> <span class="npc npc">波斯商人</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">e→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="嵩山派弟子">嵩山派弟子</span> <span class="npc npc" data-npc="左冷禅">左冷禅</span> <span class="npc npc" data-npc="嵩山派弟子">嵩山派弟子</span></div>
   </div>
 </div>
 
-<h2>天龙寺</h2>
+<h2 id="area-tianlongsi">天龙寺</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">天龙寺·枯荣堂</div>
+  <div class="room" id="tianlongsi/hall" data-search="天龙寺·枯荣堂 天龙寺弟子 天龙寺掌门 天龙寺弟子 天龙寺">
+    <div class="room-name">天龙寺·枯荣堂 <span class="room-id">tianlongsi/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>northeast</span></div>
-    <div class="exits">出口: north→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">茶客</span> <span class="npc npc">女孩</span> <span class="npc npc">茶铺伙计</span> <span class="npc npc">庙祝</span> <span class="npc npc">店小二</span> <span class="npc npc">平一指</span> <span class="npc npc">贵公子</span> <span class="npc boss">白虎 👹</span> <span class="npc npc">天龙寺弟子</span> <span class="npc npc">焦文期</span> <span class="npc npc">流氓头</span> <span class="npc npc">刘夫人</span> <span class="npc boss">包拯 👹</span> <span class="npc npc">流氓头</span> <span class="npc npc">朱饮</span> <span class="npc npc">天龙寺掌门</span> <span class="npc boss">李白 👹</span> <span class="npc npc">花铁干</span> <span class="npc npc">剑客</span> <span class="npc npc">本参</span> <span class="npc npc">本观</span> <span class="npc npc">本相</span> <span class="npc npc">本因</span> <span class="npc npc">护塔僧</span> <span class="npc npc">鸠摩智</span> <span class="npc npc">枯荣大师</span> <span class="npc npc">老年僧人</span> <span class="npc npc">扫地僧</span> <span class="npc npc">小沙弥</span> <span class="npc npc">武修文</span> <span class="npc npc">维吾尔族妇女</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">n→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="天龙寺弟子">天龙寺弟子</span> <span class="npc npc" data-npc="天龙寺掌门">天龙寺掌门</span> <span class="npc npc" data-npc="天龙寺弟子">天龙寺弟子</span></div>
   </div>
 </div>
 
-<h2>绝世境界</h2>
+<h2 id="area-ultra">绝世境界</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">绝世·武境</div>
+  <div class="room" id="ultra/hall" data-search="绝世·武境 绝世高手弟子 绝世高手掌门 绝世高手弟子 绝世境界">
+    <div class="room-name">绝世·武境 <span class="room-id">ultra/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>northwest</span></div>
-    <div class="exits">出口: west→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">程老板</span> <span class="npc npc">小女孩</span> <span class="npc npc">挑夫</span> <span class="npc npc">张兰香</span> <span class="npc npc">萧飞</span> <span class="npc npc">钱眼开</span> <span class="npc npc">台夷姑娘</span> <span class="npc npc">黑无常</span> <span class="npc npc">绝世高手弟子</span> <span class="npc npc">酒馆老板</span> <span class="npc npc">龙骏</span> <span class="npc npc">黄智强</span> <span class="npc npc">富家弟子</span> <span class="npc npc">钱迷心</span> <span class="npc npc">绝世高手掌门</span> <span class="npc npc">白龟寿</span> <span class="npc npc">李自成</span> <span class="npc boss">曲洋 👹</span> <span class="npc npc">建除道人</span> <span class="npc npc">独孤求败</span> <span class="npc npc">黄裳</span> <span class="npc npc">霍山</span> <span class="npc npc">葵花太监</span> <span class="npc npc">丫环</span> <span class="npc npc">武将</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">w→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="绝世高手弟子">绝世高手弟子</span> <span class="npc npc" data-npc="绝世高手掌门">绝世高手掌门</span> <span class="npc npc" data-npc="绝世高手弟子">绝世高手弟子</span></div>
   </div>
 </div>
 
-<h2>五毒教</h2>
+<h2 id="area-wudu">五毒教</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">五毒教·万蛊殿</div>
+  <div class="room" id="wudu/hall" data-search="五毒教·万蛊殿 五毒教弟子 何铁手 五毒教弟子 五毒教">
+    <div class="room-name">五毒教·万蛊殿 <span class="room-id">wudu/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>southeast</span></div>
-    <div class="exits">出口: south→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">陈老头</span> <span class="npc npc">关安基</span> <span class="npc npc">铁公鸡</span> <span class="npc npc">蓝衣</span> <span class="npc npc">小贼</span> <span class="npc npc">戚长发</span> <span class="npc npc">何红药</span> <span class="npc boss">地藏王 👹</span> <span class="npc npc">五毒教弟子</span> <span class="npc npc">皮货商</span> <span class="npc npc">蒙面人</span> <span class="npc npc">蟒蛇肉</span> <span class="npc npc">高衙内</span> <span class="npc npc">店小二</span> <span class="npc npc">五毒教掌门</span> <span class="npc npc">游方道人</span> <span class="npc npc">何红药</span> <span class="npc npc">何铁手</span> <span class="npc npc">沙千里</span> <span class="npc npc">潘秀达</span> <span class="npc npc">齐云敖</span> <span class="npc npc">常金鹏</span> <span class="npc npc">陆天抒</span> <span class="npc npc">商宝震</span> <span class="npc npc">江百胜</span> <span class="npc npc">男孩</span> <span class="npc npc">翠兰</span> <span class="npc npc">cun fu</span> <span class="npc npc">cun min</span> <span class="npc npc">苗三斤</span> <span class="npc npc">毒道人</span> <span class="npc npc">五毒教弟子</span> <span class="npc npc">女孩</span> <span class="npc npc">五毒教徒</span> <span class="npc npc">小孩</span> <span class="npc npc">白髯老者</span> <span class="npc npc">樵夫</span> <span class="npc npc">孙二娘</span> <span class="npc npc">田嫂</span> <span class="npc npc">锦衣童子</span> <span class="npc npc">教书先生</span> <span class="npc npc">小学童</span> <span class="npc npc">苗族少年</span> <span class="npc npc">诸葛不亮</span> <span class="npc boss">耶律齐 👹</span> <span class="npc npc">阿碧</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">s→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="五毒教弟子">五毒教弟子</span> <span class="npc npc" data-npc="何铁手">何铁手</span> <span class="npc npc" data-npc="五毒教弟子">五毒教弟子</span></div>
   </div>
 </div>
 
-<h2>侠客岛</h2>
+<h2 id="area-xiakedao">侠客岛</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">侠客岛·石室</div>
+  <div class="room" id="xiakedao/hall" data-search="侠客岛·石室 侠客岛弟子 侠客岛弟子 侠客岛弟子 侠客岛">
+    <div class="room-name">侠客岛·石室 <span class="room-id">xiakedao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>southwest</span></div>
-    <div class="exits">出口: east→荒野·门派岔路3</div>
-    <div class="npcs"><span class="npc npc">不知名草药</span> <span class="npc npc">观众</span> <span class="npc npc">铁匠铺伙计</span> <span class="npc npc">说书老人</span> <span class="npc npc">账房老夫子</span> <span class="npc npc">空空儿</span> <span class="npc npc">黄眉大师</span> <span class="npc npc">亡魂</span> <span class="npc npc">侠客岛弟子</span> <span class="npc npc">忽伦三虎</span> <span class="npc npc">老大娘</span> <span class="npc npc">田伯光</span> <span class="npc npc">官兵</span> <span class="npc npc">店小二</span> <span class="npc npc">侠客岛掌门</span> <span class="npc npc">侠客岛弟子</span> <span class="npc npc">黄衣弟子</span> <span class="npc npc">青衣弟子</span> <span class="npc npc">黄衣使者</span> <span class="npc npc">童子</span> <span class="npc npc">程嘲风</span> <span class="npc npc">水笙</span> <span class="npc npc">胖头陀</span> <span class="npc npc">游方和尚</span> <span class="npc boss">朱子柳 👹</span> <span class="npc npc">男孩</span> <span class="npc npc">刀僧</span> <span class="npc npc">垂钓者</span> <span class="npc npc">女孩</span> <span class="npc npc">小孩</span> <span class="npc npc">樵夫</span> <span class="npc boss">石破天 👹</span> <span class="npc npc">史婆婆</span> <span class="npc npc">石破天</span> <span class="npc boss">孙玉溪 👹</span> <span class="npc npc">店小二</span> <span class="npc npc">渔夫</span> <span class="npc npc">阿朱</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub3" class="exit-link" title="去 荒野·门派岔路3">e→荒野·门派岔路3</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="侠客岛弟子">侠客岛弟子</span> <span class="npc npc" data-npc="侠客岛弟子">侠客岛弟子</span> <span class="npc npc" data-npc="侠客岛弟子">侠客岛弟子</span></div>
   </div>
 </div>
 
-<h2>玄冥谷</h2>
+<h2 id="area-xuanming">玄冥谷</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">玄冥谷·冰窟</div>
+  <div class="room" id="xuanming/hall" data-search="玄冥谷·冰窟 玄冥谷弟子 鹤笔翁 玄冥谷弟子 玄冥谷">
+    <div class="room-name">玄冥谷·冰窟 <span class="room-id">xuanming/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span><span>n</span></div>
-    <div class="exits">出口: north→荒野·门派岔路4</div>
-    <div class="npcs"><span class="npc npc">养精丹</span> <span class="npc npc">刽子手</span> <span class="npc npc">铁匠</span> <span class="npc npc">老张</span> <span class="npc npc">阿庆嫂</span> <span class="npc npc">芭蕉扇</span> <span class="npc npc">养花女</span> <span class="npc boss">黑无常 👹</span> <span class="npc npc">玄冥谷弟子</span> <span class="npc npc">参客</span> <span class="npc npc">穷汉</span> <span class="npc npc">兔肉</span> <span class="npc npc">菜贩子</span> <span class="npc npc">店小二</span> <span class="npc npc">玄冥谷掌门</span> <span class="npc npc">鹤笔翁</span> <span class="npc npc">鹿杖客</span> <span class="npc npc">封弓影</span> <span class="npc npc">韦小宝</span> <span class="npc npc">无根道长</span> <span class="npc npc">书生</span> <span class="npc boss">马六 👹</span> <span class="npc npc">包不同</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">n→荒野·门派岔路4</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="玄冥谷弟子">玄冥谷弟子</span> <span class="npc npc" data-npc="鹤笔翁">鹤笔翁</span> <span class="npc npc" data-npc="玄冥谷弟子">玄冥谷弟子</span></div>
   </div>
 </div>
 
-<h2>血刀门</h2>
+<h2 id="area-xuedao">血刀门</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">血刀门·血池</div>
+  <div class="room" id="xuedao/hall" data-search="血刀门·血池 血刀门弟子 血刀老祖 血刀门弟子 血刀门">
+    <div class="room-name">血刀门·血池 <span class="room-id">xuedao/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span><span>s</span></div>
-    <div class="exits">出口: south→荒野·门派岔路4</div>
-    <div class="npcs"><span class="npc npc">蓄精丹</span> <span class="npc npc">海公公</span> <span class="npc npc">进香客</span> <span class="npc npc">梁喜禄</span> <span class="npc npc">镖头</span> <span class="npc npc">绸舞扇</span> <span class="npc npc">霍先生</span> <span class="npc boss">马面 👹</span> <span class="npc npc">血刀门弟子</span> <span class="npc npc">忽伦四虎</span> <span class="npc npc">乾隆皇帝</span> <span class="npc npc">敬香客</span> <span class="npc npc">红花会众</span> <span class="npc npc">小贩</span> <span class="npc npc">血刀门掌门</span> <span class="npc npc">血刀老祖</span> <span class="npc npc">善勇</span> <span class="npc npc">胜谛</span> <span class="npc npc">高山王</span> <span class="npc npc">金临</span> <span class="npc npc">许雪亭</span> <span class="npc npc">趟子手</span> <span class="npc npc">黄衣使者</span> <span class="npc npc">采药人</span> <span class="npc npc">小喇嘛</span> <span class="npc npc">央宗</span> <span class="npc npc">卓玛</span> <span class="npc npc">邓百川</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">s→荒野·门派岔路4</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="血刀门弟子">血刀门弟子</span> <span class="npc npc" data-npc="血刀老祖">血刀老祖</span> <span class="npc npc" data-npc="血刀门弟子">血刀门弟子</span></div>
   </div>
 </div>
 
-<h2>云龙门</h2>
+<h2 id="area-yunlong">云龙门</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">云龙门·飞云阁</div>
+  <div class="room" id="yunlong/hall" data-search="云龙门·飞云阁 云龙门弟子 玄贞道长 云龙门弟子 云龙门">
+    <div class="room-name">云龙门·飞云阁 <span class="room-id">yunlong/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span><span>e</span></div>
-    <div class="exits">出口: east→荒野·门派岔路4</div>
-    <div class="npcs"><span class="npc npc">补精丹</span> <span class="npc npc">韩文冲</span> <span class="npc npc">闲人</span> <span class="npc npc">凌飞雪</span> <span class="npc npc">官兵</span> <span class="npc npc">「扇赏」</span> <span class="npc npc">家丁</span> <span class="npc boss">孟婆 👹</span> <span class="npc npc">云龙门弟子</span> <span class="npc npc">滕一雷</span> <span class="npc npc">绿营清兵</span> <span class="npc npc">店小二</span> <span class="npc npc">红花弟子</span> <span class="npc npc">李嫂</span> <span class="npc npc">云龙门掌门</span> <span class="npc npc">马超兴</span> <span class="npc npc">玄贞道长</span> <span class="npc npc">李天垣</span> <span class="npc npc">阿曼</span> <span class="npc npc">天柏道人</span> <span class="npc boss">陈玄风 👹</span> <span class="npc boss">王五 👹</span> <span class="npc npc">风波恶</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">e→荒野·门派岔路4</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="云龙门弟子">云龙门弟子</span> <span class="npc npc" data-npc="玄贞道长">玄贞道长</span> <span class="npc npc" data-npc="云龙门弟子">云龙门弟子</span></div>
   </div>
 </div>
 
-<h2>震远镖局</h2>
+<h2 id="area-zhenyuan">震远镖局</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">震远镖局·练武厅</div>
+  <div class="room" id="zhenyuan/hall" data-search="震远镖局·练武厅 震远镖局弟子 震远镖局掌门 震远镖局弟子 震远镖局">
+    <div class="room-name">震远镖局·练武厅 <span class="room-id">zhenyuan/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span><span>w</span></div>
-    <div class="exits">出口: north→荒野·门派岔路4</div>
-    <div class="npcs"><span class="npc npc">引心丹</span> <span class="npc npc">江湖豪客</span> <span class="npc npc">店小二</span> <span class="npc npc">刘老实</span> <span class="npc npc">陈有德</span> <span class="npc npc">檀香扇</span> <span class="npc npc">武将</span> <span class="npc boss">牛头 👹</span> <span class="npc npc">震远镖局弟子</span> <span class="npc npc">店小二</span> <span class="npc npc">老和尚</span> <span class="npc npc">店小二</span> <span class="npc npc">护寺僧人</span> <span class="npc npc">阿绣</span> <span class="npc npc">震远镖局掌门</span> <span class="npc npc">彭莹玉</span> <span class="npc npc">波斯商人</span> <span class="npc npc">天门道人</span> <span class="npc boss">梅超风 👹</span> <span class="npc npc">镖头</span> <span class="npc npc">公冶乾</span> <span class="npc npc">戴永明</span> <span class="npc npc">童兆和</span> <span class="npc npc">王剑杰</span> <span class="npc npc">王剑英</span> <span class="npc npc">王维扬</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">n→荒野·门派岔路4</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="震远镖局弟子">震远镖局弟子</span> <span class="npc npc" data-npc="震远镖局掌门">震远镖局掌门</span> <span class="npc npc" data-npc="震远镖局弟子">震远镖局弟子</span></div>
   </div>
 </div>
 
-<h2>修罗地狱</h2>
+<h2 id="area-hell">修罗地狱</h2>
 <div class="grid">
-  <div class="room">
-    <div class="room-name">修罗地狱·血池</div>
+  <div class="room" id="hell/hall" data-search="修罗地狱·血池 修罗地狱弟子 修罗地狱掌门 修罗地狱弟子 修罗地狱">
+    <div class="room-name">修罗地狱·血池 <span class="room-id">hell/hall</span></div>
     <div class="path">🟦 <span>n</span><span>n</span><span>n</span><span>u</span><span>u</span><span>u</span><span>u</span><span>northeast</span></div>
-    <div class="exits">出口: west→荒野·门派岔路4</div>
-    <div class="npcs"><span class="npc npc">九皇补心丹</span> <span class="npc npc">胡掌柜</span> <span class="npc npc">店小二</span> <span class="npc npc">绿衣</span> <span class="npc npc">程药发</span> <span class="npc npc">团扇</span> <span class="npc npc">江湖艺人</span> <span class="npc boss">青龙 👹</span> <span class="npc npc">修罗地狱弟子</span> <span class="npc npc">萧远山</span> <span class="npc npc">小沙弥</span> <span class="npc npc">地藏王</span> <span class="npc npc">仪琳</span> <span class="npc npc">皮货商</span> <span class="npc npc">成自学</span> <span class="npc npc">修罗地狱掌门</span> <span class="npc npc">说不得</span> <span class="npc npc">哈萨克人</span> <span class="npc npc">天松道人</span> <span class="npc boss">李四 👹</span> <span class="npc npc">宋兵</span> <span class="npc npc">男仆</span></div>
+    <div class="exits">出口: <a href="#wilderness/hub4" class="exit-link" title="去 荒野·门派岔路4">w→荒野·门派岔路4</a></div>
+    <div class="npcs"><span class="npc npc" data-npc="修罗地狱弟子">修罗地狱弟子</span> <span class="npc npc" data-npc="修罗地狱掌门">修罗地狱掌门</span> <span class="npc npc" data-npc="修罗地狱弟子">修罗地狱弟子</span></div>
   </div>
 </div>
 
 <p class="generated">本页面由 scripts/generate-map.cjs 根据 server/src/data/maps.json / npcs.json 自动生成。</p>
+
+<script>
+(function(){
+  const search = document.getElementById('search');
+  const result = document.getElementById('result');
+  const clearBtn = document.getElementById('clearBtn');
+  const rooms = document.querySelectorAll('.room');
+  const areas = document.querySelectorAll('h2');
+
+  function filter(q) {
+    q = q.trim().toLowerCase();
+    let visible = 0;
+    const areaVis = new Map();
+
+    rooms.forEach(r => {
+      const data = (r.getAttribute('data-search') || '').toLowerCase();
+      const match = !q || data.includes(q);
+      r.classList.toggle('hidden', !match);
+      if (match) {
+        visible++;
+        const areaH2 = r.closest('.grid')?.previousElementSibling;
+        if (areaH2 && areaH2.tagName === 'H2') areaVis.set(areaH2, true);
+      }
+      r.classList.remove('highlight');
+    });
+
+    // Show/hide area headers
+    areas.forEach(h2 => {
+      if (!q) { h2.classList.remove('collapsed'); return; }
+      h2.classList.toggle('collapsed', !areaVis.has(h2));
+    });
+
+    result.textContent = q
+      ? '找到 ' + visible + ' / ' + rooms.length + ' 个匹配房间' + (visible === 1 ? '（已自动滚动到该房间）' : '')
+      : '';
+
+    // If exactly one match, scroll to it
+    if (visible === 1 && q) {
+      const match = document.querySelector('.room:not(.hidden)');
+      if (match) {
+        match.classList.add('highlight');
+        match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
+  // Live filtering as user types
+  search.addEventListener('input', () => filter(search.value));
+
+  // Also filter on Enter
+  search.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { search.value = ''; filter(''); search.blur(); }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    filter('');
+    search.focus();
+  });
+
+  // Highlight target room when navigated via hash
+  function highlightTarget() {
+    rooms.forEach(r => r.classList.remove('highlight'));
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        target.classList.add('highlight');
+        setTimeout(() => target.classList.remove('highlight'), 2000);
+      }
+    }
+  }
+  window.addEventListener('hashchange', highlightTarget);
+  highlightTarget();
+})();
+</script>
 </body>
 </html>
