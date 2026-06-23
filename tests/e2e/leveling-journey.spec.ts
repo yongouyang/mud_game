@@ -16,6 +16,9 @@ test.describe('Leveling Journey', () => {
     const sendBtn = page.getByRole('button', { name: '发送' });
     const output = page.locator('#root');
 
+    // Wait for socket connection to backend
+    await expect(output).toContainText('login', { timeout: 15000 });
+
     async function cmd(text: string) {
       await input.fill(text);
       await sendBtn.click();

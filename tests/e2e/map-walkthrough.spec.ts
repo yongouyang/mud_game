@@ -18,10 +18,14 @@ async function setup(page: any) {
   const input = page.locator('input[placeholder="输入命令..."]');
   const sendBtn = page.getByRole('button', { name: '发送' });
   const output = page.locator('#root');
+
+  // Wait for socket connection to backend (shows login prompt, not "断开")
+  await expect(output).toContainText('login', { timeout: 15000 });
+
   async function cmd(t: string) {
     await input.fill(t);
     await sendBtn.click();
-    await page.waitForTimeout(80);
+    await page.waitForTimeout(180);
   }
   const uid = 'mw' + Date.now();
   await cmd('register ' + uid + ' pw123');
