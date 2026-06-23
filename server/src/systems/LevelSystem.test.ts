@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { LevelSystem, deriveLevel } from './LevelSystem.js';
-import { Player, createPlayer } from '../models/Player.js';
+import { Player, createPlayer, PlayerAttributes } from '../models/Player.js';
 
 describe('LevelSystem', () => {
   let system: LevelSystem;
@@ -46,7 +46,7 @@ describe('LevelSystem', () => {
   it('spends attribute points by Chinese name', () => {
     const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 2;
-    const err = system.spendAttributePoint(player, '臂力', 1);
+    const err = system.spendAttributePoint(player, '臂力' as keyof PlayerAttributes, 1);
     expect(err).toBeNull();
     expect(player.attributes.str).toBe(11);
   });
@@ -61,7 +61,7 @@ describe('LevelSystem', () => {
   it('rejects invalid attribute', () => {
     const player = createPlayer('p1', '测试', { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 });
     player.attrPoints = 5;
-    const err = system.spendAttributePoint(player, 'foo', 1);
+    const err = system.spendAttributePoint(player, 'foo' as keyof PlayerAttributes, 1);
     expect(err).toContain('没有');
   });
 

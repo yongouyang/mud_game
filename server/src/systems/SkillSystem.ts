@@ -1,5 +1,5 @@
 import { Player, recalcPlayerStats } from '../models/Player.js';
-import { SkillDef, PlayerSkill } from '../models/Skill.js';
+import { SkillDef, PlayerSkill, SkillType } from '../models/Skill.js';
 import skillsData from '../data/skills.json' assert { type: 'json' };
 import { SchoolSystem } from './SchoolSystem.js';
 

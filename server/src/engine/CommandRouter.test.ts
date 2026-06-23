@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
+import { NpcSystem } from '../systems/NpcSystem.js';
 import { createTestContext } from '../test-utils.js';
 
 const PLAYER_ID = 'test-player';
@@ -357,11 +358,11 @@ describe('CommandRouter', () => {
       const ctx2 = createTestContext(0, players);
       const newRouter = ctx2.router;
       ctx2.npcs.register({ id: "wang", name: "王掌柜", description: "test", roomId: "town/inn", dialogue: ["hello"], attributes: {str:5,int:5,con:5,dex:5}, skills: [], aggressive: false });
-      cmd = (input: string) => newRouter.handle(input, PLAYER_ID);
+      const routerCmd = (input: string) => newRouter.handle(input, PLAYER_ID);
       newRouter.handle("楚留香", PLAYER_ID);
       newRouter.handle("done", PLAYER_ID);
-      cmd('e');
-      const output = cmd('ask 王掌柜');
+      routerCmd('e');
+      const output = routerCmd('ask 王掌柜');
       expect(output).toContain('王掌柜说道');
     });
   });

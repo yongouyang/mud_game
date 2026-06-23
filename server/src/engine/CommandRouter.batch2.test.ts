@@ -38,7 +38,7 @@ describe('Batch 2: Shop + Conditions', () => {
 
   it('poison condition can be applied', () => {
     const p = players.getPlayer(PLAYER_ID)!;
-    p.conditions.push('poison');
-    expect(p.conditions).toContain('poison');
+    p.conditions.push({ id: 'poison', name: '中毒', level: 1, remain: 5, appliedAt: 0 });
+    expect(p.conditions.some((c) => c.id === 'poison')).toBe(true);
   });
 });

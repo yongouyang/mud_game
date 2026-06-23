@@ -14,8 +14,8 @@ describe('CombatSystem', () => {
   });
 
   it('attack deals damage to defender', () => {
-    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10 } });
-    const d = player({ attributes: { str: 10, int: 10, con: 10, dex: 10 }, name: 'enemy' });
+    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10, per: 10, kar: 10 } });
+    const d = player({ attributes: { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 }, name: 'enemy' });
     const result = combat.attack(a, d);
     expect(result.defenderDead).toBe(false);
     expect(d.hp).toBeLessThan(d.maxHp);
@@ -23,8 +23,8 @@ describe('CombatSystem', () => {
   });
 
   it('attack can kill defender', () => {
-    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10 } });
-    const d = player({ hp: 1, maxHp: 100, attributes: { str: 5, int: 5, con: 5, dex: 1 }, name: 'enemy' });
+    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10, per: 10, kar: 10 } });
+    const d = player({ hp: 1, maxHp: 100, attributes: { str: 5, int: 5, con: 5, dex: 1, per: 10, kar: 10 }, name: 'enemy' });
     const result = combat.attack(a, d);
     expect(result.defenderDead).toBe(true);
     expect(result.message).toContain('倒下了');
@@ -41,8 +41,8 @@ describe('CombatSystem', () => {
   });
 
   it('damage formula is consistent (no duplicate implementations)', () => {
-    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10 } });
-    const d = player({ attributes: { str: 10, int: 10, con: 10, dex: 10 } });
+    const a = player({ attributes: { str: 15, int: 10, con: 10, dex: 10, per: 10, kar: 10 } });
+    const d = player({ attributes: { str: 10, int: 10, con: 10, dex: 10, per: 10, kar: 10 } });
     // Run 10 attacks and verify damage is within expected range
     for (let i = 0; i < 10; i++) {
       const defender = player({ ...d, hp: d.maxHp });

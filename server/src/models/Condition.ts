@@ -4,6 +4,7 @@ export interface PlayerCondition {
   level: number;
   remain: number; // ticks remaining
   source?: string;
+  category?: string;
   appliedAt: number; // timestamp from SystemClock
 }
 

@@ -1237,7 +1237,7 @@ export class CommandRouter {
     const attr = args[0];
     const amount = args[1] ? parseInt(args[1], 10) : 1;
     if (isNaN(amount) || amount <= 0) return '\n  数量必须是正整数。\n';
-    const err = this.levels.spendAttributePoint(player, attr, amount);
+    const err = this.levels.spendAttributePoint(player, attr as keyof PlayerAttributes, amount);
     if (err) return `\n  ${err}\n`;
     return `\n  你分配了 ${amount} 点属性点到 ${attr}。\n`;
   }

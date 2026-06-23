@@ -55,6 +55,7 @@ export interface Player {
   schoolName?: string;
   quest: {
     questId?: string;
+    title?: string;
     type: string;
     target: string; // NPC name, NPC id, item id, etc.
     targetId?: string; // canonical id for kill/collect targets

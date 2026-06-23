@@ -8,7 +8,7 @@ export interface NpcInstance {
   def: NpcDef;
   hp: number;
   maxHp: number;
-  state: 'idle' | 'fighting';
+  state: 'idle' | 'fighting' | 'dead';
   targetPlayerId: string | null;
 }
 

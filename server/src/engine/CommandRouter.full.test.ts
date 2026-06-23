@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
-import { PlayerManager } from '../systems/PlayerManager.js';
+import { Player } from '../models/Player.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { SchoolSystem } from '../systems/SchoolSystem.js';
 import { createTestContext } from '../test-utils.js';
@@ -10,7 +10,7 @@ const PLAYER_ID = 'full-player';
 describe('Full Implementation', () => {
   let skills: SkillSystem;
   let schools: SchoolSystem;
-  let player: ReturnType<typeof PlayerManager.prototype.createPlayer>;
+  let player: Player;
   let router: CommandRouter;
 
   beforeEach(() => {

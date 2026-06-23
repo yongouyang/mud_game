@@ -134,7 +134,7 @@ describe('ItemSystem', () => {
 
   it('cures condition by category via fallback', () => {
     const p = makePlayer('test');
-    p.conditions = [{ id: 'poison', category: 'poison', level: 1, appliedAt: 0 }];
+    p.conditions = [{ id: 'poison', category: 'poison', name: '中毒', level: 1, remain: 5, appliedAt: 0 }];
     const jiedu = sys.getDef('jiedu-wan')!;
     const msg = sys.applyConsumable(p, jiedu);
     expect(msg).toContain('解除');

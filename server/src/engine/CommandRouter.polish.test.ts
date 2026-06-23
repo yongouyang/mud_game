@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { CommandRouter } from './CommandRouter.js';
 import { PlayerManager } from '../systems/PlayerManager.js';
 import { ItemSystem } from '../systems/ItemSystem.js';
 import { SkillSystem } from '../systems/SkillSystem.js';
 import { NpcSystem } from '../systems/NpcSystem.js';
+import { MapSystem } from '../systems/MapSystem.js';
 import { TestSystemClock } from '../time/SystemClock.js';
 import { Scheduler } from '../time/Scheduler.js';
 import { createTestContext } from '../test-utils.js';

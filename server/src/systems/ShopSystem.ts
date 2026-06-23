@@ -15,7 +15,7 @@ export class ShopSystem {
   private shops: ShopDef[];
 
   constructor(private items: ItemSystem) {
-    this.shops = (shopsData as ShopDef[]).map((s) => ({ ...s }));
+    this.shops = (shopsData as unknown as ShopDef[]).map((s) => ({ ...s }));
   }
 
   private findShopForRoom(roomId: string): ShopDef | undefined {

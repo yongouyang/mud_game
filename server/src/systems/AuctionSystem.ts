@@ -1,4 +1,5 @@
-import { Player, InventoryItem } from '../models/Player.js';
+import { Player } from '../models/Player.js';
+import { InventoryItem } from '../models/Item.js';
 import { ItemSystem } from './ItemSystem.js';
 import { Scheduler } from '../time/Scheduler.js';
 

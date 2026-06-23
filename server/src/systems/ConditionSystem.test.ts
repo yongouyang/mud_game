@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ConditionSystem } from './ConditionSystem.js';
 import { Player, createPlayer } from '../models/Player.js';
 import { TestSystemClock } from '../time/SystemClock.js';
