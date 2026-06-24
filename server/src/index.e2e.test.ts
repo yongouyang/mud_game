@@ -27,7 +27,6 @@ import { AddressInfo } from 'node:net';
 
 let httpServer: HttpServer;
 let port: number;
-let clientSocket: ClientSocket;
 let players: PlayerManager;
 let schedulerInterval: ReturnType<typeof setInterval> | undefined;
 
@@ -94,61 +93,80 @@ beforeAll(async () => {
 
 afterAll(() => {
   if (schedulerInterval) clearInterval(schedulerInterval);
-  clientSocket?.disconnect();
   httpServer?.close();
 });
 
+// Helper to create a fresh socket connection per test suite
+async function createSocket(port: number): Promise<ClientSocket> {
+  const socket = ioc(`http://localhost:${port}`);
+  await new Promise<void>((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
+    socket.on('connect', () => { clearTimeout(t); resolve(); });
+    socket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
+  });
+  return socket;
+}
+
+function sendCmd(socket: ClientSocket, input: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
+    socket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
+    socket.emit('command', { input });
+  });
+}
+
+// Cleanup helper for per-suite sockets
+function cleanupSocket(socket: ClientSocket | undefined) {
+  if (socket) {
+    socket.removeAllListeners();
+    socket.disconnect();
+  }
+}
+
 describe('E2E: Phase 2 — core', () => {
+  let clientSocket: ClientSocket;
+
   beforeAll(async () => {
-    clientSocket = ioc(`http://localhost:${port}`);
-    await new Promise<void>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
-      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
-      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
-    });
+    clientSocket = await createSocket(port);
   }, 15000);
 
-  function sendCmd(input: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
-      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
-      clientSocket.emit('command', { input });
-    });
-  }
+  afterAll(() => {
+    cleanupSocket(clientSocket);
+  });
 
   it('shows login prompt', async () => {
     expect(clientSocket.connected).toBe(true);
-    expect(await sendCmd('')).toContain('欢迎来到炎黄群侠传');
+    expect(await sendCmd(clientSocket, '')).toContain('欢迎来到炎黄群侠传');
   });
 
   it('registers and creates character', async () => {
-    await sendCmd('register tester pass123');
-    await sendCmd('楚留香');
-    expect(await sendCmd('done')).toContain('角色创建成功');
+    await sendCmd(clientSocket, 'register tester pass123');
+    await sendCmd(clientSocket, '楚留香');
+    expect(await sendCmd(clientSocket, 'done')).toContain('角色创建成功');
   });
 
-  it('moves around', async () => { expect(await sendCmd('n')).toContain('主街'); });
-  it('looks at room', async () => { expect(await sendCmd('look')).toContain('主街'); });
-  it('returns south', async () => { expect(await sendCmd('s')).toContain('广场'); });
+  it('moves around', async () => { expect(await sendCmd(clientSocket, 'n')).toContain('主街'); });
+  it('looks at room', async () => { expect(await sendCmd(clientSocket, 'look')).toContain('主街'); });
+  it('returns south', async () => { expect(await sendCmd(clientSocket, 's')).toContain('广场'); });
 
   it('traverses all 10 rooms', async () => {
     // Verify every room name, key description, and exit directions
-    let o = await sendCmd('s');
+    let o = await sendCmd(clientSocket, 's');
     expect(o).toContain('练武场'); expect(o).toContain('青石板');
-    o = await sendCmd('n'); expect(o).toContain('广场');
-    o = await sendCmd('n'); expect(o).toContain('主街');
-    o = await sendCmd('n'); expect(o).toContain('山门');
-    o = await sendCmd('n'); expect(o).toContain('山林·入口');
-    o = await sendCmd('n'); expect(o).toContain('山林·深处');
-    o = await sendCmd('w'); expect(o).toContain('洞穴');
-    o = await sendCmd('e'); expect(o).toContain('深处');
-    o = await sendCmd('s'); expect(o).toContain('入口');
-    o = await sendCmd('e'); expect(o).toContain('断崖');
-    o = await sendCmd('w'); o = await sendCmd('s'); o = await sendCmd('s'); o = await sendCmd('s'); expect(o).toContain('广场');
-    o = await sendCmd('e'); expect(o).toContain('客栈');
-    o = await sendCmd('u'); expect(o).toContain('二楼');
-    o = await sendCmd('d'); expect(o).toContain('客栈');
-    o = await sendCmd('w'); expect(o).toContain('广场');
+    o = await sendCmd(clientSocket, 'n'); expect(o).toContain('广场');
+    o = await sendCmd(clientSocket, 'n'); expect(o).toContain('主街');
+    o = await sendCmd(clientSocket, 'n'); expect(o).toContain('山门');
+    o = await sendCmd(clientSocket, 'n'); expect(o).toContain('山林·入口');
+    o = await sendCmd(clientSocket, 'n'); expect(o).toContain('山林·深处');
+    o = await sendCmd(clientSocket, 'w'); expect(o).toContain('洞穴');
+    o = await sendCmd(clientSocket, 'e'); expect(o).toContain('深处');
+    o = await sendCmd(clientSocket, 's'); expect(o).toContain('入口');
+    o = await sendCmd(clientSocket, 'e'); expect(o).toContain('断崖');
+    o = await sendCmd(clientSocket, 'w'); o = await sendCmd(clientSocket, 's'); o = await sendCmd(clientSocket, 's'); o = await sendCmd(clientSocket, 's'); expect(o).toContain('广场');
+    o = await sendCmd(clientSocket, 'e'); expect(o).toContain('客栈');
+    o = await sendCmd(clientSocket, 'u'); expect(o).toContain('二楼');
+    o = await sendCmd(clientSocket, 'd'); expect(o).toContain('客栈');
+    o = await sendCmd(clientSocket, 'w'); expect(o).toContain('广场');
   });
 
   it('health returns ok', async () => {
@@ -158,47 +176,38 @@ describe('E2E: Phase 2 — core', () => {
 });
 
 describe('E2E: Phase 3 — skills, items, NPCs', () => {
+  let clientSocket: ClientSocket;
+
   beforeAll(async () => {
-    clientSocket = ioc(`http://localhost:${port}`);
-    await new Promise<void>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
-      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
-      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
-    });
+    clientSocket = await createSocket(port);
+    // Register and create character for this test suite
+    await sendCmd(clientSocket, 'register guojing pw123');
+    await sendCmd(clientSocket, '郭靖');
+    await sendCmd(clientSocket, 'done');
   }, 15000);
 
-  function sendCmd(input: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
-      clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
-      clientSocket.emit('command', { input });
-    });
-  }
-
-  beforeAll(async () => {
-    await sendCmd('register guojing pw123');
-    await sendCmd('郭靖');
-    await sendCmd('done');
+  afterAll(() => {
+    cleanupSocket(clientSocket);
   });
 
-  it('learns a skill', async () => { expect(await sendCmd('learn 基本拳脚')).toContain('你学会了基本拳脚'); });
-  it('lists skills', async () => { expect(await sendCmd('skills')).toContain('基本拳脚'); });
-  it('levels up skill', async () => { expect(await sendCmd('learn 基本拳脚')).toContain('Lv.2'); });
-  it('picks up silver', async () => { expect(await sendCmd('get 银子')).toContain('捡起了 5 两银子'); });
-  it('views inventory', async () => { expect(await sendCmd('i')).toContain('银子'); });
-  it('drops an item', async () => { await sendCmd('get 银子'); expect(await sendCmd('drop 银子')).toContain('丢掉了银子'); });
-  it('talks to NPC', async () => { await sendCmd('e'); expect(await sendCmd('ask 王掌柜')).toContain('王掌柜说道'); });
+  it('learns a skill', async () => { expect(await sendCmd(clientSocket, 'learn 基本拳脚')).toContain('你学会了基本拳脚'); });
+  it('lists skills', async () => { expect(await sendCmd(clientSocket, 'skills')).toContain('基本拳脚'); });
+  it('levels up skill', async () => { expect(await sendCmd(clientSocket, 'learn 基本拳脚')).toContain('Lv.2'); });
+  it('picks up silver', async () => { expect(await sendCmd(clientSocket, 'get 银子')).toContain('捡起了 5 两银子'); });
+  it('views inventory', async () => { expect(await sendCmd(clientSocket, 'i')).toContain('银子'); });
+  it('drops an item', async () => { await sendCmd(clientSocket, 'get 银子'); expect(await sendCmd(clientSocket, 'drop 银子')).toContain('丢掉了银子'); });
+  it('talks to NPC', async () => { await sendCmd(clientSocket, 'e'); expect(await sendCmd(clientSocket, 'ask 王掌柜')).toContain('王掌柜说道'); });
 
   it('traverses to Shaolin and joins the school', async () => {
-    let o = await sendCmd('w');  o = await sendCmd('n');  expect(o).toContain('主街');
-    o = await sendCmd('n');      expect(o).toContain('山门');
-    o = await sendCmd('n');      expect(o).toContain('山林·入口');
-    o = await sendCmd('e');      expect(o).toContain('断崖');
-    o = await sendCmd('s');      expect(o).toContain('少林寺');
-    o = await sendCmd('w');      expect(o).toContain('大雄宝殿');
-    o = await sendCmd('schools'); expect(o).toContain('少林派');
-    o = await sendCmd('join 少林派'); expect(o).toContain('拜入了少林派');
-    o = await sendCmd('schools 少林派'); expect(o).toContain('玄慈方丈');
+    let o = await sendCmd(clientSocket, 'w');  o = await sendCmd(clientSocket, 'n');  expect(o).toContain('主街');
+    o = await sendCmd(clientSocket, 'n');      expect(o).toContain('山门');
+    o = await sendCmd(clientSocket, 'n');      expect(o).toContain('山林·入口');
+    o = await sendCmd(clientSocket, 'e');      expect(o).toContain('断崖');
+    o = await sendCmd(clientSocket, 's');      expect(o).toContain('少林寺');
+    o = await sendCmd(clientSocket, 'w');      expect(o).toContain('大雄宝殿');
+    o = await sendCmd(clientSocket, 'schools'); expect(o).toContain('少林派');
+    o = await sendCmd(clientSocket, 'join 少林派'); expect(o).toContain('拜入了少林派');
+    o = await sendCmd(clientSocket, 'schools 少林派'); expect(o).toContain('玄慈方丈');
   });
 });
 
@@ -225,28 +234,22 @@ describe('E2E: port auto-bump', () => {
 
 
 describe('E2E: debug NPC counter', () => {
+  let clientSocket: ClientSocket;
   let uid: string;
+
   beforeAll(async () => {
-    clientSocket = ioc(`http://localhost:${port}`);
-    await new Promise<void>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
-      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
-      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
-    });
-    function sendCmd(input: string): Promise<string> {
-      return new Promise((resolve, reject) => {
-        const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
-        clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
-        clientSocket.emit('command', { input });
-      });
-    }
+    clientSocket = await createSocket(port);
     uid = 'debug' + Date.now();
-    await sendCmd('register ' + uid + ' pw999');
-    await sendCmd('战狂');
-    await sendCmd('set str 20');
-    await sendCmd('done');
-    await sendCmd('n'); await sendCmd('n'); await sendCmd('n');
+    await sendCmd(clientSocket, 'register ' + uid + ' pw999');
+    await sendCmd(clientSocket, '战狂');
+    await sendCmd(clientSocket, 'set str 20');
+    await sendCmd(clientSocket, 'done');
+    await sendCmd(clientSocket, 'n'); await sendCmd(clientSocket, 'n'); await sendCmd(clientSocket, 'n');
   }, 15000);
+
+  afterAll(() => {
+    cleanupSocket(clientSocket);
+  });
 
   it('debug kill output', async () => {
     const out = await new Promise<string>((resolve) => {
@@ -262,31 +265,25 @@ describe('E2E: debug NPC counter', () => {
 });
 
 describe('E2E: Quest System', () => {
+  let clientSocket: ClientSocket;
   let uid: string;
+
   beforeAll(async () => {
-    clientSocket = ioc(`http://localhost:${port}`);
-    await new Promise<void>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('connect timeout')), 5000);
-      clientSocket.on('connect', () => { clearTimeout(t); resolve(); });
-      clientSocket.on('connect_error', (err) => { clearTimeout(t); reject(err); });
-    });
-    function sendCmd(input: string): Promise<string> {
-      return new Promise((resolve, reject) => {
-        const t = setTimeout(() => reject(new Error(`cmd timeout: ${input}`)), 3000);
-        clientSocket.once('output', (data: { text: string }) => { clearTimeout(t); resolve(data.text); });
-        clientSocket.emit('command', { input });
-      });
-    }
+    clientSocket = await createSocket(port);
     uid = 'queste2e' + Date.now();
-    await sendCmd('register ' + uid + ' pw999');
-    await sendCmd('战狂'); await sendCmd('done');
+    await sendCmd(clientSocket, 'register ' + uid + ' pw999');
+    await sendCmd(clientSocket, '战狂'); await sendCmd(clientSocket, 'done');
     // Give exp for quest eligibility
-    await sendCmd('n'); await sendCmd('n'); await sendCmd('n');
-    await sendCmd('kill 山贼');
+    await sendCmd(clientSocket, 'n'); await sendCmd(clientSocket, 'n'); await sendCmd(clientSocket, 'n');
+    await sendCmd(clientSocket, 'kill 山贼');
     await new Promise(r => setTimeout(r, 3000));
-    await sendCmd('flee');
+    await sendCmd(clientSocket, 'flee');
     await new Promise(r => setTimeout(r, 500));
   }, 25000);
+
+  afterAll(() => {
+    cleanupSocket(clientSocket);
+  });
 
   it('quest from NPC works', async () => {
     const out2 = await new Promise<string>((resolve) => {
