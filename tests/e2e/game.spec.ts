@@ -23,6 +23,8 @@ test.describe('MUD Game', () => {
     await page.goto('/');
     const input = page.locator('input[placeholder="输入命令..."]');
     await input.fill('help');
+    // Press Escape to close autocomplete suggestions, then Enter to send
+    await input.press('Escape');
     await input.press('Enter');
     const output = page.locator('#root');
     await expect(output).toContainText('help');
